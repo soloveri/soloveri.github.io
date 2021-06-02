@@ -182,18 +182,19 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/LongAdder-analysis.html" target="_self">
-          LongAdder源码解析
+        <a href="/2021-06-02/LinkedBlockingQueue-analysis.html" target="_self">
+          LinkedBlockingQueue与ArrayBlockingQueue分析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/LongAdder-analysis.html" target="_self">
+        <a href="/2021-06-02/LinkedBlockingQueue-analysis.html" target="_self">
           
           
             
           
-          1. 预备知识在Java1.5中，JUC就已经提供了大数原子类AtomicLong，但是在Java1.8中，又提供了相同功能的大数原子类LongAdder。why？答案是如此的纯粹：为了效率。难道前者的效率就不行了吗？如果在轻微冲突的情况下，二者的效率几乎差不多。但是如果竞争非常激烈，那么因为每次对AtomicLong更新时都会使用CAS，激烈竞争导致CAS的成功的概率不大，所以有可能会执行多次无
+          LinkedBlockingQueue使用两个锁的原因是为了实现读写分离，聊率更高。如果只有一个锁，生产者和消费者只能有一个角色在工作。
+ArrayBlockingQueue为何不适合锁分离这个主要是循环队列的原因，主要是数组和链表不同，链表队列的添加和头部的删除，都是只和一个节点相关，添加只往后加就可以，删除只从头部去掉就好。为了防止head和tail相互影响出现问题，这里就需要原子性的计数器，
         </a>
       </p>
 
@@ -201,7 +202,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:05" pubdate>
+            <time datetime="2021-06-02 19:34" pubdate>
               2021-06-02
             </time>
           </div>
@@ -218,7 +219,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/atomic/">atomic</a>
+              <a href="/tags/concurrent-collections/">concurrent collections</a>
             
           </div>
         
@@ -232,18 +233,18 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/atomic-class-overview.html" target="_self">
-          原子类总览
+        <a href="/2021-06-02/SynchronousQueue-analysis.html" target="_self">
+          SynchronousQueue分析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/atomic-class-overview.html" target="_self">
+        <a href="/2021-06-02/SynchronousQueue-analysis.html" target="_self">
           
           
             
           
-          J.U.C包提供了许多原子类，我按照功能分了四类，如下所示：|  普通原子类   | 原子更新的数组  | 原子更新对象字段的updater  | 大数原子类  ||  —-  | —-  | —-  | —-  || AtomicBoolean AtomicInteger  AtomicLong AtomicReference atomicMarkableReference AtomicStam
+          
         </a>
       </p>
 
@@ -251,7 +252,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:05" pubdate>
+            <time datetime="2021-06-02 19:34" pubdate>
               2021-06-02
             </time>
           </div>
@@ -268,7 +269,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/atomic-class/">atomic class</a>
+              <a href="/tags/concurrent-collections/">concurrent collections</a>
             
           </div>
         
@@ -303,7 +304,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:05" pubdate>
+            <time datetime="2021-06-02 19:34" pubdate>
               2021-06-02
             </time>
           </div>
@@ -355,7 +356,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:05" pubdate>
+            <time datetime="2021-06-02 19:34" pubdate>
               2021-06-02
             </time>
           </div>
@@ -411,7 +412,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:05" pubdate>
+            <time datetime="2021-06-02 19:34" pubdate>
               2021-06-02
             </time>
           </div>
@@ -465,7 +466,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:05" pubdate>
+            <time datetime="2021-06-02 19:34" pubdate>
               2021-06-02
             </time>
           </div>
@@ -517,7 +518,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:05" pubdate>
+            <time datetime="2021-06-02 19:34" pubdate>
               2021-06-02
             </time>
           </div>
@@ -554,7 +555,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:05" pubdate>
+            <time datetime="2021-06-02 19:34" pubdate>
               2021-06-02
             </time>
           </div>
@@ -609,7 +610,7 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:05" pubdate>
+            <time datetime="2021-06-02 19:34" pubdate>
               2021-06-02
             </time>
           </div>
@@ -662,7 +663,7 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:05" pubdate>
+            <time datetime="2021-06-02 19:34" pubdate>
               2021-06-02
             </time>
           </div>
