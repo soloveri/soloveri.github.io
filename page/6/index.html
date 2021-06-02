@@ -182,20 +182,20 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/ConcurrentHashMap-analysis-I.html" target="_self">
-          ConcurrentHashMap架构解析
+        <a href="/2021-06-02/shared-lock-analysis.html" target="_self">
+          从Semaphore中学习共享锁原理
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/ConcurrentHashMap-analysis-I.html" target="_self">
+        <a href="/2021-06-02/shared-lock-analysis.html" target="_self">
           
           
             
           
-          前言本篇主要介绍ConcurrentHashMap的基本架构、插入与删除操作的原理，对于它扩容的逻辑，放在第二部分讲解：ConcurrentHashMap扩容分析。
-
-本文旨在介绍J.U.C包下的同步集合ConcurrentHashMap。因为Java自带的HashMap是线程不安全的，虽然也提供了线程安全的HashTable，但是后者是对整个哈希表加锁，势必效率不理想。而ConcurrentHa
+          共享锁和独占锁的实现差别不是很大，一个最大的区别就是在共享锁中，当一个线程获取锁后，它会尽可能多地唤醒后继线程。
+与独占锁不同的是，对于双链表中的节点，额外指针nextWaiter，指向SHARED节点，用来标志当前节点处于共享模式。而独占锁的nextWatier则指向null。
+1.共享锁的获取对于共享锁的获取，自定义同步器肯定会首先调用AQS的模板方法acquireShared，然后会调用自定
         </a>
       </p>
 
@@ -203,7 +203,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 14:53" pubdate>
+            <time datetime="2021-06-02 15:04" pubdate>
               2021-06-02
             </time>
           </div>
@@ -212,7 +212,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
             
           </div>
         
@@ -220,7 +220,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/concurrent-collections/">concurrent collections</a>
+              <a href="/tags/shared-lock/">shared lock</a>
             
           </div>
         
@@ -257,7 +257,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 14:53" pubdate>
+            <time datetime="2021-06-02 15:04" pubdate>
               2021-06-02
             </time>
           </div>
@@ -309,7 +309,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 14:53" pubdate>
+            <time datetime="2021-06-02 15:04" pubdate>
               2021-06-02
             </time>
           </div>
@@ -346,7 +346,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 14:53" pubdate>
+            <time datetime="2021-06-02 15:04" pubdate>
               2021-06-02
             </time>
           </div>
@@ -401,7 +401,7 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 14:53" pubdate>
+            <time datetime="2021-06-02 15:04" pubdate>
               2021-06-02
             </time>
           </div>
@@ -454,7 +454,7 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 14:53" pubdate>
+            <time datetime="2021-06-02 15:04" pubdate>
               2021-06-02
             </time>
           </div>
@@ -505,7 +505,7 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 14:53" pubdate>
+            <time datetime="2021-06-02 15:04" pubdate>
               2021-06-02
             </time>
           </div>
@@ -565,7 +565,7 @@ Indexes are used t
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 14:53" pubdate>
+            <time datetime="2021-06-02 15:04" pubdate>
               2021-06-02
             </time>
           </div>
@@ -616,7 +616,7 @@ Docker下安装MySQLcentos下安装MySQL
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 14:53" pubdate>
+            <time datetime="2021-06-02 15:04" pubdate>
               2021-06-02
             </time>
           </div>
@@ -660,7 +660,7 @@ Quick
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 14:53" pubdate>
+            <time datetime="2021-06-02 15:04" pubdate>
               2021-06-02
             </time>
           </div>
