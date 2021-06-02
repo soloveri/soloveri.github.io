@@ -182,6 +182,260 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021-06-02/LinkedTransferQueue-analysis.html" target="_self">
+          
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/LinkedTransferQueue-analysis.html" target="_self">
+          
+          
+            
+          
+          
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 18:25" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/IO-of-Java.html" target="_self">
+          Java中的IO分类
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/IO-of-Java.html" target="_self">
+          
+          
+            
+          
+          Java中的IO种类看似繁杂，实则有规律可循。
+按照功能可以分为：
+
+缓冲区
+memory
+文件
+Data Conversation
+Object
+管道pipe
+print，用于打印
+peeking ahead，预读
+流合并
+filter
+数据流转换，从字符流转到字节流
+按行读取，建议使用字符流，字节流已过时
+
+
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 18:25" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java/">java</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/IO/">IO</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/Docker-filesys-layout.html" target="_self">
+          Docker使用方法(二)-文件系统架构
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/Docker-filesys-layout.html" target="_self">
+          
+          
+            
+          
+          前言一定要将登录用户切换为root才能查看Docker的文件架构！！！
+0x0 基本文件布局Docker的文件主要都存储在/var/lib/docker目录下,文件目录如下所示:
+
+其中containers存储的是容器,images存储的是镜像。在深入了解Docker的原理之前,我们需要了解两个基本名词:
+
+overlayFS
+overlay2
+
+0x1 overlayFS其中overlayFS是
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 18:25" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Docker/">Docker</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/LinkedBlockingQueue-analysis.html" target="_self">
+          LinkedBlockingQueue与ArrayBlockingQueue分析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/LinkedBlockingQueue-analysis.html" target="_self">
+          
+          
+            
+          
+          LinkedBlockingQueue使用两个锁的原因是为了实现读写分离，聊率更高。如果只有一个锁，生产者和消费者只能有一个角色在工作。
+ArrayBlockingQueue为何不适合锁分离这个主要是循环队列的原因，主要是数组和链表不同，链表队列的添加和头部的删除，都是只和一个节点相关，添加只往后加就可以，删除只从头部去掉就好。为了防止head和tail相互影响出现问题，这里就需要原子性的计数器，
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 18:25" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/concurrent-collections/">concurrent collections</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/SynchronousQueue-analysis.html" target="_self">
+          SynchronousQueue分析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/SynchronousQueue-analysis.html" target="_self">
+          
+          
+            
+          
+          
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 18:25" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/concurrent-collections/">concurrent collections</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021-06-02/maven-how-to-find-jar.html" target="_self">
           
         </a>
@@ -201,7 +455,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 17:45" pubdate>
+            <time datetime="2021-06-02 18:25" pubdate>
               2021-06-02
             </time>
           </div>
@@ -244,62 +498,11 @@ os部分
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 17:45" pubdate>
+            <time datetime="2021-06-02 18:25" pubdate>
               2021-06-02
             </time>
           </div>
         
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/Docker-filesys-layout.html" target="_self">
-          Docker使用方法(二)-文件系统架构
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/Docker-filesys-layout.html" target="_self">
-          
-          
-            
-          
-          前言一定要将登录用户切换为root才能查看Docker的文件架构！！！
-0x0 基本文件布局Docker的文件主要都存储在/var/lib/docker目录下,文件目录如下所示:
-
-其中containers存储的是容器,images存储的是镜像。在深入了解Docker的原理之前,我们需要了解两个基本名词:
-
-overlayFS
-overlay2
-
-0x1 overlayFS其中overlayFS是
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 17:45" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Docker/">Docker</a>
-            
-          </div>
         
         
       </div>
@@ -336,7 +539,7 @@ CMD命令：容器是一个进程，CMD命令就像是容器启动时输入的�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 17:45" pubdate>
+            <time datetime="2021-06-02 18:25" pubdate>
               2021-06-02
             </time>
           </div>
@@ -387,7 +590,7 @@ docker版本:19.03
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 17:45" pubdate>
+            <time datetime="2021-06-02 18:25" pubdate>
               2021-06-02
             </time>
           </div>
@@ -435,7 +638,7 @@ tcp连接建立的基础是使
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 17:45" pubdate>
+            <time datetime="2021-06-02 18:25" pubdate>
               2021-06-02
             </time>
           </div>
@@ -453,214 +656,11 @@ tcp连接建立的基础是使
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/%E5%8F%8D%E5%B0%84%E5%88%9D%E4%BD%93%E9%AA%8C.html" target="_self">
-          反射初体验
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/%E5%8F%8D%E5%B0%84%E5%88%9D%E4%BD%93%E9%AA%8C.html" target="_self">
-          
-          
-            
-          
-          0x0 反射是什么反射是java中非常重要的一个概念。简而言之，反射就是在程序运行时可以动态的获取一个类的对象、执行某个类的方法等等。这里采用overflow上的一个回答。
-
-In order to fully understand the class object, let go back in and understand we get the class object in the firs
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 17:45" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%8F%8D%E5%B0%84/">反射</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">基本概念</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/java-memory-layout.html" target="_self">
-          java的内存布局
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/java-memory-layout.html" target="_self">
-          
-          
-            
-          
-          前言众所周知,java虚拟机的内存布局和传统的内存布局都差不多,都分为栈、堆啥的。准确的来说，jvm的内存分为以下几个部分:
-
-程序计数器(就是eip)
-堆
-方法区
-本地方法栈
-虚拟机栈
-
-其中堆和方法区是所有线程锁共享的,而程序计数器、栈肯定都是线程私有的,因为这与程序的正常运行息息相关。
-上述的五个区域都可能产生内存溢出,有的还可能产生内存泄漏(虽然内存由jvm管理,但是并不能保证内存不会泄露
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 17:45" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/jvm/">jvm</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/">内存布局</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/parents-delegation-model.html" target="_self">
-          双亲委派模型
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/parents-delegation-model.html" target="_self">
-          
-          
-            
-          
-          前言首先在了解双亲委派模型前，我们有必要了解它的英文名字：parents delegation model。其实在具体的模型中，并没有所谓的“双亲”，只有一个逻辑意义上的父类，详情见下文。
-1. 类加载器在《深入理解java虚拟机》一书中写道：
-
-java团队有意将类加载阶段中的“通过一个类的全限定名来获取该类的二进制字节流”这个动作放到java虚拟机外部去实现完成这个动作的代码就称为类加载器，以
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 17:45" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/jvm/">jvm</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%B1%BB%E5%8A%A0%E8%BD%BD/">类加载</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/tutorial.html" target="_self">
-          
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/tutorial.html" target="_self">
-          
-          
-            
-          
-          写完注释后,如果想要调试源码,那么需要重新编译源码
-否则 调试的语句大概率不是我们想调试的
-debug jdk source can’t watch variable what it is
-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 17:45" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/#board">6</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/#board">7</a><a class="extend next" rel="next" href="/page/2/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
