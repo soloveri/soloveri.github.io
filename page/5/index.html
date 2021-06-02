@@ -182,114 +182,6 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/ConcurrentHashMap-analysis-I.html" target="_self">
-          ConcurrentHashMap架构解析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/ConcurrentHashMap-analysis-I.html" target="_self">
-          
-          
-            
-          
-          前言本篇主要介绍ConcurrentHashMap的基本架构、插入与删除操作的原理，对于它扩容的逻辑，放在第二部分讲解：ConcurrentHashMap扩容分析。
-
-本文旨在介绍J.U.C包下的同步集合ConcurrentHashMap。因为Java自带的HashMap是线程不安全的，虽然也提供了线程安全的HashTable，但是后者是对整个哈希表加锁，势必效率不理想。而ConcurrentHa
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:16" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/concurrent-collections/">concurrent collections</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/ConcurrentHashMap-analysis-II.html" target="_self">
-          ConcurrentHashMap扩容分析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/ConcurrentHashMap-analysis-II.html" target="_self">
-          
-          
-            
-          
-          前言本篇继承于ConcurrentHashMap架构解析，在了解了ConcurrentHashMap的整体架构与插入删除逻辑后，还有一个知识点：扩容逻辑需要学习，我认为这是ConcurrentHashMap核心中的核心。
-废话不多说，对于ConcurrentHashMap来说，扩容可以整体分为两个部分：
-
-将属性table扩展为原来的两倍
-将旧table中数据迁移到新table
-
-那么本文就按照这
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:16" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/concurrent-collections/">concurrent collections</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
         <a href="/2021-06-02/Interrupt-mechanism.html" target="_self">
           中断机制
         </a>
@@ -310,7 +202,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:16" pubdate>
+            <time datetime="2021-06-02 15:53" pubdate>
               2021-06-02
             </time>
           </div>
@@ -361,7 +253,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:16" pubdate>
+            <time datetime="2021-06-02 15:53" pubdate>
               2021-06-02
             </time>
           </div>
@@ -415,7 +307,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:16" pubdate>
+            <time datetime="2021-06-02 15:53" pubdate>
               2021-06-02
             </time>
           </div>
@@ -467,7 +359,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:16" pubdate>
+            <time datetime="2021-06-02 15:53" pubdate>
               2021-06-02
             </time>
           </div>
@@ -518,7 +410,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:16" pubdate>
+            <time datetime="2021-06-02 15:53" pubdate>
               2021-06-02
             </time>
           </div>
@@ -569,7 +461,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:16" pubdate>
+            <time datetime="2021-06-02 15:53" pubdate>
               2021-06-02
             </time>
           </div>
@@ -619,7 +511,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:16" pubdate>
+            <time datetime="2021-06-02 15:53" pubdate>
               2021-06-02
             </time>
           </div>
@@ -669,7 +561,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:16" pubdate>
+            <time datetime="2021-06-02 15:53" pubdate>
               2021-06-02
             </time>
           </div>
@@ -687,6 +579,110 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/atomic-class/">atomic class</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/shared-lock-analysis.html" target="_self">
+          从Semaphore中学习共享锁原理
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/shared-lock-analysis.html" target="_self">
+          
+          
+            
+          
+          共享锁和独占锁的实现差别不是很大，一个最大的区别就是在共享锁中，当一个线程获取锁后，它会尽可能多地唤醒后继线程。
+与独占锁不同的是，对于双链表中的节点，额外指针nextWaiter，指向SHARED节点，用来标志当前节点处于共享模式。而独占锁的nextWatier则指向null。
+1.共享锁的获取对于共享锁的获取，自定义同步器肯定会首先调用AQS的模板方法acquireShared，然后会调用自定
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 15:53" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/shared-lock/">shared lock</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/ConcurrentHashMap-analysis-I.html" target="_self">
+          ConcurrentHashMap架构解析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/ConcurrentHashMap-analysis-I.html" target="_self">
+          
+          
+            
+          
+          前言本篇主要介绍ConcurrentHashMap的基本架构、插入与删除操作的原理，对于它扩容的逻辑，放在第二部分讲解：ConcurrentHashMap扩容分析。
+
+本文旨在介绍J.U.C包下的同步集合ConcurrentHashMap。因为Java自带的HashMap是线程不安全的，虽然也提供了线程安全的HashTable，但是后者是对整个哈希表加锁，势必效率不理想。而ConcurrentHa
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 15:53" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/concurrent-collections/">concurrent collections</a>
             
           </div>
         
