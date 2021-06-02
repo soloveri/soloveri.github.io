@@ -182,13 +182,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/SynchronousQueue-analysis.html" target="_self">
-          SynchronousQueue分析
+        <a href="/2021-06-02/LinkedTransferQueue-analysis.html" target="_self">
+          
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/SynchronousQueue-analysis.html" target="_self">
+        <a href="/2021-06-02/LinkedTransferQueue-analysis.html" target="_self">
           
           
             
@@ -201,146 +201,12 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>
         
         
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/concurrent-collections/">concurrent collections</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/interface-BlockingQueue-analysis.html" target="_self">
-          BlockingQueue接口分析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/interface-BlockingQueue-analysis.html" target="_self">
-          
-          
-            
-          
-          1. 基本概念BlockingQueue接口，提供了一组集合，一般用在生产者消费者模式中。它能搞保证在多线程环境下：当队列为空时，消费者线程会等待直到队列不空；当队列满时，生产者会等待直到队列不满。该接口提供了四种存储与删除模式：
-
-
-
-/
-操作失败抛出异常
-操作失败返回特殊值
-操作失败阻塞线程
-操作具有时间限制
-
-
-
-插入操作
-add(e)
-offer(e)
-put(e)
-offer(e,tim
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/concurrent-collections/">concurrent collections</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/Executor-interface.html" target="_self">
-          Exectuor框架解析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/Executor-interface.html" target="_self">
-          
-          
-            
-          
-          1. Executor接口在JUC包中，还提供了Executor框架用来实现线程池，我们经常使用的线程池都是从Executor派生而来。我们可以看看整个Executor框架的继承结构：
-
-那么在这个框架中，我们第一步应该需要了解它的核心接口Executor。这个接口的作用在它的注释中说的很清楚：
-
-An object that executes submitted Runnable tasks. 
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Executor/">Executor</a>
-            
-          </div>
         
       </div>
     </article>
@@ -372,7 +238,7 @@ An object that executes submitted Runnable tasks.
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>
@@ -423,7 +289,7 @@ An object that executes submitted Runnable tasks.
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>
@@ -477,7 +343,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>
@@ -529,7 +395,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>
@@ -580,7 +446,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>
@@ -631,7 +497,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>
@@ -681,7 +547,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>
@@ -699,6 +565,107 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/atomic/">atomic</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/atomic-class-overview.html" target="_self">
+          原子类总览
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/atomic-class-overview.html" target="_self">
+          
+          
+            
+          
+          J.U.C包提供了许多原子类，我按照功能分了四类，如下所示：|  普通原子类   | 原子更新的数组  | 原子更新对象字段的updater  | 大数原子类  ||  —-  | —-  | —-  | —-  || AtomicBoolean AtomicInteger  AtomicLong AtomicReference atomicMarkableReference AtomicStam
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 19:51" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/atomic-class/">atomic class</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/CopyOnWrite-collections-analysis.html" target="_self">
+          CopyOnWrite容器分析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/CopyOnWrite-collections-analysis.html" target="_self">
+          
+          
+            
+          
+          1. 预备知识J.U.C包提供了两种copy-on-wirte容器：CopyOnWriteList与CopyOnWriteSet。不了解copy-on-write技术的，可以去看理解 Copy On Write 技术。
+CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList内容的操作都基于copy-on-write，对于同一个元素，插入操作happ
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 19:51" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/concurrent-collections/">concurrent collections</a>
             
           </div>
         

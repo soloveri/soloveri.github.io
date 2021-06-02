@@ -182,19 +182,23 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/condition-analysis.html" target="_self">
-          Condition队列
+        <a href="/2021-06-02/what-is-spring-mvc.html" target="_self">
+          Spring MVC原理
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/condition-analysis.html" target="_self">
+        <a href="/2021-06-02/what-is-spring-mvc.html" target="_self">
           
           
             
           
-          Condition接口的功能用来实现类似于synchronized的await()/signal()通知机制。但是比synchronized的通知机制更丰富、更灵活。我们知道，synchronized锁内部维护了一个waitList保存调用了wait()主动释放锁的线程。AQS的waitList功能就是通过Condition内部维护的Condition queue实现的。
-与AQS的同步队列相似，
+          1. MVC是什么？MVC是一种设计规范，并不是一种设计模式。该规范将一个web分割成3部分来处理：请求首先经过控制器Controller；经过业务处理得到数据模型Model；最后通过model渲染视图View并响应给客户端。
+我们完全利用Servlet自己实现MVC规范，如下图所示：
+基本流程为：
+
+用户发请求
+Servlet（作为Controller）接收请求数据，解析数据模型model，并调
         </a>
       </p>
 
@@ -202,7 +206,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>
@@ -211,7 +215,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+              <a href="/categories/framework/">framework</a>
             
           </div>
         
@@ -219,7 +223,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/condition-queue/">condition queue</a>
+              <a href="/tags/Spring-MVC/">Spring MVC</a>
             
           </div>
         
@@ -262,7 +266,7 @@ Indexes are used t
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>
@@ -313,7 +317,7 @@ Docker下安装MySQLcentos下安装MySQL
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>
@@ -357,7 +361,7 @@ Quick
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>

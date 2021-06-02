@@ -182,18 +182,19 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/atomic-class-overview.html" target="_self">
-          原子类总览
+        <a href="/2021-06-02/LinkedBlockingQueue-analysis.html" target="_self">
+          LinkedBlockingQueue与ArrayBlockingQueue分析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/atomic-class-overview.html" target="_self">
+        <a href="/2021-06-02/LinkedBlockingQueue-analysis.html" target="_self">
           
           
             
           
-          J.U.C包提供了许多原子类，我按照功能分了四类，如下所示：|  普通原子类   | 原子更新的数组  | 原子更新对象字段的updater  | 大数原子类  ||  —-  | —-  | —-  | —-  || AtomicBoolean AtomicInteger  AtomicLong AtomicReference atomicMarkableReference AtomicStam
+          LinkedBlockingQueue使用两个锁的原因是为了实现读写分离，聊率更高。如果只有一个锁，生产者和消费者只能有一个角色在工作。
+ArrayBlockingQueue为何不适合锁分离这个主要是循环队列的原因，主要是数组和链表不同，链表队列的添加和头部的删除，都是只和一个节点相关，添加只往后加就可以，删除只从头部去掉就好。为了防止head和tail相互影响出现问题，这里就需要原子性的计数器，
         </a>
       </p>
 
@@ -201,7 +202,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>
@@ -218,7 +219,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/atomic-class/">atomic class</a>
+              <a href="/tags/concurrent-collections/">concurrent collections</a>
             
           </div>
         
@@ -232,19 +233,18 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/CopyOnWrite-collections-analysis.html" target="_self">
-          CopyOnWrite容器分析
+        <a href="/2021-06-02/SynchronousQueue-analysis.html" target="_self">
+          SynchronousQueue分析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/CopyOnWrite-collections-analysis.html" target="_self">
+        <a href="/2021-06-02/SynchronousQueue-analysis.html" target="_self">
           
           
             
           
-          1. 预备知识J.U.C包提供了两种copy-on-wirte容器：CopyOnWriteList与CopyOnWriteSet。不了解copy-on-write技术的，可以去看理解 Copy On Write 技术。
-CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList内容的操作都基于copy-on-write，对于同一个元素，插入操作happ
+          
         </a>
       </p>
 
@@ -252,7 +252,7 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>
@@ -304,7 +304,7 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>
@@ -356,7 +356,7 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>
@@ -412,7 +412,7 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>
@@ -430,60 +430,6 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/concurrent-collections/">concurrent collections</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/what-is-IOC.html" target="_self">
-          IOC到底是什么？
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/what-is-IOC.html" target="_self">
-          
-          
-            
-          
-          这篇博文：浅谈IOC–说清楚IOC是什么讲的不错，我在此就是做一些摘抄。
-
-1. IOC是什么？IOC，Inversion of Control，译为控制反转。
-1996年，Michael Mattson在其论文:Object-Oriented FrameworksA survey of methodological issues中，首先提出了IOC这个概念，IOC是一个方法论。
-简单来说，IOC
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/framework/">framework</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Spring/">Spring</a>
             
           </div>
         
@@ -518,7 +464,7 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>
@@ -555,7 +501,7 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>
@@ -573,61 +519,6 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/synchronized/">synchronized</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/what-is-spring-mvc.html" target="_self">
-          Spring MVC原理
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/what-is-spring-mvc.html" target="_self">
-          
-          
-            
-          
-          1. MVC是什么？MVC是一种设计规范，并不是一种设计模式。该规范将一个web分割成3部分来处理：请求首先经过控制器Controller；经过业务处理得到数据模型Model；最后通过model渲染视图View并响应给客户端。
-我们完全利用Servlet自己实现MVC规范，如下图所示：
-基本流程为：
-
-用户发请求
-Servlet（作为Controller）接收请求数据，解析数据模型model，并调
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/framework/">framework</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Spring-MVC/">Spring MVC</a>
             
           </div>
         
@@ -663,7 +554,7 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:46" pubdate>
+            <time datetime="2021-06-02 19:51" pubdate>
               2021-06-02
             </time>
           </div>
@@ -681,6 +572,111 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/ReentrantLock/">ReentrantLock</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/condition-analysis.html" target="_self">
+          Condition队列
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/condition-analysis.html" target="_self">
+          
+          
+            
+          
+          Condition接口的功能用来实现类似于synchronized的await()/signal()通知机制。但是比synchronized的通知机制更丰富、更灵活。我们知道，synchronized锁内部维护了一个waitList保存调用了wait()主动释放锁的线程。AQS的waitList功能就是通过Condition内部维护的Condition queue实现的。
+与AQS的同步队列相似，
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 19:51" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/condition-queue/">condition queue</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/what-is-IOC.html" target="_self">
+          IOC到底是什么？
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/what-is-IOC.html" target="_self">
+          
+          
+            
+          
+          这篇博文：浅谈IOC–说清楚IOC是什么讲的不错，我在此就是做一些摘抄。
+
+1. IOC是什么？IOC，Inversion of Control，译为控制反转。
+1996年，Michael Mattson在其论文:Object-Oriented FrameworksA survey of methodological issues中，首先提出了IOC这个概念，IOC是一个方法论。
+简单来说，IOC
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 19:51" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/framework/">framework</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Spring/">Spring</a>
             
           </div>
         
