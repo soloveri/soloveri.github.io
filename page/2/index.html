@@ -182,22 +182,19 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/class-loading-mechanism.html" target="_self">
-          类的加载机制
+        <a href="/2021-06-02/type-system-of-java.html" target="_self">
+          java中的类型系统
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/class-loading-mechanism.html" target="_self">
+        <a href="/2021-06-02/type-system-of-java.html" target="_self">
           
           
             
           
-          1. 类初始化的时机update:2021-01-16 13:59:42
-当复习类加载时机时，我给自己抛出了一个问题：这里的时机只说明了类的初始化，那么对于接口呢？接口什么时候会被初始化呢？
-仔细回顾《深入理解Java虚拟机》，才发现，作者给出的是会触发类型初始化的六种时机，而不是类初始化。这里类型可能是指类或者接口。ok，那么我的问题迎刃而解了。接口初始化的时机同样遵循以下六种场景。
-
-在Jav
+          前言java的类型系统在1.5之后就变的很复杂了。但是又极其重要因为java中的反射基于此。所以想要深入理解反射还需要简单地学习一下java的类型系统。首先我们简要说明一下在逻辑上java的type分类。然后再在实现层次上简要了解一下java到底是如何实现的。
+首先java是一个强类型语言,其任何一个变量、任何一个表达式都有类型。在Java中,总的分为两类三类(还有一个特殊的null type):
         </a>
       </p>
 
@@ -205,7 +202,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:51" pubdate>
+            <time datetime="2021-06-02 19:53" pubdate>
               2021-06-02
             </time>
           </div>
@@ -214,7 +211,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/jvm/">jvm</a>
+              <a href="/categories/%E5%8F%8D%E5%B0%84/">反射</a>
             
           </div>
         
@@ -222,7 +219,9 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E7%B1%BB%E5%8A%A0%E8%BD%BD/">类加载</a>
+              <a href="/tags/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">基本概念</a>
+            
+              <a href="/tags/%E7%B1%BB%E5%9E%8B/">类型</a>
             
           </div>
         
@@ -236,21 +235,18 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/parents-delegation-model.html" target="_self">
-          双亲委派模型
+        <a href="/2021-06-02/SPI-service-mechanism.html" target="_self">
+          通过MySQL驱动的加载学习SPI机制
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/parents-delegation-model.html" target="_self">
+        <a href="/2021-06-02/SPI-service-mechanism.html" target="_self">
           
           
             
           
-          前言首先在了解双亲委派模型前，我们有必要了解它的英文名字：parents delegation model。其实在具体的模型中，并没有所谓的“双亲”，只有一个逻辑意义上的父类，详情见下文。
-1. 类加载器在《深入理解java虚拟机》一书中写道：
-
-java团队有意将类加载阶段中的“通过一个类的全限定名来获取该类的二进制字节流”这个动作放到java虚拟机外部去实现完成这个动作的代码就称为类加载器，以
+          前言 什么是SPISPI机制（Service Provider Interface)简而言之，就是java规定了一组服务的接口，但是没有具体的实现类。那么具体的实现类肯定由不同的厂商实现，那么客户在使用时是仅依赖于接口的。SPI的具体实现是靠ServiceLoader完成的。在讲解双亲委派模型时，我们知道，SPI接口是通过bootstrap ClassLoader加载至jvm中的。而具体的驱动实现
         </a>
       </p>
 
@@ -258,7 +254,7 @@ java团队有意将类加载阶段中的“通过一个类的全限定名来获�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:51" pubdate>
+            <time datetime="2021-06-02 19:53" pubdate>
               2021-06-02
             </time>
           </div>
@@ -267,7 +263,7 @@ java团队有意将类加载阶段中的“通过一个类的全限定名来获�
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/jvm/">jvm</a>
+              <a href="/categories/%E7%B1%BB%E5%8A%A0%E8%BD%BD/">类加载</a>
             
           </div>
         
@@ -275,48 +271,11 @@ java团队有意将类加载阶段中的“通过一个类的全限定名来获�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E7%B1%BB%E5%8A%A0%E8%BD%BD/">类加载</a>
+              <a href="/tags/SPI%E6%9C%BA%E5%88%B6/">SPI机制</a>
+            
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%A9%B1%E5%8A%A8%E5%8A%A0%E8%BD%BD/">数据库驱动加载</a>
             
           </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/tutorial.html" target="_self">
-          
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/tutorial.html" target="_self">
-          
-          
-            
-          
-          写完注释后,如果想要调试源码,那么需要重新编译源码
-否则 调试的语句大概率不是我们想调试的
-debug jdk source can’t watch variable what it is
-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:51" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
         
       </div>
     </article>
@@ -351,7 +310,7 @@ debug jdk source can’t watch variable what it is
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:51" pubdate>
+            <time datetime="2021-06-02 19:53" pubdate>
               2021-06-02
             </time>
           </div>
@@ -404,7 +363,7 @@ debug jdk source can’t watch variable what it is
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:51" pubdate>
+            <time datetime="2021-06-02 19:53" pubdate>
               2021-06-02
             </time>
           </div>
@@ -437,6 +396,60 @@ debug jdk source can’t watch variable what it is
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021-06-02/class-loading-mechanism.html" target="_self">
+          类的加载机制
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/class-loading-mechanism.html" target="_self">
+          
+          
+            
+          
+          1. 类初始化的时机update:2021-01-16 13:59:42
+当复习类加载时机时，我给自己抛出了一个问题：这里的时机只说明了类的初始化，那么对于接口呢？接口什么时候会被初始化呢？
+仔细回顾《深入理解Java虚拟机》，才发现，作者给出的是会触发类型初始化的六种时机，而不是类初始化。这里类型可能是指类或者接口。ok，那么我的问题迎刃而解了。接口初始化的时机同样遵循以下六种场景。
+
+在Jav
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 19:53" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/jvm/">jvm</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%B1%BB%E5%8A%A0%E8%BD%BD/">类加载</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021-06-02/Collection-interface-analysis.html" target="_self">
           
         </a>
@@ -456,7 +469,7 @@ debug jdk source can’t watch variable what it is
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:51" pubdate>
+            <time datetime="2021-06-02 19:53" pubdate>
               2021-06-02
             </time>
           </div>
@@ -492,7 +505,7 @@ debug jdk source can’t watch variable what it is
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:51" pubdate>
+            <time datetime="2021-06-02 19:53" pubdate>
               2021-06-02
             </time>
           </div>
@@ -544,7 +557,7 @@ filter
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:51" pubdate>
+            <time datetime="2021-06-02 19:53" pubdate>
               2021-06-02
             </time>
           </div>
@@ -596,7 +609,7 @@ java中的类只能有两种权限修饰
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:51" pubdate>
+            <time datetime="2021-06-02 19:53" pubdate>
               2021-06-02
             </time>
           </div>
@@ -648,7 +661,7 @@ java中的类只能有两种权限修饰
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:51" pubdate>
+            <time datetime="2021-06-02 19:53" pubdate>
               2021-06-02
             </time>
           </div>
