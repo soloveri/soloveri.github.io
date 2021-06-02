@@ -1,0 +1,679 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="cras">
+  <meta name="keywords" content="">
+  
+  <title>类的加载机制 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="类的加载机制">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-02 14:10" pubdate>
+        2021年6月2日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      78
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">类的加载机制</h1>
+            
+            <div class="markdown-body">
+              <h1 id="1-类初始化的时机"><a href="#1-类初始化的时机" class="headerlink" title="1. 类初始化的时机"></a>1. 类初始化的时机</h1><p>update:2021-01-16 13:59:42</p>
+<p>当复习类加载时机时，我给自己抛出了一个问题：这里的时机只说明了<strong>类</strong>的初始化，那么对于接口呢？接口什么时候会被初始化呢？</p>
+<p>仔细回顾《深入理解Java虚拟机》，才发现，作者给出的是会触发<strong>类型</strong>初始化的六种时机，而不是<strong>类</strong>初始化。这里类型可能是指类或者接口。ok，那么我的问题迎刃而解了。接口初始化的时机同样遵循以下六种场景。</p>
+<hr>
+<p>在Java中，只有主动引用才会触发<del>类</del>类型加载动作。所谓的主动引用指<strong>只</strong>包括以下六种情况（除了下面这六种情况，其余的引用都称为被动引用）：</p>
+<ol>
+<li>遇到new、getstatic、setstatic或者invokestatic这4个字节码指令时，如果<strong>类型</strong>没有进行过初始化，那么需要先触发其初始化阶段。对应的java代码场景为：<ul>
+<li>new一个关键字或者一个实例化对象时</li>
+<li>读取或设置一个<strong>类型</strong>的静态字段时(final修饰、已在编译期把结果放入常量池的除外)</li>
+<li>调用一个<strong>类行</strong>的静态方法时</li>
+</ul>
+</li>
+<li>使用java.lang.reflect包的方法对<strong>类型</strong>进行反射调用的时候，如果类型没进行初始化，需要先触发其初始化。</li>
+<li>当初始化一个<strong>类</strong>时，如果其父类还未进行初始化，会先触发其父类的初始化；当一个接口在初始化时。并不要求其父接口全部完成了初始化。只有真正使用到了父接口时（例如使用接口中定义的常量）才会对父接口进行初始化</li>
+<li>当虚拟机启动时，用户需要指定一个要执行的主类(包含main()方法的类)，虚拟机会先初始化这个类。</li>
+<li>当使用JDK 1.7等动态语言支持时，如果一个java.lang.invoke.MethodHandle实例最后的解析结果REF_getStatic、REF_putStatic、REF_invokeStatic的方法句柄，并且这个方法句柄所对应的类没有进行过初始化，则需要先触发其初始化。</li>
+<li>当一个接口定义了JDK8新加入的默认方法时，如果这个接口的实现类发生了初始化，那么接口需要在其之前被初始化</li>
+</ol>
+<p><strong>注意：</strong><br>对于静态字段或者静态方法，只会对定义了这些内容的类执行类加载动作。我们通过下面的代码来理解这句话的真正含义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">staticTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>       subTest.m1();<br>    <span class="hljs-comment">// System.out.println(subTest.a);</span><br>    &#125;<br>&#125;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">subTest</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Test</span></span>&#123;<br>    <span class="hljs-keyword">static</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;load subclass subTest&quot;</span>);<br>    &#125;<br>&#125;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span></span>&#123;<br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> a;<br>    <span class="hljs-keyword">static</span> &#123;<br>        System.out.println(<span class="hljs-string">&quot;load class Test&quot;</span>);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">m1</span><span class="hljs-params">()</span></span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;method m1&quot;</span>);<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>执行结果为：</p>
+<blockquote>
+<p>load class Test<br>method m1</p>
+</blockquote>
+<p>虽然通过子类名称调用父类的静态方法，但是jvm仍然只会加载真正定义了静态方法<code>m1</code>的类<code>Test</code>。这是一个特殊情况。</p>
+<hr>
+<p>update：2021-01-18 00:27:01</p>
+<p>我又给自己提出了一个问题：当一个类被初始化时，它实现的接口是什么时候被加载的？这种情况不符合上面所述的六种场景啊。</p>
+<p>经过我的思考，我发现我进入了一个误区。上面所述的六种场景只是声明类或接口被初始化的时机，而不是加载的时机。</p>
+<p>初始化一定要求类或者接口被加载，但是反之则不一定，加载了类或接口，不一定需要初始化。所以我猜测，当是一个实现类在解析接口引用时，只是加载了接口，而没有初始化接口。不然类怎么实现验证步骤？</p>
+<h1 id="2-类加载的七个步骤"><a href="#2-类加载的七个步骤" class="headerlink" title="2. 类加载的七个步骤"></a>2. 类加载的七个步骤</h1><p>将类的Class文件加载至jvm中一般会经历七个步骤：加载、验证、准备、解析、初始化、使用、卸载。但是注意：<strong>这七个步骤并不是完全串行的</strong>。有可能在一个步骤的执行中开启另外一个步骤，而不是等待当前步骤执行完毕。</p>
+<p>并且其中的验证、准备、解析合在一起叫做“连接”。这不就是cpp编译过程的符号链接的步骤嘛，搞的这么花里胡哨的。</p>
+<p>并且其中的初始化是指类的初始化，而不是对象的初始化。类的初始化是指：</p>
+<ul>
+<li>静态字段的初始化</li>
+<li>静态代码的执行</li>
+</ul>
+<p>并且类的初始化只会在类加载的时候执行一次。下面我们就来看看这七个步骤。</p>
+<h2 id="2-1-加载"><a href="#2-1-加载" class="headerlink" title="2.1 加载"></a>2.1 加载</h2><p>这个加载是指整个类加载过程中的第一个步骤，而且是整个类加载过程中我们可以实实在在用代码控制的部分。该步骤分为三小步：</p>
+<ol>
+<li>通过类的全限定名获取类的二进制字节流</li>
+<li>将二进制字节流表示的静态存储结构转化<strong>方法区</strong>为运行时存储结构</li>
+<li>生成Class对象，作为方法区各种类型数据的访问接口</li>
+</ol>
+<p>其中通过类的权限名获取类的二进制字节流就是我们能够控制的部分，虚拟机规范只规定了我们要获取字节流，而没有规定从哪里获取字节流。可以从Class文件中获取、静态的jar包中获取、网络中获取，或者动态的在内存中生成，也就是所谓的动态代理技术，这完全都可以自定义实现。<strong>并且获取字节流这个动作就是通过我们自定义的类加载器来实现。</strong></p>
+<p>但是有一个特殊情况，就是数组类的加载不是我们可以控制的，但是数组中的元素类却又是我们可以控制的。因为<strong>数组类的并不是由类加载器加载，而是由jvm在内存中直接构造的。</strong></p>
+<hr>
+<p>这里的数组类可以看作数组的wrapper，即数组的包装类，由jvm动态生成，数组类提供了一些数组的属性，并且数组的访问也通过该类实现。</p>
+<blockquote>
+<p>java访问数组的安全性比c++高很大程度是因为该类包装了数组的访问操作。</p>
+</blockquote>
+<hr>
+<h3 id="2-1-1-数组类的加载机制"><a href="#2-1-1-数组类的加载机制" class="headerlink" title="2.1.1 数组类的加载机制"></a>2.1.1 数组类的加载机制</h3><ul>
+<li>如果数组的组件类型(即数组去掉一个维度，例如int[4][3],实际的组件类型为int[3],因为二维数组可以看作元素类型是一维数组的一维数组)。那么就递归的采用类加载过程去加载这个组件类型。是类就用类的加载过程，是数组类就用数组类的加载过程。并且该数组会被标识在加载该组件类型的类加载器的类名称空间上，因为这样才能唯一的确定一个类</li>
+<li>如果数组的组件类型不是引用类型，那么该数组会被标识在启动类加载器的类名称空间上</li>
+<li>数组类的可访问性和它组件类型的可访问性一致，如果组件类型不是引用类型，那么数组类的可访问性默认为public</li>
+</ul>
+<h3 id="2-1-2-生成Class对象"><a href="#2-1-2-生成Class对象" class="headerlink" title="2.1.2 生成Class对象"></a>2.1.2 生成Class对象</h3><p>在获得类文件的二进制的字节流后，会被转化为方法区的动态存储结构，这个结构是怎么样的并没有强制规定。但是在转化完成后，会在<strong>堆区</strong>实例化一个代表当前类的Class对象。作为方法区存储结构中的数据的访问接口。</p>
+<p><strong>加载阶段和连接阶段是交叉进行的。</strong></p>
+<h2 id="2-2-验证"><a href="#2-2-验证" class="headerlink" title="2.2 验证"></a>2.2 验证</h2><p>验证显而易见就是验证获取的二进制字节流是否安全，符合虚拟机规范。<strong>因为Class不一定是通过编译生成的</strong>，也确实可以直接在二进制层面拼接。<strong>那么在生成Class对象前不是应该先完成验证步骤？</strong></p>
+<p>验证主要验证四个部分：</p>
+<ol>
+<li>文件格式的验证</li>
+<li>元数据验证</li>
+<li>字节码验证</li>
+<li>符号引用验证</li>
+</ol>
+<h3 id="2-2-1-文件格式验证"><a href="#2-2-1-文件格式验证" class="headerlink" title="2.2.1 文件格式验证"></a>2.2.1 文件格式验证</h3><p>文件格式的验证就是验证我们在加载阶段获取到的二进制字节流是否符合<strong>Class文件格式</strong>的规范，只有完成这一步验证，字节流才会转化为方法区的存储结构，并且后续的三个验证步骤是基于方法区的存储结构，而不会直接操作二进制流了。</p>
+<h3 id="2-2-2-元数据验证"><a href="#2-2-2-元数据验证" class="headerlink" title="2.2.2 元数据验证"></a>2.2.2 元数据验证</h3><p>元数据验证是验证方法区存储的字节码是否《java语言规范》的语法要求。所谓的语义包括是否继承了final修饰的类、是否修改了final修饰的字段等等。即验证是否符合java的语法。</p>
+<h3 id="2-2-3-字节码验证"><a href="#2-2-3-字节码验证" class="headerlink" title="2.2.3 字节码验证"></a>2.2.3 字节码验证</h3><p><strong>字节码验证主要是验证代码的语义正确性。</strong>例如将父类对象赋值给子类引用（语法验证会通过，但可能会产生运行时问题）。如果代码没有通过字节码验证，说明代码肯定有错误，但反之则不一定，即使通过了验证，也不能说代码完全正确，有可能产生间接的语义错误。</p>
+<p>但是计算代码是否有语义错误显而易见是一项庞大的工程，放到代码运行之前验证不太好。所以在JDK6之后，java团队将验证语义的操作大部分都转移到了编译期间。编译器会在编译时为代码属性添加<code>StackMapTable</code>属性，这一属性描述了代码是否有语义错误。在字节码验证阶段jvm只需要验证该属性是否符合规范。当然，这并不能做到十全十美。</p>
+<h3 id="2-2-4-符号引用验证"><a href="#2-2-4-符号引用验证" class="headerlink" title="2.2.4 符号引用验证"></a>2.2.4 符号引用验证</h3><p>符号引用验证的目的是为了保证<strong>解析阶段</strong>正常进行。会进行权限检查</p>
+<h3 id="2-2-5-小结"><a href="#2-2-5-小结" class="headerlink" title="2.2.5 小结"></a>2.2.5 小结</h3><p>验证阶段可有可无，并不是强制的，只要能够保证代码是正确的，那么也可以关闭大部分类的验证措施来加速类的加载。</p>
+<h2 id="2-3-准备"><a href="#2-3-准备" class="headerlink" title="2.3 准备"></a>2.3 准备</h2><p>准备阶段是为类的静态变量(而不是实例变量，实例变量会在对象实例化时分配空间)分配内存空间，以及赋予静态变量默认的初值，这里的初值指的是int的默认为0、boolean的默认为false之类的默认值。例如:</p>
+<blockquote>
+<p>public static int value=123;</p>
+</blockquote>
+<p>在准备阶段，value的值为默认值，即为0。在初始化阶段才会被赋值为123。</p>
+<p><strong>无论代码中有没有对静态变量的赋值的操作，都会对变量进行初始化操作，至于赋值的步骤，会在初始化阶段完成!!!</strong></p>
+<p>注意：准备阶段只为静态变量做准备。</p>
+<h2 id="2-4-解析"><a href="#2-4-解析" class="headerlink" title="2.4 解析"></a>2.4 解析</h2><p>解析肯定就是符号的链接过程咯。准备来说就是将常量池中的符号引用替换为直接引用。例如Class文件中的<code>CONSTANT_Class_info</code>、<code>CONSTANT_Fieldref_info</code>、<code>CONSTANT_Method_info</code>等符号引用，存储形式都是常量。</p>
+<blockquote>
+<p>解析过程是把符号链接到正确的内存地址，符号引用变为直接引用，而不是确定符号，后者是编译期做的事，<del>解析这件事已经属于运行期了</del>。准确来说，解析并不是运行期，因为解析阶段还没有真正的开始执行字节码，我的理解时<strong>执行字节码才叫做真正的运行期</strong>。</p>
+</blockquote>
+<p>在解析阶段解析符号的过程被称为<strong>静态解析</strong>，当然能够被静态解析的符号类型有限：</p>
+<ul>
+<li>类或接口</li>
+<li>字段</li>
+<li>一部分方法</li>
+<li>接口方法</li>
+</ul>
+<p>关于方法的解析比较复杂，后文单独开一章进行讲解。</p>
+<h3 id="2-4-1-类或接口的解析"><a href="#2-4-1-类或接口的解析" class="headerlink" title="2.4.1 类或接口的解析"></a>2.4.1 类或接口的解析</h3><p>类或接口的解析有一个核心规则：</p>
+<p>如果当前代码所处的类为D，如果想要把D中一个从未解析过的符号引用N解析为类或接口C，那么则有：</p>
+<ol>
+<li><p>如果c不是一个数组类型，那么会使用<strong>D的类加载器</strong>加载c，其中会将c的全限定名传递给D的类加载器。如果其中又需要加载其他类，那么重复整个解析程序</p>
+</li>
+<li><p>如果c是一个数组类型，并且数组元素是对象类型，那么会重复第一步，<strong>并且由虚拟机生成该数组</strong></p>
+</li>
+<li><p>如果上面两步没有出现问题，那么会检查符号引用的权限，确认D对C具有访问，否则会抛出异常</p>
+</li>
+</ol>
+<h3 id="2-4-2-字段的解析"><a href="#2-4-2-字段的解析" class="headerlink" title="2.4.2 字段的解析"></a>2.4.2 字段的解析</h3><p>首先我们需要找到字段所属的类或接口C，然后：</p>
+<ol>
+<li><p>如果在c中找到了简单名称和描述符都与目标相符的字段，那么会返回字段的直接引用</p>
+</li>
+<li><p>在c实现的接口中，从下往上查找目标</p>
+</li>
+<li><p>在c继承的父类中，从下往上查找目标</p>
+</li>
+<li><p>如果成功获得了直接引用，还会检查是否对目标字段具有访问权限</p>
+</li>
+</ol>
+<p>如果在c的父类或接口中实现了相同字段，虽然按照规则可以成功找到目标字段，但是编译器为了安全，还是会选择拒绝编译。</p>
+<blockquote>
+<p>字段会在解析阶段完全解析好，因为符号引用在编译时期就确定了</p>
+</blockquote>
+<h3 id="2-4-3-接口方法的解析"><a href="#2-4-3-接口方法的解析" class="headerlink" title="2.4.3 接口方法的解析"></a>2.4.3 接口方法的解析</h3><p>首先在接口方法表中解析出当前方法所属的类或接口c，然后：</p>
+<ol>
+<li><p>如果c是一个类，那么抛出IncompatibleClassChangeError</p>
+</li>
+<li><p>否则在接口c中查看目标方法，如果成功，则返回直接引用</p>
+</li>
+<li><p>否则在c继承的接口中查找目标方法，这一步骤有一点值得注意：会一直向上递归查找，直到对java.lang.Object查找完毕，因为接口方法的查找范围<strong>包括Object类中的方法。</strong></p>
+</li>
+<li><p>对查找的直接引用进行权限检查在JDK9之后，因为JDK9之后引入了模块化系统。</p>
+</li>
+</ol>
+<p>如果在继承的多个父接口中查找到了多个目标方法，虽然虚拟机规范规定随意返回一个即可。</p>
+<h2 id="2-5-初始化"><a href="#2-5-初始化" class="headerlink" title="2.5 初始化"></a>2.5 初始化</h2><p>这里的初始化是指对类进行初始化，并且这一阶段可以通过程序控制。</p>
+<p>初始化阶段就是执行类构造器<code>&lt;cinit&gt;()</code>方法的过程。这一方法通过编译器自动生成，生成规则如下：</p>
+<ol>
+<li><p>收集类中所有类变量的赋值动作和静态代码块的语句按<strong>顺序</strong>而合成，如果没有静态变量<strong>赋值</strong>语句和静态代码块，那么并不会生成<code>&lt;cinit&gt;()</code></p>
+</li>
+<li><p>静态代码块只能访问定义在块之前的静态变量，对于块之后定义的静态变量，静态代码块只能赋值，不能访问</p>
+</li>
+<li><p>虚拟机会保证父类的类构造器<code>&lt;cinit&gt;()</code>一定会在子类的<code>&lt;cinit&gt;()</code>执行之前执行，这与实例构造器<code>&lt;init&gt;()</code>一样，会保证父类的实例构造器先于子类执行，并且JVM保证在多线程环境下<code>&lt;cinit&gt;()</code>只会被执行一次</p>
+</li>
+</ol>
+<p>这里怎么保证呢？就是虽然<code>super</code>是在是在子类构造器中调用的，但是<code>super</code>实际是在调用父类的<code>&lt;init&gt;</code>，而子类的<code>&lt;init&gt;</code>根本还没有开始执行，这样保证了父类的<code>&lt;init&gt;</code>一定会在子类的<code>&lt;init&gt;</code>之前完成，例如在下面的代码中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FieldHashNoPolymorphic</span> </span>&#123;<br>    <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Father</span> </span>&#123;<br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> money = <span class="hljs-number">1</span>;<br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Father</span><span class="hljs-params">()</span> </span>&#123;<br>            ...<br>            showMeTheMoney();<br>        &#125;<br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">showMeTheMoney</span><span class="hljs-params">()</span> </span>&#123;<br>            System.out.println(<span class="hljs-string">&quot;I am Father, I have $&quot;</span> + money);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Son</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Father</span> </span>&#123;<br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> money = <span class="hljs-number">3</span>;<br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Son</span><span class="hljs-params">()</span> </span>&#123;<br>            <span class="hljs-comment">//虽然super在Son的构造方法中，但是实际上Son的&lt;init&gt;还没有开始执行</span><br>            <span class="hljs-keyword">super</span>();<br>            ...<br>            showMeTheMoney();<br>        &#125;<br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">showMeTheMoney</span><span class="hljs-params">()</span> </span>&#123;<br>            System.out.println(<span class="hljs-string">&quot;I am Son, I have $&quot;</span> + <span class="hljs-keyword">this</span>.money);<br>        &#125;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        Father guy = <span class="hljs-keyword">new</span> Son();<br>        ...<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在执行<code>super</code>的时候，<code>Son</code>类的<code>&lt;init&gt;</code>方法还没有开始调用，所以<code>Son</code>类的<code>money</code>字段仍然为0。那么<code>&lt;init&gt;</code>由哪些部分组成呢？与<code>&lt;cinit&gt;</code>类似，也是由三部分组成：</p>
+<ol>
+<li>成员变量显式赋值代码</li>
+<li>非静态代码块中的代码</li>
+<li>构造器中的代码</li>
+</ol>
+<p>其中1、2部分按照出现的顺序排列，3永远排在最后执行。</p>
+<h3 id="2-5-1-接口的初始化"><a href="#2-5-1-接口的初始化" class="headerlink" title="2.5.1 接口的初始化"></a>2.5.1 接口的初始化</h3><p>对于接口来说，并没有强制要求父接口的<code>&lt;cinit&gt;()</code>一定要在子接口<code>&lt;cinit&gt;()</code>之前执行。只有当父接口中定义的变量被使用时，才会执行父接口的<code>&lt;cinit&gt;()</code>方法。并且接口的实现类初始化时也不会执行接口的<code>&lt;cinit&gt;()</code>方法。</p>
+<h1 id="3-类方法的解析"><a href="#3-类方法的解析" class="headerlink" title="3. 类方法的解析"></a>3. 类方法的解析</h1><p>方法的总体来说可以分为两个部分：</p>
+<ul>
+<li>能够在解析阶段完成解析的方法</li>
+<li>只能在运行时完成解析的方法</li>
+</ul>
+<p>那么如何区分它们呢？这与具体的方法调用的字节码指令有关，在java中，有五条字节码与方法调用有关：</p>
+<ul>
+<li>invokestatic:调用静态方法</li>
+<li>invokespecial：用于调用特殊的实例方法，包括实例初始化方法（<init>()方法）、私有方法、父类方法（<strong>最近的一个父类</strong>）</li>
+<li>invokevirtual：用于调用对象的实例方法</li>
+<li>invokeinferface：用于调用接口方法</li>
+<li>invokedynamic：用于运行时动态解析出调用点限定符所引用的方法</li>
+</ul>
+<p>我们可以根据这五条调用方法的指令来判定当前方法能否在类加载过程中的解析阶段完成符号链接。值得注意的是<strong>前四条的方法调用逻辑</strong>是完全固化在虚拟机内的，而最后一条指令的调用指派完全由程序员指定。</p>
+<h2 id="3-1-类加载阶段的方法符号解析"><a href="#3-1-类加载阶段的方法符号解析" class="headerlink" title="3.1 类加载阶段的方法符号解析"></a>3.1 类加载阶段的方法符号解析</h2><p>只要是通过<code>invokestatic</code>、<code>incokespecial</code>调用的或者被<code>final</code>修饰的方法，就能在类加载阶段中的解析步骤时将符号引用转换为目标方法的直接引用。总计分为五种方法：</p>
+<ul>
+<li>静态方法</li>
+<li>对象的构造方法</li>
+<li>私有方法</li>
+<li>父类方法</li>
+<li>被<code>final</code>修饰的方法</li>
+</ul>
+<p>上述五类方法被称为“非虚方法”，调用的方法的符号引用在编译器就已经完全确定，这类方法的调用称为<strong>解析</strong>。其他的所有方法都为“虚方法”，java中默认方法都是虚方法。</p>
+<h2 id="3-2-运行时的方法符号解析"><a href="#3-2-运行时的方法符号解析" class="headerlink" title="3.2 运行时的方法符号解析"></a>3.2 运行时的方法符号解析</h2><p>除了在3.1小节指出的非虚方法外，其余的方法会在第一次调用时进行链接。这类方法的符号解析有一个特殊的名字，称为<strong>分派</strong>。顾名思义，分派肯定是从多个候选者选择一个。我认为这是与解析最大的不同，因为解析调用的候选方法只有一个。</p>
+<p>分派又可分为静态分派和动态分派。</p>
+<h3 id="3-2-1-静态分派"><a href="#3-2-1-静态分派" class="headerlink" title="3.2.1 静态分派"></a>3.2.1 静态分派</h3><p>所谓的静态分派和上述非虚方法的解析并没有太大差别，都是在编译期确定目标方法的符号引用。值得注意的是：在重载环境下，编译器依赖方法参数的静态类型选择合适的版本。这也侧面说明了重载时只有参数不同才算重载。</p>
+<p>这类依赖静态类型来决定目标方法版本的操作称为静态解析，因为候选者有多个！<strong>静态解析的结果由编译器决定而不是虚拟机。</strong></p>
+<h3 id="3-2-2-动态分派"><a href="#3-2-2-动态分派" class="headerlink" title="3.2.2 动态分派"></a>3.2.2 动态分派</h3><p>静态分派是靠编译器实现的，动态分派是靠<code>invokevirtual</code>执行实现的，<code>invokevirtual</code>的执行步骤如下：</p>
+<ol>
+<li>找到操作数栈顶第一个元素指向的对象的实际类型C</li>
+<li>在类C中查找是否存在描述符和简单名称都符合预期目标的方法，如果存在，那么结束查找</li>
+<li>否则在类C的各个父类中进行查找，直到无法找到抛出异常</li>
+</ol>
+<p>这类依赖变量动态类型来决定调用的方法版本称为动态分派。值得注意的是：字段永远不存在多态，只会存在覆盖的概念。查询字段只会在最近的范围内查找。下面的代码很好地解释了动态分派与同名字段覆盖：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">FieldHashNoPolymorphic</span> </span>&#123;<br>    <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Father</span> </span>&#123;<br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> money = <span class="hljs-number">1</span>;<br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Father</span><span class="hljs-params">()</span> </span>&#123;<br>            money = <span class="hljs-number">2</span>;<br>            System.out.println(<span class="hljs-keyword">this</span>.money+<span class="hljs-string">&quot;---&quot;</span>+<span class="hljs-keyword">this</span>);<br>            showMeTheMoney();<br>        &#125;<br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">showMeTheMoney</span><span class="hljs-params">()</span> </span>&#123;<br>            System.out.println(<span class="hljs-string">&quot;I am Father, I have $&quot;</span> + money);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Son</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Father</span> </span>&#123;<br>        <span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> money = <span class="hljs-number">3</span>;<br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Son</span><span class="hljs-params">()</span> </span>&#123;<br>            <span class="hljs-keyword">super</span>(<span class="hljs-keyword">this</span>);<span class="hljs-comment">//这个this实际上是不能被传递的，这里只是示意</span><br>            System.out.println(<span class="hljs-keyword">this</span>);<br>            money = <span class="hljs-number">4</span>;<br>            showMeTheMoney();<br>        &#125;<br>        <span class="hljs-meta">@Override</span><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">showMeTheMoney</span><span class="hljs-params">()</span> </span>&#123;<br>            System.out.println(<span class="hljs-string">&quot;I am Son, I have $&quot;</span> + money);<br>        &#125;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        Father guy = <span class="hljs-keyword">new</span> Son();<br>        <span class="hljs-comment">// 通过静态类型访问到了父类中的money，输出2</span><br>        System.out.println(<span class="hljs-string">&quot;This guy has $&quot;</span> + guy.money);<br>        <span class="hljs-comment">// 将静态类型强转成Son，访问的就是子类中的money，输出4</span><br>        System.out.println(<span class="hljs-string">&quot;This guy has $&quot;</span> + ((Son) guy).money);<br>    &#125;<br>&#125;<br># 输出如下<br><span class="hljs-number">2</span>---jvm.FieldHashNoPolymorphic$Son@6ed3ef1<br>I am Son, I have $<span class="hljs-number">0</span><br>jvm.FieldHashNoPolymorphic$Son@6ed3ef1<br>I am Son, I have $<span class="hljs-number">4</span><br>This guy has $<span class="hljs-number">2</span><br>This guy has $<span class="hljs-number">4</span><br><br></code></pre></td></tr></table></figure>
+
+<p>在第一次执行中，为什么会调用<code>Son</code>类的<code>showTheMoney()</code>?因为在调用方法时，会将方法接收者（也就是caller）的引用传递进去，调用父类构造函数的代码是<code>super(this)</code>，这里的<code>this</code>代表<code>Son</code>类的对象。所以在执行下面代码时：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Father</span><span class="hljs-params">(<span class="hljs-keyword">this</span>)</span> </span>&#123;<br>    <span class="hljs-keyword">this</span>.money = <span class="hljs-number">2</span>;<br>    <span class="hljs-keyword">this</span>.showMeTheMoney();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>虽然这里的<code>this</code>指向的是子类<code>Son</code>对象，但是我们想想，<code>Son</code>对象肯定会包含了父类<code>Father</code>的数据啊，所以这两个<code>this</code>显示地是同一个地址没毛病。</p>
+<p>但是<code>sout(this.money)==2</code>就说明这里使用的<code>money</code>属性是父类的，因为代码执行处离父类<code>Father</code>最近。而显示的<code>I am Son, I have $0</code>就说明此时使用的是子类<code>Son</code>的<code>money</code>属性，因为此时代码执行处处离<code>Son</code>最近。值为0是因为此时子类<code>Son</code>的<code>money</code>属性还没有初始化，因为父类的构造函数还未执行完毕。</p>
+<p>虽然在Son类型的对象中，内存中会存在两个<code>money</code>,但是Son对象只会使用离他最近的一个，也就是自身类中的<code>money</code>属性，子类的属性会隐藏父类的同名属性。</p>
+<h3 id="3-2-3-单分派与多分派"><a href="#3-2-3-单分派与多分派" class="headerlink" title="3.2.3 单分派与多分派"></a>3.2.3 单分派与多分派</h3><p>决定单分派与多分派的标准是使用的宗量数量。宗量分为两大类：方法的接受者（caller）与方法的参数。采用《深入理解java虚拟机》中的例子作为解释：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Dispatch</span> </span>&#123;<br>    <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">QQ</span></span>&#123;&#125;<br>    <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">_360</span></span>&#123;&#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Father</span></span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">hardChoice</span><span class="hljs-params">(QQ arg)</span></span><br><span class="hljs-function">    </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;father choose qq&quot;</span>);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">hardChoice</span><span class="hljs-params">(_360 arg)</span></span><br><span class="hljs-function">    </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;father choose 360&quot;</span>);<br>    &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Son</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Father</span></span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">hardChoice</span><span class="hljs-params">(QQ arg)</span></span><br><span class="hljs-function">    </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;son choose qq&quot;</span>);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">hardChoice</span><span class="hljs-params">(_360 arg)</span></span><br><span class="hljs-function">    </span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;son chooes 360&quot;</span>);<br>    &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>    Father father = <span class="hljs-keyword">new</span> Father();<br>    Father son = <span class="hljs-keyword">new</span> Son();<br><br>    father.hardChoice(<span class="hljs-keyword">new</span> _360());<span class="hljs-comment">//father choose 360</span><br>    son.hardChoice(<span class="hljs-keyword">new</span> QQ());<span class="hljs-comment">//son choose qq</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>对于<code>fahter.hardChoice(new _360())</code>,在编译时期编译器确定调用符号时，可以看出候选者非常多（候选者有哪些，需要列出来）。那么在调用<code>father.hardChoice</code>时发现方法的接收者的静态类型这是<code>Father</code>,这就决定了在<code>Father</code>类中选择。那么接着查看调用方法的参数，发现实参的静态类型为<code>360</code>,那么通过方法调用者和函数实参这两个标准在编译器确定了符号调用，这就代表使用了两个宗量。同理编译<code>son.hardChoice(new QQ())</code>时也会使用两个宗量确定符号引用。</p>
+<p>上述确定的两个符号引用会使用<code>invokevirtual</code>调用。那么在运行时,因为已经在编译器确定了方法签名，但是候选者仍然有两个：</p>
+<ul>
+<li>Father::hardChoice(_360 arg)</li>
+<li>Son::hardChoice(_360 arg)</li>
+</ul>
+<p>因为上述的两个函数调用实际会使用<code>invokeVirtual</code>执行，所以在运行时虚拟机会从上述的两个候选者中选择一个。以<code>father.hardChoice(new _360())</code>为例，方法接收者<code>father</code>的实际类型为<code>Son</code>，所以虚拟机会选择<code>Son</code>类中的方法。可以看出在抉择过程中只用了“方法调用者”这一个参考因素。</p>
+<p>所以到目前为止，<strong>java是一个静态多分派、动态单分派的语言</strong>。那么时候才会进入分派的阶段，也就是使用<code>virtualinvoke</code>指定？</p>
+<p>我认为答案是调用非虚方法时，会进入分派阶段。</p>
+<hr>
+<p><strong>Extension: invokevirtual的执行过程</strong></p>
+<ol>
+<li><code>invokevirtual</code>首先会找到操作数栈的栈顶第一个元素所指向的对象的实际类型，记为C；</li>
+<li>在C自身中进行查找符号和描述相符的方法，如果找到，则需要检查权限</li>
+<li>如果在C自身中未找到，那么会按照继承关系<strong>自下而上</strong>在C的父类中进行查找，如果找到则需要进行权限检查</li>
+<li>如果都为找到，则会抛出<code>AbstractMethodError</code>异常</li>
+</ol>
+<hr>
+<h3 id="3-2-4-分派的具体实现"><a href="#3-2-4-分派的具体实现" class="headerlink" title="3.2.4 分派的具体实现"></a>3.2.4 分派的具体实现</h3><p>在每次调用时才去执行分派效率必定低下，所以jvm选择以虚表(virtual method table)的形式实现分派的过程。虚表和cpp中的虚表概念差不多。这个虚表建立在方法区。对于子类来说，如果没有重写父类的方法，那么子类的虚方法表中，没有被重写的方法的指针和父类同一方法的指针指向同一个函数。</p>
+<blockquote>
+<p>虚表会在类加载阶段完成初始化，在完成连接阶段中的初始化过程后，会完成该类的虚表初始化</p>
+</blockquote>
+<h1 id="4-小测试"><a href="#4-小测试" class="headerlink" title="4. 小测试"></a>4. 小测试</h1><p>根据类加载的规则，下面的代码输出到底是多少？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SingleTon</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> SingleTon singleTon = <span class="hljs-keyword">new</span> SingleTon();<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> count1;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> count2 = <span class="hljs-number">0</span>;<br> <br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-title">SingleTon</span><span class="hljs-params">()</span> </span>&#123;<br>        count1++;<br>        count2++;<br>    &#125;<br> <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> SingleTon <span class="hljs-title">getInstance</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> singleTon;<br>    &#125;<br>&#125;<br> <br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        SingleTon singleTon = SingleTon.getInstance();<br>        System.out.println(<span class="hljs-string">&quot;count1=&quot;</span> + singleTon.count1);<br>        System.out.println(<span class="hljs-string">&quot;count2=&quot;</span> + singleTon.count2);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>一个经常出现的错误答案是：</p>
+<blockquote>
+<p>count1=1;<br>count2=1;</p>
+</blockquote>
+<p>但是正确的执行结果为：</p>
+<blockquote>
+<p>count1=1;<br>count2=0;</p>
+</blockquote>
+<p>为什么呢？因为类加载过程中准备阶段是在初始化阶段之前的，虽然在上面的代码中有<code>count2=0</code>，但是准备阶段不关心这个。准备阶段完成后：</p>
+<blockquote>
+<p>count1=0;<br>count2=0;</p>
+</blockquote>
+<p>最后在初始化过程中，编译器生成的<code>&lt;cinit&gt;</code>方法是按照代码书写顺序生成的，例如这个例子中生成的是：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs java">cinit()&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> SingleTon singleTon = <span class="hljs-keyword">new</span> SingleTon();<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> count1;<br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> count2 = <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>虽然在执行<code>SingleTon</code>的构造方法时，会执行<code>count2=1</code>的操作，但是注意，<code>&lt;cinit&gt;</code>方法还没有执行完成呢。在<code>&lt;cinit&gt;</code>中最后还是会执行<code>count2=0</code>的操作。</p>
+<p>所以最终的答案是：</p>
+<blockquote>
+<p>count1=1;<br>count2=0;</p>
+</blockquote>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/jvm/">jvm</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%B1%BB%E5%8A%A0%E8%BD%BD/">类加载</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021-06-02/the-generic-of-java.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">java的泛型</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021-06-02/Collection-interface-analysis.html">
+                        <span class="hidden-mobile"></span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

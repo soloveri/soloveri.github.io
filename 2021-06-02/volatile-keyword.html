@@ -1,0 +1,506 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="cras">
+  <meta name="keywords" content="">
+  
+  <title>volatile关键字 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="volatile关键字">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-02 14:10" pubdate>
+        2021年6月2日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      22
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">volatile关键字</h1>
+            
+            <div class="markdown-body">
+              <h2 id="1-volatile是什么"><a href="#1-volatile是什么" class="headerlink" title="1. volatile是什么"></a>1. volatile是什么</h2><p>volatile被称为轻量级的<code>synchronzied</code>，它保证了内存的可见性、指令的有序性。我们通过经典的懒汉单例模式看看这个关键字的作用。</p>
+<figure class="highlight java"><figcaption><span>"线程不安全"</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DraconianSingleton</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> DraconianSingleton instance;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span>  DraconianSingleton <span class="hljs-title">getInstance</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (instance == <span class="hljs-keyword">null</span>) &#123;<br>            synchronzied(<span class="hljs-keyword">this</span>)&#123;<br>                <span class="hljs-keyword">if</span>(instance==<span class="hljs-keyword">null</span>)&#123;<br>                    instance = <span class="hljs-keyword">new</span> DraconianSingleton();<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> instance;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>虽然使用了双锁，但是上述代码仍然是线程不安全的，因为<code>new DraconianSingleton()</code>并不是原子操作。这句代码的正常操作是：</p>
+<ol>
+<li>分配内存空间</li>
+<li>初始化对象</li>
+<li>将对象地址赋给引用instance</li>
+</ol>
+<p>但是因为操作2和操作3之间没有数据依赖，编译器有理由将这两条指令进行重排。重拍后的操作为：</p>
+<ol>
+<li>分配内存空间</li>
+<li>将对象地址赋给引用instance</li>
+<li>初始化对象</li>
+</ol>
+<p>重排后的指令在单线程环境下执行是没有问题的。但是在多线程环境下，如果thread1获得锁并且在执行了第二步之后，<code>instance != null</code>,但是对象并没有完成初始化。此时如果thread1时间片到期，切换到thread2。thread2调用<code>getInstace()</code>后获得的是一个部分初始化的对象，此时thread2在使用这个对象时很可能会出现意外的错误。</p>
+<p>但是使用<code>volatile</code>修饰<code>instance</code>后，就能够禁止上述的重排现象发生，从而变成线程安全。</p>
+<figure class="highlight java"><figcaption><span>"线程安全"</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">DraconianSingleton</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">volatile</span> DraconianSingleton instance;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span>  DraconianSingleton <span class="hljs-title">getInstance</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (instance == <span class="hljs-keyword">null</span>) &#123;<br>            synchronzied(<span class="hljs-keyword">this</span>)&#123;<br>                <span class="hljs-keyword">if</span>(instance==<span class="hljs-keyword">null</span>)&#123;<br>                    instance = <span class="hljs-keyword">new</span> DraconianSingleton();<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> instance;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-volatile做了什么"><a href="#2-volatile做了什么" class="headerlink" title="2.volatile做了什么"></a>2.volatile做了什么</h2><p>volatile能够禁止上述指令重排的原因是因为它在volatile write操作之前插入了内存屏障，禁止volatile write操作之前任何的read/write操作重排序到volatile write之后。在执行<code>new DraconianSingleton()</code>时，构造函数(构造函数可以会执行写操作，例如写变量的初值)肯定会执行write操作，所以构造函数的write操作一定不会被重排序到volatile write操作之后，从而保证了只会在实例化对象完成后才会<code>instance</code>赋值。</p>
+<p>网上许多文章都说volatile会执行上述的操作禁止指令重排，但是几乎没有人说它为什么这么做。我尝试使用如下代码解释一下我的理解：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">int</span> a;<br><span class="hljs-keyword">volatile</span> b;<br>write()&#123; <span class="hljs-comment">//thread 1</span><br>    a=<span class="hljs-number">1</span>; <span class="hljs-comment">//opreation 1</span><br>    <span class="hljs-comment">//StoreStore memory barrier</span><br>    b=<span class="hljs-number">2</span>; <span class="hljs-comment">//opreation 2</span><br>    <span class="hljs-comment">//StoreLoad memory barrier</span><br>&#125;<br><br>read()&#123; <span class="hljs-comment">//thread 2</span><br>    <span class="hljs-keyword">if</span>(b==<span class="hljs-number">2</span>)&#123; <span class="hljs-comment">//opreation 3</span><br>        sout(a);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>根据happens before的程序次序原则，o1 hb o2，那么JMM保证o1的执行结果必须被o2看到。我们可以延伸一下，volatile write之前所有的动作结果都应该在volatile write执行时被看到。所以为了实现这个效果，JMM会在volatile write之前插入StoreStore、StoreLoad内存屏障（这是最笨、最稳妥的办法，具体实现时肯定会有相应的优化。<br>根据happens before的volatile变量规则，o2 hb o3，JMM保证o2（volatile写）的执行结果必须被o3（volatile读）看到。为了实现这个效果，需要借助StoreLoad内存屏障的力量。</p>
+<p><strong>所以volatile做这些工作都是为了实现happens before relation</strong>。内存屏障只是volatile实现happens before的<strong>技术手段</strong>。并且volatile并不会刷新内存，那不是它的责任，刷新内存是内存屏障的作用。</p>
+<hr>
+<p><strong>对于volatile的一些小疑问：</strong></p>
+<p><strong>Q1：对于volatile write(A) hb volatile read(B)，是不是只有A先比B发生，JMM才会使用内存屏障达到B一定能够看到A的效果（即实现 A hb B）。也就是说，如果A没有比B先发生，JMM就不会使用内存屏障实现A hb B了？</strong></p>
+<p>很明显这个表述是有问题的，但是我一直不知道如何否定这个逻辑。经过几天的思考，我给出我的理解：<br>对于volatile write(A) hb volatile read(B)，JMM不管A与B谁先发生，它只管使用内存屏障达到：如果A发生，B就能看到结果的效果（换言之，JMM按照理想情况，A先发生B后发生的情形插入内存屏障）。这样就会有：</p>
+<ul>
+<li>如果A比B先发生，那么就能实现A hb B的效果</li>
+<li>如果B比A先发生，那么虽然插入了内存屏障，但是也没有产生什么负面效果</li>
+</ul>
+<p><strong>Q2：volatile真的禁止重排序了吗？</strong></p>
+<p>我认为volatile并没有这么做，volatile它只是借助内存屏障禁止volatile write之前的任何read/write重排序到volatile write之后，至于那些read/write操作到底如何重排序，volatile并不care</p>
+<hr>
+<h2 id="3-volatile如何使用"><a href="#3-volatile如何使用" class="headerlink" title="3. volatile如何使用"></a>3. volatile如何使用</h2><p>首先我们需要知道volatile只有read/write操作具有原子性，剩余的基于volatile的算数运算并没有原子性。例如：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">volatile</span> <span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">clac</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-number">5</span>;i++)&#123;<br>        <span class="hljs-keyword">new</span> Thread()&#123;<br>            <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123;<br>                <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> j=<span class="hljs-number">0</span>;j&lt;<span class="hljs-number">1000</span>;j++)<br>                    j++;<br>            &#125;;<br>        &#125;.start();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上述<code>j++</code>并不具有原子性。想象以下多线程的场景：</p>
+<p><code>j</code>默认初始化为0。首先thread读取到<code>j=0</code>，然后进行<code>+1</code>操作，但是在将1赋给<code>j</code>之前，时间片用完，所以此时并没有volatile write操作。切换到thread2，thread2读取到的<code>j</code>仍然为0，并且完成了<code>+1</code>的动作。这样在thread2完成之后，其他所有的线程读取到的<code>j</code>肯定都为<code>1</code>。但是thread1此时不需要读取<code>j</code>了，它只会完成最后一步的volatile write动作。出现了线程安全问题。所以说volatile只有read/write操作具有原子性。</p>
+<p>上面出现问题的原因是什么呢？</p>
+<blockquote>
+<p>多个线程都能够修改同一个volatile的值，并且目标修改值依赖volatile变量的前一个值</p>
+</blockquote>
+<p>所以为了避免上述缺陷，volatile的理想使用场景是：</p>
+<ol>
+<li><p>可以有多个线程修改volatile变量，但是修改后的值不应该依赖volatile变量之前的值</p>
+</li>
+<li><p>volatile变量不需要与其他变量构成约束条件（我理解的约束条件是导致控制流发生改变的条件）</p>
+</li>
+</ol>
+<p>规则1很好理解，对于规则2的理解见如下代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//代码摘自：http://kael-aiur.com/java/java%E4%B8%ADvolatile%E5%85%B3%E9%94%AE%E5%AD%97.html</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NumberRange</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">volatile</span> <span class="hljs-keyword">int</span> lower, upper;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getLower</span><span class="hljs-params">()</span> </span>&#123; <span class="hljs-keyword">return</span> lower; &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getUpper</span><span class="hljs-params">()</span> </span>&#123; <span class="hljs-keyword">return</span> upper; &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setLower</span><span class="hljs-params">(<span class="hljs-keyword">int</span> value)</span> </span>&#123; <br>        <span class="hljs-keyword">if</span> (value &gt; upper) <br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalArgumentException(...);<br>        lower = value;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setUpper</span><span class="hljs-params">(<span class="hljs-keyword">int</span> value)</span> </span>&#123; <br>        <span class="hljs-keyword">if</span> (value &lt; lower) <br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalArgumentException(...);<br>        upper = value;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在上面的代码中，如果lower与upper初始化为(0,5)。两个线程分别调用<code>setLower</code>和<code>setUpper</code>，将（lower,upper）设置为（4，3），例如调用<code>setLower</code>通过if检查后，让出cpu，<code>setUpper</code>通过if检查后，继续执行，就能够成功将区间设置为（4，3）。这样的区间是没有意义的，之所以会出现这样的错误是因为约束条件为<code>value&gt;upper</code>，<code>volatile</code>与<code>value</code>共同参与了不变约束。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/11639746/what-is-the-point-of-making-the-singleton-instance-volatile-while-using-double-l/11640026#11640026">What is the point of making the singleton instance volatile while using double lock?</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/51647337/java-volatile-reordering-prevention-scope">Java volatile reordering prevention scope</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/xdzhouxin/article/details/81236356">volatile为什么不能保证原子性</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://developpaper.com/memory-barrier-and-its-application-in-jvm-2/">Memory barrier and its application in – JVM (2)</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/45151763/analyzing-of-x86-output-generated-by-jit-in-the-context-of-volatile">Analyzing of x86 output generated by JIT in the context of volatile</a></p>
+</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/volatile/">volatile</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021-06-02/ArrayQueue-and-ArrayDeque-analysis.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ArrayQueue与ArrayDeque源码分析</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021-06-02/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html">
+                        <span class="hidden-mobile">多线程为什么会不安全</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

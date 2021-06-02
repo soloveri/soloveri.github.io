@@ -1,0 +1,838 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="cras">
+  <meta name="keywords" content="">
+  
+  <title>Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 100vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="An elegant Material-Design theme for Hexo">
+              
+            </span>
+
+            
+          </div>
+
+          
+            <div class="scroll-down-bar">
+              <i class="iconfont icon-arrowdown"></i>
+            </div>
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      <div class="container nopadding-x-md">
+        <div class="py-5" id="board"
+          style=margin-top:0>
+          
+          <div class="container">
+            <div class="row">
+              <div class="col-12 col-md-10 m-auto">
+                
+
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/ConcurrentHashMap-analysis-II.html" target="_self">
+          ConcurrentHashMap扩容分析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/ConcurrentHashMap-analysis-II.html" target="_self">
+          
+          
+            
+          
+          前言本篇继承于ConcurrentHashMap架构解析，在了解了ConcurrentHashMap的整体架构与插入删除逻辑后，还有一个知识点：扩容逻辑需要学习，我认为这是ConcurrentHashMap核心中的核心。
+废话不多说，对于ConcurrentHashMap来说，扩容可以整体分为两个部分：
+
+将属性table扩展为原来的两倍
+将旧table中数据迁移到新table
+
+那么本文就按照这
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 14:10" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/concurrent-collections/">concurrent collections</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/Interrupt-mechanism.html" target="_self">
+          中断机制
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/Interrupt-mechanism.html" target="_self">
+          
+          
+            
+          
+          在多线程环境下，终止一个线程的任务最好的方法是通过中断。而Java的中断类似于通知协作机制，被中断的线程并不会立即停止自己的任务，而是仅仅收到了中断的通知，具体怎么处理收到的中断，这需要用户自己定义。那么为什么说Java的中断类似于通知机制？我们首先需要了解中断到底做了什么。
+1. 实施中断Java中的中断操作只需要调用目标线程的interrupt()方法即可完成。那么这个方法到底做了什么？我们来
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 14:10" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/interrupt/">interrupt</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/JMM.html" target="_self">
+          Java内存模型
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/JMM.html" target="_self">
+          
+          
+            
+          
+          1. 内存模型(memory model)1.1. 内存模型是什么在编译和运行程序时，编译器和CPU都会为了效率而力所能及地对程序进行优化，例如编译器和CPU的指令重排、CPU的流水线执行等操作。但是这种优化不是没有限制的，如果不能及时保证内存的可见性，程序就有可能出现错误,这里的可见性是指如果有一个线程A对某个内存地址addr进行了写操作，那么其他线程一定能够看到A对地址addr的操作。
+所以内
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 14:10" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/JMM/">JMM</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/Thread-state-transition.html" target="_self">
+          线程的状态转换
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/Thread-state-transition.html" target="_self">
+          
+          
+            
+          
+          因为线程是调度的基本单位，所以线程的状态转换与进程的状态转换是一致的。主要有五个状态：启动、就绪、执行、等待、销毁。这几个状态的转换图如下所示：
+
+可以看到，等待状态只能转换为就绪，再等CPU调度。这是一般的线程状态转换图。
+在java中，又多了几个状态。
+java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNABLE
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 14:10" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2/">状态转换</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/AtomicInteger-analysis.html" target="_self">
+          AtomicInteger源码解析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/AtomicInteger-analysis.html" target="_self">
+          
+          
+            
+          
+          整数型原子类AtomicInteger，能够保证每次更新时都是原子操作。其中的CAS操作都需要依靠Unsafe类来完成，我们需要关注的一般就是构造方法、增加方法与删除方法。
+1. 构造方法AtomicInteger首先会调用类构造器，初始化当前对象的valueoffset用于进行CAS操作，具体值由volatile变量value负责维护，字段定义如下所示：
+12345678910111213141
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 14:10" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/atomic/">atomic</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/AtomicIntegerArray-analysis.html" target="_self">
+          AtomicIntegerArray源码解析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/AtomicIntegerArray-analysis.html" target="_self">
+          
+          
+            
+          
+          AtomicIntegerArray能够保证数组中的每个元素原子地更新。构造方法、增加、减少方法都没什么好说，我认为值得关注的点是仅有计算偏移的方法。我们先来看看它的静态构造块：
+12345678910111213141516171819202122232425262728public class AtomicIntegerArray implements java.io.Serializable
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 14:10" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/atomic/">atomic</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/AtomicStampedReference-analysis.html" target="_self">
+          AtomicStampedReference源码解析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/AtomicStampedReference-analysis.html" target="_self">
+          
+          
+            
+          
+          AtomicStampeddReference解决了普通CAS操作的ABA问题，当然该类只能存储引用类型，因为泛型只支持引用。具体的解决方法就是为每个引用提供了一个时间戳（实际用int代替），这两个数据由内部静态类Pair封装，如下所示：
+12345678910111213141516public class AtomicStampedReference&lt;V&gt; &#123;    pr
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 14:10" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/atomic/">atomic</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/LongAdder-analysis.html" target="_self">
+          LongAdder源码解析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/LongAdder-analysis.html" target="_self">
+          
+          
+            
+          
+          1. 预备知识在Java1.5中，JUC就已经提供了大数原子类AtomicLong，但是在Java1.8中，又提供了相同功能的大数原子类LongAdder。why？答案是如此的纯粹：为了效率。难道前者的效率就不行了吗？如果在轻微冲突的情况下，二者的效率几乎差不多。但是如果竞争非常激烈，那么因为每次对AtomicLong更新时都会使用CAS，激烈竞争导致CAS的成功的概率不大，所以有可能会执行多次无
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 14:10" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/atomic/">atomic</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/atomic-class-overview.html" target="_self">
+          原子类总览
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/atomic-class-overview.html" target="_self">
+          
+          
+            
+          
+          J.U.C包提供了许多原子类，我按照功能分了四类，如下所示：|  普通原子类   | 原子更新的数组  | 原子更新对象字段的updater  | 大数原子类  ||  —-  | —-  | —-  | —-  || AtomicBoolean AtomicInteger  AtomicLong AtomicReference atomicMarkableReference AtomicStam
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 14:10" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/atomic-class/">atomic class</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/shared-lock-analysis.html" target="_self">
+          从Semaphore中学习共享锁原理
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/shared-lock-analysis.html" target="_self">
+          
+          
+            
+          
+          共享锁和独占锁的实现差别不是很大，一个最大的区别就是在共享锁中，当一个线程获取锁后，它会尽可能多地唤醒后继线程。
+与独占锁不同的是，对于双链表中的节点，额外指针nextWaiter，指向SHARED节点，用来标志当前节点处于共享模式。而独占锁的nextWatier则指向null。
+1.共享锁的获取对于共享锁的获取，自定义同步器肯定会首先调用AQS的模板方法acquireShared，然后会调用自定
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 14:10" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/shared-lock/">shared lock</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+
+
+  <nav aria-label="navigation">
+    <span class="pagination" id="pagination">
+      <a class="extend prev" rel="prev" href="/page/4/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/#board">3</a><a class="page-number" href="/page/4/#board">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/#board">6</a><a class="extend next" rel="next" href="/page/6/#board"><i class="iconfont icon-arrowright"></i></a>
+    </span>
+  </nav>
+
+
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

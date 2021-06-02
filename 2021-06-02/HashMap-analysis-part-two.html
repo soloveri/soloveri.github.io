@@ -1,0 +1,492 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="cras">
+  <meta name="keywords" content="">
+  
+  <title>HashMap源码分析(二)-插入源码 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="HashMap源码分析(二)-插入源码">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-02 14:10" pubdate>
+        2021年6月2日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      73
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HashMap源码分析(二)-插入源码</h1>
+            
+            <div class="markdown-body">
+              <p>HashMap中最常用的就是<code>put(key,value)</code>函数与<code>remove</code>函数,而且这些函数还会包含RB树与list的相互转换,比较复杂。值得认真推敲。</p>
+<h2 id="1-put方法"><a href="#1-put方法" class="headerlink" title="1. put方法"></a>1. put方法</h2><p>下面JDk1.8中,HashMap的<code>put</code>源码。其又在内部调用了<code>putVal</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> V <span class="hljs-title">put</span><span class="hljs-params">(K key, V value)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> putVal(hash(key), key, value, <span class="hljs-keyword">false</span>, <span class="hljs-keyword">true</span>);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">final</span> V <span class="hljs-title">putVal</span><span class="hljs-params">(<span class="hljs-keyword">int</span> hash, K key, V value, <span class="hljs-keyword">boolean</span> onlyIfAbsent,<span class="hljs-keyword">boolean</span> evict)</span> </span>&#123;<br>...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>putVal(int hash, K key, V value, boolean onlyIfAbsent,boolean evict)</code>有四个参数,其中前两个参数都好理解。第三个参数<code>onlyIfAbsent</code>为一个标志位:</p>
+<ul>
+<li>如果为false,表示对于相同key的value会进行覆盖</li>
+<li>为true则不会进行覆盖</li>
+</ul>
+<p><strong>在<code>HashMap</code>默认对相同key的value进行覆盖。</strong> 最后一个参数<code>evict</code>已在介绍<code>putEntries</code>方法时介绍过。在<code>HashMap</code>表示是否处于创建模式,<strong>默认为false</strong>。</p>
+<p>在深入分析<code>putVal</code>方法之前,需要先了解一下<code>resize()</code>方法,下面是其源码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">    * Initializes or doubles table size.  If null, allocates in</span><br><span class="hljs-comment">    * accord with initial capacity target held in field threshold.</span><br><span class="hljs-comment">    * Otherwise, because we are using power-of-two expansion, the</span><br><span class="hljs-comment">    * elements from each bin must either stay at same index, or move</span><br><span class="hljs-comment">    * with a power of two offset in the new table.</span><br><span class="hljs-comment">    *</span><br><span class="hljs-comment">    * <span class="hljs-doctag">@return</span> the table</span><br><span class="hljs-comment">    */</span><br><span class="hljs-keyword">final</span> Node&lt;K,V&gt;[] resize() &#123;<br>    Node&lt;K,V&gt;[] oldTab = table;<br>    <span class="hljs-keyword">int</span> oldCap = (oldTab == <span class="hljs-keyword">null</span>) ? <span class="hljs-number">0</span> : oldTab.length;<br>    <span class="hljs-keyword">int</span> oldThr = threshold;<br>    <span class="hljs-keyword">int</span> newCap, newThr = <span class="hljs-number">0</span>;<br>    <span class="hljs-comment">//如果HashMap不为空,已经是存储过元素了才会不为空</span><br>    <span class="hljs-keyword">if</span> (oldCap &gt; <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-comment">//如果当前容量已经超过最大容量了,已经没办法扩大了,那么就只会更新存储个数的阈值,只能利用剩下的25%空间</span><br>        <span class="hljs-comment">//无需进行复制</span><br>        <span class="hljs-keyword">if</span> (oldCap &gt;= MAXIMUM_CAPACITY) &#123;<br>            threshold = Integer.MAX_VALUE;<br>            <span class="hljs-keyword">return</span> oldTab;<br>        &#125;<br>        <span class="hljs-comment">//这就是常规的对容量进行扩充一倍的操作</span><br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ((newCap = oldCap &lt;&lt; <span class="hljs-number">1</span>) &lt; MAXIMUM_CAPACITY &amp;&amp;<br>                    <span class="hljs-comment">//如果原始容量太小,那么threshold就会在后面进行自动计算</span><br>                    <span class="hljs-comment">//比如原始容量为4,原始threshold为3,但是newThr通过原始threshold左移一位也能正确</span><br>                    <span class="hljs-comment">//得出答案啊,为啥还要多此一举?</span><br>                    oldCap &gt;= DEFAULT_INITIAL_CAPACITY)<br>            newThr = oldThr &lt;&lt; <span class="hljs-number">1</span>; <span class="hljs-comment">// double threshold</span><br>    &#125;<br>    <span class="hljs-comment">//仅仅是调用了能够设置初始容量的构造函数,但是还未put值</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (oldThr &gt; <span class="hljs-number">0</span>) <span class="hljs-comment">// initial capacity was placed in threshold</span><br>        newCap = oldThr;<br>    <span class="hljs-comment">//如果当前HashMap的table还未分配,也就是调用默认的无参构造函数</span><br>    <span class="hljs-comment">//此时threshold=0,就是分配默认大小的table</span><br>    <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">//新的容量就是默认的初始化容量为16</span><br>        newCap = DEFAULT_INITIAL_CAPACITY;<br>        <span class="hljs-comment">//设置新的threshold,新的threshold就是12</span><br>        newThr = (<span class="hljs-keyword">int</span>)(DEFAULT_LOAD_FACTOR * DEFAULT_INITIAL_CAPACITY);<br>    &#125;<br>    <span class="hljs-comment">//执行下面if语句只会有两种情况发生,一种就是调用能够设置初始容量的构造函数但还未put元素</span><br>    <span class="hljs-comment">//另外一种就是当前HashMap已经有元素,但是当前容量小于默认容量,也就是小于16</span><br>    <span class="hljs-comment">//因为如果调用默认构造函数,那么threshold在上面已经分配</span><br>    <span class="hljs-comment">//如果HashMap中已经有元素,也会直接设置好</span><br>    <span class="hljs-keyword">if</span> (newThr == <span class="hljs-number">0</span>) &#123;<br>        <span class="hljs-comment">//通过用户的指定的容量进行threshold的计算</span><br>        <span class="hljs-keyword">float</span> ft = (<span class="hljs-keyword">float</span>)newCap * loadFactor;<br>        newThr = (newCap &lt; MAXIMUM_CAPACITY &amp;&amp; ft &lt; (<span class="hljs-keyword">float</span>)MAXIMUM_CAPACITY ?<br>                    (<span class="hljs-keyword">int</span>)ft : Integer.MAX_VALUE);<br>    &#125;<br>    threshold = newThr;<br>    <span class="hljs-meta">@SuppressWarnings(&#123;&quot;rawtypes&quot;,&quot;unchecked&quot;&#125;)</span><br>    Node&lt;K,V&gt;[] newTab = (Node&lt;K,V&gt;[])<span class="hljs-keyword">new</span> Node[newCap];<br>    table = newTab;<br>    <span class="hljs-comment">//已经设置好新的容量与新的threshold,如果原始HashMap不为空,那么就进行元素的复制</span><br>    <span class="hljs-keyword">if</span> (oldTab != <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-comment">//逐个拷贝</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; oldCap; ++j) &#123;<br>            Node&lt;K,V&gt; e;<br>            <span class="hljs-keyword">if</span> ((e = oldTab[j]) != <span class="hljs-keyword">null</span>) &#123;<br>                oldTab[j] = <span class="hljs-keyword">null</span>;<br>                <span class="hljs-keyword">if</span> (e.next == <span class="hljs-keyword">null</span>)<br>                    newTab[e.hash &amp; (newCap - <span class="hljs-number">1</span>)] = e;<br>                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (e <span class="hljs-keyword">instanceof</span> TreeNode)<br>                    <span class="hljs-comment">//如果是使用红黑树存储的,那么就把一棵树分裂成两颗树?这留着后面再分析</span><br>                    ((TreeNode&lt;K,V&gt;)e).split(<span class="hljs-keyword">this</span>, newTab, j, oldCap);<br>                <span class="hljs-keyword">else</span> &#123; <span class="hljs-comment">// preserve order</span><br>                    <span class="hljs-comment">//HashMap会把一个完整的链表分成高低两个链表,每个链表的具体个数取决元素hash的某一bit是否为1,概率各为50%,高表示当前使用的bit位为1,低表示bit位为0</span><br>                    <span class="hljs-comment">//所以理想情况下分成两个长度相等的链表</span><br><br>                    <span class="hljs-comment">//低链表的头尾</span><br>                    Node&lt;K,V&gt; loHead = <span class="hljs-keyword">null</span>, loTail = <span class="hljs-keyword">null</span>;<br>                    <span class="hljs-comment">//高链表的头尾</span><br>                    Node&lt;K,V&gt; hiHead = <span class="hljs-keyword">null</span>, hiTail = <span class="hljs-keyword">null</span>;<br>                    Node&lt;K,V&gt; next;<br>                    <span class="hljs-keyword">do</span> &#123;<br>                        <span class="hljs-comment">//尾插法</span><br>                        next = e.next;<br>                        <span class="hljs-comment">//低链表,如果当前使用的bit为0,那么就使用尾插法加入到链表中</span><br>                        <span class="hljs-keyword">if</span> ((e.hash &amp; oldCap) == <span class="hljs-number">0</span>) &#123;<br>                            <span class="hljs-keyword">if</span> (loTail == <span class="hljs-keyword">null</span>)<br>                                loHead = e;<br>                            <span class="hljs-keyword">else</span><br>                                loTail.next = e;<br>                            loTail = e;<br>                        &#125;<br>                        <span class="hljs-keyword">else</span> &#123;<br>                            <span class="hljs-keyword">if</span> (hiTail == <span class="hljs-keyword">null</span>)<br>                                hiHead = e;<br>                            <span class="hljs-keyword">else</span><br>                                hiTail.next = e;<br>                            hiTail = e;<br>                        &#125;<br>                    &#125; <span class="hljs-keyword">while</span> ((e = next) != <span class="hljs-keyword">null</span>);<br>                    <span class="hljs-comment">//这里为什么需要判断非null呢?因为有可能运气不好,元素全部聚集到low链表或high链表中</span><br>                    <span class="hljs-keyword">if</span> (loTail != <span class="hljs-keyword">null</span>) &#123;<br>                        loTail.next = <span class="hljs-keyword">null</span>;<br>                        <span class="hljs-comment">//如果是low链表,那么索引就会保持原位置不动</span><br>                        newTab[j] = loHead;<br>                    &#125;<br>                    <span class="hljs-keyword">if</span> (hiTail != <span class="hljs-keyword">null</span>) &#123;<br>                        hiTail.next = <span class="hljs-keyword">null</span>;<br>                        <span class="hljs-comment">//如果是high表,那么索引就会偏移原来的容量的长度</span><br>                        newTab[j + oldCap] = hiHead;<br>                    &#125;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> newTab;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="2-putVal方法"><a href="#2-putVal方法" class="headerlink" title="2. putVal方法"></a>2. putVal方法</h2><p>老规矩,先把代码粘上来:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">    * Implements Map.put and related methods.</span><br><span class="hljs-comment">    *</span><br><span class="hljs-comment">    * <span class="hljs-doctag">@param</span> hash hash for key</span><br><span class="hljs-comment">    * <span class="hljs-doctag">@param</span> key the key</span><br><span class="hljs-comment">    * <span class="hljs-doctag">@param</span> value the value to put</span><br><span class="hljs-comment">    * <span class="hljs-doctag">@param</span> onlyIfAbsent if true, don&#x27;t change existing value</span><br><span class="hljs-comment">    * <span class="hljs-doctag">@param</span> evict if false, the table is in creation mode.</span><br><span class="hljs-comment">    * <span class="hljs-doctag">@return</span> previous value, or null if none</span><br><span class="hljs-comment">    */</span><br><span class="hljs-function"><span class="hljs-keyword">final</span> V <span class="hljs-title">putVal</span><span class="hljs-params">(<span class="hljs-keyword">int</span> hash, K key, V value, <span class="hljs-keyword">boolean</span> onlyIfAbsent,</span></span><br><span class="hljs-params"><span class="hljs-function">                <span class="hljs-keyword">boolean</span> evict)</span> </span>&#123;<br>    Node&lt;K,V&gt;[] tab; Node&lt;K,V&gt; p; <span class="hljs-keyword">int</span> n, i;<br>    <span class="hljs-keyword">if</span> ((tab = table) == <span class="hljs-keyword">null</span> || (n = tab.length) == <span class="hljs-number">0</span>)<br>        n = (tab = resize()).length;<br>        <span class="hljs-comment">//前文说过,(n-1)&amp;hash等价于hash%n,不同hash的key不可能取到同一个下标</span><br>        <span class="hljs-comment">//如果还没有创建过节点,那么创建新节点放到对应桶中即可</span><br>    <span class="hljs-keyword">if</span> ((p = tab[i = (n - <span class="hljs-number">1</span>) &amp; hash]) == <span class="hljs-keyword">null</span>)<br>        tab[i] = newNode(hash, key, value, <span class="hljs-keyword">null</span>);<br>    <span class="hljs-comment">//目标bucket已经有元素了,那么会有两种情况:</span><br>    <span class="hljs-comment">//要么是替换key对应的value,要么就是加入一个新节点    </span><br>    <span class="hljs-keyword">else</span> &#123;<br>        Node&lt;K,V&gt; e; K k;<br>        <span class="hljs-comment">//这里总是首先判断目标bucket中第一个元素是否和key是用一个元素,p就是第一个元素</span><br>        <span class="hljs-keyword">if</span> (p.hash == hash &amp;&amp;<br>            ((k = p.key) == key || (key != <span class="hljs-keyword">null</span> &amp;&amp; key.equals(k)))) <span class="hljs-comment">//@Fisrt Question</span><br>            <span class="hljs-comment">//把bucket中的第一个元素赋值给e</span><br>            e = p;<br>        <span class="hljs-comment">//如果目标bucket已经使用RB tree存储了,那么就调用TreeNode的putTreeVal方法存入新节点</span><br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (p <span class="hljs-keyword">instanceof</span> TreeNode)<br>            e = ((TreeNode&lt;K,V&gt;)p).putTreeVal(<span class="hljs-keyword">this</span>, tab, hash, key, value);<br>        <span class="hljs-comment">//走到这里,说明bucket还是使用链表存储</span><br>        <span class="hljs-comment">//那么需要判断是加入新节点还是替换value</span><br>        <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> binCount = <span class="hljs-number">0</span>; ; ++binCount) &#123;<br>                <span class="hljs-keyword">if</span> ((e = p.next) == <span class="hljs-keyword">null</span>) &#123;<br>                    <span class="hljs-comment">//链表已经遍历完了,还是没有找到相同的对象,说明用户的目的是插入新节点</span><br>                    <br>                    <span class="hljs-comment">//注意,Hash冲突的在这里也会执行插入,导致一条链表过长</span><br>                    p.next = newNode(hash, key, value, <span class="hljs-keyword">null</span>);<br>                    <span class="hljs-comment">//因为是从p.next开始遍历的,所以在插入第七个元素时,进行树化</span><br>                    <span class="hljs-comment">//从0开始计算，0表示第一个节点，所以如果原来本身就有8个节点，那么则会调用treeifyBin</span><br>                    <span class="hljs-comment">//但是只有table的长度达到64时，才会进行树化</span><br>                    <span class="hljs-keyword">if</span> (binCount &gt;= TREEIFY_THRESHOLD - <span class="hljs-number">1</span>) <span class="hljs-comment">// -1 for 1st</span><br>                        treeifyBin(tab, hash);<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>                <span class="hljs-comment">//与上面的@First Question一样,判断我们当前处理的链表节点与key是否为同一个对象</span><br>                <span class="hljs-comment">//如果是,说明用户的目的是替换value,而不是插入</span><br>                <span class="hljs-keyword">if</span> (e.hash == hash &amp;&amp;<br>                    ((k = e.key) == key || (key != <span class="hljs-keyword">null</span> &amp;&amp; key.equals(k))))<br>                    <span class="hljs-keyword">break</span>;<br>                p = e;<br>            &#125;<br>        &#125;<br>        <span class="hljs-comment">//如果用户目的是替换元素,那么额e就是找出来的对象,否则如果是插入新节点e就会为null</span><br>        <span class="hljs-keyword">if</span> (e != <span class="hljs-keyword">null</span>) &#123; <span class="hljs-comment">// existing mapping for key</span><br>            V oldValue = e.value;<br>            <span class="hljs-comment">//onlyIfAbsent为false允许替换元素,如果不允许替换元素,那么就看看原始value是否为null</span><br>            <span class="hljs-comment">//如果为null,那么即使onlyAbsence为true也能替换</span><br>            <span class="hljs-keyword">if</span> (!onlyIfAbsent || oldValue == <span class="hljs-keyword">null</span>)<br>                e.value = value;<br>            afterNodeAccess(e);<span class="hljs-comment">//@second question</span><br>            <span class="hljs-keyword">return</span> oldValue;<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">//为了实现fast-fail机制</span><br>    ++modCount;<br>    <span class="hljs-comment">//如果插入后元素个数超出了存储阈值,那么就会调用resize扩容</span><br>    <span class="hljs-keyword">if</span> (++size &gt; threshold)<br>        resize();<br>    afterNodeInsertion(evict);<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>不难理解的代码都写在注释中了,这里写写比较难以理解的地方。</p>
+<p>@First Question:为什么要这么写?</p>
+<p>首先,<code>if (p.hash == hash &amp;&amp; ((k = p.key) == key || (key != null &amp;&amp; key.equals(k))))</code>这一句是在判断插入的key与bucket中的第一个key是否为同一个对象,在HashMap中判断两个对象是否为同一个需要hash相同并且对象相同。所以用<code>&amp;&amp;</code>把hash是否相同与对象是否相同的两个条件连接起来没什么问题。并且判断hash比后面的判断要快,所以把判断hash写在前面。但是判断两个对象是否相同为什么要使用<code>(key != null &amp;&amp; key.equals(k)))</code>?</p>
+<p>因为对于引用类型,<code>==</code>比较的是对象地址。所以如果两个对象地址都相同,那么肯定是同一个对象。后面的条件是为了满足有些重写了<code>equals</code>与<code>hashCode</code>方法的类需要把逻辑上相同的两个对象认为是同一个对象。</p>
+<p>@Second Question:<code>afterNodeAccess</code>有什么用?</p>
+<p>追踪其实现代码,发现其其实是空函数:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// Callbacks to allow LinkedHashMap post-actions</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">afterNodeAccess</span><span class="hljs-params">(Node&lt;K,V&gt; p)</span> </span>&#123; &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">afterNodeInsertion</span><span class="hljs-params">(<span class="hljs-keyword">boolean</span> evict)</span> </span>&#123; &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">afterNodeRemoval</span><span class="hljs-params">(Node&lt;K,V&gt; p)</span> </span>&#123; &#125;<br></code></pre></td></tr></table></figure>
+
+<p>注释里写的是给<code>LinkedHashMap</code>用作回调函数,不知道为什么HashMap里也使用这个,我们可以override这些函数,在完成插入、替换或者移除节点这些动作后执行一些通用的操作。</p>
+<blockquote>
+<p>Attention!!!<br>能存储在一个链表或者一颗红黑树中的,都是hash冲突的key-value,我到今天才发现!!!惭愧！！！</p>
+</blockquote>
+<h3 id="2-1-treeifyBin"><a href="#2-1-treeifyBin" class="headerlink" title="2.1 treeifyBin"></a>2.1 treeifyBin</h3><p><code>putVal</code>中还有一个非常重要的方法,就是<code>treeifyBin</code>,该方法将链表转化为一颗RB tree,实现代码如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">    * Replaces all linked nodes in bin at index for given hash unless</span><br><span class="hljs-comment">    * table is too small, in which case resizes instead.</span><br><span class="hljs-comment">    */</span><br><span class="hljs-function"><span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">treeifyBin</span><span class="hljs-params">(Node&lt;K,V&gt;[] tab, <span class="hljs-keyword">int</span> hash)</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> n, index; Node&lt;K,V&gt; e;<br>    <span class="hljs-comment">//如果tab的长度小于64,那么就会扩容,而不是树化</span><br>    <span class="hljs-keyword">if</span> (tab == <span class="hljs-keyword">null</span> || (n = tab.length) &lt; MIN_TREEIFY_CAPACITY)<br>        resize();<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ((e = tab[index = (n - <span class="hljs-number">1</span>) &amp; hash]) != <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-comment">//hd是头节点,tl指向尾节点</span><br>        TreeNode&lt;K,V&gt; hd = <span class="hljs-keyword">null</span>, tl = <span class="hljs-keyword">null</span>;<br>        <span class="hljs-keyword">do</span> &#123;<br>            <span class="hljs-comment">//Node节点转换为TreeNode双链表</span><br>            TreeNode&lt;K,V&gt; p = replacementTreeNode(e, <span class="hljs-keyword">null</span>);<br>            <span class="hljs-comment">//设置头节点</span><br>            <span class="hljs-keyword">if</span> (tl == <span class="hljs-keyword">null</span>)<br>                hd = p;<br>            <span class="hljs-comment">//尾插法</span><br>            <span class="hljs-keyword">else</span> &#123;<br>                p.prev = tl;<br>                tl.next = p;<br>            &#125;<br>            tl = p;<br>        &#125; <span class="hljs-keyword">while</span> ((e = e.next) != <span class="hljs-keyword">null</span>);<br>        <span class="hljs-comment">//因为TreeNode是Node的子列,所以将tab[index]替换成RB树的头节点</span><br>        <span class="hljs-keyword">if</span> ((tab[index] = hd) != <span class="hljs-keyword">null</span>)<br>            hd.treeify(tab);<br>    &#125;<br><br>    <span class="hljs-comment">// For treeifyBin</span><br>    <span class="hljs-function">TreeNode&lt;K,V&gt; <span class="hljs-title">replacementTreeNode</span><span class="hljs-params">(Node&lt;K,V&gt; p, Node&lt;K,V&gt; next)</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> TreeNode&lt;&gt;(p.hash, p.key, p.value, next);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以看出,<code>treeifyBin</code>仅仅是将目标bucket的由<code>Node</code>组成的双向链表转化为由<code>TreeNode</code>组成的双向链表,具体的树化还得看双向链表的头节点<code>hd</code>的方法<code>treeify</code>。</p>
+<h3 id="2-2-TreeNode"><a href="#2-2-TreeNode" class="headerlink" title="2.2 TreeNode"></a>2.2 TreeNode</h3><p>在深入了解<code>treeify</code>之前,我们还需要简单了解一下<code>TreeNode</code>的结构。<code>TreeNode</code>继承于<code>LinkedHashMap.Entry</code>,而<code>LinkedHashMap.Entry</code>又继承于<code>HashMap.Node</code>,最后<code>HashMap.Node</code>继承于<code>Map.Entry</code>。这一串继承下来,<code>TreeNode</code>的变量总共有11个。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TreeNode</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">LinkedHashMap</span>.<span class="hljs-title">Entry</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; </span>&#123;<br>    TreeNode&lt;K,V&gt; parent;  <span class="hljs-comment">// red-black tree links</span><br>    TreeNode&lt;K,V&gt; left;<br>    TreeNode&lt;K,V&gt; right;<br>    TreeNode&lt;K,V&gt; prev;    <span class="hljs-comment">// needed to unlink next upon deletion</span><br>    <span class="hljs-keyword">boolean</span> red;<br>    TreeNode(<span class="hljs-keyword">int</span> hash, K key, V val, Node&lt;K,V&gt; next) &#123;<br>        <span class="hljs-keyword">super</span>(hash, key, val, next);<br>    &#125;<br>    ...<br>&#125;<br><br><span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Entry</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">HashMap</span>.<span class="hljs-title">Node</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; </span>&#123;<br>    Entry&lt;K,V&gt; before, after;<br>    Entry(<span class="hljs-keyword">int</span> hash, K key, V value, Node&lt;K,V&gt; next) &#123;<br>        <span class="hljs-keyword">super</span>(hash, key, value, next);<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">Map</span>.<span class="hljs-title">Entry</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; </span>&#123;<br>    <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> hash;<br>    <span class="hljs-keyword">final</span> K key;<br>    V value;<br>    Node&lt;K,V&gt; next;<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>下面是<code>TreeNode</code>的<code>treeify</code>方法,该方法就是将一个双向链表转化为红黑树,树化肯定要从根节点开始树化嘛。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">* Forms tree of the nodes linked from this node.</span><br><span class="hljs-comment">*/</span><br><br><span class="hljs-function"><span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">treeify</span><span class="hljs-params">(Node&lt;K,V&gt;[] tab)</span> </span>&#123;<br>    TreeNode&lt;K,V&gt; root = <span class="hljs-keyword">null</span>;<br>    <span class="hljs-keyword">for</span> (TreeNode&lt;K,V&gt; x = <span class="hljs-keyword">this</span>, next; x != <span class="hljs-keyword">null</span>; x = next) &#123;<br>        <span class="hljs-comment">//x.next的运行时类型为TreeNode,但是静态类型为Node,所以需要强制转换</span><br>        next = (TreeNode&lt;K,V&gt;)x.next;<br>        x.left = x.right = <span class="hljs-keyword">null</span>;<br>        <span class="hljs-comment">//还没有设置RB树的根节点,设置一哈</span><br>        <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>) &#123;<br>            x.parent = <span class="hljs-keyword">null</span>;<br>            <span class="hljs-comment">//根节点必为黑</span><br>            x.red = <span class="hljs-keyword">false</span>;<br>            root = x;<br>        &#125;<br>        <span class="hljs-comment">//开始放置新的树节点</span><br>        <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">//x就是当前要放入的节点</span><br>            K k = x.key;<br>            <span class="hljs-keyword">int</span> h = x.hash;<br>            Class&lt;?&gt; kc = <span class="hljs-keyword">null</span>;<br>            <span class="hljs-keyword">for</span> (TreeNode&lt;K,V&gt; p = root;;) &#123;<br>                <span class="hljs-keyword">int</span> dir, ph;<br>                K pk = p.key;<br>                <span class="hljs-comment">//@First-Q</span><br>                <span class="hljs-comment">//为什么要比较hash的大小</span><br>                <span class="hljs-keyword">if</span> ((ph = p.hash) &gt; h)<br>                    dir = -<span class="hljs-number">1</span>;<br>                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (ph &lt; h)<br>                    dir = <span class="hljs-number">1</span>;<br>                <span class="hljs-comment">//hash相等</span><br>                <span class="hljs-comment">//如果没有实现Comparable接口,那没法比了,只能调用tieBreakOrder强行比较</span><br>                <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ((kc == <span class="hljs-keyword">null</span> &amp;&amp;(kc = comparableClassFor(k)) == <span class="hljs-keyword">null</span>) ||<br>                            <span class="hljs-comment">//实现了Comparable接口,但是二者compare的结果还是相等的</span><br>                            (dir = compareComparables(kc, k, pk)) == <span class="hljs-number">0</span>)<br>                    <span class="hljs-comment">//强行比较</span><br>                    dir = tieBreakOrder(k, pk);<br><br>                TreeNode&lt;K,V&gt; xp = p;<br>                <span class="hljs-comment">//dir&lt;=0就插入到左子树中,否则插入到右子树中,并且如果目标方向的子节点为空,才会进行插入</span><br>                <span class="hljs-comment">//否则继续向下遍历</span><br>                <span class="hljs-keyword">if</span> ((p = (dir &lt;= <span class="hljs-number">0</span>) ? p.left : p.right) == <span class="hljs-keyword">null</span>) &#123;<br>                    x.parent = xp;<br>                    <span class="hljs-keyword">if</span> (dir &lt;= <span class="hljs-number">0</span>)<br>                        xp.left = x;<br>                    <span class="hljs-keyword">else</span><br>                        xp.right = x;<br>                    <span class="hljs-comment">//平衡颜色</span><br>                    root = balanceInsertion(root, x);<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">//对树进行平衡调整,从根节点开始调整</span><br>    moveRootToFront(tab, root);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>那么其中<code>comaprableClassFor</code>是干嘛的呢?康康它的源码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">    * Returns x&#x27;s Class if it is of the form &quot;class C implements</span><br><span class="hljs-comment">    * Comparable&lt;C&gt;&quot;, else null.</span><br><span class="hljs-comment">    */</span><br><span class="hljs-keyword">static</span> Class&lt;?&gt; comparableClassFor(Object x) &#123;<br>    <span class="hljs-keyword">if</span> (x <span class="hljs-keyword">instanceof</span> Comparable) &#123;<span class="hljs-comment">//如果对象x实现了Comparable接口</span><br>        Class&lt;?&gt; c; Type[] ts, as; Type t; ParameterizedType p;<br>        <span class="hljs-keyword">if</span> ((c = x.getClass()) == String.class) <span class="hljs-comment">// bypass checks</span><br>            <span class="hljs-keyword">return</span> c;<br>        <span class="hljs-comment">//ts是一个Type类型的数组</span><br>        <span class="hljs-comment">//getGenericInterfaces返回的是c直接实现的接口</span><br>        <span class="hljs-keyword">if</span> ((ts = c.getGenericInterfaces()) != <span class="hljs-keyword">null</span>) &#123;<br>            <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; ts.length; ++i) &#123;<br>                <span class="hljs-comment">//如果t是一个参数化类型并且原始类型是Comparable,并且t的泛型类型中参数个数只有1个,并且参数是x.getClass()</span><br>                <span class="hljs-comment">//那么就返回x的Class对象,否则返回null</span><br>                <span class="hljs-keyword">if</span> (((t = ts[i]) <span class="hljs-keyword">instanceof</span> ParameterizedType) &amp;&amp;<br>                    ((p = (ParameterizedType)t).getRawType() ==<br>                        Comparable.class) &amp;&amp;<br>                    (as = p.getActualTypeArguments()) != <span class="hljs-keyword">null</span> &amp;&amp;<br>                    as.length == <span class="hljs-number">1</span> &amp;&amp; as[<span class="hljs-number">0</span>] == c) <span class="hljs-comment">// type arg is c</span><br>                    <span class="hljs-keyword">return</span> c;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>该方法其中就是判断类<code>c</code>是否实现了接口<code>Comparable&lt;c&gt;</code>,如果实现了,就返回<code>c</code>的<code>Class</code>对象,否则返回null。那么<code>compareComparables</code>是干嘛的?顺便康康其源码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">    * Returns k.compareTo(x) if x matches kc (k&#x27;s screened comparable</span><br><span class="hljs-comment">    * class), else 0.</span><br><span class="hljs-comment">    */</span><br><span class="hljs-meta">@SuppressWarnings(&#123;&quot;rawtypes&quot;,&quot;unchecked&quot;&#125;)</span> <span class="hljs-comment">// for cast to Comparable</span><br><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">compareComparables</span><span class="hljs-params">(Class&lt;?&gt; kc, Object k, Object x)</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> (x == <span class="hljs-keyword">null</span> || x.getClass() != kc ? <span class="hljs-number">0</span> :<br>            ((Comparable)k).compareTo(x));<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>首先会比较待插入键<code>y</code>的<code>Class</code>文件<code>kc</code>与树中的节点<code>x</code>的<code>Class</code>文件是否相同,这一句就要求了如果<code>y</code>和<code>x</code>必须是同一类型,否则即使<code>y</code>实现了<code>Comaprable</code>接口也不能比较,因为我们不知道<code>x</code>是否实现了<code>Comparable</code>接口。</p>
+<p>如果是同一类型,那么就是<code>comparaTo</code>方法比较这两个键的大小。注意这里还是有可能相等的,还是无法决定这两个键谁大谁小。那么当然还有最后一招,就是方法<code>tieBreakOrder</code>,这个方法必须抉择处待插入的节点和数中的某个节点到底谁大。那么它怎么比的?还是看源码咯。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">* Tie-breaking utility for ordering insertions when equal</span><br><span class="hljs-comment">* hashCodes and non-comparable. We don&#x27;t require a total</span><br><span class="hljs-comment">* order, just a consistent insertion rule to maintain</span><br><span class="hljs-comment">* equivalence across rebalancings. Tie-breaking further than</span><br><span class="hljs-comment">* necessary simplifies testing a bit.</span><br><span class="hljs-comment">*/</span><br><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">tieBreakOrder</span><span class="hljs-params">(Object a, Object b)</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> d;<br>    <span class="hljs-keyword">if</span> (a == <span class="hljs-keyword">null</span> || b == <span class="hljs-keyword">null</span> ||<br>        (d = a.getClass().getName().<br>            compareTo(b.getClass().getName())) == <span class="hljs-number">0</span>)<br>        d = (System.identityHashCode(a) &lt;= System.identityHashCode(b) ?<br>                -<span class="hljs-number">1</span> : <span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">return</span> d;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>首先判断<code>a</code>或者<code>b</code>的名字谁长,名字短的排在前面。如果名字长度相等,那么计算<code>a</code>和<code>b</code>的hashCode,hash相等的话,<code>a</code>排在前面。那么<code>identityHashCode</code>是怎么计算的?</p>
+<p>该方法就是返回对象<code>a</code>或<code>b</code>的默认hashcode,无论<code>a</code>或者<code>b</code>是否override了<code>hashCode</code>方法。<code>null</code>的<code>hashCode</code>为0。</p>
+<p>经过上述最多三次的抉择,终于能决定待插入节点<code>x</code>和树中的节点谁大谁小了。那么抉择出来了,就可以在树中插入节点<code>x</code>了吗?当然不行,上面的代码仅仅是比较大小而已,真正插入时需要在RB树中找到一个合适的叶节点。下面的代码就是寻找合适的叶节点:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//下文中的x是待插入节点</span><br><span class="hljs-keyword">for</span> (TreeNode&lt;K,V&gt; p = root;;) &#123;<br>    <span class="hljs-keyword">int</span> dir, ph;<br>    K pk = p.key;<br>    <span class="hljs-comment">//@First-Q</span><br>    <span class="hljs-comment">//为什么要比较hash的大小</span><br>    <span class="hljs-keyword">if</span> ((ph = p.hash) &gt; h)<br>        dir = -<span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (ph &lt; h)<br>        dir = <span class="hljs-number">1</span>;<br>    <span class="hljs-comment">//hash相等</span><br>    <span class="hljs-comment">//如果没有实现Comparable接口,那没法比了,只能调用tieBreakOrder强行比较</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> ((kc == <span class="hljs-keyword">null</span> &amp;&amp;(kc = comparableClassFor(k)) == <span class="hljs-keyword">null</span>) ||<br>                <span class="hljs-comment">//实现了Comparable接口,但是二者compare的结果还是相等的</span><br>                (dir = compareComparables(kc, k, pk)) == <span class="hljs-number">0</span>)<br>        <span class="hljs-comment">//强行比较</span><br>        dir = tieBreakOrder(k, pk);<br><br>    TreeNode&lt;K,V&gt; xp = p;<br>    <span class="hljs-comment">//dir&lt;=0就插入到左子树中,否则插入到右子树中,并且如果目标方向的子节点为空,这才是真正的插入点</span><br>    <span class="hljs-comment">//否则继续向下遍历寻找合适的位置 </span><br>    <span class="hljs-keyword">if</span> ((p = (dir &lt;= <span class="hljs-number">0</span>) ? p.left : p.right) == <span class="hljs-keyword">null</span>) &#123;<br>        x.parent = xp;<br>        <span class="hljs-keyword">if</span> (dir &lt;= <span class="hljs-number">0</span>)<br>            xp.left = x;<br>        <span class="hljs-keyword">else</span><br>            xp.right = x;<br>        <span class="hljs-comment">//平衡颜色</span><br>        root = balanceInsertion(root, x);<br>        <span class="hljs-keyword">break</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在找到插入位置并完成插入后,需要调用<code>balanceInsertion</code>平衡节点之间的颜色。这个函数是红黑树的调整的核心操作。我把注释都写在了代码中:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">static</span> &lt;K,V&gt; <span class="hljs-function">TreeNode&lt;K,V&gt; <span class="hljs-title">balanceInsertion</span><span class="hljs-params">(TreeNode&lt;K,V&gt; root,</span></span><br><span class="hljs-params"><span class="hljs-function">                                            TreeNode&lt;K,V&gt; x)</span> </span>&#123;<br><br>    <span class="hljs-comment">//注意在JDK8中,红黑树是左右倾都存在的</span><br>    <span class="hljs-comment">//要从插入的节点x开始逐级向上调整</span><br>    <span class="hljs-comment">//插入的节点一定是红色,而且可能插在x的左侧或者右侧</span><br>    x.red = <span class="hljs-keyword">true</span>;<br>    <span class="hljs-keyword">for</span> (TreeNode&lt;K,V&gt; xp, xpp, xppl, xppr;;) &#123;<br>        <span class="hljs-comment">//如果x没有父节点,那么根本不用调整</span><br>        <span class="hljs-comment">//将x的颜色设为黑色返回即可,因为x此时就是根节点</span><br>        <span class="hljs-keyword">if</span> ((xp = x.parent) == <span class="hljs-keyword">null</span>) &#123;<br>            x.red = <span class="hljs-keyword">false</span>;<br>            <span class="hljs-keyword">return</span> x;<br>        &#125;<br>        <span class="hljs-comment">//如果x的父节点xp是黑的,这时可以直接返回,因为在xp左侧插入一个红节点不影响RB的完美平衡</span><br>        <span class="hljs-comment">//或者xp是红色的,但是xp没有父节点,那么可以直接返回?</span><br>        <span class="hljs-comment">//查了一下,xp是红色但是没有父节点的情况不会出现,这样是为了给xpp赋值</span><br>        <span class="hljs-comment">//综上,如果xp是黑色,就直接返回root,因为不影响平衡性</span><br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!xp.red || (xpp = xp.parent) == <span class="hljs-keyword">null</span>)<br>            <span class="hljs-keyword">return</span> root;<br>        <span class="hljs-comment">//只要上面的else if没返回,那么xp必是红节点,而且xpp必然存在</span><br>        <span class="hljs-comment">//因为xp为红但是xp为根节点的情况不存在</span><br>        <span class="hljs-comment">//不然这里的if判断可能会产生null</span><br>        <span class="hljs-keyword">if</span> (xp == (xppl = xpp.left)) &#123;<br>            <span class="hljs-comment">//走到这,xp就必定是左红节点，如果xpp有右子节点并且xppr为红</span><br>            <span class="hljs-comment">//此时我们就需要把xppl和xppr的红色向上传递?为什么,因为插入的x节点必是红节点,不允许连续子节点和父节点都是红节点</span><br>            <span class="hljs-comment">//这里进行向上传递红色的操作</span><br>            <span class="hljs-keyword">if</span> ((xppr = xpp.right) != <span class="hljs-keyword">null</span> &amp;&amp; xppr.red) &#123;<br>                xppr.red = <span class="hljs-keyword">false</span>;<br>                xp.red = <span class="hljs-keyword">false</span>;<br>                xpp.red = <span class="hljs-keyword">true</span>;<br>                <span class="hljs-comment">//将xpp赋值给x是因为xpp的所有子节点已经调整好了</span><br>                <span class="hljs-comment">//这就相当于递归回溯调整颜色的过程,调整完颜色后直接从新的x节点开始继续开始下一轮循环</span><br>                x = xpp;<br>            &#125;<br><br>            <span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-comment">//如果xpp有右子节点但是为黑</span><br>                <span class="hljs-comment">//或者xpp根本就没有右子节点</span><br>                <span class="hljs-comment">//总之这时已经出现了x和xp两个连续的左红节点,要么都是左红节点,或者x是右红,xp是左红</span><br><br>                <span class="hljs-keyword">if</span> (x == xp.right) &#123;<br>                    <span class="hljs-comment">//如果x是右红,那么就要先以xp为轴点进行左旋,形成x和xp都是左红的局面</span><br>                    <span class="hljs-comment">//注意,这里不是把xp赋值给x后把x传进去,而是传进去xp,顺便把xp赋值给x</span><br>                    root = rotateLeft(root, x = xp);<br>                    <span class="hljs-comment">//这里左旋x就会成为新的xp</span><br>                    <span class="hljs-comment">//这里xp=x.parent也可能是进行赋值操作?</span><br>                    <span class="hljs-comment">//xpp也是赋值操作?</span><br>                    xpp = (xp = x.parent) == <span class="hljs-keyword">null</span> ? <span class="hljs-keyword">null</span> : xp.parent;<br>                &#125;<br>                <span class="hljs-comment">//走到这,x和xp就一定都是左红,这里要以xpp为轴点进行右旋</span><br>                <span class="hljs-comment">//这里为毛需要判空?xp不是一定存在?</span><br>                <span class="hljs-keyword">if</span> (xp != <span class="hljs-keyword">null</span>) &#123;<br>                    <span class="hljs-comment">//注意,这里xp一定是红色,那么xpp必然是黑色</span><br>                    <span class="hljs-comment">//旋转后,xp会成为新的xpp,这里是将xpp的颜色赋值给xp</span><br>                    xp.red = <span class="hljs-keyword">false</span>;<br>                    <span class="hljs-keyword">if</span> (xpp != <span class="hljs-keyword">null</span>) &#123;<br>                        <span class="hljs-comment">//将xp的颜色赋值给xpp,因为xp原来是红色</span><br>                        xpp.red = <span class="hljs-keyword">true</span>;<br>                        <span class="hljs-comment">//右旋,可能会产生新的root节点</span><br>                        root = rotateRight(root, xpp);<br>                    &#125;<br>                &#125;<br>            &#125;<br>        &#125;<br><br>        <span class="hljs-comment">//跟上面的插入情况差不多</span><br>        <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-comment">//走到这,xp必是右红节点</span><br>            <span class="hljs-comment">//将红色向上传递</span><br>            <span class="hljs-keyword">if</span> (xppl != <span class="hljs-keyword">null</span> &amp;&amp; xppl.red) &#123;<br>                xppl.red = <span class="hljs-keyword">false</span>;<br>                xp.red = <span class="hljs-keyword">false</span>;<br>                xpp.red = <span class="hljs-keyword">true</span>;<br>                x = xpp;<br>            &#125;<br>            <span class="hljs-keyword">else</span> &#123;<br>                <span class="hljs-comment">//如果x是左红节点</span><br>                <span class="hljs-keyword">if</span> (x == xp.left) &#123;<br>                    <span class="hljs-comment">//那么就需要以xp为轴点,向右旋,也就是把xp和x安排到一条直线上,也就是像下面这样</span><br>                    <span class="hljs-comment">//    xpp(xpp不一定有)           xpp</span><br>                    <span class="hljs-comment">//      \                         \</span><br>                    <span class="hljs-comment">//       xp  ----&gt;                 xp</span><br>                    <span class="hljs-comment">//       /                          \</span><br>                    <span class="hljs-comment">//      x                            x</span><br>                    root = rotateRight(root, x = xp);<br>                    xpp = (xp = x.parent) == <span class="hljs-keyword">null</span> ? <span class="hljs-keyword">null</span> : xp.parent;<br>                &#125;<br>                <span class="hljs-comment">//xp是必然存在的,xpp也是必然存在的,步知道为什么会有这两个判断</span><br>                <span class="hljs-keyword">if</span> (xp != <span class="hljs-keyword">null</span>) &#123;<br>                    xp.red = <span class="hljs-keyword">false</span>;<br>                    <span class="hljs-keyword">if</span> (xpp != <span class="hljs-keyword">null</span>) &#123;<br>                        xpp.red = <span class="hljs-keyword">true</span>;<br><br>                        <span class="hljs-comment">//   xpp                xp</span><br>                        <span class="hljs-comment">//    \               /  \</span><br>                        <span class="hljs-comment">//     xp -------&gt;   xpp  x</span><br>                        <span class="hljs-comment">//     \</span><br>                        <span class="hljs-comment">//      x</span><br>                        root = rotateLeft(root, xpp);<br>                    &#125;<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/HashMap/">HashMap</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021-06-02/HashMap-analysis-part-one.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HashMap源码分析(一)-HashMap中的那些常量</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021-06-02/red-black-tree.html">
+                        <span class="hidden-mobile">红黑树入门</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

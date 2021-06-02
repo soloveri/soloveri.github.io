@@ -1,0 +1,554 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="cras">
+  <meta name="keywords" content="">
+  
+  <title>红黑树入门 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="红黑树入门">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-02 14:10" pubdate>
+        2021年6月2日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      5.4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      70
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">红黑树入门</h1>
+            
+            <div class="markdown-body">
+              <p>本篇将带你一步一步了解红黑树，当然大部分内容来源于算法(第4版)一书，我仅仅对一点内容总结了自己的心得。</p>
+<p>在谈谈红黑树之前，我们先来回顾一下二叉排序树(balanced sort tree),因为红黑树是从BST的概念演化而来的。BST的定义很简单，对于一个节点来说，左树的所有节点的值都小于当前节点的值，右树所有节点的值都大于当前节点的值。但是在最坏情况下BST的高度会达到O(N),效率太差。</p>
+<p>我们在这里引入一个抽象的2-3树，所谓的2就是指节点只有两个指针指向子树，相应的3指的是节点中有三个指针指向子树，当然3节点中就会包含2个key。</p>
+<p>2-3保证了一点性质：<strong>所有的空节点到达根节点的路径都是一样长的</strong>,这条性质保证了查找的复杂度在O(logN)的水平。</p>
+<h2 id="1-2-3树的插入"><a href="#1-2-3树的插入" class="headerlink" title="1. 2-3树的插入"></a>1. 2-3树的插入</h2><p>2-3树的插入还是比较复杂的，分为插入位置在2节点还是3节点。</p>
+<h3 id="1-1-2节点位置插入"><a href="#1-1-2节点位置插入" class="headerlink" title="1.1 2节点位置插入"></a>1.1 2节点位置插入</h3><p>2节点位置的插入比较简单，首先我们需要查找目标应该在的位置，如果查找结束于一个2节点，那么直接将目标插入结束的节点即可，下图演示了在2-3树中插入key为N的节点(按照字典序)。</p>
+<p><img src="../images/red-black-tree/red-black-tree.drawio.svg" srcset="/img/loading.gif" lazyload alt="2节点中插入新节点"></p>
+<h3 id="1-2-3节点位置插入"><a href="#1-2-3节点位置插入" class="headerlink" title="1.2 3节点位置插入"></a>1.2 3节点位置插入</h3><p>3节点位置的插入比较复杂，分为一下三种情况：</p>
+<ul>
+<li>没有父节点的3节点</li>
+<li>父节点为2节点的3节点</li>
+<li>父节点为3节点的3节点</li>
+</ul>
+<p><strong>没有父节点的3节点:</strong></p>
+<p>如果没有父节点，那么在3节点中再加入一个新值的话3节点就会升级为4节点，这在2-3树中是不允许的，采取的办法是为4节点构造一个父节点，将4节点降级为3节点，那么构造的父节点的值是多少？应该是4节点中3个值的中间数，如下图所示：</p>
+<p><img src="../images/red-black-tree/insert-node-to-three.drawio.svg" srcset="/img/loading.gif" lazyload alt="3节点位置插入-1"></p>
+<p><strong>父节点为2节点的3节点:</strong></p>
+<p>思路是一样的，只不过这里不再需要人为构造父节点了，只需要把4节点中三个数中的中间位置数向上传递就行了，并且将当前节点分割为两个2节点，这样父节点就会由2节点升级为3节点。如下图所示：</p>
+<p><img src="../images/red-black-tree/insert-node-to-three-II.drawio.svg" srcset="/img/loading.gif" lazyload alt="3节点位置插入-2"></p>
+<p><strong>父节点为3节点的3节点</strong></p>
+<p>操作与上面完全相同，有一点要记住：<strong>如果3节点是通过4节点降级得到的，那么就必须把这个3节点分割为两个2节点</strong>。因为如果不分割，退化后的3节点是不符合规则的。</p>
+<p>经过上面讲解，可以发现有如下规律：</p>
+<ul>
+<li>在插入节点，不管当前位置是2节点还是3节点，我们先把值加入到这个节点中，然后再慢慢调整</li>
+<li>如果3节点是通过4节点降级得到的，那么必须要把这个3节点分割为两个2节点</li>
+</ul>
+<h2 id="2-左倾红黑树"><a href="#2-左倾红黑树" class="headerlink" title="2. 左倾红黑树"></a>2. 左倾红黑树</h2><p>虽然2-3树的理解非常方便，但是代码实现起来比较困难，所以就产生了红黑树等价代替2-3树。但是红黑树都是2节点，怎么保存3节点呢？很简单，就是通过所谓的红或者黑来代替3节点。</p>
+<p>我们通过红链接或者黑链接来表示2-3树。<strong>红链接将两个2节点连接起来构成3节点，黑链接就是普通的链接</strong>。那么这个链接是如何表示？这个颜色到底保存在哪？有如下规定：</p>
+<p>如果a是b的子节点，且二者之间的链接是红色的，那么这个红色的信息保存在a中(也就是子节点)，也就是一个节点的颜色等于指向该节点的链接的颜色。</p>
+<p>那么红黑树的官方定义是什么？</p>
+<p><del>红黑树就是满足以下定义的二叉查找树</del>满足下面定义的仅仅是左倾红黑树:</p>
+<ul>
+<li>根节点总是黑色的</li>
+<li>红链接均为左连接</li>
+<li>没有任何一个节点同时和两条红链接相连</li>
+<li>该树是完美黑色平衡的，就是所有空节点到达根节点所经历的黑链接数量是相同的，也不难理解，因为红链接的两个节点实际在一层，因为表示的是3节点</li>
+</ul>
+<hr>
+<p><strong>Extensions:</strong></p>
+<p>红黑树有很多种,左倾、右倾、或者左右倾等等,我一直以为左倾红黑树就是全部的红黑树,实际上只是因为它简单,算法第4版才会选择它进行讲解。实际上只要满足以下定义的都是红黑树:</p>
+<ul>
+<li>每一个节点不是红就是黑</li>
+<li>根节点必是黑色</li>
+<li>所有叶子节点(最底层的空节点)都是黑色</li>
+<li>红节点的两个直接子节点必须都是黑色（换言之也就是不能同时有两个红节点相连）</li>
+<li>从任意一个节点到到它的最底层子空节点所经过的黑节点个数都是一样的,也就是RB树是完美黑平衡的,注意,这个空节点只能是所选定的节点的子节点,而不能是它兄弟节点的空子节点。也就是任意空节点到达根节点经过的黑节点个数是相同的</li>
+</ul>
+<hr>
+<p>我们如果将红黑树的红链接画平，那么就是一颗2-3树。如下图所示:</p>
+<p><img src="../images/red-black-tree/rb-tree-and-2-3-tree.drawio.svg" srcset="/img/loading.gif" lazyload alt="红黑树与2-3树的转换"></p>
+<p>那么为了保证左倾红黑树的3条性质，我们还需要熟悉以下几项操作。</p>
+<p><strong>保证红链接均为左链接:</strong></p>
+<p>为了保证以上性质，我们可以采用旋转的操作：</p>
+<p><img src="../images/red-black-tree/rb-tree-left-rotate.drawio.svg" srcset="/img/loading.gif" lazyload alt="左旋操作"></p>
+<figure class="highlight java"><figcaption><span>"左旋操作"</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//返回旋转后的根节点</span><br><span class="hljs-function">Node <span class="hljs-title">rotateLeft</span><span class="hljs-params">(Node h)</span></span>&#123;<br>    Node x=h.right;<br>    h.right=x.left;<br>    x.left=h;<br>    <span class="hljs-comment">//把原来h节点的颜色赋给新的头节点</span><br>    x.color=h.color;<br>    h.color=red;<br>    x.size=h.size;<br>    h.size=<span class="hljs-number">1</span>+size(h.left)+size(h.right);<br>    <span class="hljs-keyword">return</span> x;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>右旋代码是非常类似的。</p>
+<figure class="highlight java"><figcaption><span>"右旋操作"</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function">Node <span class="hljs-title">rotateRight</span><span class="hljs-params">(Node h)</span></span>&#123;<br>    Node x=h.left;<br>    h.left=x.right;<br>    x.color=h.color;<br>    h.color=red;<br>    x.size=h.size;<br>    h.size=size(h.left)+size(h.right)+<span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">return</span> x;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>保证不会出现两条连续的红链接</strong></p>
+<p>这个性质的实现也是通过旋转来实现的,额外的操作是可能需要进行颜色转换，因为可能出现4节点降级为两个2节点。我们需要遵守以下三条准则：</p>
+<ul>
+<li>如果当前节点的左子链接是黑色而右子链接为红色，那么进行对当前节点左旋</li>
+<li>如果当前节点的左子链接是红色的，并且左子链接的左子链接也是红色的，那么将当前节点进行右旋</li>
+<li>如果左右链接都是红色的，那么进行颜色颜色转换，将红链接向上传递。</li>
+</ul>
+<p>前两条规则如下图所示:</p>
+<div align=center><img src="../images/red-black-tree/part-I.png" srcset="/img/loading.gif" lazyload/></div>
+
+<p>最后一条规则如下所示:</p>
+<div align=center><img src="../images/red-black-tree/part-II.png" srcset="/img/loading.gif" lazyload/></div>
+
+<p>对于第一条规则我认为没有必须要求左子链接为黑色，因为不可能产生三条连续的红链接，因为都是在树底插入，在插入之前就不可能产生两条连续的红色链接，所以插入后最多产生两条连续的红链接。</p>
+<h3 id="2-1-红黑树的插入操作"><a href="#2-1-红黑树的插入操作" class="headerlink" title="2.1 红黑树的插入操作"></a>2.1 红黑树的插入操作</h3><p>红黑树插入新节点时插入的是<strong>红节点</strong>,至于保持平衡那需要在插入之后修正。下面是红黑树的插入节点的代码,与普通的BST差别不是很大,最后需要在回溯修正节点的颜色时遵循上面规则：</p>
+<figure class="highlight java"><figcaption><span>"红黑树插入代码"</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> Node <span class="hljs-title">put</span><span class="hljs-params">(Node x,Key key,Value val)</span></span>&#123;<br>        <span class="hljs-keyword">if</span>(x==<span class="hljs-keyword">null</span>)&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Node(key,val,RED,<span class="hljs-number">1</span>);<br>        &#125;<br>        <span class="hljs-keyword">int</span> cmp=key.compareTo(x.key);<br>        <span class="hljs-keyword">if</span>(cmp&lt;<span class="hljs-number">0</span>)&#123;<br>            x.left=put(x.left,key,val);<br>        &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(cmp&gt;<span class="hljs-number">0</span>)&#123;<br>            x.right=put(x.right,key,val);<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            x.val=val;<br>        &#125;<br>        <span class="hljs-comment">//修正红黑树的颜色</span><br>        <span class="hljs-comment">//感觉第二个条件也不一定需要吧，只是减少了旋转的次数,如果加了左子树为黑的条件，则不会进行下一行的旋转，因为可以直接进行颜色转换</span><br>        <span class="hljs-comment">//如果删去左子树为黑的条件，那么会多余执行一次下一行的转换，再进行颜色转换，本来可以直接转的，上面做了多余一步的操作</span><br>        <br>        <span class="hljs-comment">//对于左倾红黑树，必须先左转，将红节点调整到右边</span><br>        <span class="hljs-comment">//然后再右转，最后再进行颜色传递</span><br>        <span class="hljs-keyword">if</span>(isRed(x.right)&amp;&amp; !isRed(x.left))&#123;<br>            x=rotateLeft(x);<br>        &#125;<br>        <span class="hljs-keyword">if</span>(isRed(x.left) &amp;&amp; isRed(x.left.left))&#123;<br>            x=rotateRight(x);<br>        &#125;<br>        <span class="hljs-keyword">if</span>(isRed(x.left) &amp;&amp; isRed(x.right))&#123;<br>            flipColor(x);<br>        &#125;<br>        x.size=size(x.left)+size(x.right)+<span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">return</span> x;<br>    &#125;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="2-2-红黑树的删除操作"><a href="#2-2-红黑树的删除操作" class="headerlink" title="2.2 红黑树的删除操作"></a>2.2 红黑树的删除操作</h3><p>红黑树的删除比插入还复杂些,因为红黑树是完美黑节点平衡的,所以在删除时我们就不能删除黑节点,只能删除红节点。但是如果我们想要删除的值就是黑的,怎么办？办法就是把它变红。简单来说就是不断变换颜色。直到我们的目标删除节点为红色时。</p>
+<p>待删除的节点分两种：一种是在底部，没有子节点，像这样的节点，把它转换成红色的删除就好。另外一种就是有后继节点，为了保持树的有序性，我们采取跟BST的一样的操作，把待删除节点的后继节点找到，然后将待删除节点替换为后继节点。</p>
+<p>总的来说：</p>
+<ul>
+<li>我们只能删除红节点</li>
+<li>并且待删除节点不能是个2-节点，因为直接将2-节点删除会破坏平衡性</li>
+</ul>
+<p>所以在我们向下寻找待删除节点的时候，我们就必须保证当前处理的节点不是2-节点。</p>
+<p><strong>删除最小值:</strong></p>
+<p>这里以删除最小值为例,与BST的删除操作类似，采用递归删除。我们在每一轮递归调用时，都需要将当前节点的左子节点调整为非2-节点。如果处理节点为2-节点,这就需要:</p>
+<ul>
+<li>从当前的父节点(当前节点)借一个</li>
+</ul>
+<p><img src="../images/red-black-tree/borrow-from-parent.png" srcset="/img/loading.gif" lazyload alt="borrow-from-father"></p>
+<ul>
+<li>或者当前节点的左子节点的兄弟节点借一个</li>
+</ul>
+<p><img src="../images/red-black-tree/borrow-from-bro-min.png" srcset="/img/loading.gif" lazyload alt="borrow-from-bro"></p>
+<p>步骤如下：我们首先从父节点借一个，这里所谓的借一个是将父节点的颜色变黑，两个子节点的颜色变红，也就是改造为4节点，然后我们再看左子节点的兄弟是否为非2-节点。如果是，那么就从兄弟借，把从父节点借的再还回去。然后我们进入下一轮递归调用，这样继续处理左子节点。保证了路径上的每个节点都不是2-节点,<strong>把红链接一层一层传递下去</strong>。最后删除最底层的红节点,然后再层层回溯修复节点颜色。</p>
+<figure class="highlight java"><figcaption><span>"删除最小值"</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//删除操作的大小修正都在balance中了</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">deleteMin</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">if</span>(root==<span class="hljs-keyword">null</span>)&#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-comment">//为啥要进行这步操作，仅仅是为了假装根节点为3-节点吗？？？</span><br>        <span class="hljs-comment">//做这步操作可能是因为flipColor的写法</span><br>        <span class="hljs-comment">//因为flipColor的操作是把当前节点和两个子节点的颜色取反，如果不把根节点的颜色设红，后面的子节点没法借</span><br>        <span class="hljs-keyword">if</span>(!isRed(root.left)&amp;&amp;!isRed(root.right))&#123;<br>            root.color=RED;<br>        &#125;<br><br>        root=deleteMin(root);<br>        <span class="hljs-comment">//恢复根节点的颜色</span><br>        <span class="hljs-keyword">if</span>(root!=<span class="hljs-keyword">null</span>)&#123;<br>            root.color=BLACK;<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">//能够进入这个函数的当前节点一定不是2节点</span><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> Node <span class="hljs-title">deleteMin</span><span class="hljs-params">(Node h)</span></span>&#123;<br>        <span class="hljs-keyword">if</span>(h.left==<span class="hljs-keyword">null</span>)&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>        &#125;<br>        <span class="hljs-comment">//判断当前节点的左子节点是否为3节点</span><br>        <span class="hljs-keyword">if</span>(!isRed(h.left) &amp;&amp; !isRed(h.left.left))&#123;<br>            <span class="hljs-comment">//左子节点为黑，且它的子节点为黑，表示左子节点是一个2-节点，需要借</span><br>            <span class="hljs-comment">//moveRedLeft就是调整红链接一直往左边走</span><br>            h=moveRedLeft(h);<br>        &#125;<br>        h.left=deleteMin(h.left);<br>        <span class="hljs-comment">//因为前面借节点的时候，有可能只是从父节点借了一个，</span><br>        <span class="hljs-comment">// 这样就会导致存在right-leaning的红链接，需要修正</span><br>        <span class="hljs-keyword">return</span> balance(h);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>删除最大值:</strong></p>
+<p>删除最大值类似，唯一一点不同的是，我们需要把当前节点的左子节点的红链接先翻转到右边,道理很简单。删除最小值不用这么做是因为红黑树的红链接本身就在左侧。删除最大值就是要把红链接一层一层的向底层传递直到不能传递。并且如果不把红链接翻转到右侧，右树底下的节点如果为2-节点时，他没有办法向上借了。</p>
+<figure class="highlight java"><figcaption><span>"删除最大值"</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">deleteMax</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">if</span>(root==<span class="hljs-keyword">null</span>)&#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(!isRed(root.left)&amp;&amp; !isRed(root.right))&#123;<br>            root.color=RED;<br>        &#125;<br>        root=deleteMax(root);<br>        <span class="hljs-keyword">if</span>(root!=<span class="hljs-keyword">null</span>)&#123;<br>            root.color=BLACK;<br>        &#125;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> Node <span class="hljs-title">deleteMax</span><span class="hljs-params">(Node h)</span></span>&#123;<br>        <span class="hljs-comment">//如果左链接是红色，那么就需要翻转到右边，不然右子节点下面的节点没法向它们的父节点借了</span><br>        <span class="hljs-keyword">if</span>(isRed(h.left))&#123;<br>            h=rotateRight(h);<br>        &#125;<br>        <br>        <span class="hljs-comment">//具体的删除操作，直接置空</span><br>        <span class="hljs-keyword">if</span>(h.right==<span class="hljs-keyword">null</span>)&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(!isRed(h.right) &amp;&amp; !isRed(h.right.left))&#123;<br>            h=moveRedRight(h);<br>        &#125;<br>        h.right=deleteMax(h.right);<br>        <span class="hljs-keyword">return</span> balance(h);<br>    &#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>删除任意值:</strong></p>
+<p>删除任意值就是删除最小值与最大值的组合操作。如果想要删除的值比当前节点的值小，那么就向左继续寻找，与删除最小值类似，如果不小于当前节点的值，那么就往右走，类似于删除最大值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">delete</span><span class="hljs-params">(Key key)</span></span>&#123;<br>        <span class="hljs-keyword">if</span>(root==<span class="hljs-keyword">null</span>)&#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(!isRed(root.left) &amp;&amp; !isRed(root.right))&#123;<br>            root.color=RED;<br>        &#125;<br>        root=delete(root,key);<br>        <span class="hljs-keyword">if</span>(root!=<span class="hljs-keyword">null</span>) &#123;<br>            root.color = BLACK;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> Node <span class="hljs-title">delete</span><span class="hljs-params">(Node h,Key key)</span></span>&#123;<br>        <span class="hljs-keyword">int</span> cmp=key.compareTo(h.key);<br>        <span class="hljs-keyword">if</span>(cmp&lt;<span class="hljs-number">0</span>)&#123;<br>            <span class="hljs-keyword">if</span>(!isRed(h.left) &amp;&amp; !isRed(h.left.left))&#123;<br>                h=moveRedLeft(h);<br>            &#125;<br>            h.left=delete(h.left,key);<br>        &#125;<br>        <span class="hljs-keyword">else</span>&#123;<br>            <span class="hljs-comment">//把红链接转到右边,因为原来的红链接都是左斜的，如果最大键在3-节点中，删除会导致树的不平衡,就是把红链接往右边传递</span><br>            <span class="hljs-keyword">if</span>(isRed(h.left))&#123;<br>                h=rotateRight(h);<br>            &#125;<br>            <span class="hljs-comment">//目标节点在底部</span><br>            <span class="hljs-comment">//这里只看右子节点是因为如果右子节点不为空，就说明我们找当前节点的后继节点来替换，</span><br>            <span class="hljs-comment">//如果为空，又因为当前节点必不是2-节点，所以可以放心删除</span><br>            <span class="hljs-keyword">if</span>(h.key.compareTo(key)==<span class="hljs-number">0</span> &amp;&amp; h.right==<span class="hljs-keyword">null</span>)&#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>            &#125;<br>            <span class="hljs-comment">//走到这里有两种情况，要么我们需要找后继节点替换，要么目标节点在当前节点的右边</span><br>            <span class="hljs-comment">//总之都需要向右边的子节点走，所以必须提前右子节点为非2-节点</span><br>            <span class="hljs-comment">//保证要删除的值所在节点必须不能是2-节点,</span><br>            <span class="hljs-keyword">if</span>(!isRed(h.right) &amp;&amp; !isRed(h.right.left))&#123;<br>                h=moveRedRight(h);<br>            &#125;<br>            <span class="hljs-comment">//如果删除的节点不是在底部，那么就拿后继节点替换</span><br>            <span class="hljs-keyword">if</span>(key.compareTo(h.key)==<span class="hljs-number">0</span>)&#123;<br>                h.val=get(root,min(h.right).key);<br>                h.key=min(h.right).key;<br>                h.right=deleteMin(h.right);<br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                <span class="hljs-comment">//否则继续向右边走</span><br>                h.right=delete(h.right,key);<br>            &#125;<br>        &#125;<br>        <span class="hljs-comment">//balance中会调整节点大小</span><br>        <span class="hljs-keyword">return</span> balance(h);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>普林斯顿原始论文与代码:</p>
+<p>(<a target="_blank" rel="noopener" href="https://www.cs.princeton.edu/~rs/talks/LLRB/RedBlack.pdf">https://www.cs.princeton.edu/~rs/talks/LLRB/RedBlack.pdf</a>)</p>
+<p>(<a target="_blank" rel="noopener" href="https://algs4.cs.princeton.edu/33balanced/RedBlackBST.java.html">https://algs4.cs.princeton.edu/33balanced/RedBlackBST.java.html</a>)</p>
+<p>他人博客笔记:</p>
+<p>(<a target="_blank" rel="noopener" href="https://deserts.io/red-black-tree-deletion/">https://deserts.io/red-black-tree-deletion/</a>)</p>
+<p>(<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/41f092a42ec1">https://www.jianshu.com/p/41f092a42ec1</a>)</p>
+<p>(<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/48331a5a11f4">https://www.jianshu.com/p/48331a5a11f4</a>)</p>
+<h2 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h2><p>完整代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">package</span> tools;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LLRBTImpl</span>&lt;<span class="hljs-title">Key</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Comparable</span>&lt;<span class="hljs-title">Key</span>&gt;,<span class="hljs-title">Value</span>&gt; </span>&#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> RED =<span class="hljs-keyword">true</span>;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> BLACK =<span class="hljs-keyword">false</span>;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span></span>&#123;<br>        Key key;<br>        Value val;<br>        Node left;<br>        Node right;<br>        <span class="hljs-keyword">boolean</span> color;<br>        <span class="hljs-keyword">int</span> size;<br>        Node(Key key,Value val,<span class="hljs-keyword">boolean</span> color,<span class="hljs-keyword">int</span> size)&#123;<br>            <span class="hljs-keyword">this</span>.key=key;<br>            <span class="hljs-keyword">this</span>.val=val;<br>            <span class="hljs-keyword">this</span>.color=color;<br>            <span class="hljs-keyword">this</span>.size=size;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">private</span> Node root;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">size</span><span class="hljs-params">(Node x)</span></span>&#123;<br>        <span class="hljs-keyword">if</span>(x==<span class="hljs-keyword">null</span>)&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> x.size;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isRed</span><span class="hljs-params">(Node x)</span></span>&#123;<br>        <span class="hljs-comment">//因为有可能需要判断不存在的叶子节点的颜色</span><br>        <span class="hljs-keyword">if</span>(x==<span class="hljs-keyword">null</span>)&#123;<br>            <span class="hljs-keyword">return</span> BLACK;<br>        &#125;<br>        <span class="hljs-keyword">return</span> x.color== RED;<br>    &#125;<br>    <span class="hljs-comment">//左旋x的右节点必然是红色的，返回的是旋转的根节点</span><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> Node <span class="hljs-title">rotateLeft</span><span class="hljs-params">(Node h)</span></span>&#123;<br>        Node x=h.right;<br>        h.right=x.left;<br>        x.left=h;<br>        x.color=h.color;<br>        h.color=RED;<br>        x.size=h.size;<br>        h.size=size(h.left)+size(h.right)+<span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">return</span> x;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> Node <span class="hljs-title">rotateRight</span><span class="hljs-params">(Node h)</span></span>&#123;<br>        Node x=h.left;<br>        h.left=x.right;<br>        x.right=h;<br>        x.color=h.color;<br>        h.color=RED;<br>        x.size=h.size;<br>        h.size=size(h.left)+size(h.right)+<span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">return</span> x;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">flipColor</span><span class="hljs-params">(Node x)</span></span>&#123;<br>        x.left.color=!x.left.color;<br>        x.right.color=!x.right.color;<br>        x.color=!x.color;<br>    &#125;<br>    <span class="hljs-comment">//返回的是插入节点后红黑树新的根节点</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">put</span><span class="hljs-params">(Key key,Value val)</span></span>&#123;<br>        root=put(root,key,val);<br>        root.color=BLACK;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> Node <span class="hljs-title">put</span><span class="hljs-params">(Node x,Key key,Value val)</span></span>&#123;<br>        <span class="hljs-keyword">if</span>(x==<span class="hljs-keyword">null</span>)&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Node(key,val,RED,<span class="hljs-number">1</span>);<br>        &#125;<br>        <span class="hljs-keyword">int</span> cmp=key.compareTo(x.key);<br>        <span class="hljs-keyword">if</span>(cmp&lt;<span class="hljs-number">0</span>)&#123;<br>            x.left=put(x.left,key,val);<br>        &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(cmp&gt;<span class="hljs-number">0</span>)&#123;<br>            x.right=put(x.right,key,val);<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            x.val=val;<br>        &#125;<br>        <span class="hljs-comment">//修正红黑树的颜色</span><br>        <span class="hljs-comment">//感觉第二个条件也不一定需要吧，只是减少了旋转的次数</span><br>        <span class="hljs-keyword">if</span>(isRed(x.right)&amp;&amp; !isRed(x.left))&#123;<br>            x=rotateLeft(x);<br>        &#125;<br>        <span class="hljs-keyword">if</span>(isRed(x.left) &amp;&amp; isRed(x.left.left))&#123;<br>            x=rotateRight(x);<br>        &#125;<br>        <span class="hljs-keyword">if</span>(isRed(x.left) &amp;&amp; isRed(x.right))&#123;<br>            flipColor(x);<br>        &#125;<br>        x.size=size(x.left)+size(x.right)+<span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">return</span> x;<br>    &#125;<br><br><br>    <span class="hljs-comment">//删除操作的大小修正都在balance中了</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">deleteMin</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">if</span>(root==<span class="hljs-keyword">null</span>)&#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-comment">//为啥要进行这步操作，仅仅是为了假装根节点为3-节点吗？？？</span><br>        <span class="hljs-comment">//做这步操作可能是因为flipColor的写法</span><br>        <span class="hljs-comment">//因为flipColor的操作是把当前节点和两个子节点的颜色取反，如果不把根节点的颜色设红，后面的子节点没法借</span><br>        <span class="hljs-keyword">if</span>(!isRed(root.left)&amp;&amp;!isRed(root.right))&#123;<br>            root.color=RED;<br>        &#125;<br><br>        root=deleteMin(root);<br>        <span class="hljs-keyword">if</span>(root!=<span class="hljs-keyword">null</span>)&#123;<br>            root.color=BLACK;<br>        &#125;<br>    &#125;<br>    <span class="hljs-comment">//能够进入这个函数的当前节点一定不是2节点</span><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> Node <span class="hljs-title">deleteMin</span><span class="hljs-params">(Node h)</span></span>&#123;<br>        <span class="hljs-keyword">if</span>(h.left==<span class="hljs-keyword">null</span>)&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>        &#125;<br>        <span class="hljs-comment">//判断当前节点的左子节点是否为3节点</span><br>        <span class="hljs-keyword">if</span>(!isRed(h.left) &amp;&amp; !isRed(h.left.left))&#123;<br>            <span class="hljs-comment">//左子节点为黑，且它的子节点为黑，表示左子节点是一个2-节点，需要借</span><br>            h=moveRedLeft(h);<br>        &#125;<br>        h.left=deleteMin(h.left);<br>        <span class="hljs-comment">//因为前面借节点的时候，有可能只是从父节点借了一个，</span><br>        <span class="hljs-comment">// 这样就会导致存在right-leaning的红链接，需要修正</span><br>        <span class="hljs-keyword">return</span> balance(h);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">deleteMax</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">if</span>(root==<span class="hljs-keyword">null</span>)&#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(!isRed(root.left)&amp;&amp; !isRed(root.right))&#123;<br>            root.color=RED;<br>        &#125;<br>        root=deleteMax(root);<br>        <span class="hljs-keyword">if</span>(root!=<span class="hljs-keyword">null</span>)&#123;<br>            root.color=BLACK;<br>        &#125;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> Node <span class="hljs-title">deleteMax</span><span class="hljs-params">(Node h)</span></span>&#123;<br>        <span class="hljs-comment">//如果左链接是红色，那么就需要翻转到右边，不然右子节点下面的节点没法向它们的父节点借了</span><br>        <span class="hljs-keyword">if</span>(isRed(h.left))&#123;<br>            h=rotateRight(h);<br>        &#125;<br><br>        <span class="hljs-keyword">if</span>(h.right==<span class="hljs-keyword">null</span>)&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(!isRed(h.right) &amp;&amp; !isRed(h.right.left))&#123;<br>            h=moveRedRight(h);<br>        &#125;<br>        h.right=deleteMax(h.right);<br>        <span class="hljs-keyword">return</span> balance(h);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">delete</span><span class="hljs-params">(Key key)</span></span>&#123;<br>        <span class="hljs-keyword">if</span>(root==<span class="hljs-keyword">null</span>)&#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(!isRed(root.left) &amp;&amp; !isRed(root.right))&#123;<br>            root.color=RED;<br>        &#125;<br>        root=delete(root,key);<br>        <span class="hljs-keyword">if</span>(root!=<span class="hljs-keyword">null</span>) &#123;<br>            root.color = BLACK;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> Node <span class="hljs-title">delete</span><span class="hljs-params">(Node h,Key key)</span></span>&#123;<br>        <span class="hljs-keyword">int</span> cmp=key.compareTo(h.key);<br>        <span class="hljs-keyword">if</span>(cmp&lt;<span class="hljs-number">0</span>)&#123;<br>            <span class="hljs-keyword">if</span>(!isRed(h.left) &amp;&amp; !isRed(h.left.left))&#123;<br>                h=moveRedLeft(h);<br>            &#125;<br>            h.left=delete(h.left,key);<br>        &#125;<br>        <span class="hljs-keyword">else</span>&#123;<br>            <span class="hljs-comment">//把红链接转到右边,因为原来的红链接都是左斜的，如果最大键在3-节点中，删除会导致树的不平衡</span><br>            <span class="hljs-keyword">if</span>(isRed(h.left))&#123;<br>                h=rotateRight(h);<br>            &#125;<br>            <span class="hljs-comment">//目标节点在底部</span><br>            <span class="hljs-keyword">if</span>(h.key.compareTo(key)==<span class="hljs-number">0</span> &amp;&amp; h.right==<span class="hljs-keyword">null</span>)&#123;<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>            &#125;<br>            <span class="hljs-comment">//保证要删除的值所在节点必须不能是2-节点,</span><br>            <span class="hljs-keyword">if</span>(!isRed(h.right) &amp;&amp; !isRed(h.right.left))&#123;<br>                h=moveRedRight(h);<br>            &#125;<br>            <span class="hljs-comment">//如果删除的节点不是在底部，那么就拿后继节点替换</span><br>            <span class="hljs-keyword">if</span>(key.compareTo(h.key)==<span class="hljs-number">0</span>)&#123;<br>                h.val=get(root,min(h.right).key);<br>                h.key=min(h.right).key;<br>                h.right=deleteMin(h.right);<br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                h.right=delete(h.right,key);<br>            &#125;<br>        &#125;<br>        <span class="hljs-comment">//balance中会调整节点大小</span><br>        <span class="hljs-keyword">return</span> balance(h);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Node <span class="hljs-title">min</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">if</span>(root==<span class="hljs-keyword">null</span>)&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> min(root);<br><br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">private</span> Node <span class="hljs-title">min</span><span class="hljs-params">(Node h)</span></span>&#123;<br>        <span class="hljs-keyword">if</span>(h.left==<span class="hljs-keyword">null</span>)&#123;<br>            <span class="hljs-keyword">return</span> h;<br>        &#125;<br>        <span class="hljs-keyword">return</span> min(h.left);<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> Value <span class="hljs-title">get</span><span class="hljs-params">(Key key)</span></span>&#123;<br>        <span class="hljs-keyword">if</span>(root==<span class="hljs-keyword">null</span>)&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> get(root,key);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> Value <span class="hljs-title">get</span><span class="hljs-params">(Node h,Key key)</span></span>&#123;<br>        <span class="hljs-keyword">if</span>(h==<span class="hljs-keyword">null</span>)&#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>        &#125;<br>        <span class="hljs-keyword">int</span> cmp=key.compareTo(h.key);<br>        <span class="hljs-keyword">if</span>(cmp&lt;<span class="hljs-number">0</span>)&#123;<br>            <span class="hljs-keyword">return</span> get(h.left,key);<br>        &#125;<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(cmp&gt;<span class="hljs-number">0</span>)&#123;<br>            <span class="hljs-keyword">return</span> get(h.right,key);<br>        &#125;<span class="hljs-keyword">else</span>&#123;<br>            <span class="hljs-keyword">return</span> h.val;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">//经过一系列反转，头节点必然发生变化，必须返回新的头节点</span><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> Node <span class="hljs-title">balance</span><span class="hljs-params">(Node x)</span></span>&#123;<br>        <span class="hljs-keyword">if</span>(isRed(x.right))&#123;<br>            x=rotateLeft(x);<br>        &#125;<br>        <span class="hljs-keyword">if</span>(isRed(x.left) &amp;&amp; isRed(x.left.left))&#123;<br>            x=rotateRight(x);<br>        &#125;<br>        <span class="hljs-keyword">if</span>(isRed(x.left) &amp;&amp; isRed(x.right))&#123;<br>            flipColor(x);<br>        &#125;<br>        x.size=size(x.left)+size(x.right)+<span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">return</span> x;<br>    &#125;<br>    <span class="hljs-comment">//因为删除的节点必须是红节点，所以就必须把红节点往左侧移动</span><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> Node <span class="hljs-title">moveRedLeft</span><span class="hljs-params">(Node h)</span></span>&#123;<br>        delFlipColor(h);<br>        <span class="hljs-comment">//兄弟节点不是2-节点，可以借</span><br>        <span class="hljs-keyword">if</span>(isRed(h.right.left))&#123;<br>            h.right=rotateRight(h.right);<br>            h=rotateLeft(h);<br>            delFlipColor(h);<br>        &#125;<br>        <span class="hljs-comment">//经过上述一系列反转，头节点早就变化了</span><br>        <span class="hljs-keyword">return</span> h;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> Node <span class="hljs-title">moveRedRight</span><span class="hljs-params">(Node h)</span></span>&#123;<br>        delFlipColor(h);<br>        <span class="hljs-keyword">if</span>(isRed(h.left.left))&#123;<br>            h=rotateRight(h);<br>            delFlipColor(h);<br>        &#125;<br>        <span class="hljs-keyword">return</span> h;<br>    &#125;<br><br>    <span class="hljs-comment">//每调用一次就反转一遍当前节点及左右子节点的颜色</span><br>    <span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">delFlipColor</span><span class="hljs-params">(Node h)</span></span>&#123;<br>        h.color=!h.color;<br>        h.left.color=!h.left.color;<br>        h.right.color=!h.right.color;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>红黑树删除节点<br><a target="_blank" rel="noopener" href="http://jackhuang.online/2019/08/09/red-black-tree%E7%AE%80%E4%BB%8B/">http://jackhuang.online/2019/08/09/red-black-tree%E7%AE%80%E4%BB%8B/</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/java%E9%9B%86%E5%90%88/">java集合</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91-map/">红黑树,map</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021-06-02/HashMap-analysis-part-two.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">HashMap源码分析(二)-插入源码</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021-06-02/ArrayList-source-code-analysis.html">
+                        <span class="hidden-mobile">ArrayList源码分析</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

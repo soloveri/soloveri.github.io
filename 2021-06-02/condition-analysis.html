@@ -1,0 +1,507 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="cras">
+  <meta name="keywords" content="">
+  
+  <title>Condition队列 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Condition队列">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-02 14:10" pubdate>
+        2021年6月2日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      49
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Condition队列</h1>
+            
+            <div class="markdown-body">
+              <p><code>Condition</code>接口的功能用来实现类似于<code>synchronized</code>的await()/signal()通知机制。但是比<code>synchronized</code>的通知机制更丰富、更灵活。我们知道，<code>synchronized</code>锁内部维护了一个<code>waitList</code>保存调用了<code>wait()</code>主动释放锁的线程。AQS的<code>waitList</code>功能就是通过<code>Condition</code>内部维护的<code>Condition queue</code>实现的。</p>
+<p>与AQS的同步队列相似，<code>Condition queue</code>也是由<code>Node</code>类型的节点组成的。但是这里并没有使用<code>Node</code>的prev、next指针组成双向队列，而是通过一组额外的指针<code>firstWaiter</code>和<code>lastWaiter</code>维护了一个<strong>单向队列</strong>。<code>condition queue</code>的组成元素如下图所示：</p>
+<p><img src="images/condition-queue.png" srcset="/img/loading.gif" lazyload alt="condition queue"></p>
+<p>我们发现还有两个没见过的元素：<code>REINTERRUPT</code>和<code>THROW_IE</code>。这两个元素与线程wait之后发生的中断有关，这放到后面再解释。了解了基本情况，那么我们就来看看AQS的wait/notify机制是如何实现的。</p>
+<h2 id="wait机制"><a href="#wait机制" class="headerlink" title="wait机制"></a>wait机制</h2><p>在AQS中，主动挂起是通过<code>await()</code>方法实现的，与<code>synchronized</code>类似，调用<code>await()</code>的线程必须是获得锁的线程。那万一有人故意在没有获得锁的时候调用呢？这种情况如何处理？暂时不清楚。<code>await()</code>方法实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">await</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException </span>&#123;<br>    <span class="hljs-comment">//当线程发生中断时，直接抛出异常</span><br>    <span class="hljs-keyword">if</span> (Thread.interrupted())<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InterruptedException();<br>    <span class="hljs-comment">// 将当前线程加入condition queue</span><br>    Node node = addConditionWaiter();<br>    <span class="hljs-comment">// 释放当前线程持有的锁</span><br>    <span class="hljs-keyword">int</span> savedState = fullyRelease(node);<br>    <span class="hljs-keyword">int</span> interruptMode = <span class="hljs-number">0</span>;<br>    <span class="hljs-comment">// 如果当前线程仍然在condition queue中，那么就主动park，直到被唤醒</span><br>    <span class="hljs-keyword">while</span> (!isOnSyncQueue(node)) &#123;<br>        LockSupport.park(<span class="hljs-keyword">this</span>);<br>        <span class="hljs-keyword">if</span> ((interruptMode = checkInterruptWhileWaiting(node)) != <span class="hljs-number">0</span>)<br>            <span class="hljs-keyword">break</span>;<br>    &#125;<br>    <span class="hljs-comment">// 处理park期间发生中断的情况</span><br>    <span class="hljs-keyword">if</span> (acquireQueued(node, savedState) &amp;&amp; interruptMode != THROW_IE)<br>        interruptMode = REINTERRUPT;<br>    <span class="hljs-keyword">if</span> (node.nextWaiter != <span class="hljs-keyword">null</span>) <span class="hljs-comment">// clean up if cancelled</span><br>        unlinkCancelledWaiters();<br>    <span class="hljs-keyword">if</span> (interruptMode != <span class="hljs-number">0</span>)<br>        reportInterruptAfterWait(interruptMode);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>线程调用<code>await()</code>之后，首先会将当前线程加入<code>condition queue</code>，然后完全释放当前线程持有的锁，最后挂起当前线程直到当前线程被中断或者被<code>signal</code>唤醒。我们先来分析线程从调用<code>await()</code>到被挂起这一阶段所发生的事情。处理park期间发生中断的代码我们在第四部分进行分析。</p>
+<p>调用<code>await</code>后，要做的操作就是将当前线程的包装节点node加入<code>condition queue</code>。加入操作不需要保证线程安全，因为能够调用<code>await()</code>的线程，在正确的情况下都已经获得了锁，具体的实现代码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">// 将当前线程加入队列</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> Node <span class="hljs-title">addConditionWaiter</span><span class="hljs-params">()</span> </span>&#123;<br>    Node t = lastWaiter;<br>    <span class="hljs-comment">// If lastWaiter is cancelled, clean out.</span><br>    <span class="hljs-comment">//如果condition queue不为空，并且最后一个节点不在condition queue中</span><br>    <span class="hljs-comment">// 那么就剔除队列中的所有取消节点</span><br>    <span class="hljs-keyword">if</span> (t != <span class="hljs-keyword">null</span> &amp;&amp; t.waitStatus != Node.CONDITION) &#123;<br>        unlinkCancelledWaiters();<br>        t = lastWaiter;<br>    &#125;<br>    Node node = <span class="hljs-keyword">new</span> Node(Thread.currentThread(), Node.CONDITION);<br>    <span class="hljs-keyword">if</span> (t == <span class="hljs-keyword">null</span>)<br>        firstWaiter = node;<br>    <span class="hljs-keyword">else</span><br>        t.nextWaiter = node;<br>    lastWaiter = node;<br>    <span class="hljs-keyword">return</span> node;<br>&#125;<br><br><span class="hljs-comment">// 剔除所有的非等待节点</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">unlinkCancelledWaiters</span><span class="hljs-params">()</span> </span>&#123;<br>    Node t = firstWaiter;<br>    <span class="hljs-comment">//trail始终指向队列中最后一个有效节点</span><br>    Node trail = <span class="hljs-keyword">null</span>;<br>    <span class="hljs-keyword">while</span> (t != <span class="hljs-keyword">null</span>) &#123;<br>        Node next = t.nextWaiter;<br>        <span class="hljs-comment">//如果当前节点仍不为Node.CONDITION状态</span><br>        <span class="hljs-keyword">if</span> (t.waitStatus != Node.CONDITION) &#123;<br>            t.nextWaiter = <span class="hljs-keyword">null</span>;<br>            <span class="hljs-comment">//如果仍没有找到一个有效节点</span><br>            <span class="hljs-keyword">if</span> (trail == <span class="hljs-keyword">null</span>)<br>                <span class="hljs-comment">// 那么就假设next是有效节点</span><br>                firstWaiter = next;<br>            <span class="hljs-comment">// 如果已经找到了有效节点，那么就跳过当前节点</span><br>            <span class="hljs-keyword">else</span><br>                trail.nextWaiter = next;<br>            <br>            <span class="hljs-keyword">if</span> (next == <span class="hljs-keyword">null</span>)<br>                lastWaiter = trail;<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>            trail = t;<br>        t = next;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>节点入队的逻辑比较简单，如果条件队列的最后一个节点失效了，那么就会一次性剔除队列中所有的失效节点。<strong>那么这里就出现了一个问题：<code>condition queue</code>中的节点的waitStatus什么时候会被修改成非<code>Node.CONDITION</code>？</strong> 有人说是超时、中断会被更改，没找到啊？此问题仍待解决。</p>
+<p>当前线程找到最后一个有效节点入队后，就会释放所有持有的锁。这里为什么要指<strong>所有</strong>？因为有可能发生锁重入的情况。这也就是释放锁为什么叫<code>fullyRelease</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">//释放目前持有的锁，包括可重入</span><br><span class="hljs-function"><span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> <span class="hljs-title">fullyRelease</span><span class="hljs-params">(Node node)</span> </span>&#123;<br>    <span class="hljs-keyword">boolean</span> failed = <span class="hljs-keyword">true</span>;<br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-keyword">int</span> savedState = getState();<br>        <span class="hljs-comment">//调用AQS框架的释放方法，最终又会调用用户自定的tryRelease</span><br>        <span class="hljs-keyword">if</span> (release(savedState)) &#123;<br>            failed = <span class="hljs-keyword">false</span>;<br>            <span class="hljs-keyword">return</span> savedState;<br>        &#125;<br>        <span class="hljs-comment">//释放锁失败，则说明当前线程根本就没有持有锁 </span><br>        <span class="hljs-keyword">else</span> &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalMonitorStateException();<br>        &#125;<br>    &#125; <span class="hljs-keyword">finally</span> &#123;<br>        <span class="hljs-keyword">if</span> (failed)<br>            node.waitStatus = Node.CANCELLED;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在前面我们曾说到，调用<code>await()</code>的线程必须持有锁，但是有可能有人故意在没有持有锁的线程中调用<code>await()</code>。在<code>await()</code>中并没有对这一特殊情况进行处理，其实AQS是把这个检查交给用户自己去定义了。例如在<code>reentrantLock</code>自定义的<code>tryRelease</code>中，如果当前线程没有持有锁，则释放失败。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">tryRelease</span><span class="hljs-params">(<span class="hljs-keyword">int</span> releases)</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> c = getState() - releases;<br>    <span class="hljs-comment">//当前线程并没有持有锁，直接抛出异常</span><br>    <span class="hljs-keyword">if</span> (Thread.currentThread() != getExclusiveOwnerThread())<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalMonitorStateException();<br>    <span class="hljs-keyword">boolean</span> free = <span class="hljs-keyword">false</span>;<br>    <span class="hljs-keyword">if</span> (c == <span class="hljs-number">0</span>) &#123;<br>        free = <span class="hljs-keyword">true</span>;<br>        setExclusiveOwnerThread(<span class="hljs-keyword">null</span>);<br>    &#125;<br>    setState(c);<br>    <span class="hljs-keyword">return</span> free;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果释放锁时抛出异常，那么会将当前已经进入<code>condition queue</code>的节点的waitStatus设为Node.CANCELLED（原来这也是在条件队列中生成取消节点的一种方法）。释放锁之后需要做的就是主动挂起当前线程，直到被中断或者被<code>signal</code>。从下面的代码中我们发现，如果当前线程被唤醒之后仍在条件队列中，那么继续会被主动挂起。？？？将被挂起的线程移除条件队列难道不是通过<code>await()</code>实现的？是谁？我们想想，正常情况下，是谁把挂起的线程唤醒的？是<code>signal</code>或者发生的中断。那么有没有可能就是这二者偷偷做的呢？</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">await</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException </span>&#123;<br>    ...<br>    <span class="hljs-comment">//被唤醒之后，如果当前节点不在同步队列中，那么继续park</span><br>    <span class="hljs-keyword">while</span> (!isOnSyncQueue(node)) &#123;<br>        LockSupport.park(<span class="hljs-keyword">this</span>);<br>        <span class="hljs-keyword">if</span> ((interruptMode = checkInterruptWhileWaiting(node)) != <span class="hljs-number">0</span>)<br>            <span class="hljs-keyword">break</span>;<br>    &#125;<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="signal机制"><a href="#signal机制" class="headerlink" title="signal机制"></a>signal机制</h2><p>当某个条件满足时，线程可以通过调用<code>signal()</code>方法唤醒<code>condition queue</code>中的某个线程或者使用<code>signalALL()</code>方法唤醒<code>condition queue</code>中的所有线程。注意，调用<code>await()</code>的线程和调用<code>signal()</code>的线程不是同一个哦。<code>signal()</code>和<code>signalALL()</code>的具体实现差不多。我先详细一下已下<code>singal()</code>吧。具体代码如下所示：</p>
+<figure class="highlight java"><figcaption><span>"signal"</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">signal</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// 如果当前锁没有被调用signal的线程独占</span><br>    <span class="hljs-keyword">if</span> (!isHeldExclusively())<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalMonitorStateException();<br>    Node first = firstWaiter;<br>    <span class="hljs-comment">// 如果首节点不为空，则调用doSignal唤醒线程</span><br>    <span class="hljs-keyword">if</span> (first != <span class="hljs-keyword">null</span>)<br>        doSignal(first);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doSignal</span><span class="hljs-params">(Node first)</span> </span>&#123;<br>    <span class="hljs-keyword">do</span> &#123;<br>        <span class="hljs-keyword">if</span> ( (firstWaiter = first.nextWaiter) == <span class="hljs-keyword">null</span>)<br>            lastWaiter = <span class="hljs-keyword">null</span>;<br>        first.nextWaiter = <span class="hljs-keyword">null</span>;<br>    &#125; <span class="hljs-keyword">while</span> (!transferForSignal(first) &amp;&amp;<br>                (first = firstWaiter) != <span class="hljs-keyword">null</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>signal()</code>函数首先会检查当前调用<code>signal()</code>函数的线程是否独占锁。如果是，那么则调用<code>doSingal</code>唤醒条件队列中第一个节点。而在<code>doSignal</code>中，又会循环调用<code>transferForSignal()</code>。这个方法的名字很有意思，transform，transform什么？我们进入具体的方法瞅瞅。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">transferForSignal</span><span class="hljs-params">(Node node)</span> </span>&#123;<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    * If cannot change waitStatus, the node has been cancelled.</span><br><span class="hljs-comment">    */</span><br>    <span class="hljs-keyword">if</span> (!compareAndSetWaitStatus(node, Node.CONDITION, <span class="hljs-number">0</span>))<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    * Splice onto queue and try to set waitStatus of predecessor to</span><br><span class="hljs-comment">    * indicate that thread is (probably) waiting. If cancelled or</span><br><span class="hljs-comment">    * attempt to set waitStatus fails, wake up to resync (in which</span><br><span class="hljs-comment">    * case the waitStatus can be transiently and harmlessly wrong).</span><br><span class="hljs-comment">    */</span><br>    Node p = enq(node);<br>    <span class="hljs-keyword">int</span> ws = p.waitStatus;<br>    <span class="hljs-keyword">if</span> (ws &gt; <span class="hljs-number">0</span> || !compareAndSetWaitStatus(p, ws, Node.SIGNAL))<br>        LockSupport.unpark(node.thread);<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>transferForSignal</code>首先尝试使用CAS将node的<code>waitStatus</code>从Node.CONDITION更改为0。如果更改失败，则说明当前node已经被cancel了。那么为什么不可能是被中断了呢？node被中断后，waitStatus会被更改为0，这个CAS也会失败啊。这个CAS失败好像没有关系，应该会继续<code>transforForSignal</code>条件队列中的下一个节点。所以最坏的局面就是条件队列中的线程全部被唤醒了。</p>
+<p><code>transferForSignal</code>如果第一步的CAS成功，则会通过调用<code>enq</code>把当前节点node加入同步队列，如果当前node的前向节点<code>p</code>不是一个一个可靠的爹，说明当前node的唤醒操作不能依赖<code>p</code>，需要手动调用<code>unpark</code>唤醒当前node表示的线程。</p>
+<p>如果<code>transferForSignal</code>返回true，则说明成功<code>signal</code>一个线程，可以停止<code>doSignal</code>的循环操作了。这样就成功执行了<code>signal</code>操作。那么<code>signalAll</code>是什么样的操作呢？是将条件队列中的节点依次加入同步队列吗？来瞅瞅。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">signalAll</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (!isHeldExclusively())<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalMonitorStateException();<br>    Node first = firstWaiter;<br>    <span class="hljs-keyword">if</span> (first != <span class="hljs-keyword">null</span>)<br>        doSignalAll(first);<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doSignalAll</span><span class="hljs-params">(Node first)</span> </span>&#123;<br>    lastWaiter = firstWaiter = <span class="hljs-keyword">null</span>;<br>    <span class="hljs-keyword">do</span> &#123;<br>        Node next = first.nextWaiter;<br>        first.nextWaiter = <span class="hljs-keyword">null</span>;<br>        transferForSignal(first);<br>        first = next;<br>    &#125; <span class="hljs-keyword">while</span> (first != <span class="hljs-keyword">null</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>signalAll</code>内部会调用与<code>doSignal</code>类似的函数<code>doSignalAll</code>。<code>doSignalAll</code>的流程与<code>doSignal</code>高度类似。其内部也是循环调用<code>transferForSignal</code>将条件队列中节点依次加入同步队列。只不过<code>doSingalAll</code>的循环操作终止条件不再是<code>transferForSignal</code>操作是否成功，而是遍历完条件队列中的所有节点后才会终止循环操作。</p>
+<h2 id="signal机制与中断的交互"><a href="#signal机制与中断的交互" class="headerlink" title="signal机制与中断的交互"></a>signal机制与中断的交互</h2><p>通过了解<code>signal</code>机制，我们知道，一旦调用<code>signal</code>，一般情况下则会将条件队列的首节点加入条件队列争锁。但是如果线程在等待资源期间收到了中断请求怎么办？对于这个问题，我们需要拆分成两个小问题：</p>
+<ol>
+<li>中断是谁处理的？</li>
+<li>发生中断的情况会有哪几种？</li>
+</ol>
+<p>对于第一个问题，我们首先想想线程是如何进入条件队列等待资源的？是通过调用<code>await</code>完成。那么在等待期间收到中断请求的处理是不是也应该由<code>await</code>完成？我们来看看<code>await</code>的我们未分析的后半部分：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">await</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException </span>&#123;<br>    ...<br>    <span class="hljs-keyword">while</span> (!isOnSyncQueue(node)) &#123;<br>        <span class="hljs-comment">//调用park函数后当前线程被主动挂起</span><br>        LockSupport.park(<span class="hljs-keyword">this</span>);<br>        <span class="hljs-keyword">if</span> ((interruptMode = checkInterruptWhileWaiting(node)) != <span class="hljs-number">0</span>)<br>            <span class="hljs-keyword">break</span>;<br>    &#125;<br>    <span class="hljs-comment">// 处理park期间发生中断的情况</span><br>    <span class="hljs-keyword">if</span> (acquireQueued(node, savedState) &amp;&amp; interruptMode != THROW_IE)<br>        interruptMode = REINTERRUPT;<br>    <span class="hljs-keyword">if</span> (node.nextWaiter != <span class="hljs-keyword">null</span>) <span class="hljs-comment">// clean up if cancelled</span><br>        unlinkCancelledWaiters();<br>    <span class="hljs-keyword">if</span> (interruptMode != <span class="hljs-number">0</span>)<br>        reportInterruptAfterWait(interruptMode);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在<code>await</code>中调用<code>park</code>后，如果被唤醒，则会执行<code>checkInterruptWhileWaiting</code>判断是否结束循环，如果能够成功跳出循环，则会通过三个<code>if</code>处理具体的情况，到底是怎么处理的我们后文再看。我们再来看看第二个问题：可能出现的情况也就两种：</p>
+<ul>
+<li>中断发生时，线程还没有被<code>signal</code></li>
+<li>中断发生时，线程已经被别的线程<code>signal</code>了</li>
+</ul>
+<p>那么中断和<code>signal</code>到底谁先发生是怎么判断的呢？这肯定是<code>checkInterruptWhileWaiting</code>处理的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> <span class="hljs-title">checkInterruptWhileWaiting</span><span class="hljs-params">(Node node)</span> </span>&#123;<br>    <span class="hljs-comment">//清除中断位</span><br>    <span class="hljs-keyword">return</span> Thread.interrupted() ?<br>        (transferAfterCancelledWait(node) ? THROW_IE : REINTERRUPT) :<br>        <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><code>checkInterruptWhileWaiting</code>的内容很简单，如果没有发生中断，则返回0。否则继续调用<code>transferAfterCancelledWait</code>判断：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">transferAfterCancelledWait</span><span class="hljs-params">(Node node)</span> </span>&#123;<br>    <span class="hljs-comment">//如果是中断先发生，那么CAS会成功，否则就表示当前node已经被signal了</span><br>    <span class="hljs-keyword">if</span> (compareAndSetWaitStatus(node, Node.CONDITION, <span class="hljs-number">0</span>)) &#123;<br>        enq(node);<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>    &#125;<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    * If we lost out to a signal(), then we can&#x27;t proceed</span><br><span class="hljs-comment">    * until it finishes its enq().  Cancelling during an</span><br><span class="hljs-comment">    * incomplete transfer is both rare and transient, so just</span><br><span class="hljs-comment">    * spin.</span><br><span class="hljs-comment">    */</span><br>    <span class="hljs-comment">// 如果是signal先发生，为什么一定要保证节点加入了同步队列？</span><br>    <span class="hljs-comment">// 因为如果直接返回false，后续会执行acquireQueued抢锁</span><br>    <span class="hljs-comment">// node都未加入同步队列怎么抢？必然会发生奇怪的不可预期的事情</span><br>    <span class="hljs-keyword">while</span> (!isOnSyncQueue(node))<br>        Thread.yield();<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>&#125;<br><br><span class="hljs-comment">// 判断node是否已经处于同步队列</span><br><span class="hljs-function"><span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">isOnSyncQueue</span><span class="hljs-params">(Node node)</span> </span>&#123;<br>    <span class="hljs-comment">//条件队列中的node是不会设置prev与next指针的</span><br><br>    <span class="hljs-keyword">if</span> (node.waitStatus == Node.CONDITION || node.prev == <span class="hljs-keyword">null</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>    <span class="hljs-keyword">if</span> (node.next != <span class="hljs-keyword">null</span>) <span class="hljs-comment">// If has successor, it must be on queue</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    * node.prev can be non-null, but not yet on queue because</span><br><span class="hljs-comment">    * the CAS to place it on queue can fail. So we have to</span><br><span class="hljs-comment">    * traverse from tail to make sure it actually made it.  It</span><br><span class="hljs-comment">    * will always be near the tail in calls to this method, and</span><br><span class="hljs-comment">    * unless the CAS failed (which is unlikely), it will be</span><br><span class="hljs-comment">    * there, so we hardly ever traverse much.</span><br><span class="hljs-comment">    */</span><br>    <span class="hljs-keyword">return</span> findNodeFromTail(node);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>如果中断先于<code>signal</code>发生，那么则会调用<code>enq</code>将当前node加入同步队列并返回<code>true</code>。否则自旋直到当前节点成功加入同步队列，随后返回<code>false</code>。这里我存在一个问题：如果<code>signal</code>先于中断发生，那么为什么一定要保证当前node加入了同步队列呢？</p>
+<p>可以看出，<code>transferAfterCancelledWait</code>就是判断中断和<code>signal</code>到底谁先发生的关键函数。如果中断先发生，则返回true，否则返回false。在返回之后，我们再次回到<code>checkInterruptWhileWaiting</code>。如果中断发生，那么则返回<code>THROW_IE</code>，否则返回<code>REINTERRUPT</code>。这两个是什么意思？通过下面的注释，我们了解到，<code>THROW_IE</code>表示在<code>wait</code>退出后，需要抛出一个中断异常，否则只是重新设置中断位。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-comment">/** Mode meaning to reinterrupt on exit from wait */</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> REINTERRUPT =  <span class="hljs-number">1</span>;<br><span class="hljs-comment">/** Mode meaning to throw InterruptedException on exit from wait */</span><br><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> THROW_IE    = -<span class="hljs-number">1</span>;<br></code></pre></td></tr></table></figure>
+
+<p>我们的视角再次回到<code>await</code>，在判断中断与<code>signal</code>谁先发生后，则会跳出循环（如果中断和<code>signal</code>都没有发生，那么则会继续调用park挂起自己）。在跳出循环后，会执行三个<code>if</code>条件，基本流程我都以注释的形式写在了代码中，还是比较容易理解的。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">await</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> InterruptedException </span>&#123;<br>    ...<br>    <span class="hljs-keyword">while</span> (!isOnSyncQueue(node)) &#123;<br>        <span class="hljs-comment">//调用park函数后当前线程被主动挂起</span><br>        LockSupport.park(<span class="hljs-keyword">this</span>);<br>        <span class="hljs-keyword">if</span> ((interruptMode = checkInterruptWhileWaiting(node)) != <span class="hljs-number">0</span>)<br>            <span class="hljs-keyword">break</span>;<br>    &#125;<br>    <span class="hljs-comment">// 处理park期间发生中断的情况</span><br><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    * 需要获得锁savedState次，因为需要与调用await之前线程持有锁的状态一致</span><br><span class="hljs-comment">    */</span><br>    <span class="hljs-keyword">if</span> (acquireQueued(node, savedState) &amp;&amp;<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    * acquireQueueed返回true表示在抢锁过程中发生了中断了，</span><br><span class="hljs-comment">    * 如果没有后半部分的判断条件，那么原来可能interruptMode=THROW_IE,THROW_IE在await结束后</span><br><span class="hljs-comment">    * 需要抛出中断异常，但是因为在抢锁的过程中又发生了中断，没有后半部分的条件</span><br><span class="hljs-comment">    * interruptMode被覆盖为REINTERRUPT这样仅仅只会重新设置中断位，丢失了原本需要抛出的中断异常</span><br><span class="hljs-comment">    */</span><br>    interruptMode != THROW_IE)<br>        interruptMode = REINTERRUPT;<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    * 在node被移出条件队列后，需要设置node的nextWaiter指针</span><br><span class="hljs-comment">    * 在中断先发生的情况下，node只是被加入了同步队列，而没有设置nextWaiter指针</span><br><span class="hljs-comment">    * 但是signal先发生的情况下，node的nextWaiter已经被修改了，所以使用if判断</span><br><span class="hljs-comment">    */</span><br>    <span class="hljs-keyword">if</span> (node.nextWaiter != <span class="hljs-keyword">null</span>) <span class="hljs-comment">// clean up if cancelled</span><br>        unlinkCancelledWaiters();<br>    <span class="hljs-keyword">if</span> (interruptMode != <span class="hljs-number">0</span>)<br>    <span class="hljs-comment">// node被移出条件队列后，要根据interruptMode的值来决定是抛出异常还是重新设置中断标志位</span><br>        reportInterruptAfterWait(interruptMode);<br>&#125;<br><br><span class="hljs-comment">// 根据interruptMode的值来决定是抛出异常还是设置中断标志位</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">reportInterruptAfterWait</span><span class="hljs-params">(<span class="hljs-keyword">int</span> interruptMode)</span></span><br><span class="hljs-function">    <span class="hljs-keyword">throws</span> InterruptedException </span>&#123;<br>    <span class="hljs-comment">// 直接抛出中断异常</span><br>    <span class="hljs-keyword">if</span> (interruptMode == THROW_IE)<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> InterruptedException();<br>    <span class="hljs-comment">//重新设置中断位</span><br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (interruptMode == REINTERRUPT)<br>        selfInterrupt();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>我认为需要再对条件语句<code>if (acquireQueued(node, savedState) &amp;&amp; interruptMode != THROW_IE)</code>做一下说明，一旦一个线程被唤醒：</p>
+<ol>
+<li>如果中断先于<code>signal</code>发生，那么不管在抢锁的过程中有没有发生中断，因为if的后半部分的条件无法通过，最后的结果就是抛出中断。if的后半个条件就是为了处理此类情况，避免了中断被覆盖</li>
+<li>如果<code>signal</code>先于中断发生，如果抢锁的过程中发生了中断，那么无论后半部分的条件是否通过，都不会影响最后设置中断位的结果</li>
+</ol>
+<p>无论是因为中断还是<code>signal</code>谁先发生，唤醒后都会转移到同步队列抢锁，<strong>抢到锁才会考虑后续是否需要补一个中断异常。</strong></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>条件队列还是比较简单的，最复杂的地方就是<code>signal</code>与中断如果都发生了，那么情况就比较棘手。条件队列仅通过额外的<code>nextWaiter</code>指针维护一个单向队列，如果线程的资源要求达到满足，那么就会将节点从条件队列移步至同步队列抢锁。</p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000016462281">逐行分析AQS源码(4)——Condition接口实现</a></li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/condition-queue/">condition queue</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021-06-02/ReentrantLock-analysis.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ReentrantLock源码解析</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021-06-02/index-of-mysql.html">
+                        <span class="hidden-mobile">mysql中的索引</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

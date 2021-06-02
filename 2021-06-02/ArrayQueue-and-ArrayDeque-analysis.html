@@ -1,0 +1,565 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
+  <link rel="icon" href="/img/favicon.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#2f4154">
+  <meta name="description" content="">
+  <meta name="author" content="cras">
+  <meta name="keywords" content="">
+  
+  <title>ArrayQueue与ArrayDeque源码分析 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/default.png') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="ArrayQueue与ArrayDeque源码分析">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-02 14:10" pubdate>
+        2021年6月2日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      49
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">ArrayQueue与ArrayDeque源码分析</h1>
+            
+            <div class="markdown-body">
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这里将<code>ArrayQueue</code>与<code>ArrayDeque</code>放在一起分析是因为二者都是基于数组实现的队列。</p>
+<h2 id="0x0-小试牛刀-ArrayQueue源码分析"><a href="#0x0-小试牛刀-ArrayQueue源码分析" class="headerlink" title="0x0 小试牛刀-ArrayQueue源码分析"></a>0x0 小试牛刀-ArrayQueue源码分析</h2><p>在进入主题之前我们思考一个问题,如果我们用数组实现一个传统的FIFO队列,是有可能出现数组未满,但是队列已满的假象的。这是因为我们在不断弹出元素的同时,队列的头指针就会不断朝着队列尾部的方向移动,那么头指针之前的空间就被浪费了,而采用链表实现的队列就不会出现这种情况。</p>
+<p>为了解决上述的问题,我们采用循环数组的方式实现单项队列。所谓的循环数组,就是逻辑上数组的头和尾是连接在一起的,我们维护一个头指针和一个尾指针。那么为了我们能够知道什么时候数组被填充满了,我们需要使用额外的一个元素空间来标记队列是否真的满了。如果队列真的满了,那么头指针和尾指针就会重合。否则头指针和尾指针之间至少会有一个元素的空闲空间大小,如下图所示:</p>
+<p><img src="images/circular-queue.drawio.svg" srcset="/img/loading.gif" lazyload alt="循环队列示意图"></p>
+<p>接下来进入主题,简要分析以下它的源码。</p>
+<p>下面是<code>ArrayQueue</code>的构造函数:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ArrayQueue</span>&lt;<span class="hljs-title">T</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractList</span>&lt;<span class="hljs-title">T</span>&gt; </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> capacity;<br>    <span class="hljs-keyword">private</span> T[] queue;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> head;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> tail;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ArrayQueue</span><span class="hljs-params">(<span class="hljs-keyword">int</span> capacity)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.capacity = capacity + <span class="hljs-number">1</span>;<span class="hljs-comment">//把额外用作标记的空间加上</span><br>        <span class="hljs-keyword">this</span>.queue = newArray(capacity + <span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">this</span>.head = <span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">this</span>.tail = <span class="hljs-number">0</span>;<br>    &#125;<br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以看到,<code>ArrayQueue</code>是通过数组<code>queue</code>保存内容的。其中维持了两个指针<code>head</code>和<code>tail</code>。capacity表示队列的容量。在构造函数中,可以看到会对<code>capacity</code>加1,这是为什么?还记得上面说过的循环队列需要使用的额外的一个元素空间来标记队列是否满了?没错,这个加1就是把那个额外空间加上了。</p>
+<p>接下来看看它的<code>add</code>函数。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">add</span><span class="hljs-params">(T o)</span> </span>&#123;<br>    queue[tail] = o;<br>    <span class="hljs-keyword">int</span> newtail = (tail + <span class="hljs-number">1</span>) % capacity;<br>    <span class="hljs-keyword">if</span> (newtail == head)<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IndexOutOfBoundsException(<span class="hljs-string">&quot;Queue full&quot;</span>);<br>    tail = newtail;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>; <span class="hljs-comment">// we did add something</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<p><code>ArrayQueue</code>因为是单项队列,所以只能从队尾进元素,然后tail指针取模向后移动一个。很可惜,<code>add</code>方法并不会自动扩容,在队列满后,会抛出指针异常,但是我们可以手动调用<code>resize()</code>方法进行扩容,很麻烦。所以没人用是正常的。接下来看看<code>resize()</code>方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">resize</span><span class="hljs-params">(<span class="hljs-keyword">int</span> newcapacity)</span> </span>&#123;<br>    <span class="hljs-comment">//获取当前队列内的元素个数</span><br>    <span class="hljs-keyword">int</span> size = size();<br>    <span class="hljs-keyword">if</span> (newcapacity &lt; size)<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IndexOutOfBoundsException(<span class="hljs-string">&quot;Resizing would lose data&quot;</span>);<br>    <span class="hljs-comment">//仍然需要把标记空间加上</span><br>    newcapacity++;<br>    <span class="hljs-keyword">if</span> (newcapacity == <span class="hljs-keyword">this</span>.capacity)<br>        <span class="hljs-keyword">return</span>;<br>    T[] newqueue = newArray(newcapacity);<br>    <span class="hljs-comment">//将原始队列中的元素复制到新队列中,从新队列的0位置开始复制</span><br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; size; i++)<br>        newqueue[i] = get(i);<br>    <span class="hljs-keyword">this</span>.capacity = newcapacity;<br>    <span class="hljs-keyword">this</span>.queue = newqueue;<br>    <span class="hljs-keyword">this</span>.head = <span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">this</span>.tail = size;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">size</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-comment">// Can&#x27;t use % here because it&#x27;s not mod: -3 % 2 is -1, not +1.</span><br>    <span class="hljs-comment">//在java中负数取模的结果符号与被取模的数符号相同</span><br>    <span class="hljs-keyword">int</span> diff = tail - head;<br>    <span class="hljs-keyword">if</span> (diff &lt; <span class="hljs-number">0</span>)<br>        diff += capacity;<br>    <span class="hljs-keyword">return</span> diff;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> T <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> size = size();<br>    <span class="hljs-keyword">if</span> (i &lt; <span class="hljs-number">0</span> || i &gt;= size) &#123;<br>        <span class="hljs-keyword">final</span> String msg = <span class="hljs-string">&quot;Index &quot;</span> + i + <span class="hljs-string">&quot;, queue size &quot;</span> + size;<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IndexOutOfBoundsException(msg);<br>    &#125;<br>    <span class="hljs-comment">//加上偏移量head,就能准确定位老队列中的元素了</span><br>    <span class="hljs-keyword">int</span> index = (head + i) % capacity;<br>    <span class="hljs-keyword">return</span> queue[index];<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>单项队列<code>ArrayQueue</code>的源码还是比较简单的,下面才是这篇文章的核心。</p>
+<h2 id="0x1-主菜-ArrayDeque源码分析"><a href="#0x1-主菜-ArrayDeque源码分析" class="headerlink" title="0x1  主菜-ArrayDeque源码分析"></a>0x1  主菜-ArrayDeque源码分析</h2><h3 id="0x1-1-重要字段与构造函数"><a href="#0x1-1-重要字段与构造函数" class="headerlink" title="0x1-1 重要字段与构造函数"></a>0x1-1 重要字段与构造函数</h3><p>双向队列<code>ArraDeque</code>底层也是数组实现的,当然与<code>ArrayQueue</code>一样,采用循环数组。下面是<code>ArrayDeque</code>的字段与构造方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ArrayDeque</span>&lt;<span class="hljs-title">E</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractCollection</span>&lt;<span class="hljs-title">E</span>&gt;</span><br><span class="hljs-class">                           <span class="hljs-keyword">implements</span> <span class="hljs-title">Deque</span>&lt;<span class="hljs-title">E</span>&gt;, <span class="hljs-title">Cloneable</span>, <span class="hljs-title">Serializable</span></span><br><span class="hljs-class"></span>&#123;<br><br>     <span class="hljs-comment">//底层采用object类型数组保存元素,双向队列的容量就是该数组的长度,并且总是2的倍数</span><br>     <span class="hljs-comment">//数组永远都不会填满,并且没有用于储存队列元素的数组元素都必定为null</span><br>    <span class="hljs-keyword">transient</span> Object[] elements; <span class="hljs-comment">// non-private to simplify nested class access</span><br><br>    <span class="hljs-comment">//双端队列的头指针,只有队列中没有存储元素时head才会与tail相遇</span><br>    <span class="hljs-keyword">transient</span> <span class="hljs-keyword">int</span> head;<br><br>    <span class="hljs-comment">//双端队列的尾指针,指向下一个元素的存储位置</span><br>    <span class="hljs-keyword">transient</span> <span class="hljs-keyword">int</span> tail;<br><br>    <span class="hljs-comment">//默认最小容量为8</span><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> MIN_INITIAL_CAPACITY = <span class="hljs-number">8</span>;<br><br>    <span class="hljs-comment">//无参构造方法</span><br>    <span class="hljs-comment">//队列为空,那么就将队列扩充为16</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ArrayDeque</span><span class="hljs-params">()</span> </span>&#123;<br>        elements = <span class="hljs-keyword">new</span> Object[<span class="hljs-number">16</span>];<br>    &#125;<br><br>    <span class="hljs-comment">//指定初始容量的构造方法,但是都会把容量升级为最小的2的倍数</span><br>    <span class="hljs-comment">//allocateElements用于升级容量至最小的2的倍数,这将在后面详解</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ArrayDeque</span><span class="hljs-params">(<span class="hljs-keyword">int</span> numElements)</span> </span>&#123;<br>        allocateElements(numElements);<br>    &#125;<br><br>    <span class="hljs-comment">//使用一个集合初始化队列,但是还是首先会把容量扩充至最最近的2的倍数,</span><br>    <span class="hljs-comment">//然后再将原集合中的左右元素拷贝至队列中</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">ArrayDeque</span><span class="hljs-params">(Collection&lt;? extends E&gt; c)</span> </span>&#123;<br>        allocateElements(c.size());<br>        addAll(c);<br>    &#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>可以看到,最重要的就是扩充容量函数<code>allocateElements</code>,这个函数比较复杂,有点难理解。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><br><span class="hljs-comment">//该函数内部调用了calculateSize计算新的容量(计算最近的2的倍数)</span><br><span class="hljs-comment">//然后分配数组</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">allocateElements</span><span class="hljs-params">(<span class="hljs-keyword">int</span> numElements)</span> </span>&#123;<br>    elements = <span class="hljs-keyword">new</span> Object[calculateSize(numElements)];<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">int</span> <span class="hljs-title">calculateSize</span><span class="hljs-params">(<span class="hljs-keyword">int</span> numElements)</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> initialCapacity = MIN_INITIAL_CAPACITY;<br>    <span class="hljs-comment">// Find the best power of two to hold elements.</span><br>    <span class="hljs-comment">// Tests &quot;&lt;=&quot; because arrays aren&#x27;t kept full即可.</span><br>    <span class="hljs-comment">//如果目标容量还小于规定的最小容量8,那么直接返回即可</span><br>    <span class="hljs-keyword">if</span> (numElements &gt;= initialCapacity) &#123;<br>        initialCapacity = numElements;<br>        initialCapacity |= (initialCapacity &gt;&gt;&gt;  <span class="hljs-number">1</span>);<br>        initialCapacity |= (initialCapacity &gt;&gt;&gt;  <span class="hljs-number">2</span>);<br>        initialCapacity |= (initialCapacity &gt;&gt;&gt;  <span class="hljs-number">4</span>);<br>        initialCapacity |= (initialCapacity &gt;&gt;&gt;  <span class="hljs-number">8</span>);<br>        initialCapacity |= (initialCapacity &gt;&gt;&gt; <span class="hljs-number">16</span>);<br>        initialCapacity++;<br><br>        <span class="hljs-keyword">if</span> (initialCapacity &lt; <span class="hljs-number">0</span>)   <span class="hljs-comment">// Too many elements, must back off</span><br>            initialCapacity &gt;&gt;&gt;= <span class="hljs-number">1</span>;<span class="hljs-comment">// Good luck allocating 2 ^ 30 elements</span><br>    &#125;<br>    <span class="hljs-keyword">return</span> initialCapacity;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>可以看到<code>calculateSize()</code>的代码很魔性,很有必要好好解释一哈。以下面32bit的数(作为初始容量newElements)为例:</p>
+<blockquote>
+<p>0000 0010 1101 0011 0000 0000 0000 0000</p>
+</blockquote>
+<p><strong>目标数据</strong>为离newElements最近的2的整数:</p>
+<blockquote>
+<p>0000 0100 0000 0000 0000 0000 0000 0000</p>
+</blockquote>
+<p>操作步骤如下:</p>
+<ol>
+<li>先执行<code>initialCapacity |= (initialCapacity &gt;&gt;&gt;  1)</code>,即将<code>initialCapacity</code>无符号向右移动1位:</li>
+</ol>
+<blockquote>
+<p>0000 0001 0110 1001 1000 0000 0000 0000</p>
+</blockquote>
+<p>然后与自身进行或操作更新<code>initialCapacity</code>,这样就保证了左边第1位和第2位都为1。</p>
+<blockquote>
+<p>0000 0011 1111 1011 1000 0000 0000 0000</p>
+</blockquote>
+<ol start="2">
+<li>再执行<code>initialCapacity |= (initialCapacity &gt;&gt;&gt;  2)</code>,将<code>initialCapacity</code>无符号向右移动2位:</li>
+</ol>
+<blockquote>
+<p>0000 0000 1111 1110 1110 0000 0000 0000</p>
+</blockquote>
+<p>然后与自身进行或操作更新<code>initialCapacity</code>,这样就保证了从左侧第一个1开始,后四位都是1。</p>
+<blockquote>
+<p>0000 0011 1111 1111 1110 0000 0000 0000</p>
+</blockquote>
+<ol start="3">
+<li>执行<code>initialCapacity |= (initialCapacity &gt;&gt;&gt;  4)</code>,将<code>initialCapacity</code>无符号向右移动4位:</li>
+</ol>
+<blockquote>
+<p>0000 0000 0011 1111 1111 1110 0000 0000</p>
+</blockquote>
+<p>然后与自身进行或操作更新<code>initialCapacity</code>,这样就保证了从左侧第一个1开始,后八位都是1。</p>
+<blockquote>
+<p>0000 0011 1111 1111 1111 1110 0000 0000</p>
+</blockquote>
+<ol start="4">
+<li>执行<code>initialCapacity |= (initialCapacity &gt;&gt;&gt;  8)</code>,将<code>initialCapacity</code>无符号向右移动8位:</li>
+</ol>
+<blockquote>
+<p>0000 0000 0000 0011 1111 1111 1111 1110</p>
+</blockquote>
+<p>然后与自身进行或操作更新<code>initialCapacity</code>,这样就保证了从左侧第一个1开始,后十六位都是1。</p>
+<blockquote>
+<p>0000 0011 1111 1111 1111 1111 1111 1110</p>
+</blockquote>
+<ol start="5">
+<li>执行<code>initialCapacity |= (initialCapacity &gt;&gt;&gt;  16)</code>,将<code>initialCapacity</code>无符号向右移动16位:</li>
+</ol>
+<blockquote>
+<p>0000 0000 0000 0000 0000 0011 1111 1111 </p>
+</blockquote>
+<p>然后与自身进行或操作更新<code>initialCapacity</code>,这样就保证了从左侧第一个1开始,后三十二位都是1(当然最右边会有些bit丢失,但是这并没有关系。)</p>
+<blockquote>
+<p>0000 0011 1111 1111 1111 1111 1111 1111</p>
+</blockquote>
+<p>6.最后将自身加1,就得到了目标数据:</p>
+<blockquote>
+<p>0000 0100 0000 0000 0000 0000 0000 0000</p>
+</blockquote>
+<p>是离<code>0000 0010 1101 0011 0000 0000 0000 0000</code>最近的2的整数倍容量。我只能说,这段代码是真的妙,太妙了。</p>
+<p>然后如果传进来的目标容易第31为1,那么求得的新容量第32位就会变为1,变成了负数2^31,所以还需要处理以下,如果新容量发生溢出,那么就将2^32向右移一位,返回<br>2^30,这已经是<code>ArrayDeque</code>的极限容量。</p>
+<h3 id="0x1-2-ArrayDeque的增删查"><a href="#0x1-2-ArrayDeque的增删查" class="headerlink" title="0x1-2 ArrayDeque的增删查"></a>0x1-2 ArrayDeque的增删查</h3><p>对于<code>ArrayDeque</code>的增删查方法也值得我们关注,下面我们先来看看add方法。</p>
+<h4 id="增"><a href="#增" class="headerlink" title="增"></a>增</h4><p><code>ArrayDeque</code>是直接继承<code>AbstractCllecetion</code>的,所以并没由在add中调用offer类方法。相反,在add类中调用了offer类。在<code>ArrayDeque</code>中,add类和offer类并没有差别。因为<code>ArrayDeque</code>会自动扩容,永远也不会出现插入失败的情况。这里就以add类的方法为例,代码如下所示:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addFirst</span><span class="hljs-params">(E e)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (e == <span class="hljs-keyword">null</span>)<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NullPointerException();<br>        elements[head = (head - <span class="hljs-number">1</span>) &amp; (elements.length - <span class="hljs-number">1</span>)] = e;<br>        <span class="hljs-keyword">if</span> (head == tail)<br>            doubleCapacity();<br>    &#125;<br><br>    <br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addLast</span><span class="hljs-params">(E e)</span> </span>&#123;<br>        <span class="hljs-keyword">if</span> (e == <span class="hljs-keyword">null</span>)<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NullPointerException();<br>        elements[tail] = e;<br>        <span class="hljs-keyword">if</span> ( (tail = (tail + <span class="hljs-number">1</span>) &amp; (elements.length - <span class="hljs-number">1</span>)) == head)<br>            doubleCapacity();<br>    &#125;<br><br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">offerFirst</span><span class="hljs-params">(E e)</span> </span>&#123;<br>        addFirst(e);<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">offerLast</span><span class="hljs-params">(E e)</span> </span>&#123;<br>        addLast(e);<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>    &#125;<br></code></pre></td></tr></table></figure>
+<p><code>addFirst()</code>首先会判断元素是否为<code>null</code>,<code>ArrayDeque</code>中是允许存在null元素的,但是不允许我们存储<code>null</code>。注意下面真正进行存储的代码:</p>
+<blockquote>
+<p>elements[head = (head - 1) &amp; (elements.length - 1)] = e;</p>
+</blockquote>
+<p>这里首先会将head减1,为什么要减呢?因为我们是采用循环数组存储的,如果当前head指向0,调用<code>addFirst</code>是将元素往头部存的,自然需要将head往前移动。指针移动如下图所示:</p>
+<p><img src="images/ArrayDeque-ciecular.drawio.svg" srcset="/img/loading.gif" lazyload alt="指针移动"></p>
+<p>但是减1有可能会将head变为负数。所以需要与<code>elements.length - 1</code>进行与操作。这里举个例子好理解:</p>
+<p>以32位计算机为例,如果当前我们的队列容量为<code>128</code>,也就是<code>1 0000 0000</code>，减1后会变为<code>1111 1111</code>:</p>
+<ul>
+<li><p>如果head移动后为负数:假设为-1,也就是<code>1000,...,000 0000</code>(最高位符号位为1,中间有许多1就不写了),与<code>1111 1111</code>相与,那么结果就还是127,刚好是队列中的最后一个位置。</p>
+</li>
+<li><p>如果head减1后仍为正数:那么就是对head取模,结果仍然是head,非常巧妙。</p>
+</li>
+</ul>
+<p>最后,如果再添加新元素完成后,队列容量已满(头指针head与尾指针tail相遇),那么就调用<code>doubleCapacity</code>使容量翻倍。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">doubleCapacity</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">assert</span> head == tail;<br>    <span class="hljs-keyword">int</span> p = head;<br>    <span class="hljs-keyword">int</span> n = elements.length;<br>    <span class="hljs-comment">//r就是尾指针到数组最后一个位置之间的元素数量</span><br>    <span class="hljs-keyword">int</span> r = n - p; <span class="hljs-comment">// number of elements to the right of p</span><br>    <span class="hljs-keyword">int</span> newCapacity = n &lt;&lt; <span class="hljs-number">1</span>;<br>    <span class="hljs-comment">//容量无法扩充,已到达2^31,抛出状态异常</span><br>    <span class="hljs-keyword">if</span> (newCapacity &lt; <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalStateException(<span class="hljs-string">&quot;Sorry, deque too big&quot;</span>);<br>    <span class="hljs-comment">//否则就申请新数组并将元素拷贝至此</span><br>    Object[] a = <span class="hljs-keyword">new</span> Object[newCapacity];<br>    <br>    System.arraycopy(elements, p, a, <span class="hljs-number">0</span>, r);<br>    <span class="hljs-comment">//最后一位为长度</span><br>    System.arraycopy(elements, <span class="hljs-number">0</span>, a, r, p);<br>    elements = a;<br>    head = <span class="hljs-number">0</span>;<br>    tail = n;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这里仍然以下图为例(队列容量为8):</p>
+<p><img src="images/ArrayDeque-double-cap.drawio.svg" srcset="/img/loading.gif" lazyload alt="double-cap"></p>
+<p>首先从新队列的头开始复制r个元素,然后接着再r后面复制p个元素,完成扩容。</p>
+<h3 id="删"><a href="#删" class="headerlink" title="删"></a>删</h3><p>从下面的代码可以得知:remove系列在底层是调用了poll系列的方法,所以还是直接调用remove系列方法方便。调用poll系列是如果队列为空时则返回null,否则返回弹出的元素。没有什么特别的。查头尾元素也非常普通,这里就不单列出来了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><code class="hljs java"><br><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">removeFirst</span><span class="hljs-params">()</span> </span>&#123;<br>    E x = pollFirst();<br>    <span class="hljs-keyword">if</span> (x == <span class="hljs-keyword">null</span>)<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NoSuchElementException();<br>    <span class="hljs-keyword">return</span> x;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">removeLast</span><span class="hljs-params">()</span> </span>&#123;<br>    E x = pollLast();<br>    <span class="hljs-keyword">if</span> (x == <span class="hljs-keyword">null</span>)<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NoSuchElementException();<br>    <span class="hljs-keyword">return</span> x;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">pollFirst</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> h = head;<br>    <span class="hljs-meta">@SuppressWarnings(&quot;unchecked&quot;)</span><br>    E result = (E) elements[h];<br>    <span class="hljs-comment">// Element is null if deque empty</span><br>    <span class="hljs-comment">//如果队列为空,那么还是可以查到null的</span><br>    <span class="hljs-keyword">if</span> (result == <span class="hljs-keyword">null</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>    elements[h] = <span class="hljs-keyword">null</span>;     <span class="hljs-comment">// Must null out slot</span><br>    head = (h + <span class="hljs-number">1</span>) &amp; (elements.length - <span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">pollLast</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> t = (tail - <span class="hljs-number">1</span>) &amp; (elements.length - <span class="hljs-number">1</span>);<br>    <span class="hljs-meta">@SuppressWarnings(&quot;unchecked&quot;)</span><br>    E result = (E) elements[t];<br>    <span class="hljs-keyword">if</span> (result == <span class="hljs-keyword">null</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>    elements[t] = <span class="hljs-keyword">null</span>;<br>    tail = t;<br>    <span class="hljs-keyword">return</span> result;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="occurrence方法"><a href="#occurrence方法" class="headerlink" title="occurrence方法"></a>occurrence方法</h3><p>occurrence系列有两个方法,<code>removeFirstOccurrence</code>是删除第一次出现的指定元素,对应的<code>removeLastOccurrence</code>就是删除最后一次出现的元素。具体的删除操作由<code>delete</code>完成,为了在删除时移动最少的元素,所以<code>delete</code>还是有点小复杂。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs java"><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">removeFirstOccurrence</span><span class="hljs-params">(Object o)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (o == <span class="hljs-keyword">null</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>    <span class="hljs-keyword">int</span> mask = elements.length - <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">int</span> i = head;<br>    Object x;<br>    <span class="hljs-keyword">while</span> ( (x = elements[i]) != <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-keyword">if</span> (o.equals(x)) &#123;<br>            delete(i);<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>        &#125;<br>        <span class="hljs-comment">//从head开始,往tail方向遍历</span><br>        i = (i + <span class="hljs-number">1</span>) &amp; mask;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">removeLastOccurrence</span><span class="hljs-params">(Object o)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (o == <span class="hljs-keyword">null</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>    <span class="hljs-keyword">int</span> mask = elements.length - <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">int</span> i = (tail - <span class="hljs-number">1</span>) &amp; mask;<br>    Object x;<br>    <span class="hljs-keyword">while</span> ( (x = elements[i]) != <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-keyword">if</span> (o.equals(x)) &#123;<br>            delete(i);<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>        &#125;<br>        <span class="hljs-comment">//从tail开始,往head方向遍历</span><br>        i = (i - <span class="hljs-number">1</span>) &amp; mask;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>下面是delete的源码,为了实现最小次数的移动还真是费心了,具体的解释见注释吧。其中检查函数的作用就是检查还能不能在原数组中进行了移动数据的操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><code class="hljs java"><br><span class="hljs-comment">//如果是移动i后面的那部分数据,就返回true</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">delete</span><span class="hljs-params">(<span class="hljs-keyword">int</span> i)</span> </span>&#123;<br>    checkInvariants();<br>    <span class="hljs-keyword">final</span> Object[] elements = <span class="hljs-keyword">this</span>.elements;<br>    <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> mask = elements.length - <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> h = head;<br>    <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> t = tail;<br>    <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> front = (i - h) &amp; mask;<br>    <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> back  = (t - i) &amp; mask;<br><br>    <span class="hljs-comment">// Invariant: head &lt;= i &lt; tail mod circularity</span><br>    <span class="hljs-keyword">if</span> (front &gt;= ((t - h) &amp; mask))<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> ConcurrentModificationException();<br><br>    <span class="hljs-comment">//下面这么复杂完全是为了减少移动次数</span><br>    <span class="hljs-comment">//如果前半段少于后半段数据,那么就移动前半段</span><br>    <span class="hljs-keyword">if</span> (front &lt; back) &#123;<br>        <span class="hljs-comment">//此时h和i之间并没有跨越下标0</span><br>        <span class="hljs-keyword">if</span> (h &lt;= i) &#123;<br>            System.arraycopy(elements, h, elements, h + <span class="hljs-number">1</span>, front);<br>        &#125; <span class="hljs-keyword">else</span> &#123; <span class="hljs-comment">// Wrap around</span><br>        <span class="hljs-comment">//h和i之间跨域了下标0</span><br>            <span class="hljs-comment">//先将下标0~i之间的元素从0~i-1移动至1~i</span><br>            System.arraycopy(elements, <span class="hljs-number">0</span>, elements, <span class="hljs-number">1</span>, i);<br>            <span class="hljs-comment">//把数组中的最后一个元素拷贝至数组下标0位置</span><br>            elements[<span class="hljs-number">0</span>] = elements[mask];<br>            <span class="hljs-comment">//把数组中h~mask-1移动至h+1~mask</span><br>            System.arraycopy(elements, h, elements, h + <span class="hljs-number">1</span>, mask - h);<br>        &#125;<br>        elements[h] = <span class="hljs-keyword">null</span>;<br>        <span class="hljs-comment">//更新head</span><br>        head = (h + <span class="hljs-number">1</span>) &amp; mask;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        <span class="hljs-comment">//后半段数据少于前半段,那么就移动后半段,并返回true</span><br>        <span class="hljs-keyword">if</span> (i &lt; t) &#123; <span class="hljs-comment">// Copy the null tail as well</span><br>            System.arraycopy(elements, i + <span class="hljs-number">1</span>, elements, i, back);<br>            tail = t - <span class="hljs-number">1</span>;<br>        &#125; <span class="hljs-keyword">else</span> &#123; <span class="hljs-comment">// Wrap around</span><br>            System.arraycopy(elements, i + <span class="hljs-number">1</span>, elements, i, mask - i);<br>            elements[mask] = elements[<span class="hljs-number">0</span>];<br>            System.arraycopy(elements, <span class="hljs-number">1</span>, elements, <span class="hljs-number">0</span>, t);<br>            tail = (t - <span class="hljs-number">1</span>) &amp; mask;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>    &#125;<br>&#125;<br><br><span class="hljs-comment">//就是检查有没有移动数据的空间</span><br><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">void</span> <span class="hljs-title">checkInvariants</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">assert</span> elements[tail] == <span class="hljs-keyword">null</span>;<br>    <span class="hljs-keyword">assert</span> head == tail ? elements[head] == <span class="hljs-keyword">null</span> :<br>        (elements[head] != <span class="hljs-keyword">null</span> &amp;&amp;<br>         elements[(tail - <span class="hljs-number">1</span>) &amp; (elements.length - <span class="hljs-number">1</span>)] != <span class="hljs-keyword">null</span>);<br>    <span class="hljs-keyword">assert</span> elements[(head - <span class="hljs-number">1</span>) &amp; (elements.length - <span class="hljs-number">1</span>)] == <span class="hljs-keyword">null</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="0x3-课后总结"><a href="#0x3-课后总结" class="headerlink" title="0x3 课后总结"></a>0x3 课后总结</h2><p>ArrayDeque采用数组实现循环队列,容量始终是2次幂。在单线程中:</p>
+<ul>
+<li>作为栈,比<code>Stack</code>快,因为不需要保证线程安全</li>
+<li>作为队列比LinkedList快,因为不需要构造节点</li>
+</ul>
+<p>不过一般没啥人用吧,就当为分析LinkedList提前开路了。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/1c1c3f24762e">https://www.jianshu.com/p/1c1c3f24762e</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Queue/">Queue</a>
+                    
+                      <a class="hover-with-bg" href="/tags/ArrayQueue/">ArrayQueue</a>
+                    
+                      <a class="hover-with-bg" href="/tags/ArrayDeque/">ArrayDeque</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021-06-02/ArrayList-source-code-analysis.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">ArrayList源码分析</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021-06-02/volatile-keyword.html">
+                        <span class="hidden-mobile">volatile关键字</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
