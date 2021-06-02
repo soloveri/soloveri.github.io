@@ -182,57 +182,6 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/Interrupt-mechanism.html" target="_self">
-          中断机制
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/Interrupt-mechanism.html" target="_self">
-          
-          
-            
-          
-          在多线程环境下，终止一个线程的任务最好的方法是通过中断。而Java的中断类似于通知协作机制，被中断的线程并不会立即停止自己的任务，而是仅仅收到了中断的通知，具体怎么处理收到的中断，这需要用户自己定义。那么为什么说Java的中断类似于通知机制？我们首先需要了解中断到底做了什么。
-1. 实施中断Java中的中断操作只需要调用目标线程的interrupt()方法即可完成。那么这个方法到底做了什么？我们来
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:53" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/interrupt/">interrupt</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
         <a href="/2021-06-02/JMM.html" target="_self">
           Java内存模型
         </a>
@@ -253,7 +202,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:53" pubdate>
+            <time datetime="2021-06-02 17:45" pubdate>
               2021-06-02
             </time>
           </div>
@@ -307,7 +256,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:53" pubdate>
+            <time datetime="2021-06-02 17:45" pubdate>
               2021-06-02
             </time>
           </div>
@@ -359,7 +308,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:53" pubdate>
+            <time datetime="2021-06-02 17:45" pubdate>
               2021-06-02
             </time>
           </div>
@@ -410,7 +359,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:53" pubdate>
+            <time datetime="2021-06-02 17:45" pubdate>
               2021-06-02
             </time>
           </div>
@@ -461,7 +410,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:53" pubdate>
+            <time datetime="2021-06-02 17:45" pubdate>
               2021-06-02
             </time>
           </div>
@@ -511,7 +460,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:53" pubdate>
+            <time datetime="2021-06-02 17:45" pubdate>
               2021-06-02
             </time>
           </div>
@@ -561,7 +510,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:53" pubdate>
+            <time datetime="2021-06-02 17:45" pubdate>
               2021-06-02
             </time>
           </div>
@@ -579,6 +528,57 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/atomic-class/">atomic class</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/CopyOnWrite-collections-analysis.html" target="_self">
+          CopyOnWrite容器分析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/CopyOnWrite-collections-analysis.html" target="_self">
+          
+          
+            
+          
+          1. 预备知识J.U.C包提供了两种copy-on-wirte容器：CopyOnWriteList与CopyOnWriteSet。不了解copy-on-write技术的，可以去看理解 Copy On Write 技术。
+CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList内容的操作都基于copy-on-write，对于同一个元素，插入操作happ
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 17:45" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/concurrent-collections/">concurrent collections</a>
             
           </div>
         
@@ -613,7 +613,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:53" pubdate>
+            <time datetime="2021-06-02 17:45" pubdate>
               2021-06-02
             </time>
           </div>
@@ -665,7 +665,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 15:53" pubdate>
+            <time datetime="2021-06-02 17:45" pubdate>
               2021-06-02
             </time>
           </div>
