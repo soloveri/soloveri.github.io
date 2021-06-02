@@ -182,265 +182,6 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/HashMap-analysis-part-three.html" target="_self">
-          HashMap源码分析(三)-删除源码
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/HashMap-analysis-part-three.html" target="_self">
-          
-          
-            
-          
-          HashMap的删除操作一般通过remove完成。在remove方法中,同样存在fast-fail机制,不了解的可以去看看ArrayList中的fast-fail。通过fast-fail机制检查后,会调用真正的删除方法removeNode,如下面代码所示：
-12345678910111213141516171819202122232425262728293031323334353637383940
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 18:25" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/HashMap/">HashMap</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/Queue-interface-analysis.html" target="_self">
-          Queue接口分析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/Queue-interface-analysis.html" target="_self">
-          
-          
-            
-          
-          0x1 基本概念Queue接口继承自超级接口Collection,其不仅实现了Coolection中的基本方法,而且额外增加了适用于队列的增、删、差方法。并且对应这三种操作,Queue提供了两套方法,一套在操作失败时抛出异常,另一套在操作失败时返回null,不过在文档中说到:
-
-The latter form of the insert operation is designed specific
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 18:25" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Queue/">Queue</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/HashMap-analysis-part-one.html" target="_self">
-          HashMap源码分析(一)-HashMap中的那些常量
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/HashMap-analysis-part-one.html" target="_self">
-          
-          
-            
-          
-          前言HashMap实现了接口Map、Cloneable、Serializable,后两个都是标记接口,注意HasnMap的clone方法也仅仅是浅复制(shadow copy)。而Map是跟Collection并列的顶级接口。HashMap并且继承抽象类AbstractMap。
-本文将首先简单说说接口Map,因为AbstarctMap作为实现接口Map的骨架,仅实现了一些基本方法,没什么好说的。
-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 18:25" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/HashMap/">HashMap</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/HashMap-analysis-part-two.html" target="_self">
-          HashMap源码分析(二)-插入源码
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/HashMap-analysis-part-two.html" target="_self">
-          
-          
-            
-          
-          HashMap中最常用的就是put(key,value)函数与remove函数,而且这些函数还会包含RB树与list的相互转换,比较复杂。值得认真推敲。
-1. put方法下面JDk1.8中,HashMap的put源码。其又在内部调用了putVal。
-1234567public V put(K key, V value) &#123;    return putVal(hash(key), key,
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 18:25" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/HashMap/">HashMap</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/red-black-tree.html" target="_self">
-          红黑树入门
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/red-black-tree.html" target="_self">
-          
-          
-            
-          
-          本篇将带你一步一步了解红黑树，当然大部分内容来源于算法(第4版)一书，我仅仅对一点内容总结了自己的心得。
-在谈谈红黑树之前，我们先来回顾一下二叉排序树(balanced sort tree),因为红黑树是从BST的概念演化而来的。BST的定义很简单，对于一个节点来说，左树的所有节点的值都小于当前节点的值，右树所有节点的值都大于当前节点的值。但是在最坏情况下BST的高度会达到O(N),效率太差。
-我
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 18:25" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E9%9B%86%E5%90%88/">java集合</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91-map/">红黑树,map</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
         <a href="/2021-06-02/ArrayQueue-and-ArrayDeque-analysis.html" target="_self">
           ArrayQueue与ArrayDeque源码分析
         </a>
@@ -461,7 +202,7 @@ The latter form of the insert operation is designed specific
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 18:25" pubdate>
+            <time datetime="2021-06-02 18:35" pubdate>
               2021-06-02
             </time>
           </div>
@@ -515,7 +256,7 @@ The latter form of the insert operation is designed specific
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 18:25" pubdate>
+            <time datetime="2021-06-02 18:35" pubdate>
               2021-06-02
             </time>
           </div>
@@ -532,19 +273,18 @@ The latter form of the insert operation is designed specific
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/volatile-keyword.html" target="_self">
-          volatile关键字
+        <a href="/2021-06-02/List-interface-analysis.html" target="_self">
+          
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/volatile-keyword.html" target="_self">
+        <a href="/2021-06-02/List-interface-analysis.html" target="_self">
           
           
             
           
-          1. volatile是什么volatile被称为轻量级的synchronzied，它保证了内存的可见性、指令的有序性。我们通过经典的懒汉单例模式看看这个关键字的作用。
-"线程不安全"12345678910111213public class DraconianSingleton &#123;    private static DraconianSingleton instance;    pu
+          
         </a>
       </p>
 
@@ -552,7 +292,59 @@ The latter form of the insert operation is designed specific
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 18:25" pubdate>
+            <time datetime="2021-06-02 18:35" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/IO-of-Java.html" target="_self">
+          Java中的IO分类
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/IO-of-Java.html" target="_self">
+          
+          
+            
+          
+          Java中的IO种类看似繁杂，实则有规律可循。
+按照功能可以分为：
+
+缓冲区
+memory
+文件
+Data Conversation
+Object
+管道pipe
+print，用于打印
+peeking ahead，预读
+流合并
+filter
+数据流转换，从字符流转到字节流
+按行读取，建议使用字符流，字节流已过时
+
+
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 18:35" pubdate>
               2021-06-02
             </time>
           </div>
@@ -561,7 +353,7 @@ The latter form of the insert operation is designed specific
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+              <a href="/categories/java/">java</a>
             
           </div>
         
@@ -569,7 +361,7 @@ The latter form of the insert operation is designed specific
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/volatile/">volatile</a>
+              <a href="/tags/IO/">IO</a>
             
           </div>
         
@@ -583,19 +375,20 @@ The latter form of the insert operation is designed specific
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html" target="_self">
-          多线程为什么会不安全
+        <a href="/2021-06-02/access-control-of-Java.html" target="_self">
+          思考java中的访问控制
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html" target="_self">
+        <a href="/2021-06-02/access-control-of-Java.html" target="_self">
           
           
             
           
-          在聊多线程为什么不安全之前，需要说一哈学习多线程编程的路线。多线程说到底就是为了提高效率，而这个效率的提高是有安全风险的，这也是多线程为啥这么难的原因。而编写一个多线程的程序可以分为三个部分：分工、同步、互斥。
-分工更偏向于设计，这里是提高性能的关键。相当于项目经理分配任务。与现实世界非常相似, 不过是一个线程执行完了一个任务，如何通知执行后续任务的线程开工而已。 这里多说一句，计算机里的这个模型
+          java中权限修饰符作用于两个地方，一个是类，另一个是类的成员。下面将分别详细讲解。
+java中的类权限修饰符在讲解类的权限的修饰符前，我们需要明确一个概念。在java中，任何可执行的语句都必须放在一个类中的方法，比如调用方法。不像c++，在类外也能定义函数，在java中，我们say no。不管你是创建别的类的对象，还是创建方法，成员，等等，这都必须放在一个类中。
+java中的类只能有两种权限修饰
         </a>
       </p>
 
@@ -603,7 +396,7 @@ The latter form of the insert operation is designed specific
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 18:25" pubdate>
+            <time datetime="2021-06-02 18:35" pubdate>
               2021-06-02
             </time>
           </div>
@@ -612,7 +405,7 @@ The latter form of the insert operation is designed specific
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+              <a href="/categories/java/">java</a>
             
           </div>
         
@@ -620,7 +413,7 @@ The latter form of the insert operation is designed specific
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">基本概念</a>
+              <a href="/tags/%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6/">访问控制</a>
             
           </div>
         
@@ -634,18 +427,20 @@ The latter form of the insert operation is designed specific
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/basic-API.html" target="_self">
-          java视角下的Linux IO API
+        <a href="/2021-06-02/analysis-of-dynamic-proxy.html" target="_self">
+          动态代理的原理
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/basic-API.html" target="_self">
+        <a href="/2021-06-02/analysis-of-dynamic-proxy.html" target="_self">
           
           
             
           
-          
+          1. 前言代理分为静态代理和动态代理。静态代理就是我们手动地将代理类写出来，而动态代理就是由虚拟机在运行时自动地将代理类构造出来。下面我就简单地阐述静态代理的用法以及缺点。
+首先在下面声明需要代理的类：
+123456789101112131415161718192021222324252627282930313233//实体类实现的接口public interface UserDao &#123;
         </a>
       </p>
 
@@ -653,7 +448,7 @@ The latter form of the insert operation is designed specific
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 18:25" pubdate>
+            <time datetime="2021-06-02 18:35" pubdate>
               2021-06-02
             </time>
           </div>
@@ -662,7 +457,7 @@ The latter form of the insert operation is designed specific
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/IO/">IO</a>
+              <a href="/categories/java/">java</a>
             
           </div>
         
@@ -670,7 +465,224 @@ The latter form of the insert operation is designed specific
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/IO%E6%A8%A1%E5%9E%8B/">IO模型</a>
+              <a href="/tags/dynamic-proxy/">dynamic proxy</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/the-GC-of-Java.html" target="_self">
+          Java中的GC
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/the-GC-of-Java.html" target="_self">
+          
+          
+            
+          
+          Java中的自动垃圾回收是其一大优点。本文将从以下三个方面简介相关知识：
+
+如何定义垃圾
+垃圾回收的时机
+垃圾回收的策略
+具体的垃圾回收器
+
+在介绍相关的知识前，我们需要知道一个词：stop-the-world，这个词专门为GC而生，因为Java会在进行垃圾回收的时候除了GC线程外，会暂停所有工作线程，也就是所谓的“停止世界运转”。那么GC优化时，我们的目标可能就是减少GC时stop-the-wo
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 18:35" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java/">java</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/garbage-collection/">garbage collection</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/the-String-of-Java.html" target="_self">
+          java的字符串
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/the-String-of-Java.html" target="_self">
+          
+          
+            
+          
+          java的所有字符串都会保存在全局字符串池中，在了解全局字符串池之前，我们需要明白：在java中，所有的字符串字面值都会被解释为一个字符串对象。
+
+All string literals in Java programs, such as “abc”, are implemented as instances of this class
+
+接下来我们聊聊全局字符串池。全局字符串池在jdk1.7后也
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 18:35" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Java/">Java</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/String/">String</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/LinkedList-source-code-analysis.html" target="_self">
+          LinkedList源码分析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/LinkedList-source-code-analysis.html" target="_self">
+          
+          
+            
+          
+          LinkedList弥补了ArrayList插入元素慢的缺点,当然也带了查找元素慢的缺点。LinkedList同时实现了List和Queue接口,其底层采用双向链表实现。当然LinkedList也有一个父类AbstractSequentialList用于实现一般的方法。下面是LinkedList的继承图:
+
+可以看到LinkedList实现了Cloneable、Serializable接口,当然也
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 18:35" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/LinkedList/">LinkedList</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-02/ArrayList-source-code-analysis.html" target="_self">
+          ArrayList源码分析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-02/ArrayList-source-code-analysis.html" target="_self">
+          
+          
+            
+          
+          前言分析源码初体验，第一次分析个比较简单的集合类ArrayList。我把重点放在了ArrayList实现的接口、继承的类以及几个主要的类方法上。
+0x0 ArrayList继承图我们首先来看看ArrayList中的继承图。
+
+ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable、Seriablizable、List接口。
+这里我首先有了两个
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-02 18:35" pubdate>
+              2021-06-02
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/ArrayList/">ArrayList</a>
             
           </div>
         
