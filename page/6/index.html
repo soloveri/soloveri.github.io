@@ -184,19 +184,22 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/LinkedBlockingQueue-analysis.html" target="_self">
-          LinkedBlockingQueue与ArrayBlockingQueue分析
+        <a href="/2021-06-03/Executor-interface.html" target="_self">
+          Exectuor框架解析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/LinkedBlockingQueue-analysis.html" target="_self">
+        <a href="/2021-06-03/Executor-interface.html" target="_self">
           
           
             
           
-          LinkedBlockingQueue使用两个锁的原因是为了实现读写分离，聊率更高。如果只有一个锁，生产者和消费者只能有一个角色在工作。
-ArrayBlockingQueue为何不适合锁分离这个主要是循环队列的原因，主要是数组和链表不同，链表队列的添加和头部的删除，都是只和一个节点相关，添加只往后加就可以，删除只从头部去掉就好。为了防止head和tail相互影响出现问题，这里就需要原子性的计数器，
+          1. Executor接口在JUC包中，还提供了Executor框架用来实现线程池，我们经常使用的线程池都是从Executor派生而来。我们可以看看整个Executor框架的继承结构：
+
+那么在这个框架中，我们第一步应该需要了解它的核心接口Executor。这个接口的作用在它的注释中说的很清楚：
+
+An object that executes submitted Runnable tasks. 
         </a>
       </p>
 
@@ -204,7 +207,7 @@ ArrayBlockingQueue为何不适合锁分离这个主要是循环队列的原因�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:44" pubdate>
+            <time datetime="2021-06-03 15:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -221,57 +224,7 @@ ArrayBlockingQueue为何不适合锁分离这个主要是循环队列的原因�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/concurrent-collections/">concurrent collections</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/SynchronousQueue-analysis.html" target="_self">
-          SynchronousQueue分析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/SynchronousQueue-analysis.html" target="_self">
-          
-          
-            
-          
-          
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:44" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/concurrent-collections/">concurrent collections</a>
+              <a href="/tags/Executor/">Executor</a>
             
           </div>
         
@@ -306,7 +259,7 @@ ArrayBlockingQueue为何不适合锁分离这个主要是循环队列的原因�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:44" pubdate>
+            <time datetime="2021-06-03 15:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -358,7 +311,7 @@ ArrayBlockingQueue为何不适合锁分离这个主要是循环队列的原因�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:44" pubdate>
+            <time datetime="2021-06-03 15:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -414,7 +367,7 @@ ArrayBlockingQueue为何不适合锁分离这个主要是循环队列的原因�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:44" pubdate>
+            <time datetime="2021-06-03 15:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -445,22 +398,24 @@ ArrayBlockingQueue为何不适合锁分离这个主要是循环队列的原因�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/what-is-IOC.html" target="_self">
-          IOC到底是什么？
+        <a href="/2021-06-03/ThreadPoolExecutor.html" target="_self">
+          ThreadPoolExecutor线程池解析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/what-is-IOC.html" target="_self">
+        <a href="/2021-06-03/ThreadPoolExecutor.html" target="_self">
           
           
             
           
-          这篇博文：浅谈IOC–说清楚IOC是什么讲的不错，我在此就是做一些摘抄。
+          0. 预备知识在了解ThreadPoolExecutor之前，我们首先需要了解一些基本概念，下图是ThreadPoolExecutor的部分核心字段。我先依次对其进行解释。
 
-1. IOC是什么？IOC，Inversion of Control，译为控制反转。
-1996年，Michael Mattson在其论文:Object-Oriented FrameworksA survey of methodological issues中，首先提出了IOC这个概念，IOC是一个方法论。
-简单来说，IOC
+#0.1 线程池状态JUC为线程池规定了5种状态，如下图所示：
+对于每种状态，含义如下：
+
+RUNNING: 线程池能够接受任务并处理阻塞队列中的任务
+SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部执行完
         </a>
       </p>
 
@@ -468,7 +423,7 @@ ArrayBlockingQueue为何不适合锁分离这个主要是循环队列的原因�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:44" pubdate>
+            <time datetime="2021-06-03 15:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -477,7 +432,7 @@ ArrayBlockingQueue为何不适合锁分离这个主要是循环队列的原因�
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/framework/">framework</a>
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
             
           </div>
         
@@ -485,7 +440,7 @@ ArrayBlockingQueue为何不适合锁分离这个主要是循环队列的原因�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Spring/">Spring</a>
+              <a href="/tags/Executor/">Executor</a>
             
           </div>
         
@@ -520,7 +475,7 @@ ArrayBlockingQueue为何不适合锁分离这个主要是循环队列的原因�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:44" pubdate>
+            <time datetime="2021-06-03 15:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -557,7 +512,7 @@ ArrayBlockingQueue为何不适合锁分离这个主要是循环队列的原因�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:44" pubdate>
+            <time datetime="2021-06-03 15:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -575,61 +530,6 @@ ArrayBlockingQueue为何不适合锁分离这个主要是循环队列的原因�
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/synchronized/">synchronized</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/what-is-spring-mvc.html" target="_self">
-          Spring MVC原理
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/what-is-spring-mvc.html" target="_self">
-          
-          
-            
-          
-          1. MVC是什么？MVC是一种设计规范，并不是一种设计模式。该规范将一个web分割成3部分来处理：请求首先经过控制器Controller；经过业务处理得到数据模型Model；最后通过model渲染视图View并响应给客户端。
-我们完全利用Servlet自己实现MVC规范，如下图所示：
-基本流程为：
-
-用户发请求
-Servlet（作为Controller）接收请求数据，解析数据模型model，并调
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:44" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/framework/">framework</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Spring-MVC/">Spring MVC</a>
             
           </div>
         
@@ -665,7 +565,7 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:44" pubdate>
+            <time datetime="2021-06-03 15:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -683,6 +583,111 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/ReentrantLock/">ReentrantLock</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/condition-analysis.html" target="_self">
+          Condition队列
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/condition-analysis.html" target="_self">
+          
+          
+            
+          
+          Condition接口的功能用来实现类似于synchronized的await()/signal()通知机制。但是比synchronized的通知机制更丰富、更灵活。我们知道，synchronized锁内部维护了一个waitList保存调用了wait()主动释放锁的线程。AQS的waitList功能就是通过Condition内部维护的Condition queue实现的。
+与AQS的同步队列相似，
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 15:50" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/condition-queue/">condition queue</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/what-is-IOC.html" target="_self">
+          IOC到底是什么？
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/what-is-IOC.html" target="_self">
+          
+          
+            
+          
+          这篇博文：浅谈IOC–说清楚IOC是什么讲的不错，我在此就是做一些摘抄。
+
+1. IOC是什么？IOC，Inversion of Control，译为控制反转。
+1996年，Michael Mattson在其论文:Object-Oriented FrameworksA survey of methodological issues中，首先提出了IOC这个概念，IOC是一个方法论。
+简单来说，IOC
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 15:50" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/framework/">framework</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Spring/">Spring</a>
             
           </div>
         
