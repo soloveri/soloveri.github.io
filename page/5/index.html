@@ -184,326 +184,6 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/ConcurrentHashMap-analysis-II.html" target="_self">
-          ConcurrentHashMap扩容分析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/ConcurrentHashMap-analysis-II.html" target="_self">
-          
-          
-            
-          
-          前言本篇继承于ConcurrentHashMap架构解析，在了解了ConcurrentHashMap的整体架构与插入删除逻辑后，还有一个知识点：扩容逻辑需要学习，我认为这是ConcurrentHashMap核心中的核心。
-废话不多说，对于ConcurrentHashMap来说，扩容可以整体分为两个部分：
-
-将属性table扩展为原来的两倍
-将旧table中数据迁移到新table
-
-那么本文就按照这
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:13" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/concurrent-collections/">concurrent collections</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/ThreadPoolExecutor.html" target="_self">
-          ThreadPoolExecutor线程池解析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/ThreadPoolExecutor.html" target="_self">
-          
-          
-            
-          
-          0. 预备知识在了解ThreadPoolExecutor之前，我们首先需要了解一些基本概念，下图是ThreadPoolExecutor的部分核心字段。我先依次对其进行解释。
-
-#0.1 线程池状态JUC为线程池规定了5种状态，如下图所示：
-对于每种状态，含义如下：
-
-RUNNING: 线程池能够接受任务并处理阻塞队列中的任务
-SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部执行完
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:13" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Executor/">Executor</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/Interrupt-mechanism.html" target="_self">
-          中断机制
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/Interrupt-mechanism.html" target="_self">
-          
-          
-            
-          
-          在多线程环境下，终止一个线程的任务最好的方法是通过中断。而Java的中断类似于通知协作机制，被中断的线程并不会立即停止自己的任务，而是仅仅收到了中断的通知，具体怎么处理收到的中断，这需要用户自己定义。那么为什么说Java的中断类似于通知机制？我们首先需要了解中断到底做了什么。
-1. 实施中断Java中的中断操作只需要调用目标线程的interrupt()方法即可完成。那么这个方法到底做了什么？我们来
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:13" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/interrupt/">interrupt</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/JMM.html" target="_self">
-          Java内存模型
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/JMM.html" target="_self">
-          
-          
-            
-          
-          1. 内存模型(memory model)1.1. 内存模型是什么在编译和运行程序时，编译器和CPU都会为了效率而力所能及地对程序进行优化，例如编译器和CPU的指令重排、CPU的流水线执行等操作。但是这种优化不是没有限制的，如果不能及时保证内存的可见性，程序就有可能出现错误,这里的可见性是指如果有一个线程A对某个内存地址addr进行了写操作，那么其他线程一定能够看到A对地址addr的操作。
-所以内
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:13" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/JMM/">JMM</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/Thread-state-transition.html" target="_self">
-          线程的状态转换
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/Thread-state-transition.html" target="_self">
-          
-          
-            
-          
-          因为线程是调度的基本单位，所以线程的状态转换与进程的状态转换是一致的。主要有五个状态：启动、就绪、执行、等待、销毁。这几个状态的转换图如下所示：
-
-可以看到，等待状态只能转换为就绪，再等CPU调度。这是一般的线程状态转换图。
-在java中，又多了几个状态。
-java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNABLE
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:13" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2/">状态转换</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/AtomicInteger-analysis.html" target="_self">
-          AtomicInteger源码解析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/AtomicInteger-analysis.html" target="_self">
-          
-          
-            
-          
-          整数型原子类AtomicInteger，能够保证每次更新时都是原子操作。其中的CAS操作都需要依靠Unsafe类来完成，我们需要关注的一般就是构造方法、增加方法与删除方法。
-1. 构造方法AtomicInteger首先会调用类构造器，初始化当前对象的valueoffset用于进行CAS操作，具体值由volatile变量value负责维护，字段定义如下所示：
-12345678910111213141
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:13" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/atomic/">atomic</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
         <a href="/2021-06-03/AtomicIntegerArray-analysis.html" target="_self">
           AtomicIntegerArray源码解析
         </a>
@@ -524,7 +204,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:13" pubdate>
+            <time datetime="2021-06-03 11:20" pubdate>
               2021-06-03
             </time>
           </div>
@@ -575,7 +255,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:13" pubdate>
+            <time datetime="2021-06-03 11:20" pubdate>
               2021-06-03
             </time>
           </div>
@@ -625,7 +305,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:13" pubdate>
+            <time datetime="2021-06-03 11:20" pubdate>
               2021-06-03
             </time>
           </div>
@@ -675,7 +355,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:13" pubdate>
+            <time datetime="2021-06-03 11:20" pubdate>
               2021-06-03
             </time>
           </div>
@@ -693,6 +373,308 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/atomic-class/">atomic class</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/CopyOnWrite-collections-analysis.html" target="_self">
+          CopyOnWrite容器分析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/CopyOnWrite-collections-analysis.html" target="_self">
+          
+          
+            
+          
+          1. 预备知识J.U.C包提供了两种copy-on-wirte容器：CopyOnWriteList与CopyOnWriteSet。不了解copy-on-write技术的，可以去看理解 Copy On Write 技术。
+CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList内容的操作都基于copy-on-write，对于同一个元素，插入操作happ
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 11:20" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/concurrent-collections/">concurrent collections</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/ConcurrentHashMap-analysis-I.html" target="_self">
+          ConcurrentHashMap架构解析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/ConcurrentHashMap-analysis-I.html" target="_self">
+          
+          
+            
+          
+          前言本篇主要介绍ConcurrentHashMap的基本架构、插入与删除操作的原理，对于它扩容的逻辑，放在第二部分讲解：ConcurrentHashMap扩容分析。
+
+本文旨在介绍J.U.C包下的同步集合ConcurrentHashMap。因为Java自带的HashMap是线程不安全的，虽然也提供了线程安全的HashTable，但是后者是对整个哈希表加锁，势必效率不理想。而ConcurrentHa
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 11:20" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/concurrent-collections/">concurrent collections</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/ConcurrentHashMap-analysis-II.html" target="_self">
+          ConcurrentHashMap扩容分析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/ConcurrentHashMap-analysis-II.html" target="_self">
+          
+          
+            
+          
+          前言本篇继承于ConcurrentHashMap架构解析，在了解了ConcurrentHashMap的整体架构与插入删除逻辑后，还有一个知识点：扩容逻辑需要学习，我认为这是ConcurrentHashMap核心中的核心。
+废话不多说，对于ConcurrentHashMap来说，扩容可以整体分为两个部分：
+
+将属性table扩展为原来的两倍
+将旧table中数据迁移到新table
+
+那么本文就按照这
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 11:20" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/concurrent-collections/">concurrent collections</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/what-is-IOC.html" target="_self">
+          IOC到底是什么？
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/what-is-IOC.html" target="_self">
+          
+          
+            
+          
+          这篇博文：浅谈IOC–说清楚IOC是什么讲的不错，我在此就是做一些摘抄。
+
+1. IOC是什么？IOC，Inversion of Control，译为控制反转。
+1996年，Michael Mattson在其论文:Object-Oriented FrameworksA survey of methodological issues中，首先提出了IOC这个概念，IOC是一个方法论。
+简单来说，IOC
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 11:20" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/framework/">framework</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Spring/">Spring</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/tomcat.html" target="_self">
+          
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/tomcat.html" target="_self">
+          
+          
+            
+          
+          自我介绍面试官您好，我叫高宇航，目前是武汉大学国家网络安全学院的硕士二年级研究生，本科也就读于武汉大学网络安全学院。
+在个人技术方面：我对Java的基础比较熟悉，包括Java语言本身以及一些jvm的相关原理，在安全方面，我对二进制安全比较了解，能够熟练阅读调试汇编，使用常见的恶意代码分析工具，比如ollydbg、IDA，对于web安全，我了解一些基本的攻击漏洞，例如xss和CSRF
+在项目经验方面
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 11:20" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/Interrupt-mechanism.html" target="_self">
+          中断机制
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/Interrupt-mechanism.html" target="_self">
+          
+          
+            
+          
+          在多线程环境下，终止一个线程的任务最好的方法是通过中断。而Java的中断类似于通知协作机制，被中断的线程并不会立即停止自己的任务，而是仅仅收到了中断的通知，具体怎么处理收到的中断，这需要用户自己定义。那么为什么说Java的中断类似于通知机制？我们首先需要了解中断到底做了什么。
+1. 实施中断Java中的中断操作只需要调用目标线程的interrupt()方法即可完成。那么这个方法到底做了什么？我们来
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 11:20" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/interrupt/">interrupt</a>
             
           </div>
         
