@@ -184,112 +184,6 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/SPI-service-mechanism.html" target="_self">
-          通过MySQL驱动的加载学习SPI机制
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/SPI-service-mechanism.html" target="_self">
-          
-          
-            
-          
-          前言 什么是SPISPI机制（Service Provider Interface)简而言之，就是java规定了一组服务的接口，但是没有具体的实现类。那么具体的实现类肯定由不同的厂商实现，那么客户在使用时是仅依赖于接口的。SPI的具体实现是靠ServiceLoader完成的。在讲解双亲委派模型时，我们知道，SPI接口是通过bootstrap ClassLoader加载至jvm中的。而具体的驱动实现
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 16:57" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E7%B1%BB%E5%8A%A0%E8%BD%BD/">类加载</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/SPI%E6%9C%BA%E5%88%B6/">SPI机制</a>
-            
-              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%A9%B1%E5%8A%A8%E5%8A%A0%E8%BD%BD/">数据库驱动加载</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/Frequently-asked-questions-about-generics.html" target="_self">
-          关于泛型的常见问题
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/Frequently-asked-questions-about-generics.html" target="_self">
-          
-          
-            
-          
-          前言这里罗列一些关于泛型的常见问题,并给出解答。其中本篇大多数问题来自Java Generics FAQs - Generic And Parameterized Types,我这里仅翻译一些我认为比较容易糊涂的问题。
-当然,在解答这些问题时,我们需要牢记一个概念,通配符?表示的是不知道是什么类型,而不是任意类型。
-
-泛型类型:class test&lt;T&gt;&#123;&#125;
-具体参
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 16:57" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%9F%BA%E7%A1%80/">基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E6%B3%9B%E5%9E%8B/">泛型</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
         <a href="/2021-06-03/the-generic-of-java.html" target="_self">
           java的泛型
         </a>
@@ -312,7 +206,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 16:57" pubdate>
+            <time datetime="2021-06-03 17:12" pubdate>
               2021-06-03
             </time>
           </div>
@@ -367,7 +261,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 16:57" pubdate>
+            <time datetime="2021-06-03 17:12" pubdate>
               2021-06-03
             </time>
           </div>
@@ -398,18 +292,19 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/Collection-interface-analysis.html" target="_self">
-          
+        <a href="/2021-06-03/HashMap-analysis-part-three.html" target="_self">
+          HashMap源码分析(三)-删除源码
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/Collection-interface-analysis.html" target="_self">
+        <a href="/2021-06-03/HashMap-analysis-part-three.html" target="_self">
           
           
             
           
-          
+          HashMap的删除操作一般通过remove完成。在remove方法中,同样存在fast-fail机制,不了解的可以去看看ArrayList中的fast-fail。通过fast-fail机制检查后,会调用真正的删除方法removeNode,如下面代码所示：
+12345678910111213141516171819202122232425262728293031323334353637383940
         </a>
       </p>
 
@@ -417,95 +312,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 16:57" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/List-interface-analysis.html" target="_self">
-          
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/List-interface-analysis.html" target="_self">
-          
-          
-            
-          
-          
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 16:57" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/IO-of-Java.html" target="_self">
-          Java中的IO分类
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/IO-of-Java.html" target="_self">
-          
-          
-            
-          
-          Java中的IO种类看似繁杂，实则有规律可循。
-按照功能可以分为：
-
-缓冲区
-memory
-文件
-Data Conversation
-Object
-管道pipe
-print，用于打印
-peeking ahead，预读
-流合并
-filter
-数据流转换，从字符流转到字节流
-按行读取，建议使用字符流，字节流已过时
-
-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 16:57" pubdate>
+            <time datetime="2021-06-03 17:12" pubdate>
               2021-06-03
             </time>
           </div>
@@ -514,7 +321,7 @@ filter
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/java/">java</a>
+              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
             
           </div>
         
@@ -522,7 +329,163 @@ filter
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/IO/">IO</a>
+              <a href="/tags/HashMap/">HashMap</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/HashMap-analysis-part-one.html" target="_self">
+          HashMap源码分析(一)-HashMap中的那些常量
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/HashMap-analysis-part-one.html" target="_self">
+          
+          
+            
+          
+          前言HashMap实现了接口Map、Cloneable、Serializable,后两个都是标记接口,注意HasnMap的clone方法也仅仅是浅复制(shadow copy)。而Map是跟Collection并列的顶级接口。HashMap并且继承抽象类AbstractMap。
+本文将首先简单说说接口Map,因为AbstarctMap作为实现接口Map的骨架,仅实现了一些基本方法,没什么好说的。
+
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 17:12" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/HashMap/">HashMap</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/HashMap-analysis-part-two.html" target="_self">
+          HashMap源码分析(二)-插入源码
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/HashMap-analysis-part-two.html" target="_self">
+          
+          
+            
+          
+          HashMap中最常用的就是put(key,value)函数与remove函数,而且这些函数还会包含RB树与list的相互转换,比较复杂。值得认真推敲。
+1. put方法下面JDk1.8中,HashMap的put源码。其又在内部调用了putVal。
+1234567public V put(K key, V value) &#123;    return putVal(hash(key), key,
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 17:12" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/HashMap/">HashMap</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/red-black-tree.html" target="_self">
+          红黑树入门
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/red-black-tree.html" target="_self">
+          
+          
+            
+          
+          本篇将带你一步一步了解红黑树，当然大部分内容来源于算法(第4版)一书，我仅仅对一点内容总结了自己的心得。
+在谈谈红黑树之前，我们先来回顾一下二叉排序树(balanced sort tree),因为红黑树是从BST的概念演化而来的。BST的定义很简单，对于一个节点来说，左树的所有节点的值都小于当前节点的值，右树所有节点的值都大于当前节点的值。但是在最坏情况下BST的高度会达到O(N),效率太差。
+我
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 17:12" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E9%9B%86%E5%90%88/">java集合</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91-map/">红黑树,map</a>
             
           </div>
         
@@ -557,7 +520,7 @@ java中的类只能有两种权限修饰
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 16:57" pubdate>
+            <time datetime="2021-06-03 17:12" pubdate>
               2021-06-03
             </time>
           </div>
@@ -609,7 +572,7 @@ java中的类只能有两种权限修饰
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 16:57" pubdate>
+            <time datetime="2021-06-03 17:12" pubdate>
               2021-06-03
             </time>
           </div>
@@ -666,7 +629,7 @@ java中的类只能有两种权限修饰
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 16:57" pubdate>
+            <time datetime="2021-06-03 17:12" pubdate>
               2021-06-03
             </time>
           </div>
@@ -684,6 +647,60 @@ java中的类只能有两种权限修饰
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/garbage-collection/">garbage collection</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/the-String-of-Java.html" target="_self">
+          java的字符串
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/the-String-of-Java.html" target="_self">
+          
+          
+            
+          
+          java的所有字符串都会保存在全局字符串池中，在了解全局字符串池之前，我们需要明白：在java中，所有的字符串字面值都会被解释为一个字符串对象。
+
+All string literals in Java programs, such as “abc”, are implemented as instances of this class
+
+接下来我们聊聊全局字符串池。全局字符串池在jdk1.7后也
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 17:12" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Java/">Java</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/String/">String</a>
             
           </div>
         
