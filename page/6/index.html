@@ -7,13 +7,15 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-  <link rel="icon" href="/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/panda.png">
+  <link rel="icon" href="/img/panda.png">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#55967e">
   <meta name="description" content="">
   <meta name="author" content="cras">
   <meta name="keywords" content="">
@@ -40,7 +42,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"soloveri.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -52,7 +54,7 @@
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
-       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+       href="/">&nbsp;<strong>Rains·Blog</strong>&nbsp;</a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -142,12 +144,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
+         style="background: url('/img/home.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="An elegant Material-Design theme for Hexo">
+            <span class="h2" id="subtitle" title="BRT 3号线">
               
             </span>
 
@@ -182,215 +184,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/AtomicIntegerArray-analysis.html" target="_self">
-          AtomicIntegerArray源码解析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/AtomicIntegerArray-analysis.html" target="_self">
-          
-          
-            
-          
-          AtomicIntegerArray能够保证数组中的每个元素原子地更新。构造方法、增加、减少方法都没什么好说，我认为值得关注的点是仅有计算偏移的方法。我们先来看看它的静态构造块：
-12345678910111213141516171819202122232425262728public class AtomicIntegerArray implements java.io.Serializable
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/atomic/">atomic</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/AtomicStampedReference-analysis.html" target="_self">
-          AtomicStampedReference源码解析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/AtomicStampedReference-analysis.html" target="_self">
-          
-          
-            
-          
-          AtomicStampeddReference解决了普通CAS操作的ABA问题，当然该类只能存储引用类型，因为泛型只支持引用。具体的解决方法就是为每个引用提供了一个时间戳（实际用int代替），这两个数据由内部静态类Pair封装，如下所示：
-12345678910111213141516public class AtomicStampedReference&lt;V&gt; &#123;    pr
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/atomic/">atomic</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/LongAdder-analysis.html" target="_self">
-          LongAdder源码解析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/LongAdder-analysis.html" target="_self">
-          
-          
-            
-          
-          1. 预备知识在Java1.5中，JUC就已经提供了大数原子类AtomicLong，但是在Java1.8中，又提供了相同功能的大数原子类LongAdder。why？答案是如此的纯粹：为了效率。难道前者的效率就不行了吗？如果在轻微冲突的情况下，二者的效率几乎差不多。但是如果竞争非常激烈，那么因为每次对AtomicLong更新时都会使用CAS，激烈竞争导致CAS的成功的概率不大，所以有可能会执行多次无
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/atomic/">atomic</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/atomic-class-overview.html" target="_self">
-          原子类总览
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/atomic-class-overview.html" target="_self">
-          
-          
-            
-          
-          J.U.C包提供了许多原子类，我按照功能分了四类，如下所示：|  普通原子类   | 原子更新的数组  | 原子更新对象字段的updater  | 大数原子类  ||  —-  | —-  | —-  | —-  || AtomicBoolean AtomicInteger  AtomicLong AtomicReference atomicMarkableReference AtomicStam
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/atomic-class/">atomic class</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/shared-lock-analysis.html" target="_self">
+        <a href="/2021-06-03/shared-lock-analysis.html" target="_self">
           从Semaphore中学习共享锁原理
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/shared-lock-analysis.html" target="_self">
+        <a href="/2021-06-03/shared-lock-analysis.html" target="_self">
           
           
             
@@ -405,8 +205,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
             </time>
           </div>
         
@@ -436,13 +236,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/what-is-IOC.html" target="_self">
+        <a href="/2021-06-03/what-is-IOC.html" target="_self">
           IOC到底是什么？
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/what-is-IOC.html" target="_self">
+        <a href="/2021-06-03/what-is-IOC.html" target="_self">
           
           
             
@@ -459,8 +259,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
             </time>
           </div>
         
@@ -490,13 +290,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/tomcat.html" target="_self">
+        <a href="/2021-06-03/tomcat.html" target="_self">
           
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/tomcat.html" target="_self">
+        <a href="/2021-06-03/tomcat.html" target="_self">
           
           
             
@@ -511,8 +311,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
             </time>
           </div>
         
@@ -528,13 +328,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/CLH.html" target="_self">
+        <a href="/2021-06-03/CLH.html" target="_self">
           AQS使用的CLH原型
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/CLH.html" target="_self">
+        <a href="/2021-06-03/CLH.html" target="_self">
           
           
             
@@ -548,8 +348,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
             </time>
           </div>
         
@@ -579,13 +379,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/what-is-spring-mvc.html" target="_self">
+        <a href="/2021-06-03/what-is-spring-mvc.html" target="_self">
           Spring MVC原理
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/what-is-spring-mvc.html" target="_self">
+        <a href="/2021-06-03/what-is-spring-mvc.html" target="_self">
           
           
             
@@ -603,8 +403,8 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
             </time>
           </div>
         
@@ -634,13 +434,13 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/ReentrantLock-analysis.html" target="_self">
+        <a href="/2021-06-03/ReentrantLock-analysis.html" target="_self">
           ReentrantLock源码解析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/ReentrantLock-analysis.html" target="_self">
+        <a href="/2021-06-03/ReentrantLock-analysis.html" target="_self">
           
           
             
@@ -656,8 +456,8 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
             </time>
           </div>
         
@@ -681,11 +481,203 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
     </article>
   </div>
 
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/condition-analysis.html" target="_self">
+          Condition队列
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/condition-analysis.html" target="_self">
+          
+          
+            
+          
+          Condition接口的功能用来实现类似于synchronized的await()/signal()通知机制。但是比synchronized的通知机制更丰富、更灵活。我们知道，synchronized锁内部维护了一个waitList保存调用了wait()主动释放锁的线程。AQS的waitList功能就是通过Condition内部维护的Condition queue实现的。
+与AQS的同步队列相似，
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/condition-queue/">condition queue</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/index-of-mysql.html" target="_self">
+          mysql中的索引
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/index-of-mysql.html" target="_self">
+          
+          
+            
+          
+          前言索引是使用MySQL是一个很重要的知识点,正确的使用索引能够极大地提高MySQL的运行效率。那么关于索引,我产生了如下问题:
+
+索引是什么
+有哪些索引
+索引的原理是什么
+如何正确地使用索引
+
+下面我将一一对问题进行解答。
+1.索引是什么索引是一种专门用于数据库的结构,其目的也非常明显,就是用来优化数据库的执行效率。首先我们来看看官方是如何描述索引的用处:
+
+Indexes are used t
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/mysql/">mysql</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%B4%A2%E5%BC%95/">索引</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/the-installation-of-mysql-on-linux.html" target="_self">
+          基于centos7安装MySQL
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/the-installation-of-mysql-on-linux.html" target="_self">
+          
+          
+            
+          
+          前言安装的环境为centos7。并且要在
+Docker下安装MySQLcentos下安装MySQL
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Docker/">Docker</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/hello-world.html" target="_self">
+          Hello World
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/hello-world.html" target="_self">
+          
+          
+            
+          
+          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Quick
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+        
+      </div>
+    </article>
+  </div>
+
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/5/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/#board">7</a><a class="extend next" rel="next" href="/page/7/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/5/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><span class="page-number current">6</span>
     </span>
   </nav>
 

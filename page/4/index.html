@@ -7,13 +7,15 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-  <link rel="icon" href="/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/panda.png">
+  <link rel="icon" href="/img/panda.png">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#55967e">
   <meta name="description" content="">
   <meta name="author" content="cras">
   <meta name="keywords" content="">
@@ -40,7 +42,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"soloveri.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -52,7 +54,7 @@
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
-       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+       href="/">&nbsp;<strong>Rains·Blog</strong>&nbsp;</a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -142,12 +144,12 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
+         style="background: url('/img/home.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="An elegant Material-Design theme for Hexo">
+            <span class="h2" id="subtitle" title="BRT 3号线">
               
             </span>
 
@@ -182,64 +184,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/volatile-keyword.html" target="_self">
-          volatile关键字
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-02/volatile-keyword.html" target="_self">
-          
-          
-            
-          
-          1. volatile是什么volatile被称为轻量级的synchronzied，它保证了内存的可见性、指令的有序性。我们通过经典的懒汉单例模式看看这个关键字的作用。
-"线程不安全"12345678910111213public class DraconianSingleton &#123;    private static DraconianSingleton instance;    pu
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/volatile/">volatile</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-02/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html" target="_self">
+        <a href="/2021-06-03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html" target="_self">
           多线程为什么会不安全
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html" target="_self">
+        <a href="/2021-06-03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html" target="_self">
           
           
             
@@ -253,8 +204,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
             </time>
           </div>
         
@@ -284,13 +235,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/basic-API.html" target="_self">
+        <a href="/2021-06-03/basic-API.html" target="_self">
           java视角下的Linux IO API
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/basic-API.html" target="_self">
+        <a href="/2021-06-03/basic-API.html" target="_self">
           
           
             
@@ -303,8 +254,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
             </time>
           </div>
         
@@ -334,13 +285,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/threadlocal-analysis.html" target="_self">
+        <a href="/2021-06-03/threadlocal-analysis.html" target="_self">
           ThreadLocal源码解析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/threadlocal-analysis.html" target="_self">
+        <a href="/2021-06-03/threadlocal-analysis.html" target="_self">
           
           
             
@@ -354,8 +305,8 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
             </time>
           </div>
         
@@ -385,13 +336,13 @@ ThreadLocalMap是
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80.html" target="_self">
+        <a href="/2021-06-03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80.html" target="_self">
           多线程基础
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80.html" target="_self">
+        <a href="/2021-06-03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80.html" target="_self">
           
           
             
@@ -407,8 +358,8 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
             </time>
           </div>
         
@@ -438,13 +389,13 @@ ThreadLocalMap是
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/five-IO-model.html" target="_self">
+        <a href="/2021-06-03/five-IO-model.html" target="_self">
           五种IO模型
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/five-IO-model.html" target="_self">
+        <a href="/2021-06-03/five-IO-model.html" target="_self">
           
           
             
@@ -459,8 +410,8 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
             </time>
           </div>
         
@@ -490,13 +441,13 @@ ThreadLocalMap是
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/synchronized-keyword.html" target="_self">
+        <a href="/2021-06-03/synchronized-keyword.html" target="_self">
           synchronized关键字
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/synchronized-keyword.html" target="_self">
+        <a href="/2021-06-03/synchronized-keyword.html" target="_self">
           
           
             
@@ -510,8 +461,8 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
             </time>
           </div>
         
@@ -541,34 +492,19 @@ ThreadLocalMap是
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/interface-BlockingQueue-analysis.html" target="_self">
-          BlockingQueue接口分析
+        <a href="/2021-06-03/CopyOnWrite-collections-analysis.html" target="_self">
+          CopyOnWrite容器分析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/interface-BlockingQueue-analysis.html" target="_self">
+        <a href="/2021-06-03/CopyOnWrite-collections-analysis.html" target="_self">
           
           
             
           
-          1. 基本概念BlockingQueue接口，提供了一组集合，一般用在生产者消费者模式中。它能搞保证在多线程环境下：当队列为空时，消费者线程会等待直到队列不空；当队列满时，生产者会等待直到队列不满。该接口提供了四种存储与删除模式：
-
-
-
-/
-操作失败抛出异常
-操作失败返回特殊值
-操作失败阻塞线程
-操作具有时间限制
-
-
-
-插入操作
-add(e)
-offer(e)
-put(e)
-offer(e,tim
+          1. 预备知识J.U.C包提供了两种copy-on-wirte容器：CopyOnWriteList与CopyOnWriteSet。不了解copy-on-write技术的，可以去看理解 Copy On Write 技术。
+CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList内容的操作都基于copy-on-write，对于同一个元素，插入操作happ
         </a>
       </p>
 
@@ -576,8 +512,8 @@ offer(e,tim
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
             </time>
           </div>
         
@@ -607,13 +543,79 @@ offer(e,tim
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/Executor-interface.html" target="_self">
+        <a href="/2021-06-03/interface-BlockingQueue-analysis.html" target="_self">
+          BlockingQueue接口分析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/interface-BlockingQueue-analysis.html" target="_self">
+          
+          
+            
+          
+          1. 基本概念BlockingQueue接口，提供了一组集合，一般用在生产者消费者模式中。它能搞保证在多线程环境下：当队列为空时，消费者线程会等待直到队列不空；当队列满时，生产者会等待直到队列不满。该接口提供了四种存储与删除模式：
+
+
+
+/
+操作失败抛出异常
+操作失败返回特殊值
+操作失败阻塞线程
+操作具有时间限制
+
+
+
+插入操作
+add(e)
+offer(e)
+put(e)
+offer(e,tim
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/concurrent-collections/">concurrent collections</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/Executor-interface.html" target="_self">
           Exectuor框架解析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/Executor-interface.html" target="_self">
+        <a href="/2021-06-03/Executor-interface.html" target="_self">
           
           
             
@@ -630,8 +632,8 @@ An object that executes submitted Runnable tasks.
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
             </time>
           </div>
         
@@ -661,24 +663,20 @@ An object that executes submitted Runnable tasks.
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-02/ThreadPoolExecutor.html" target="_self">
-          ThreadPoolExecutor线程池解析
+        <a href="/2021-06-03/ConcurrentHashMap-analysis-I.html" target="_self">
+          ConcurrentHashMap架构解析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-02/ThreadPoolExecutor.html" target="_self">
+        <a href="/2021-06-03/ConcurrentHashMap-analysis-I.html" target="_self">
           
           
             
           
-          0. 预备知识在了解ThreadPoolExecutor之前，我们首先需要了解一些基本概念，下图是ThreadPoolExecutor的部分核心字段。我先依次对其进行解释。
+          前言本篇主要介绍ConcurrentHashMap的基本架构、插入与删除操作的原理，对于它扩容的逻辑，放在第二部分讲解：ConcurrentHashMap扩容分析。
 
-#0.1 线程池状态JUC为线程池规定了5种状态，如下图所示：
-对于每种状态，含义如下：
-
-RUNNING: 线程池能够接受任务并处理阻塞队列中的任务
-SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部执行完
+本文旨在介绍J.U.C包下的同步集合ConcurrentHashMap。因为Java自带的HashMap是线程不安全的，虽然也提供了线程安全的HashTable，但是后者是对整个哈希表加锁，势必效率不理想。而ConcurrentHa
         </a>
       </p>
 
@@ -686,8 +684,8 @@ SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-02 19:53" pubdate>
-              2021-06-02
+            <time datetime="2021-06-03 11:13" pubdate>
+              2021-06-03
             </time>
           </div>
         
@@ -703,7 +701,7 @@ SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Executor/">Executor</a>
+              <a href="/tags/concurrent-collections/">concurrent collections</a>
             
           </div>
         
@@ -715,7 +713,7 @@ SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部�
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/3/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/#board">5</a><a class="page-number" href="/page/6/#board">6</a><a class="page-number" href="/page/7/#board">7</a><a class="extend next" rel="next" href="/page/5/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/3/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/#board">5</a><a class="page-number" href="/page/6/#board">6</a><a class="extend next" rel="next" href="/page/5/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

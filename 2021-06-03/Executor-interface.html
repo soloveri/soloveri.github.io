@@ -1,0 +1,547 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/panda.png">
+  <link rel="icon" href="/img/panda.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#55967e">
+  <meta name="description" content="">
+  <meta name="author" content="cras">
+  <meta name="keywords" content="">
+  
+  <title>Exectuor框架解析 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"soloveri.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Rains·Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/home.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Exectuor框架解析">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-03 11:13" pubdate>
+        2021年6月3日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      3.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      42
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Exectuor框架解析</h1>
+            
+            <div class="markdown-body">
+              <h2 id="1-Executor接口"><a href="#1-Executor接口" class="headerlink" title="1. Executor接口"></a>1. Executor接口</h2><p>在JUC包中，还提供了Executor框架用来实现线程池，我们经常使用的线程池都是从Executor派生而来。我们可以看看整个Executor框架的继承结构：</p>
+<p><img src="images/executor-framework.png" srcset="/img/loading.gif" lazyload alt="executor-framework"></p>
+<p>那么在这个框架中，我们第一步应该需要了解它的核心接口<code>Executor</code>。这个接口的作用在它的注释中说的很清楚：</p>
+<blockquote>
+<p>An object that executes submitted Runnable tasks. This interface provides a way of decoupling task submission from the mechanics of how each task will be run, including details of thread use, scheduling, etc. An Executor is normally used instead of explicitly creating threads. For example, rather than invoking new Thread(new(RunnableTask())).start() for each of a set of tasks</p>
+</blockquote>
+<p>这个接口的作用就是让用户专注于线程的任务，至于线程怎么调用的，如何运行的，用户并不需要关心。具体的实现类可以任意实现线程之间的协作。唯一的抽象方法就是<code>execute</code>，如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Executor</span> </span>&#123;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * Executes the given command at some time in the future.  The command</span><br><span class="hljs-comment">     * may execute in a new thread, in a pooled thread, or in the calling</span><br><span class="hljs-comment">     * thread, at the discretion of the &#123;<span class="hljs-doctag">@code</span> Executor&#125; implementation.</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> command the runnable task</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> RejectedExecutionException if this task cannot be</span><br><span class="hljs-comment">     * accepted for execution</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@throws</span> NullPointerException if command is null</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">execute</span><span class="hljs-params">(Runnable command)</span></span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<h2 id="2-ExecutorService接口"><a href="#2-ExecutorService接口" class="headerlink" title="2. ExecutorService接口"></a>2. ExecutorService接口</h2><p>那么对于Executor的增强类接口<code>ExecutorService</code>呢？我们看看它的注释：</p>
+<blockquote>
+<p>An Executor that provides methods to manage termination and methods that can produce a Future for tracking progress of one or more asynchronous tasks.<br>An ExecutorService can be shut down, which will cause it to reject new tasks. Two different methods are provided for shutting down an ExecutorService. The shutdown method will allow previously submitted tasks to execute before terminating, while the shutdownNow method prevents waiting tasks from starting and attempts to stop currently executing tasks. Upon termination, an executor has no tasks actively executing, no tasks awaiting execution, and no new tasks can be submitted. An unused ExecutorService should be shut down to allow reclamation of its resources.</p>
+</blockquote>
+<p>上述大致就是ExecutorService作为一个Executor，它提供一些方法用来终止当前对象提供服务以及一些方法用于产生一个<strong>Future</strong>表示异步任务执行的结果。并且一个ExecutorService可以被关闭，但是这可能会导致新任务被迫终止。它提供了两类方法用来终止自身。</p>
+<ul>
+<li>第一类是<code>shutdown</code>方法，这类方法会将停止之前已经提交的任务执行完毕</li>
+<li>第二类是<code>shutdownNow</code>方法，这类方法会将已经提交但未执行的任务直接终止，并且尝试对终止正在执行的任务。</li>
+</ul>
+<p>终止后ExecutorService不会存在还在执行的任务，并且也无法提交任务。当我们不再需要ExecutorService时，就应将其关闭，避免资源浪费。</p>
+<p>对ExecutorService有了一个初步的认识后，我们看看它提供的一些核心方法：</p>
+<p><img src="images/ExecutorService.png" srcset="/img/loading.gif" lazyload alt="ExecutorService"></p>
+<p>其实还有一点可以值得关注，就是上述提到的<code>Future</code>。这其实也是一个顶级接口，简而言之就是用来保存异步线程执行的结果。后续再详细分析。</p>
+<h3 id="2-1-AbstractExecuteService"><a href="#2-1-AbstractExecuteService" class="headerlink" title="2.1 AbstractExecuteService"></a>2.1 AbstractExecuteService</h3><p>对于ExecutorService接口，JUC提供了一个抽象实现类<code>AbstractExecutorService</code>负责实现了一些异步执行任务核心方法的实现，包括<code>submit</code>、<code>invokeAll</code>、<code>invokeAny</code>这三类。并且提供了一个包装函数，能够将提交的任务（callable或者runnable）包装为一个<code>FutureTask</code>，如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">protected</span> &lt;T&gt; <span class="hljs-function">RunnableFuture&lt;T&gt; <span class="hljs-title">newTaskFor</span><span class="hljs-params">(Callable&lt;T&gt; callable)</span> </span>&#123;<br>   <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> FutureTask&lt;T&gt;(callable);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>所谓的<code>FutureTask</code>其实是<code>Future</code>接口的实现类，这个我们后续在分析<code>Future</code>体系的时候再详细介绍。其实我们应该重点关注提交函数<code>submit</code>到底是如何实现的。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> Future&lt;?&gt; submit(Runnable task) &#123;<br>   <span class="hljs-keyword">if</span> (task == <span class="hljs-keyword">null</span>) <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NullPointerException();<br>   RunnableFuture&lt;Void&gt; ftask = newTaskFor(task, <span class="hljs-keyword">null</span>);<br>   execute(ftask);<br>   <span class="hljs-keyword">return</span> ftask;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>从上面得知，<code>submit</code>函数的逻辑比较简单，就是将提交后的<code>Runnable</code>或者<code>callable</code>实现类包装成<code>FutureTask</code>后，还是会调用顶级接口的<code>execute</code>方法来执行一个具体的任务。这里还是无法得知线程到底是如何调度的。</p>
+<h3 id="2-2-ScheduledExecutorService"><a href="#2-2-ScheduledExecutorService" class="headerlink" title="2.2 ScheduledExecutorService"></a>2.2 ScheduledExecutorService</h3><p><code>ScheduledExecutorService</code>接口的最用其实很简单，正如在它的注释中所写的，用来执行一些定时任务或者周期任务：</p>
+<blockquote>
+<p>An ExecutorService that can schedule commands to run after a given delay, or to execute periodically.<br>The schedule methods create tasks with various delays and return a task object that can be used to cancel or check execution. The scheduleAtFixedRate and scheduleWithFixedDelay methods create and execute tasks that run periodically until cancelled.</p>
+</blockquote>
+<p>那么该接口定义四个抽象方法用来提交定时或周期任务：</p>
+<p><img src="images/ScheduleExecutorService.png" srcset="/img/loading.gif" lazyload alt="ScheduleExecutorService"></p>
+<p>提交任务后同样会返回一个<code>Future</code>接口的实现类<code>ScheduleFuture</code>，根据不同的任务安排，<code>ScheduleFuture</code>代表的含义不同，具体可以查看API文档。</p>
+<h2 id="3-线程池ThreadPoolExecutor"><a href="#3-线程池ThreadPoolExecutor" class="headerlink" title="3. 线程池ThreadPoolExecutor"></a>3. 线程池ThreadPoolExecutor</h2><p><code>ThreadPoolExecutor</code>是一个具体线程池类，它通过继承<code>AbstractExecutorService</code>来实现接口<code>Executor</code>。该类实现了具体调度线程的方法负责完成提交的任务。并且通过一组参数实现了很强的扩展性，包括：</p>
+<ol>
+<li>核心线程数与最大线程数</li>
+<li>预先启动核心线程</li>
+<li>新线程的生产方式</li>
+<li>线程存活时间</li>
+<li>阻塞队列</li>
+<li>任务的拒绝策略</li>
+<li>hook方法（在任务执行前后添加代理方法）</li>
+<li>线程池的终止策略</li>
+</ol>
+<h3 id="3-1-核心线程数"><a href="#3-1-核心线程数" class="headerlink" title="3.1 核心线程数"></a>3.1 核心线程数</h3><p>因为线程池中的线程数量会根据参数<code>corePoolSize</code>和<code>maximumPoolSize</code>的大小进行动态调整。当在方法<code>execute(Runnable)</code>中提交新任务时：</p>
+<ol>
+<li>如果正在运行的线程数量<strong>少于</strong><code>corePoolSize</code>线程时，<strong>即使其他工作线程处于空闲状态</strong>，也会创建一个新线程来处理请求</li>
+<li>如果运行的线程数<strong>大于</strong><code>corePoolSize</code>但小于<code>maximumPoolSize</code>，则<strong>仅在队列已满时才创建新线程</strong>。</li>
+</ol>
+<p>通过将corePoolSize和maximumPoolSize设置为相同的值，可以创建固定大小的线程池。 通过将maximumPoolSize设置为一个本质上不受限制的值（例如Integer.MAX_VALUE），可以允许池容纳任意数量的并发任务。通常，核心和最大池大小仅在构造时设置，但也可以使用setCorePoolSize和setMaximumPoolSize动态更改。</p>
+<h3 id="3-2-预先启动核心线程"><a href="#3-2-预先启动核心线程" class="headerlink" title="3.2 预先启动核心线程"></a>3.2 预先启动核心线程</h3><p>所谓的预先启动核心线程是指：在默认情况下，核心线程的生产条件是有新的任务提交。但是有可能我们在不提交任务的情况下也有启动核心线程的需求。例如假设我们提供的阻塞队列非空，那么在不调用<code>submit</code>提交新任务的前提下，需要手动启动核心线程来处理阻塞队列中的任务。</p>
+<p>那么手动启动核心线程的操作可以通过<code>prestartCoreThread</code>或者<code>prestartAllCoreThreads</code><br>来完成。</p>
+<h3 id="3-3-线程的生产模式"><a href="#3-3-线程的生产模式" class="headerlink" title="3.3 线程的生产模式"></a>3.3 线程的生产模式</h3><p>所谓的线程的生产模式，也就是当我们存活的线程不足以处理提交的任务，那么我们就需要生产新的线程来处理。那么在<code>ThreadPoolExecutor</code>中，维护了一个线程工厂<code>threadFactory</code>来生产线程。</p>
+<p>在Java中，线程工厂有许多种，如下图所示：</p>
+<p><img src="images/ThreadFactory.png" srcset="/img/loading.gif" lazyload alt="ThreadFactory"></p>
+<p>对于<code>ThreadPoolExecutor</code>来说，采用的是默认的线程工厂<code>DefaultThreadFactory</code>，该线程池创建的所有线程全部都属于同一ThreadGroup中，并且具有相同的NORM_PRIORITY优先级和非守护程序状态。</p>
+<p>通过提供不同的ThreadFactory，可以更改线程的名称，线程组，优先级，守护程序状态等。如果ThreadFactory在通过从newThread返回null返回要求时未能创建线程，执行器将继续执行，但可能无法执行 执行任何任务。 线程应具有“ modifyThread” RuntimePermission。 如果线程池的工作线程或其他线程不具有此许可权，则服务可能会降级：配置更改可能不会及时生效，并且关闭池可能保持在可能终止但未完成的状态。</p>
+<h3 id="3-2-线程的存活时间"><a href="#3-2-线程的存活时间" class="headerlink" title="3.2 线程的存活时间"></a>3.2 线程的存活时间</h3><p>一般来说，线程的存活时间一般用来限制非核心线程的数量。</p>
+<p>如果池当前具有的核心线程数超过corePoolSize，则多余的线程如果在keepAliveTime的时长内都没有处理任务，那么多余的线程将会被关闭。 我们可以使用<code>setKeepAliveTime(long，TimeUnit)</code>方法动态更改此参数。 使用<code>Long.MAX_VALUE TimeUnit.NANOSECONDS</code>可以有使空闲线程永远不会在线程池关闭之前终止。</p>
+<p>对于线程的存活时间，有一点需要我们注意：<strong>只要keepAliveTime值不为零，调用方法<code>allowCoreThreadTimeOut(boolean)</code>可用于将此超时策略应用于核心线程</strong></p>
+<h3 id="3-3-阻塞队列"><a href="#3-3-阻塞队列" class="headerlink" title="3.3 阻塞队列"></a>3.3 阻塞队列</h3><p>阻塞队列主要用来存储多余的任务，它与线程池交互的逻辑如下：</p>
+<ol>
+<li>如果正在运行的线程数量少于<code>corePoolSize</code>，则Executor会添加新线程而不是将任务添加到阻塞队列</li>
+<li>如果正在运行的线程数量不少于<code>corePoolSize</code>，则Executor会选择将新任务添加到阻塞队列而不是创建新线程</li>
+<li>如果阻塞队列已满，那么Executor会选择创建一个新线程。如果总的线程数量大于<code>maximumPoolSize</code>，那么线程池会执行拒绝策略。</li>
+</ol>
+<p>对于阻塞队列如何排队的逻辑，可以细分为三种：</p>
+<ol>
+<li><p><strong>直接交付</strong>。对于工作队列，一个很好的默认选择是SynchronousQueue，它可以将任务移交给线程，而不必另外保留它们。在这里，如果没有立即可用的线程来运行任务，则尝试将其排队的尝试将失败，因此将构造一个新线程。在处理可能具有内部依赖项的请求集时，此策略避免了锁定。直接切换通常需要无限制的maximumPoolSizes以避免拒绝新提交的任务。反过来，当平均而言，命令继续以比其可处理的速度更快到达时，这可能会带来无限线程增长的可能性。</p>
+</li>
+<li><p><strong>无界队列</strong>。使用无界队列（例如，没有预定义容量的LinkedBlockingQueue）将在所有corePoolSize线程繁忙时使新任务在队列中等待。因此，将仅创建corePoolSize线程。 （因此，maximumPoolSize的值没有任何作用。）当每个任务完全独立于其他任务时，这可能是适当的，因此任务不会影响彼此的执行。例如，在网页服务器中。尽管这种排队方式对于消除短暂的请求突发很有用，但它承认当命令平均继续以比处理速度更快的速度到达时，无限制的工作队列增长是可能的。</p>
+</li>
+<li><p><strong>有界队列</strong>。与有限的maximumPoolSizes一起使用时，有界队列（例如ArrayBlockingQueue）有助于防止资源耗尽，但调优和控制起来会更加困难。队列大小和最大池大小可能会相互折衷：使用大队列和小容量线程池可以最大程度地减少CPU使用率，操作系统资源和上下文切换开销，但会导致人为地降低吞吐量。如果任务频繁阻塞（例如都是I/O操作），则系统在完成任务时因为阻塞会花费更多的时间。使用小队列大容量线程池，CPU频繁切换线程的开销也是不可忽略的，这同样会降低吞吐量。</p>
+</li>
+</ol>
+<h3 id="3-4-拒绝任务的策略"><a href="#3-4-拒绝任务的策略" class="headerlink" title="3.4 拒绝任务的策略"></a>3.4 拒绝任务的策略</h3><p>线程池拒绝任务的时机有两种：</p>
+<ol>
+<li>当线程池关闭后，线程会拒绝执行提交的任务</li>
+<li>当线程池的线程数量已经达到最大，并且阻塞队列也没有空间的时候，线程池会拒绝执行提交的任务。</li>
+</ol>
+<p>拒绝的操作由线程池中的<code>RejectedExecutionHandler</code>属性来完成。那么具体的拒绝逻辑又可以分为四种：</p>
+<ol>
+<li><strong>ThreadPoolExecutor.AbortPolicy</strong>：这是线程池的<strong>默认</strong>拒绝策略。该策略在拒绝时会抛出运行时异常RejectedExecutionException。</li>
+<li><strong>ThreadPoolExecutor.CallerRunsPolicy</strong>：该策略就是在线程池<strong>未关闭时</strong>直接调用<code>Runnable</code>实现类的<code>run</code>执行任务。这提供了一种简单的反馈控制机制，该机制将减慢新任务的提交速度。</li>
+<li><strong>ThreadPoolExecutor.DiscardPolicy</strong>：直接忽略当前提交的任务</li>
+<li><strong>ThreadPoolExecutor.DiscardOldestPolicy</strong>：如果线程池未关闭，则会抛弃阻塞队列头部的任务，然后重新尝试让线程池执行当前任务（该操作可能再次失败，导致重复执行此操作）。</li>
+</ol>
+<p>当然我们自己也可以实现自定义拒绝策略，不过需要注意，策略只能在阻塞队列容量一定的情况下才生效。</p>
+<h3 id="3-5-可hook方法"><a href="#3-5-可hook方法" class="headerlink" title="3.5 可hook方法"></a>3.5 可hook方法</h3><p><code>ThreadPoolExecutor</code>内部提供了可以被override的<code>beforeExecute(Thread,Runnable)</code>和<code>afterExecute(Runnable,Throwable)</code>，这两个方法会在每个任务执行前后调用。这两个hook函数可以用来执行一些特殊操作。 例如，重新初始化ThreadLocals，收集统计信息或添加日志。 另外，一旦执行程序完全终止，可以终止方法终止以执行需要执行的任何特殊处理。</p>
+<p>并且<code>ThreadPoolExecutor</code>也提供了可被override的<code>terminated()</code>方法。这个方法一般用来进行一些特殊操作（当然只能一次），当Executor被完全关闭的时候。<br>如果钩子或回调方法引发异常，内部工作线程可能进而失败并突然终止。</p>
+<p><strong>当然如果这些hook函数内部抛出了异常，那么工作线程可能会出现不可预知的错误。</strong></p>
+<p>Queue maintenance<br>Method getQueue() allows access to the work queue for purposes of monitoring and debugging. Use of this method for any other purpose is strongly discouraged. Two supplied methods, remove(Runnable) and purge are available to assist in storage reclamation when large numbers of queued tasks become cancelled.</p>
+<h3 id="3-6-线程池的回收"><a href="#3-6-线程池的回收" class="headerlink" title="3.6 线程池的回收"></a>3.6 线程池的回收</h3><p>如果一个线程池没有被引用，并且池内<strong>没有存活线程</strong>的情况下，线程池会自动关闭。那么如何保证在不使用线程池的情况下，池内没有存活线程才是关键。那么这个问题有两种解决方法：</p>
+<ol>
+<li>不设置线程池的核心线程数量，那么对于临时申请的工作线程会自动关闭。</li>
+<li>调用<code>allowCoreThreadTimeOut(boolean)</code>，允许核心线程存在过期机制</li>
+</ol>
+<h2 id="4-系统提供的线程池"><a href="#4-系统提供的线程池" class="headerlink" title="4. 系统提供的线程池"></a>4. 系统提供的线程池</h2><p>可以看到，前文提到线程池的参数是多样化的，那么为了适用于不同的生产环境，JUC提供了一个<code>Executor</code>工厂：<code>Exexutors</code>类，这个类通过预定义不同的参数生产一些适用于不同场景的线程池，包括：</p>
+<ol>
+<li><code>Executors.newCachedThreadPool</code>：无限制线程池，并且可以自动回收</li>
+<li><code>Executors.newFixedThreadPool</code>：线程数量固定</li>
+<li><code>Executors.newSingleThreadExecutor</code>：只有一个线程的线程池</li>
+</ol>
+<h2 id="5-小结"><a href="#5-小结" class="headerlink" title="5. 小结"></a>5. 小结</h2><p>本篇简要叙述了JUC中的Executor框架，以及两个核心接口<code>Executor</code>、<code>ExecutorService</code>。并且简单介绍了线程池实现类<code>ThreadPoolExecutor</code>的一部分配置参数以及一些内置的线程池。后续我们就需要详细研究<code>ThreadPoolExecutor</code>到底是如何工作的。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Executor/">Executor</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021-06-03/interface-BlockingQueue-analysis.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">BlockingQueue接口分析</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021-06-03/ConcurrentHashMap-analysis-I.html">
+                        <span class="hidden-mobile">ConcurrentHashMap架构解析</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

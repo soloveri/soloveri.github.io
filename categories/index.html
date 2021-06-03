@@ -7,13 +7,15 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/favicon.png">
-  <link rel="icon" href="/img/favicon.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/panda.png">
+  <link rel="icon" href="/img/panda.png">
   <meta name="viewport"
         content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
-  <meta name="theme-color" content="#2f4154">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#55967e">
   <meta name="description" content="">
   <meta name="author" content="cras">
   <meta name="keywords" content="">
@@ -40,7 +42,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"example.com","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"soloveri.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -52,7 +54,7 @@
     <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
   <div class="container">
     <a class="navbar-brand"
-       href="/">&nbsp;<strong>Fluid</strong>&nbsp;</a>
+       href="/">&nbsp;<strong>Rains·Blog</strong>&nbsp;</a>
 
     <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
             data-target="#navbarSupportedContent"
@@ -142,7 +144,7 @@
 </nav>
 
     <div class="banner" id="banner" parallax=true
-         style="background: url('/img/default.png') no-repeat center center;
+         style="background: url('/img/home.jpg') no-repeat center center;
            background-size: cover;">
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
@@ -195,7 +197,7 @@
       </a>
       <a href="/categories/java%E5%9F%BA%E7%A1%80/" class="category-count col-2 col-md-1">
         <i class="iconfont icon-articles"></i>
-        <span>14</span>
+        <span>12</span>
       </a>
       <div class="category-collapse">
         
@@ -207,71 +209,71 @@
     
       
       
-        <a href="/2021-06-02/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80.html" class="list-group-item list-group-item-action">
           <span class="category-post">多线程基础</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/interface-BlockingQueue-analysis.html" class="list-group-item list-group-item-action">
-          <span class="category-post">BlockingQueue接口分析</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2021-06-02/Executor-interface.html" class="list-group-item list-group-item-action">
-          <span class="category-post">Exectuor框架解析</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2021-06-02/ThreadPoolExecutor.html" class="list-group-item list-group-item-action">
-          <span class="category-post">ThreadPoolExecutor线程池解析</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2021-06-02/CopyOnWrite-collections-analysis.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/CopyOnWrite-collections-analysis.html" class="list-group-item list-group-item-action">
           <span class="category-post">CopyOnWrite容器分析</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/LinkedBlockingQueue-analysis.html" class="list-group-item list-group-item-action">
-          <span class="category-post">LinkedBlockingQueue与ArrayBlockingQueue分析</span>
+        <a href="/2021-06-03/interface-BlockingQueue-analysis.html" class="list-group-item list-group-item-action">
+          <span class="category-post">BlockingQueue接口分析</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/SynchronousQueue-analysis.html" class="list-group-item list-group-item-action">
-          <span class="category-post">SynchronousQueue分析</span>
+        <a href="/2021-06-03/Executor-interface.html" class="list-group-item list-group-item-action">
+          <span class="category-post">Exectuor框架解析</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/ConcurrentHashMap-analysis-I.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/ConcurrentHashMap-analysis-I.html" class="list-group-item list-group-item-action">
           <span class="category-post">ConcurrentHashMap架构解析</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/ConcurrentHashMap-analysis-II.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/ConcurrentHashMap-analysis-II.html" class="list-group-item list-group-item-action">
           <span class="category-post">ConcurrentHashMap扩容分析</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/AtomicInteger-analysis.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/ThreadPoolExecutor.html" class="list-group-item list-group-item-action">
+          <span class="category-post">ThreadPoolExecutor线程池解析</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2021-06-03/AtomicInteger-analysis.html" class="list-group-item list-group-item-action">
           <span class="category-post">AtomicInteger源码解析</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2021-06-03/AtomicIntegerArray-analysis.html" class="list-group-item list-group-item-action">
+          <span class="category-post">AtomicIntegerArray源码解析</span>
+        </a>
+      
+    
+      
+      
+        <a href="/2021-06-03/AtomicStampedReference-analysis.html" class="list-group-item list-group-item-action">
+          <span class="category-post">AtomicStampedReference源码解析</span>
         </a>
       
     
@@ -312,63 +314,63 @@
     
       
       
-        <a href="/2021-06-02/volatile-keyword.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/volatile-keyword.html" class="list-group-item list-group-item-action">
           <span class="category-post">volatile关键字</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/threadlocal-analysis.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/threadlocal-analysis.html" class="list-group-item list-group-item-action">
           <span class="category-post">ThreadLocal源码解析</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/synchronized-keyword.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/synchronized-keyword.html" class="list-group-item list-group-item-action">
           <span class="category-post">synchronized关键字</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/Interrupt-mechanism.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/Interrupt-mechanism.html" class="list-group-item list-group-item-action">
           <span class="category-post">中断机制</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/JMM.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/JMM.html" class="list-group-item list-group-item-action">
           <span class="category-post">Java内存模型</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/shared-lock-analysis.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/shared-lock-analysis.html" class="list-group-item list-group-item-action">
           <span class="category-post">从Semaphore中学习共享锁原理</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/CLH.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/CLH.html" class="list-group-item list-group-item-action">
           <span class="category-post">AQS使用的CLH原型</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/ReentrantLock-analysis.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/ReentrantLock-analysis.html" class="list-group-item list-group-item-action">
           <span class="category-post">ReentrantLock源码解析</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/condition-analysis.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/condition-analysis.html" class="list-group-item list-group-item-action">
           <span class="category-post">Condition队列</span>
         </a>
       
@@ -404,49 +406,49 @@
     
       
       
-        <a href="/2021-06-02/HashMap-analysis-part-three.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/HashMap-analysis-part-three.html" class="list-group-item list-group-item-action">
           <span class="category-post">HashMap源码分析(三)-删除源码</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/LinkedList-source-code-analysis.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/LinkedList-source-code-analysis.html" class="list-group-item list-group-item-action">
           <span class="category-post">LinkedList源码分析</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/Queue-interface-analysis.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/Queue-interface-analysis.html" class="list-group-item list-group-item-action">
           <span class="category-post">Queue接口分析</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/HashMap-analysis-part-one.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/HashMap-analysis-part-one.html" class="list-group-item list-group-item-action">
           <span class="category-post">HashMap源码分析(一)-HashMap中的那些常量</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/HashMap-analysis-part-two.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/HashMap-analysis-part-two.html" class="list-group-item list-group-item-action">
           <span class="category-post">HashMap源码分析(二)-插入源码</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/ArrayList-source-code-analysis.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/ArrayList-source-code-analysis.html" class="list-group-item list-group-item-action">
           <span class="category-post">ArrayList源码分析</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/ArrayQueue-and-ArrayDeque-analysis.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/ArrayQueue-and-ArrayDeque-analysis.html" class="list-group-item list-group-item-action">
           <span class="category-post">ArrayQueue与ArrayDeque源码分析</span>
         </a>
       
@@ -482,28 +484,28 @@
     
       
       
-        <a href="/2021-06-02/Docker-filesys-layout.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/Docker-filesys-layout.html" class="list-group-item list-group-item-action">
           <span class="category-post">Docker使用方法(二)-文件系统架构</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/Docker-write-dockfile.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/Docker-write-dockfile.html" class="list-group-item list-group-item-action">
           <span class="category-post">Dockerfile的基本规则</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/basic-Docker-install.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/basic-Docker-install.html" class="list-group-item list-group-item-action">
           <span class="category-post">Docker使用方法(一)-基本安装</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/the-installation-of-mysql-on-linux.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/the-installation-of-mysql-on-linux.html" class="list-group-item list-group-item-action">
           <span class="category-post">基于centos7安装MySQL</span>
         </a>
       
@@ -527,7 +529,7 @@
       </a>
       <a href="/categories/java/" class="category-count col-2 col-md-1">
         <i class="iconfont icon-articles"></i>
-        <span>4</span>
+        <span>3</span>
       </a>
       <div class="category-collapse">
         
@@ -539,28 +541,21 @@
     
       
       
-        <a href="/2021-06-02/IO-of-Java.html" class="list-group-item list-group-item-action">
-          <span class="category-post">Java中的IO分类</span>
-        </a>
-      
-    
-      
-      
-        <a href="/2021-06-02/access-control-of-Java.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/access-control-of-Java.html" class="list-group-item list-group-item-action">
           <span class="category-post">思考java中的访问控制</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/analysis-of-dynamic-proxy.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/analysis-of-dynamic-proxy.html" class="list-group-item list-group-item-action">
           <span class="category-post">动态代理的原理</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/the-GC-of-Java.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/the-GC-of-Java.html" class="list-group-item list-group-item-action">
           <span class="category-post">Java中的GC</span>
         </a>
       
@@ -596,21 +591,21 @@
     
       
       
-        <a href="/2021-06-02/%E5%8F%8D%E5%B0%84%E5%88%9D%E4%BD%93%E9%AA%8C.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/%E5%8F%8D%E5%B0%84%E5%88%9D%E4%BD%93%E9%AA%8C.html" class="list-group-item list-group-item-action">
           <span class="category-post">反射初体验</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/type-system-of-java.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/type-system-of-java.html" class="list-group-item list-group-item-action">
           <span class="category-post">java中的类型系统</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/the-generic-of-java.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/the-generic-of-java.html" class="list-group-item list-group-item-action">
           <span class="category-post">java的泛型</span>
         </a>
       
@@ -646,21 +641,21 @@
     
       
       
-        <a href="/2021-06-02/java-memory-layout.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/java-memory-layout.html" class="list-group-item list-group-item-action">
           <span class="category-post">java的内存布局</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/parents-delegation-model.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/parents-delegation-model.html" class="list-group-item list-group-item-action">
           <span class="category-post">双亲委派模型</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/class-loading-mechanism.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/class-loading-mechanism.html" class="list-group-item list-group-item-action">
           <span class="category-post">类的加载机制</span>
         </a>
       
@@ -696,14 +691,14 @@
     
       
       
-        <a href="/2021-06-02/what-is-IOC.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/what-is-IOC.html" class="list-group-item list-group-item-action">
           <span class="category-post">IOC到底是什么？</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/what-is-spring-mvc.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/what-is-spring-mvc.html" class="list-group-item list-group-item-action">
           <span class="category-post">Spring MVC原理</span>
         </a>
       
@@ -739,14 +734,14 @@
     
       
       
-        <a href="/2021-06-02/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html" class="list-group-item list-group-item-action">
           <span class="category-post">多线程为什么会不安全</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/Thread-state-transition.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/Thread-state-transition.html" class="list-group-item list-group-item-action">
           <span class="category-post">线程的状态转换</span>
         </a>
       
@@ -782,14 +777,14 @@
     
       
       
-        <a href="/2021-06-02/basic-API.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/basic-API.html" class="list-group-item list-group-item-action">
           <span class="category-post">java视角下的Linux IO API</span>
         </a>
       
     
       
       
-        <a href="/2021-06-02/five-IO-model.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/five-IO-model.html" class="list-group-item list-group-item-action">
           <span class="category-post">五种IO模型</span>
         </a>
       
@@ -825,7 +820,7 @@
     
       
       
-        <a href="/2021-06-02/index-of-mysql.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/index-of-mysql.html" class="list-group-item list-group-item-action">
           <span class="category-post">mysql中的索引</span>
         </a>
       
@@ -861,7 +856,7 @@
     
       
       
-        <a href="/2021-06-02/the-String-of-Java.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/the-String-of-Java.html" class="list-group-item list-group-item-action">
           <span class="category-post">java的字符串</span>
         </a>
       
@@ -897,7 +892,7 @@
     
       
       
-        <a href="/2021-06-02/SPI-service-mechanism.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/SPI-service-mechanism.html" class="list-group-item list-group-item-action">
           <span class="category-post">通过MySQL驱动的加载学习SPI机制</span>
         </a>
       
@@ -933,7 +928,7 @@
     
       
       
-        <a href="/2021-06-02/Frequently-asked-questions-about-generics.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/Frequently-asked-questions-about-generics.html" class="list-group-item list-group-item-action">
           <span class="category-post">关于泛型的常见问题</span>
         </a>
       
@@ -969,7 +964,7 @@
     
       
       
-        <a href="/2021-06-02/red-black-tree.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/red-black-tree.html" class="list-group-item list-group-item-action">
           <span class="category-post">红黑树入门</span>
         </a>
       
@@ -1005,7 +1000,7 @@
     
       
       
-        <a href="/2021-06-02/top-questions-for-network.html" class="list-group-item list-group-item-action">
+        <a href="/2021-06-03/top-questions-for-network.html" class="list-group-item list-group-item-action">
           <span class="category-post">计网热门问题</span>
         </a>
       

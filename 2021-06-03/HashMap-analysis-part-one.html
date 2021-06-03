@@ -1,0 +1,632 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/panda.png">
+  <link rel="icon" href="/img/panda.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#55967e">
+  <meta name="description" content="">
+  <meta name="author" content="cras">
+  <meta name="keywords" content="">
+  
+  <title>HashMap源码分析(一)-HashMap中的那些常量 - Hexo</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"soloveri.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Rains·Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/home.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="HashMap源码分析(一)-HashMap中的那些常量">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-03 11:13" pubdate>
+        2021年6月3日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      6.7k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      87
+       分钟
+    </span>
+  
+
+  
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">HashMap源码分析(一)-HashMap中的那些常量</h1>
+            
+            <div class="markdown-body">
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>HashMap实现了接口<code>Map</code>、<code>Cloneable</code>、<code>Serializable</code>,后两个都是标记接口,注意HasnMap的<code>clone</code>方法也仅仅是浅复制(shadow copy)。而<code>Map</code>是跟<code>Collection</code>并列的顶级接口。HashMap并且继承抽象类<code>AbstractMap</code>。</p>
+<p>本文将首先简单说说接口<code>Map</code>,因为<code>AbstarctMap</code>作为实现接口<code>Map</code>的骨架,仅实现了一些基本方法,没什么好说的。</p>
+<h3 id="Map接口"><a href="#Map接口" class="headerlink" title="Map接口"></a>Map接口</h3><figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">HashMap</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractMap</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt;</span><br><span class="hljs-class">    <span class="hljs-keyword">implements</span> <span class="hljs-title">Map</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt;, <span class="hljs-title">Cloneable</span>, <span class="hljs-title">Serializable</span> </span>&#123;<br>    ...<br>    &#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>Map提供了三种方法来遍历自身:</p>
+<ul>
+<li>通过<code>keySet()</code>方法返回Map中所有键组成的Set</li>
+<li>通过<code>values()</code>返回Map中values组成的Collection</li>
+<li>通过<code>entrySet()</code>返回由<code>Map.Entry</code>组成的Set</li>
+</ul>
+<p>前两种都比较常规。值得一提的是第三种方式中的<code>Map.Entry</code>。在<code>Map</code>接口定义了一个内部接口<code>Entry</code>。Entry维护了一组键值对,类似于c++HashMap中的pair结构。这个Entry结构只能通过Map的迭代器获得。并且这些Entry集合<strong>只</strong>在遍历的过程中有效,如果在遍历过程中修改了集合,那么对Entry的操作是未定义的,除非使用Entry定义的<code>setValue()</code>方法。</p>
+<h2 id="1-HashMap中的常量"><a href="#1-HashMap中的常量" class="headerlink" title="1. HashMap中的常量"></a>1. HashMap中的常量</h2><p>HashMap中定义了一些比较重要的常量,如下所示:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><br><span class="hljs-comment">//默认初始容量,必须是2的倍数</span><br><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> DEFAULT_INITIAL_CAPACITY = <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">4</span>; <span class="hljs-comment">// aka 16</span><br><br><span class="hljs-comment">//HashMap最大的容量,也就是2^30,因为必须是2的倍数</span><br><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> MAXIMUM_CAPACITY = <span class="hljs-number">1</span> &lt;&lt; <span class="hljs-number">30</span>;<br><br><span class="hljs-comment">//扩容因子,如果当前存储的Entry个数达到容量的75%,那么就进行扩容</span><br><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">float</span> DEFAULT_LOAD_FACTOR = <span class="hljs-number">0.75f</span>;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * The bin count threshold for using a tree rather than list for a</span><br><span class="hljs-comment"> * bin.  Bins are converted to trees when adding an element to a</span><br><span class="hljs-comment"> * bin with at least this many nodes. The value must be greater</span><br><span class="hljs-comment"> * than 2 and should be at least 8 to mesh with assumptions in</span><br><span class="hljs-comment"> * tree removal about conversion back to plain bins upon</span><br><span class="hljs-comment"> * shrinkage.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-comment">//当一条链表上的数据容量达到8时就采用红黑树存储</span><br><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> TREEIFY_THRESHOLD = <span class="hljs-number">8</span>;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * The bin count threshold for untreeifying a (split) bin during a</span><br><span class="hljs-comment"> * resize operation. Should be less than TREEIFY_THRESHOLD, and at</span><br><span class="hljs-comment"> * most 6 to mesh with shrinkage detection under removal.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-comment">//当一条链表上的数据少于等于6个时,就从红黑树转为链表存储一个桶中的数据</span><br><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> UNTREEIFY_THRESHOLD = <span class="hljs-number">6</span>;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * The smallest table capacity for which bins may be treeified.</span><br><span class="hljs-comment"> * (Otherwise the table is resized if too many nodes in a bin.)</span><br><span class="hljs-comment"> * Should be at least 4 * TREEIFY_THRESHOLD to avoid conflicts</span><br><span class="hljs-comment"> * between resizing and treeification thresholds.</span><br><span class="hljs-comment"> */</span><br><span class="hljs-comment">//如果一旦采用红黑树存储,那么HashMap的容量至少为64</span><br><span class="hljs-comment">//当然用红黑树存储一个桶中的数据时,那么就至少是4*TREEIFY_THRESHOLD的容量</span><br><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> MIN_TREEIFY_CAPACITY = <span class="hljs-number">64</span>;<br></code></pre></div></td></tr></table></figure>
+
+<p>下面将罗列一些常见的关于HashMap常量的问题。</p>
+<h3 id="1-1-为什么Map的容量都是2的整数幂"><a href="#1-1-为什么Map的容量都是2的整数幂" class="headerlink" title="1.1 为什么Map的容量都是2的整数幂?"></a>1.1 为什么Map的容量都是2的整数幂?</h3><p>有两个理由:</p>
+<ul>
+<li>寻找bucket索引更快</li>
+<li>让扩容方法resize()效率更高，在理想情况下，能够等概率地将一个长链表分为两半，一半在原位置，一半移动到新扩容的地方</li>
+</ul>
+<p>对于第一点,因为在JDK8中,HashMap计算bucket的索引方法如下:</p>
+<blockquote>
+<p>i = (n - 1) &amp; hash == hash % n == (n-1) &amp; (h = key.hashCode()) ^ (h &gt;&gt;&gt; 16)</p>
+</blockquote>
+<p>tab就是用来存储bucket的数组。n是数组的容量。如果n是2的整数幂,那么<code>(n-1)&amp; hash== hash% n</code>,其中hash是一个32位整数。没错,就是这么神奇。这样计算索引只需移位操作,比取模更快。所以都是2的整数幂。</p>
+<p>对于第二点:每次HashMap扩容都是变为原来的两倍,扩容是一个代价高昂的操作。在扩容时不仅需要复制元素,而且需要更新对应的索引。如果HashMap的容量都是2的整数幂。那么它的索引要么在原来位置,要么偏移了2的整数次幂(<strong>偏移了原始容量的距离</strong>)。</p>
+<p>对于这一点,我们随便设一个hash做验证,令hashcode=0x00008435。未扩容前的容量为2^4=16。那么当前计算出的索引:</p>
+<blockquote>
+<p>0000 0000 0000 0000 1000 0100 0001 0101 -&gt; hash<br>0000 0000 0000 0000 0000 0000 0000 1111 -&gt; n-1</p>
+</blockquote>
+<p>计算出的索引为:0101b &amp; 1111b=101b=5。现在将容量扩张为原来的2倍:</p>
+<blockquote>
+<p>0000 0000 0000 0000 0000 0000 0001 1111 -&gt; n-1</p>
+</blockquote>
+<p>计算出的索引为:11111b &amp; 10101b=10101b=21。索引移动了2的整数幂。再将容量扩充为原来的2倍:</p>
+<blockquote>
+<p>0000 0000 0000 0000 0000 0000 0011 1111 -&gt; n-1</p>
+</blockquote>
+<p>计算出的索引为:111111b &amp; 010101b=10101b=21。索引没有变化。</p>
+<p>从上面的结果可以看出,索引动与不动随机的取决于hashcode某1bit是0还是1。后者是0还是1的概率为0.5。</p>
+<p>将容量扩充为原来的两倍的同时,也公平的将每个桶的容量也扩充为原来的两倍,因为桶中的元素移动于不移动完全是等概率的,取决于hashcode某bit是1还是0。</p>
+<blockquote>
+<p>值得注意的是,JDK1.8中,HashMap扩容不会讲链表倒置,而JDK1.7会</p>
+</blockquote>
+<h3 id="1-2-为什么hash要这么计算"><a href="#1-2-为什么hash要这么计算" class="headerlink" title="1.2 为什么hash要这么计算?"></a>1.2 为什么hash要这么计算?</h3><p>在JDK1.8中,Map计算hashcode采用了新的方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> <span class="hljs-title">hash</span><span class="hljs-params">(Object key)</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> h;<br>    <span class="hljs-comment">//null的hash为0</span><br>    <span class="hljs-keyword">return</span> (key == <span class="hljs-keyword">null</span>) ? <span class="hljs-number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="hljs-number">16</span>);<br>    <span class="hljs-comment">//这里调用的key的hashCode方法,实际上调用的key的具体实现类,而不是Object的hashCode</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>是将key的hash高16位于低16位进行异或。最后的hash高16位还是原来的高16位,低16位是异或后的结果。为什么要这么做呢?</p>
+<p>简单来说是为了增加hash的随机性。比如两个整数:365(11110101b),165(01110101b)。如果只采用Integer自己实现的hash算法,那么计算出来的hash就是365于165。</p>
+<p>现在进行索引的计算(map容量为16):<code>(n-1) &amp; 16</code>。计算出的结果都为<code>101b</code>,发生了hash碰撞。但是这两个数差别还是蛮大的。所以将对象的原始hash的高16位与低16位异或,这么做也是为了在低16中保留高16位的特性,加大低16位的随机性。</p>
+<p>所以说最终目的就是为了<strong>防止hash碰撞</strong>。JDK1.7的hash算法并不怎么随机,曾经产生了dos攻击。<a target="_blank" rel="noopener" href="https://coolshell.cn/articles/6424.html">HASH COLLISION DOS 问题</a></p>
+<p><strong>最后,null的hash为0!</strong></p>
+<h3 id="1-3-为什么HashMap的默认容量为16"><a href="#1-3-为什么HashMap的默认容量为16" class="headerlink" title="1.3 为什么HashMap的默认容量为16?"></a>1.3 为什么HashMap的默认容量为16?</h3><p>既然HashMap的容量必须是2的整数幂,那么为什么不是2,4,或者16,32。emm,这个问题我在网上看到的回答是:</p>
+<blockquote>
+<p>如果是2、4、8之类的,容量太小,容易导致频繁扩容。上文说过,扩容代价很高的。而不设置成32、64等更大的值是因为太大了,用到的概率不大。避免浪费空间。</p>
+</blockquote>
+<p>这个答案还行吧,好像有那么一点道理。</p>
+<h3 id="1-4-为什么桶中节点数到8才采用RB树"><a href="#1-4-为什么桶中节点数到8才采用RB树" class="headerlink" title="1.4 为什么桶中节点数到8才采用RB树?"></a>1.4 为什么桶中节点数到8才采用RB树?</h3><p>答案存在于源码中的开发笔记。这里仅摘抄最重要的部分。</p>
+<blockquote>
+<p>Because TreeNodes are about twice the size of regular nodes, we use them only when bins contain enough nodes to warrant use(see TREEIFY_THRESHOLD). And when they become too small (due to removal or resizing) they are converted back to plain bins.  In usages with well-distributed user hashCodes, tree bins are rarely used.  Ideally, under random hashCodes, the frequency of nodes in bins follows a Poisson distribution (<a target="_blank" rel="noopener" href="http://en.wikipedia.org/wiki/Poisson_distribution">http://en.wikipedia.org/wiki/Poisson_distribution</a>) with a parameter of about 0.5 on average for the default resizing threshold of 0.75, although with a large variance because of resizing granularity.</p>
+</blockquote>
+<p>大致意思是说,采用红黑树的存储所消耗的空间是采用链表存储的两倍。所以仅在链表中数据足够多的情况下会转为红黑树存储,当节点数减少到一定数量,就会再次退化为链表存储。<strong>如果使用足够好的hash算法</strong>,那么计算出的hashcode应该是足够分散的。</p>
+<p>在理想hash下,每个桶中的节点数符合参数为0.5的泊松分布。分布公式为<code>(exp(-0.5) * pow(0.5, k) / * factorial(k))</code>。通过公式的计算,每个桶中各个节点数出现的情况如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-number">0</span>:    <span class="hljs-number">0.60653066</span><br><span class="hljs-number">1</span>:    <span class="hljs-number">0.30326533</span><br><span class="hljs-number">2</span>:    <span class="hljs-number">0.07581633</span><br><span class="hljs-number">3</span>:    <span class="hljs-number">0.01263606</span><br><span class="hljs-number">4</span>:    <span class="hljs-number">0.00157952</span><br><span class="hljs-number">5</span>:    <span class="hljs-number">0.00015795</span><br><span class="hljs-number">6</span>:    <span class="hljs-number">0.00001316</span><br><span class="hljs-number">7</span>:    <span class="hljs-number">0.00000094</span><br><span class="hljs-number">8</span>:    <span class="hljs-number">0.00000006</span><br></code></pre></div></td></tr></table></figure>
+<p>可以看到,一个桶中出现出现8个节点的概率为千万分之六。几乎是不可能出现的情况。当然,回归现实,不可能每次都出现理想hash。所以采用8个节点作为分界点。一个桶中达到8个节点,就转为红黑树存储。</p>
+<p>这里又可以引申出一个问题,<strong>为什么泊松分布的参数要设置为0.5?</strong></p>
+<blockquote>
+<p>emmm,从注释中看,应该也是一个经验值吧。</p>
+</blockquote>
+<h3 id="1-5-为什么桶中节点数减少为6才采用链表"><a href="#1-5-为什么桶中节点数减少为6才采用链表" class="headerlink" title="1.5 为什么桶中节点数减少为6才采用链表?"></a>1.5 为什么桶中节点数减少为6才采用链表?</h3><p>在节点数减少到6时才桶中元素采用RB树转为链表,为什么不是5或者7?</p>
+<p>不设置为5、4、3的原因显而易见,节点太少,用红黑树存储从空间角度上来说不划算,因为是链表存储的2倍。</p>
+<p>那么为什么不设置为7呢?</p>
+<p>因为如果设置为7,那么加一个entry,变为8就要升级红黑树,减一个entry就变为7降级为链表。如果对HashMap频繁的进行增删操作,那么桶的存储方式就得频繁的在红黑树和链表之间转换,这个开销是不可忽视的。所以设为6,有一个缓冲的空间。</p>
+<h3 id="1-6-为什么factor设为0-75"><a href="#1-6-为什么factor设为0-75" class="headerlink" title="1.6 为什么factor设为0.75?"></a>1.6 为什么factor设为0.75?</h3><p>在官方注释中,下面的节选部分解释了为什么<code>load factor</code>是0.75。</p>
+<blockquote>
+<p>As a general rule, the default load factor (.75) offers a good tradeoff between time and space costs.  Higher values decrease the space overhead but increase the lookup cost (reflected in most of the operations of the <tt>HashMap</tt> class, including <tt>get</tt> and <tt>put</tt>).  The expected number of entries in the map and its load factor should be taken into account when setting its initial capacity, so as to minimize the number of<br>rehash operations.  If the initial capacity is greater than the maximum number of entries divided by the load factor, no rehash operations will ever occur.</p>
+</blockquote>
+<p>简而言之,0.75是一个经验值,在时间和空间两个方面达到了平衡。<strong>这也就解释为什么不是0.5或是1?</strong></p>
+<p>如果factor是<strong>0.5</strong>,那么就会导致map频繁扩容,代价比较高。而且空间利用率也比较低。但是链表中的内容或者RB树的节点就比较少,提升了查询效率。<strong>是以空间换时间的方式。</strong></p>
+<p>如果factor设置为<strong>1</strong>,虽然空间利用率达到了100%,在使用完才会扩容,一定程度增加了put的时间。并且可能会发生大量的hash碰撞,此时的查询效率是非常低的。<strong>是以时间换空间的方式。</strong></p>
+<p><strong>那么为什么不是0.6或者0.8?</strong></p>
+<p>首先如果<code>load factor</code>为0.75,那么每次<code>load factor * capacity</code>都会得到一个整数。</p>
+<p>其次,在StackOverflow上有一个<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/10901752/what-is-the-significance-of-load-factor-in-hashmap">回答</a>,采用了二项分布的方式计算出了<code>load factor</code>与<code>capacity</code>的最佳比例:</p>
+<p>他首先规定,在完美情况下,在每次插入时所选取的桶应该是一个空桶。泊松分布的极限就是二项分布。在n次插入实验中,每次插入都选取空桶的概率总和应该为0.5。计算公式为:</p>
+<blockquote>
+<p>1/2=P=C(n, 0) * (1/s)^0 * (1 - 1/s)^(n - 0),其中s是桶的数量,n是试验次数</p>
+</blockquote>
+<p>我一直不明白<code>1/s</code>代表的是什么?每次都选取的是非空桶?那么解释不了<code>1/s</code>啊。而且StackOverflow新人还不能评论,可恶啊。</p>
+<p>进行简单变化,在s趋于正无穷时,<code>n/s=load factor</code>趋近于<code>ln(2)</code>。所以他得出load facotr在<code>ln(2)~0.75</code>之间HashMap都能有很出色的表现。</p>
+<p>我对上述回答产生了如下疑问:</p>
+<ol>
+<li>也不一定要求每次插入都必须要求空桶吧?</li>
+<li><code>1/s</code>的数学意义到底代表着什么?</li>
+</ol>
+<h2 id="2-HashMap的属性"><a href="#2-HashMap的属性" class="headerlink" title="2. HashMap的属性"></a>2. HashMap的属性</h2><p>HashMap中的magic number在上面已经分析过,下面是HashMap的一些属性:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">* The table, initialized on first use, and resized as</span><br><span class="hljs-comment">* necessary. When allocated, length is always a power of two.</span><br><span class="hljs-comment">* (We also tolerate length zero in some operations to allow</span><br><span class="hljs-comment">* bootstrapping mechanics that are currently not needed.)</span><br><span class="hljs-comment">*/</span><br><span class="hljs-comment">//用来存储bucket的底层数组,无论是初始化HashMap还是扩容,容量一直都是2的整数幂</span><br><span class="hljs-comment">//当然上面也指出了在某些时候允许长度为0,从而允许一些当前不需要的引导机制????这是啥意思</span><br><span class="hljs-keyword">transient</span> Node&lt;K,V&gt;[] table;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment">* Holds cached entrySet(). Note that AbstractMap fields are used</span><br><span class="hljs-comment">* for keySet() and values().</span><br><span class="hljs-comment">*/</span><br><span class="hljs-keyword">transient</span> Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment">* The number of key-value mappings contained in this map.</span><br><span class="hljs-comment">*/</span><br><span class="hljs-comment">//这是HashMap中实际的Entry数量,不是容量哦</span><br><span class="hljs-keyword">transient</span> <span class="hljs-keyword">int</span> size;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment">* The number of times this HashMap has been structurally modified</span><br><span class="hljs-comment">* Structural modifications are those that change the number of mappings in</span><br><span class="hljs-comment">* the HashMap or otherwise modify its internal structure (e.g.,</span><br><span class="hljs-comment">* rehash).  This field is used to make iterators on Collection-views of</span><br><span class="hljs-comment">* the HashMap fail-fast.  (See ConcurrentModificationException).</span><br><span class="hljs-comment">*/</span><br><span class="hljs-comment">//modCount曾在分析ArrayList的源码解释过,用于支持fast-fail机制,从而也说明HashMap是线程不安全的</span><br><span class="hljs-keyword">transient</span> <span class="hljs-keyword">int</span> modCount;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment">* The next size value at which to resize (capacity * load factor).</span><br><span class="hljs-comment">*</span><br><span class="hljs-comment">* <span class="hljs-doctag">@serial</span></span><br><span class="hljs-comment">*/</span><br><span class="hljs-comment">// (The javadoc description is true upon serialization.</span><br><span class="hljs-comment">// Additionally, if the table array has not been allocated, this</span><br><span class="hljs-comment">// field holds the initial array capacity, or zero signifying</span><br><span class="hljs-comment">// DEFAULT_INITIAL_CAPACITY.)</span><br><br><span class="hljs-comment">//注释中的大致意思就是下一次扩容时的容量,如果HashMap还未初始化,那么就存储初始化的容量,或者0(表示默认初始化容量)</span><br><span class="hljs-keyword">int</span> threshold;<br><br><span class="hljs-comment">/**</span><br><span class="hljs-comment">* The load factor for the hash table.</span><br><span class="hljs-comment">*</span><br><span class="hljs-comment">* <span class="hljs-doctag">@serial</span></span><br><span class="hljs-comment">*/</span><br><span class="hljs-comment">//HashMap的装载因子,一旦确定,不可更改</span><br><span class="hljs-keyword">final</span> <span class="hljs-keyword">float</span> loadFactor;<br></code></pre></div></td></tr></table></figure>
+
+<p>更新:2020-08-02 18:57:49</p>
+<p><code>HashMap</code>中的<code>threshold</code>=<code>loadFactor*capacity</code>,并<strong>不是</strong>下一次扩容的容量,当然如果HashMap还未初始化,并且用户指定了初始化容量,那么存储的就是根据用户指定容量计算出的元素数量阈值,否则0就是表示默认值12。       </p>
+<p><code>table</code>数组的元素是Node,这又是什么呢?来一起康康:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">static</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Node</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; <span class="hljs-keyword">implements</span> <span class="hljs-title">Map</span>.<span class="hljs-title">Entry</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; </span>&#123;<br>        <span class="hljs-comment">//key的Hash值,是一个32bit的int,不可更改</span><br>        <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> hash;<br>        <span class="hljs-comment">//key,不可更改</span><br>        <span class="hljs-keyword">final</span> K key;<br>        V value;<br>        <span class="hljs-comment">//next指针,因为刚开始就是使用链表存储的Entry的</span><br>        Node&lt;K,V&gt; next;<br>        <span class="hljs-comment">//构造函数</span><br>        <span class="hljs-comment">//注意:没有默认构造函数</span><br>        Node(<span class="hljs-keyword">int</span> hash, K key, V value, Node&lt;K,V&gt; next) &#123;<br>            <span class="hljs-keyword">this</span>.hash = hash;<br>            <span class="hljs-keyword">this</span>.key = key;<br>            <span class="hljs-keyword">this</span>.value = value;<br>            <span class="hljs-keyword">this</span>.next = next;<br>        &#125;<br><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> K <span class="hljs-title">getKey</span><span class="hljs-params">()</span>        </span>&#123; <span class="hljs-keyword">return</span> key; &#125;<br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> V <span class="hljs-title">getValue</span><span class="hljs-params">()</span>      </span>&#123; <span class="hljs-keyword">return</span> value; &#125;<br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> String <span class="hljs-title">toString</span><span class="hljs-params">()</span> </span>&#123; <span class="hljs-keyword">return</span> key + <span class="hljs-string">&quot;=&quot;</span> + value; &#125;<br><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> <span class="hljs-title">hashCode</span><span class="hljs-params">()</span> </span>&#123;<br>            <span class="hljs-keyword">return</span> Objects.hashCode(key) ^ Objects.hashCode(value);<br>        &#125;<br><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> V <span class="hljs-title">setValue</span><span class="hljs-params">(V newValue)</span> </span>&#123;<br>            V oldValue = value;<br>            value = newValue;<br>            <span class="hljs-keyword">return</span> oldValue;<br>        &#125;<br><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">equals</span><span class="hljs-params">(Object o)</span> </span>&#123;<br>            <span class="hljs-keyword">if</span> (o == <span class="hljs-keyword">this</span>)<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>            <span class="hljs-keyword">if</span> (o <span class="hljs-keyword">instanceof</span> Map.Entry) &#123;<br>                Map.Entry&lt;?,?&gt; e = (Map.Entry&lt;?,?&gt;)o;<br>                <span class="hljs-keyword">if</span> (Objects.equals(key, e.getKey()) &amp;&amp;<br>                    Objects.equals(value, e.getValue()))<br>                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>            &#125;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>        &#125;<br>    &#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>从上面可以看出,Node是在HashMap使用链表存储模式时一组key-value的wrapper类。而<code>Map.Entry</code>是在<code>Map</code>接口中定义的一个内部接口,规定了一些<code>Entry</code>必须实现的方法。基本上就可以说这个<code>Entry</code>就相当于c++中的<code>pair</code>结构。保存一对key-value。<code>Entry</code>的定义如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><br><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Entry</span>&lt;<span class="hljs-title">K</span>,<span class="hljs-title">V</span>&gt; </span>&#123;<br>    <span class="hljs-function">K <span class="hljs-title">getKey</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">V <span class="hljs-title">getValue</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">V <span class="hljs-title">setValue</span><span class="hljs-params">(V value)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">equals</span><span class="hljs-params">(Object o)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">hashCode</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;K extends Comparable&lt;? <span class="hljs-keyword">super</span> K&gt;, V&gt; Comparator&lt;Map.Entry&lt;K,V&gt;&gt; comparingByKey() &#123;<br>        <span class="hljs-keyword">return</span> (Comparator&lt;Map.Entry&lt;K, V&gt;&gt; &amp; Serializable)<br>            (c1, c2) -&gt; c1.getKey().compareTo(c2.getKey());<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;K, V extends Comparable&lt;? <span class="hljs-keyword">super</span> V&gt;&gt; Comparator&lt;Map.Entry&lt;K,V&gt;&gt; comparingByValue() &#123;<br>        <span class="hljs-keyword">return</span> (Comparator&lt;Map.Entry&lt;K, V&gt;&gt; &amp; Serializable)<br>            (c1, c2) -&gt; c1.getValue().compareTo(c2.getValue());<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;K, V&gt; Comparator&lt;Map.Entry&lt;K, V&gt;&gt; comparingByKey(Comparator&lt;? <span class="hljs-keyword">super</span> K&gt; cmp) &#123;<br>        Objects.requireNonNull(cmp);<br>        <span class="hljs-keyword">return</span> (Comparator&lt;Map.Entry&lt;K, V&gt;&gt; &amp; Serializable)<br>            (c1, c2) -&gt; cmp.compare(c1.getKey(), c2.getKey());<br>    &#125;<br>    <br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;K, V&gt; Comparator&lt;Map.Entry&lt;K, V&gt;&gt; comparingByValue(Comparator&lt;? <span class="hljs-keyword">super</span> V&gt; cmp) &#123;<br>        Objects.requireNonNull(cmp);<br>        <span class="hljs-keyword">return</span> (Comparator&lt;Map.Entry&lt;K, V&gt;&gt; &amp; Serializable)<br>            (c1, c2) -&gt; cmp.compare(c1.getValue(), c2.getValue());<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>在<code>Entry</code>中定义了四个获取比较器的静态方法,对于不熟悉java8新语法的同学来说,静态方法内部的实现可能让人摸不着头脑。</p>
+<p>首先,<code>(c1, c2) -&gt; c1.getKey().compareTo(c2.getKey());</code>其实是lambda表达式,它的一般格式如下:</p>
+<blockquote>
+<p>(type1 arg1,type2 arg2…)-&gt;{ body…}</p>
+</blockquote>
+<p>lambda有<a target="_blank" rel="noopener" href="http://blog.oneapm.com/apm-tech/226.html">以下特点</a>:</p>
+<ul>
+<li>一个 Lambda 表达式可以有零个或多个参数</li>
+<li>参数的类型既可以明确声明，也可以根据上下文来推断。例如：(int a)与(a)效果相同</li>
+<li>所有参数需包含在圆括号内，参数之间用逗号相隔。例如：(a, b) 或 (String a, int b, float c)<br>空圆括号代表参数集为空。例如：() -&gt; 42</li>
+<li>当只有一个参数，且其类型可推导时，<strong>圆括号</strong>（）可省略。例如：a -&gt; return a*a</li>
+<li>Lambda 表达式的主体可包含零条或多条语句</li>
+<li>如果 Lambda 表达式的主体只有<strong>一条</strong>语句，<strong>花括号</strong>{}可省略。匿名函数的返回类型与该主体表达式一致</li>
+<li>如果 Lambda 表达式的主体包含一条以上语句，则表达式必须包含在花括号{}中（形成代码块）。匿名函数的返回类型与代码块的返回类型一致，若没有返回则为空</li>
+</ul>
+<p>关于lambda表达式更高级知识可以了解一下函数式语言中的闭包,java中的lambda就是最接近闭包的概念。</p>
+<p>接下来再看看为什么一个lambda表达式能够强转为接口。<code>Comparator</code>是一个函数式接口(<code>@FunctionalInterface</code>)。函数式接口的标准就是其内部只能定义一个抽象方法。在java8中,每个lambda表达式都能隐式的赋值给函数时接口。当然lambda表达式的返回值和参数得和接口中定义的抽象方法一样才行。</p>
+<p>然而我们去实际看<code>Comparator</code>接口源码时,却发现<code>Comparator</code>有两个抽象方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@FunctionalInterface</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Comparator</span>&lt;<span class="hljs-title">T</span>&gt; </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">compare</span><span class="hljs-params">(T o1, T o2)</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">equals</span><span class="hljs-params">(Object obj)</span></span>;<br>    ...<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>竟然和函数式接口的定义不一样?然而答案在<code>FunctionInterface</code>的<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/lang/FunctionalInterface.html">官方文档</a>中。</p>
+<blockquote>
+<p>If an interface declares an abstract method overriding one of the public methods of java.lang.Object, that also does not count toward the interface’s abstract method count since any implementation of the interface will have an implementation from java.lang.Object or elsewhere.</p>
+</blockquote>
+<p>意思就是说如果函数式接口的抽象方法如果重写自<code>object</code>,那么是不计入函数式接口定义的方法个数中的,因为<code>Object</code>中的方法肯定都会在自身中实现或者override于其他地方。</p>
+<p>最后强转的类型是竟然是<code>(Comparator&lt;Map.Entry&lt;K, V&gt;&gt; &amp; Serializable)</code>,两个类型还能进行与操作?</p>
+<p>其实这也是java8中的新语法,StackOverflow上关于此问题的<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/28509596/java-lambda-expressions-casting-and-comparators">回答</a>如下:</p>
+<blockquote>
+<p>The lambda is initialized with its target type as Comparator and Serializable. Note the return type of method is just Comparator, but because Serializable is also inscribed to it while initialization, it can always be serialized even though this message is lost in method signature.</p>
+</blockquote>
+<p>简而言之就是lambda表达式的初始化的目标类型是<code>Comparator</code>和<code>Serializable</code>。但是最后的<strong>返回类型</strong>却只是<code>Comparator</code>,但是<code>Serializable</code>类型已经在表达式初始化时注册(inscribe)过了。所以尽管在函数签名中丢失了该信息,但是返回值是一定总是可以初始化的。</p>
+<p>ok,经过上述的简单科普,相信返回比较器的代码实现已经不是问题了。上述所有的点都是java8的新语法,包括在接口中定义<code>default</code>方法和<code>static</code>方法。</p>
+<h2 id="3-HashMap的构造方法"><a href="#3-HashMap的构造方法" class="headerlink" title="3. HashMap的构造方法"></a>3. HashMap的构造方法</h2><p><code>HashMap</code>总共有4个构造方法,除了<code>HashMap(Map&lt;? extends K, ? extends V&gt; m)</code>以外,其他3个构造函数都是仅仅设置装载因子<code>load factor</code>,在这三个构造函数中,除了默认构造函数,<del>另外两个都会设置初始容量</del>。</p>
+<p><del>这里传入的初始容量仅仅是为了设置threshold,而不是设置初始容量</del>,这里再次收回所说的话,虽然表面上看仅仅是将传入容量修正为最近的2的整数幂,并赋值给threshold。</p>
+<p><strong>但是在第一次put元素时</strong>,会将刚才设置好的threshold赋值给table的新容量,也就实现的指定HashMap的容量的操作。但是这三个构造都不会进行table内存的分配,<strong>只会在第一次put时调用resize()进行分配</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">HashMap</span><span class="hljs-params">(<span class="hljs-keyword">int</span> initialCapacity, <span class="hljs-keyword">float</span> loadFactor)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (initialCapacity &lt; <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalArgumentException(<span class="hljs-string">&quot;Illegal initial capacity: &quot;</span> +<br>                                           initialCapacity);<br>    <span class="hljs-keyword">if</span> (initialCapacity &gt; MAXIMUM_CAPACITY)<br>        initialCapacity = MAXIMUM_CAPACITY;<br>    <span class="hljs-keyword">if</span> (loadFactor &lt;= <span class="hljs-number">0</span> || Float.isNaN(loadFactor))<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalArgumentException(<span class="hljs-string">&quot;Illegal load factor: &quot;</span> +<br>                                           loadFactor);<br>    <span class="hljs-keyword">this</span>.loadFactor = loadFactor;<br>    <span class="hljs-keyword">this</span>.threshold = tableSizeFor(initialCapacity);<br>&#125;<br><br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">HashMap</span><span class="hljs-params">(<span class="hljs-keyword">int</span> initialCapacity)</span> </span>&#123;<br>    <span class="hljs-keyword">this</span>(initialCapacity, DEFAULT_LOAD_FACTOR);<br>&#125;<br><br><span class="hljs-comment">//默认构造函数不会设置threshold</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">HashMap</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">this</span>.loadFactor = DEFAULT_LOAD_FACTOR; <span class="hljs-comment">// all other fields defaulted</span><br>&#125;<br><br><span class="hljs-comment">//会在putEntries中设置threshold    </span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">HashMap</span><span class="hljs-params">(Map&lt;? extends K, ? extends V&gt; m)</span> </span>&#123;<br>    <span class="hljs-keyword">this</span>.loadFactor = DEFAULT_LOAD_FACTOR;<br>    putMapEntries(m, <span class="hljs-keyword">false</span>);<br>&#125;<br><br></code></pre></div></td></tr></table></figure>
+<p>在第四个使用<code>Map</code>对象构造HashMap的构造函数中,其调用了<code>putMapEntries(Map,boolean)</code>方法,这个函数值得一提,因为其第二个参数的意义会在后面用到:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">/**</span><br><span class="hljs-comment">     * Implements Map.putAll and Map constructor.</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> m the map</span><br><span class="hljs-comment">     * <span class="hljs-doctag">@param</span> evict false when initially constructing this map, else</span><br><span class="hljs-comment">     * true (relayed to method afterNodeInsertion).</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-function"><span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">putMapEntries</span><span class="hljs-params">(Map&lt;? extends K, ? extends V&gt; m, <span class="hljs-keyword">boolean</span> evict)</span> </span>&#123;<br>        <span class="hljs-keyword">int</span> s = m.size();<br>        <span class="hljs-keyword">if</span> (s &gt; <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-keyword">if</span> (table == <span class="hljs-keyword">null</span>) &#123; <span class="hljs-comment">// pre-size</span><br>                <span class="hljs-comment">//下面的操作是在计算完全存储m中的元素需要的capacity,注意不是threshold</span><br>                <br>                <span class="hljs-comment">//下面的加1.0F是为在计算出的loadFactor为小数时向上取整</span><br>                <span class="hljs-keyword">float</span> ft = ((<span class="hljs-keyword">float</span>)s / loadFactor) + <span class="hljs-number">1.0F</span>;<br>                <span class="hljs-keyword">int</span> t = ((ft &lt; (<span class="hljs-keyword">float</span>)MAXIMUM_CAPACITY) ?<br>                         (<span class="hljs-keyword">int</span>)ft : MAXIMUM_CAPACITY);<br>                <span class="hljs-comment">//查看所需的capacity是否比当前HashMap的扩容阈值还大,比阈值还大的情况下,不可能存储下m的所有元素,即使当前HashMap为空</span><br>                <span class="hljs-comment">//那么就需要更新当前HashMap的阈值</span><br>                <span class="hljs-keyword">if</span> (t &gt; threshold)<br>                    threshold = tableSizeFor(t);<br>            &#125;<br>            <span class="hljs-comment">//当调用HashMap的putAll方法时,会再次调用该方法执行到下面的else if </span><br>            <span class="hljs-comment">//这里的resize相当于一次预判,如果m的元素个数比当前hashmap的元素个数阈值threshold还高的话</span><br>            <span class="hljs-comment">//那么即使当前HashMap为空,也无法存储m的所有元素,所以必须扩容</span><br>            <span class="hljs-comment">//当然即使s&lt;=threshold,当前HashMap还是有可能存储不下,这会在putVal内部进行扩容</span><br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (s &gt; threshold)<br>                resize();<br>            <span class="hljs-keyword">for</span> (Map.Entry&lt;? extends K, ? extends V&gt; e : m.entrySet()) &#123;<br>                K key = e.getKey();<br>                V value = e.getValue();<br>                putVal(hash(key), key, value, <span class="hljs-keyword">false</span>, evict);<br>            &#125;<br>        &#125;<br>    &#125; <br></code></pre></div></td></tr></table></figure>
+<p>在<code>else if</code>中的扩容操作体现了HashMap的扩容懒汉模式,仅仅在已经确定没有足够空间存储的情况中才会进行扩容操作,因为扩容操作的代价太高了。</p>
+<p><strong>evict参数:</strong></p>
+<p>如果当前<code>HashMap</code>的table还未进行分配,那么就会将参数<code>evict</code>设置为false,表示当前正处于构造模式。这个单词本身的意思具有驱逐的意思,主要应用于<code>LinkedHashMap</code>构造<code>LRU</code>时使用。与<code>HashMap</code>中的意义不同。</p>
+<p>最后代码中经常使用<code>tableSizeFor(int)</code>方法就是把用户输入的容量调整到最近的2的整数幂。其代码与<code>ArrayQueue</code>的调整方式基本一致。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> <span class="hljs-title">tableSizeFor</span><span class="hljs-params">(<span class="hljs-keyword">int</span> cap)</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> n = cap - <span class="hljs-number">1</span>;<br>    n |= n &gt;&gt;&gt; <span class="hljs-number">1</span>;<br>    n |= n &gt;&gt;&gt; <span class="hljs-number">2</span>;<br>    n |= n &gt;&gt;&gt; <span class="hljs-number">4</span>;<br>    n |= n &gt;&gt;&gt; <span class="hljs-number">8</span>;<br>    n |= n &gt;&gt;&gt; <span class="hljs-number">16</span>;<br>    <span class="hljs-keyword">return</span> (n &lt; <span class="hljs-number">0</span>) ? <span class="hljs-number">1</span> : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACIT      Y : n + <span class="hljs-number">1</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<p>唯一与<code>ArrayQueue</code>不同的时,当把容量调整到离cap最近的2的整数幂-1时:</p>
+<ul>
+<li>如果已经溢出,那么会将容量设为1</li>
+<li>如果此时的容量小于<code>2^31</code>但是大于<code>2^30</code>,那么就将容量修正为<code>2^30</code></li>
+<li>否则最新容量就是最近的2的整数幂。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/857420/what-are-the-reasons-why-map-getobject-key-is-not-fully-generic">为什么HashMap的get方法没有写成泛型？</a></p>
+<h2 id="0x3-JDK1-8与JDK1-7的HashMap异同"><a href="#0x3-JDK1-8与JDK1-7的HashMap异同" class="headerlink" title="0x3 JDK1.8与JDK1.7的HashMap异同"></a>0x3 JDK1.8与JDK1.7的HashMap异同</h2><ol>
+<li><p>实现方式不同,在JDK1.7中,HashMap采用数组+链表的方式实现,1.8则采用数组+链表+红黑树实现。</p>
+</li>
+<li><p>扩容与插入顺序不同,1.7在链表中扩容是需要时再扩,也就是在插入时发现实在没办法插入再进行扩容,然后重新完成插入操作。我认为这很正常,没地方放再扩容不是正常逻辑?<br>JDK1.8中是先把节点放入map中,最后再决定是否要调用<code>resize</code>,我认为这是因为1.8中链表和RB树会进行相互转换。如果先进行扩容,那么本来需要进行树化的链表由于扩容被迫拆为两条小链表,可能会浪费空间。例如链表为7个,插入后为8个需要进行树化,但是先扩容导致该链表的长度减为4,又不需要树化了。</p>
+</li>
+<li><p>链表的插入顺序不同,1.7中是采用头插法,1.8中采用尾插法。</p>
+</li>
+</ol>
+<h2 id="0x4-JDK1-7的HashMap中存在的问题"><a href="#0x4-JDK1-7的HashMap中存在的问题" class="headerlink" title="0x4 JDK1.7的HashMap中存在的问题"></a>0x4 JDK1.7的HashMap中存在的问题</h2><ol>
+<li>死循环问题,因为1.7中采用头插法,在多线程环境下进行扩容操作时(resize过后在调用transfor时可能会出现问题)可能会形成循环链表,导致在进行get操作时陷入死循环。这种情况出现在原hashmap中有:3-&gt;5-&gt;7,扩容后的hashmap分割为：5-&gt;3和7，这时可能会产生死循环</li>
+</ol>
+<p>对于1.7hashmap的transform方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">transfer</span><span class="hljs-params">(Entry[] newTable)</span> </span>&#123;<br>    Entry[] src = table;<br>    <span class="hljs-keyword">int</span> newCapacity = newTable.length;<br>    <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> j = <span class="hljs-number">0</span>; j &lt; src.length; j++) &#123;<br>        Entry&lt;K,V&gt; e = src[j];<br>        <span class="hljs-keyword">if</span> (e != <span class="hljs-keyword">null</span>) &#123;<br>            src[j] = <span class="hljs-keyword">null</span>;<br>            <span class="hljs-keyword">do</span> &#123;<br>                Entry&lt;K,V&gt; next = e.next;<br>                <span class="hljs-keyword">int</span> i = indexFor(e.hash, newCapacity);<br>                <span class="hljs-comment">//如果线程1在这就被挂起，那么当前这个do...while循环本身就不会结束</span><br>                e.next = newTable[i];<br><br>                <span class="hljs-comment">//死循环产生点</span><br>                <span class="hljs-comment">//线程1正准备执行下面一句时被挂起，才会出现get时死循环</span><br>                newTable[i] = e;<br>                <br>                e = next;<br>            &#125; <span class="hljs-keyword">while</span> (e != <span class="hljs-keyword">null</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<ol start="2">
+<li>数据丢失问题,同样是因为头插法,原始链表的末尾数据可能会产生丢失问题。</li>
+</ol>
+<p>这种情况出现在原hashmap中有:3-&gt;5-&gt;7,扩容后的hashmap分割为：7-&gt;3和5，这时可能会丢失数据3。详情见：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/bendandedaima/p/13259284.html">HashMap为什么线程不安全（死循环+数据丢失过程分析）</a></p>
+<h2 id="0x5-JDK1-8的HashMap中存在的问题"><a href="#0x5-JDK1-8的HashMap中存在的问题" class="headerlink" title="0x5 JDK1.8的HashMap中存在的问题"></a>0x5 JDK1.8的HashMap中存在的问题</h2><p>仍然会出现死循环以及数据丢失的问题。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">....<br><span class="hljs-keyword">if</span> ((p = tab[i = (n - <span class="hljs-number">1</span>) &amp; hash]) == <span class="hljs-keyword">null</span>)<br>    tab[i] = newNode(hash, key, value, <span class="hljs-keyword">null</span>);<br>...<br></code></pre></div></td></tr></table></figure>
+<p>上述是<code>putVal</code>中的部分代码,在多线程环境下,如果线程1已经通过if检查但是被迫放弃cpu,而线程2因为hash相同已经完成了插入操作,线程1重新获取cpu,此时再进行插入就会覆盖线程2插入的线程。</p>
+<p>数据丢失问题是多线程环境下必然产生的问题。而1.8下的死循环原因却不相同,在对链表进行树化(<code>treeify</code>)或者调整树平衡(<code>balanceInsertion</code>)时仍然会产生死循环问题。</p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li><p><a target="_blank" rel="noopener" href="https://runzhuoli.me/2018/09/20/why-hashmap-size-power-of-2.html">为什么容量都是2的整数幂</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://albenw.github.io/posts/df45eaf1/">关于HashMap的一些理解</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/reliveIT/article/details/82960063?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-4.channel_param&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromMachineLearnPai2-4.channel_param">HashMap defaultLoadFactor = 0.75和泊松分布没有关系</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://juejin.im/post/5d5d25e9f265da03f66dc517">HashMap面试必问的6个点，你知道几个</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/liang1101/p/12728936.html">1.7与1.8HashMap的异同</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/10901752/what-is-the-significance-of-load-factor-in-hashmap">1.8散列因子为0.75的可能原因</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xrq730/p/5037299.html">1.7中HashMap存在的问题</a></p>
+</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/HashMap/">HashMap</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021-06-03/Queue-interface-analysis.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Queue接口分析</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021-06-03/HashMap-analysis-part-two.html">
+                        <span class="hidden-mobile">HashMap源码分析(二)-插入源码</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+
+  
+
+  
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
