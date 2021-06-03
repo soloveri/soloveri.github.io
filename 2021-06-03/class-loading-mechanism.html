@@ -175,7 +175,7 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-06-03 16:05" pubdate>
+      <time datetime="2021-06-03 16:12" pubdate>
         2021年6月3日 下午
       </time>
     </span>
@@ -197,7 +197,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      78
+      77
        分钟
     </span>
   
@@ -238,8 +238,7 @@
             <h1 style="display: none">类的加载机制</h1>
             
             <div class="markdown-body">
-              <h1 id="1-类初始化的时机"><a href="#1-类初始化的时机" class="headerlink" title="1. 类初始化的时机"></a>1. 类初始化的时机</h1><p>update:2021-01-16 13:59:42</p>
-<p>当复习类加载时机时，我给自己抛出了一个问题：这里的时机只说明了<strong>类</strong>的初始化，那么对于接口呢？接口什么时候会被初始化呢？</p>
+              <h1 id="1-类初始化的时机"><a href="#1-类初始化的时机" class="headerlink" title="1. 类初始化的时机"></a>1. 类初始化的时机</h1><p>当复习类加载时机时，我给自己抛出了一个问题：这里的时机只说明了<strong>类</strong>的初始化，那么对于接口呢？接口什么时候会被初始化呢？</p>
 <p>仔细回顾《深入理解Java虚拟机》，才发现，作者给出的是会触发<strong>类型</strong>初始化的六种时机，而不是<strong>类</strong>初始化。这里类型可能是指类或者接口。ok，那么我的问题迎刃而解了。接口初始化的时机同样遵循以下六种场景。</p>
 <hr>
 <p>在Java中，只有主动引用才会触发<del>类</del>类型加载动作。所谓的主动引用指<strong>只</strong>包括以下六种情况（除了下面这六种情况，其余的引用都称为被动引用）：</p>
@@ -496,7 +495,7 @@
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
                     
-                      <a class="hover-with-bg" href="/tags/%E7%B1%BB%E5%8A%A0%E8%BD%BD/">类加载</a>
+                      <a class="hover-with-bg" href="/tags/class-loading/">class loading</a>
                     
                   </div>
                 
@@ -523,8 +522,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2021-06-03/List-interface-analysis.html">
-                        <span class="hidden-mobile"></span>
+                      <a href="/2021-06-03/red-black-tree.html">
+                        <span class="hidden-mobile">红黑树入门</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
