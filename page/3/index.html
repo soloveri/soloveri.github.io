@@ -184,6 +184,164 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021-06-03/HashMap-analysis-part-two.html" target="_self">
+          HashMap源码分析(二)-插入源码
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/HashMap-analysis-part-two.html" target="_self">
+          
+          
+            
+          
+          HashMap中最常用的就是put(key,value)函数与remove函数,而且这些函数还会包含RB树与list的相互转换,比较复杂。值得认真推敲。
+1. put方法下面JDk1.8中,HashMap的put源码。其又在内部调用了putVal。
+1234567public V put(K key, V value) &#123;    return putVal(hash(key), key,
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 12:50" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/HashMap/">HashMap</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/red-black-tree.html" target="_self">
+          红黑树入门
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/red-black-tree.html" target="_self">
+          
+          
+            
+          
+          本篇将带你一步一步了解红黑树，当然大部分内容来源于算法(第4版)一书，我仅仅对一点内容总结了自己的心得。
+在谈谈红黑树之前，我们先来回顾一下二叉排序树(balanced sort tree),因为红黑树是从BST的概念演化而来的。BST的定义很简单，对于一个节点来说，左树的所有节点的值都小于当前节点的值，右树所有节点的值都大于当前节点的值。但是在最坏情况下BST的高度会达到O(N),效率太差。
+我
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 12:50" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E9%9B%86%E5%90%88/">java集合</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91-map/">红黑树,map</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/ArrayList-source-code-analysis.html" target="_self">
+          ArrayList源码分析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/ArrayList-source-code-analysis.html" target="_self">
+          
+          
+            
+          
+          前言分析源码初体验，第一次分析个比较简单的集合类ArrayList。我把重点放在了ArrayList实现的接口、继承的类以及几个主要的类方法上。
+0x0 ArrayList继承图我们首先来看看ArrayList中的继承图。
+
+ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable、Seriablizable、List接口。
+这里我首先有了两个
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 12:50" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/ArrayList/">ArrayList</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021-06-03/ArrayQueue-and-ArrayDeque-analysis.html" target="_self">
           ArrayQueue与ArrayDeque源码分析
         </a>
@@ -204,7 +362,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
+            <time datetime="2021-06-03 12:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -258,99 +416,12 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
+            <time datetime="2021-06-03 12:50" pubdate>
               2021-06-03
             </time>
           </div>
         
         
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/List-interface-analysis.html" target="_self">
-          
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/List-interface-analysis.html" target="_self">
-          
-          
-            
-          
-          
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/volatile-keyword.html" target="_self">
-          volatile关键字
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/volatile-keyword.html" target="_self">
-          
-          
-            
-          
-          1. volatile是什么volatile被称为轻量级的synchronzied，它保证了内存的可见性、指令的有序性。我们通过经典的懒汉单例模式看看这个关键字的作用。
-"线程不安全"12345678910111213public class DraconianSingleton &#123;    private static DraconianSingleton instance;    pu
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/volatile/">volatile</a>
-            
-          </div>
         
       </div>
     </article>
@@ -382,7 +453,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
+            <time datetime="2021-06-03 12:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -432,7 +503,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
+            <time datetime="2021-06-03 12:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -484,7 +555,7 @@ java中的类只能有两种权限修饰
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
+            <time datetime="2021-06-03 12:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -536,7 +607,7 @@ java中的类只能有两种权限修饰
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
+            <time datetime="2021-06-03 12:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -593,7 +664,7 @@ java中的类只能有两种权限修饰
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
+            <time datetime="2021-06-03 12:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -611,60 +682,6 @@ java中的类只能有两种权限修饰
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/garbage-collection/">garbage collection</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/the-String-of-Java.html" target="_self">
-          java的字符串
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/the-String-of-Java.html" target="_self">
-          
-          
-            
-          
-          java的所有字符串都会保存在全局字符串池中，在了解全局字符串池之前，我们需要明白：在java中，所有的字符串字面值都会被解释为一个字符串对象。
-
-All string literals in Java programs, such as “abc”, are implemented as instances of this class
-
-接下来我们聊聊全局字符串池。全局字符串池在jdk1.7后也
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Java/">Java</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/String/">String</a>
             
           </div>
         

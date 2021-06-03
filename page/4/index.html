@@ -184,20 +184,22 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/LinkedList-source-code-analysis.html" target="_self">
-          LinkedList源码分析
+        <a href="/2021-06-03/the-String-of-Java.html" target="_self">
+          java的字符串
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/LinkedList-source-code-analysis.html" target="_self">
+        <a href="/2021-06-03/the-String-of-Java.html" target="_self">
           
           
             
           
-          LinkedList弥补了ArrayList插入元素慢的缺点,当然也带了查找元素慢的缺点。LinkedList同时实现了List和Queue接口,其底层采用双向链表实现。当然LinkedList也有一个父类AbstractSequentialList用于实现一般的方法。下面是LinkedList的继承图:
+          java的所有字符串都会保存在全局字符串池中，在了解全局字符串池之前，我们需要明白：在java中，所有的字符串字面值都会被解释为一个字符串对象。
 
-可以看到LinkedList实现了Cloneable、Serializable接口,当然也
+All string literals in Java programs, such as “abc”, are implemented as instances of this class
+
+接下来我们聊聊全局字符串池。全局字符串池在jdk1.7后也
         </a>
       </p>
 
@@ -205,7 +207,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
+            <time datetime="2021-06-03 12:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -214,7 +216,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+              <a href="/categories/Java/">Java</a>
             
           </div>
         
@@ -222,58 +224,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/LinkedList/">LinkedList</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/threadlocal-analysis.html" target="_self">
-          ThreadLocal源码解析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/threadlocal-analysis.html" target="_self">
-          
-          
-            
-          
-          顾名思义，ThreadLocal就是基于线程粒度的私有变量，跟我们以往认知中基于函数、类粒度的私有变量不同。而且ThreadLocal的使用频率非常高，但是如若使用不当，则可能会发生内存泄漏，所以好好研究一下其实现原理是非常有必要的。内容分为三个部分：ThreadLocalMap是什么，ThreadLocal是如何插入变量的，ThreadLocal是如何删除变量的。
-ThreadLocalMap是
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/ThreadLocal/">ThreadLocal</a>
+              <a href="/tags/String/">String</a>
             
           </div>
         
@@ -309,7 +260,7 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
+            <time datetime="2021-06-03 12:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -361,7 +312,7 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
+            <time datetime="2021-06-03 12:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -392,22 +343,19 @@ ThreadLocalMap是
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/ArrayList-source-code-analysis.html" target="_self">
-          ArrayList源码分析
+        <a href="/2021-06-03/volatile-keyword.html" target="_self">
+          volatile关键字
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/ArrayList-source-code-analysis.html" target="_self">
+        <a href="/2021-06-03/volatile-keyword.html" target="_self">
           
           
             
           
-          前言分析源码初体验，第一次分析个比较简单的集合类ArrayList。我把重点放在了ArrayList实现的接口、继承的类以及几个主要的类方法上。
-0x0 ArrayList继承图我们首先来看看ArrayList中的继承图。
-
-ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable、Seriablizable、List接口。
-这里我首先有了两个
+          1. volatile是什么volatile被称为轻量级的synchronzied，它保证了内存的可见性、指令的有序性。我们通过经典的懒汉单例模式看看这个关键字的作用。
+"线程不安全"12345678910111213public class DraconianSingleton &#123;    private static DraconianSingleton instance;    pu
         </a>
       </p>
 
@@ -415,7 +363,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
+            <time datetime="2021-06-03 12:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -424,7 +372,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
             
           </div>
         
@@ -432,7 +380,58 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/ArrayList/">ArrayList</a>
+              <a href="/tags/volatile/">volatile</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/threadlocal-analysis.html" target="_self">
+          ThreadLocal源码解析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/threadlocal-analysis.html" target="_self">
+          
+          
+            
+          
+          顾名思义，ThreadLocal就是基于线程粒度的私有变量，跟我们以往认知中基于函数、类粒度的私有变量不同。而且ThreadLocal的使用频率非常高，但是如若使用不当，则可能会发生内存泄漏，所以好好研究一下其实现原理是非常有必要的。内容分为三个部分：ThreadLocalMap是什么，ThreadLocal是如何插入变量的，ThreadLocal是如何删除变量的。
+ThreadLocalMap是
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 12:50" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/ThreadLocal/">ThreadLocal</a>
             
           </div>
         
@@ -466,7 +465,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
+            <time datetime="2021-06-03 12:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -484,113 +483,6 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/synchronized/">synchronized</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/ThreadPoolExecutor.html" target="_self">
-          ThreadPoolExecutor线程池解析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/ThreadPoolExecutor.html" target="_self">
-          
-          
-            
-          
-          0. 预备知识在了解ThreadPoolExecutor之前，我们首先需要了解一些基本概念，下图是ThreadPoolExecutor的部分核心字段。我先依次对其进行解释。
-
-#0.1 线程池状态JUC为线程池规定了5种状态，如下图所示：
-对于每种状态，含义如下：
-
-RUNNING: 线程池能够接受任务并处理阻塞队列中的任务
-SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部执行完
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Executor/">Executor</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/CopyOnWrite-collections-analysis.html" target="_self">
-          CopyOnWrite容器分析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/CopyOnWrite-collections-analysis.html" target="_self">
-          
-          
-            
-          
-          1. 预备知识J.U.C包提供了两种copy-on-wirte容器：CopyOnWriteList与CopyOnWriteSet。不了解copy-on-write技术的，可以去看理解 Copy On Write 技术。
-CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList内容的操作都基于copy-on-write，对于同一个元素，插入操作happ
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/concurrent-collections/">concurrent collections</a>
             
           </div>
         
@@ -639,7 +531,7 @@ offer(e,tim
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
+            <time datetime="2021-06-03 12:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -693,7 +585,7 @@ An object that executes submitted Runnable tasks.
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 12:43" pubdate>
+            <time datetime="2021-06-03 12:50" pubdate>
               2021-06-03
             </time>
           </div>
@@ -711,6 +603,112 @@ An object that executes submitted Runnable tasks.
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/Executor/">Executor</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/ThreadPoolExecutor.html" target="_self">
+          ThreadPoolExecutor线程池解析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/ThreadPoolExecutor.html" target="_self">
+          
+          
+            
+          
+          0. 预备知识在了解ThreadPoolExecutor之前，我们首先需要了解一些基本概念，下图是ThreadPoolExecutor的部分核心字段。我先依次对其进行解释。
+
+#0.1 线程池状态JUC为线程池规定了5种状态，如下图所示：
+对于每种状态，含义如下：
+
+RUNNING: 线程池能够接受任务并处理阻塞队列中的任务
+SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部执行完
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 12:50" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Executor/">Executor</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/atomic-class-overview.html" target="_self">
+          原子类总览
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/atomic-class-overview.html" target="_self">
+          
+          
+            
+          
+          J.U.C包提供了许多原子类，我按照功能分了四类，如下所示：|  普通原子类   | 原子更新的数组  | 原子更新对象字段的updater  | 大数原子类  ||  —-  | —-  | —-  | —-  || AtomicBoolean AtomicInteger  AtomicLong AtomicReference atomicMarkableReference AtomicStam
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 12:50" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/atomic-class/">atomic class</a>
             
           </div>
         
