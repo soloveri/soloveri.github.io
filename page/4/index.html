@@ -184,19 +184,20 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html" target="_self">
-          多线程为什么会不安全
+        <a href="/2021-06-03/analysis-of-dynamic-proxy.html" target="_self">
+          动态代理的原理
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html" target="_self">
+        <a href="/2021-06-03/analysis-of-dynamic-proxy.html" target="_self">
           
           
             
           
-          在聊多线程为什么不安全之前，需要说一哈学习多线程编程的路线。多线程说到底就是为了提高效率，而这个效率的提高是有安全风险的，这也是多线程为啥这么难的原因。而编写一个多线程的程序可以分为三个部分：分工、同步、互斥。
-分工更偏向于设计，这里是提高性能的关键。相当于项目经理分配任务。与现实世界非常相似, 不过是一个线程执行完了一个任务，如何通知执行后续任务的线程开工而已。 这里多说一句，计算机里的这个模型
+          1. 前言代理分为静态代理和动态代理。静态代理就是我们手动地将代理类写出来，而动态代理就是由虚拟机在运行时自动地将代理类构造出来。下面我就简单地阐述静态代理的用法以及缺点。
+首先在下面声明需要代理的类：
+123456789101112131415161718192021222324252627282930313233//实体类实现的接口public interface UserDao &#123;
         </a>
       </p>
 
@@ -204,7 +205,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
+            <time datetime="2021-06-03 15:44" pubdate>
               2021-06-03
             </time>
           </div>
@@ -213,7 +214,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+              <a href="/categories/java/">java</a>
             
           </div>
         
@@ -221,7 +222,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">基本概念</a>
+              <a href="/tags/dynamic-proxy/">dynamic proxy</a>
             
           </div>
         
@@ -235,18 +236,25 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/basic-API.html" target="_self">
-          java视角下的Linux IO API
+        <a href="/2021-06-03/the-GC-of-Java.html" target="_self">
+          Java中的GC
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/basic-API.html" target="_self">
+        <a href="/2021-06-03/the-GC-of-Java.html" target="_self">
           
           
             
           
-          
+          Java中的自动垃圾回收是其一大优点。本文将从以下三个方面简介相关知识：
+
+如何定义垃圾
+垃圾回收的时机
+垃圾回收的策略
+具体的垃圾回收器
+
+在介绍相关的知识前，我们需要知道一个词：stop-the-world，这个词专门为GC而生，因为Java会在进行垃圾回收的时候除了GC线程外，会暂停所有工作线程，也就是所谓的“停止世界运转”。那么GC优化时，我们的目标可能就是减少GC时stop-the-wo
         </a>
       </p>
 
@@ -254,7 +262,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
+            <time datetime="2021-06-03 15:44" pubdate>
               2021-06-03
             </time>
           </div>
@@ -263,7 +271,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/IO/">IO</a>
+              <a href="/categories/java/">java</a>
             
           </div>
         
@@ -271,7 +279,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/IO%E6%A8%A1%E5%9E%8B/">IO模型</a>
+              <a href="/tags/garbage-collection/">garbage collection</a>
             
           </div>
         
@@ -285,19 +293,22 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/threadlocal-analysis.html" target="_self">
-          ThreadLocal源码解析
+        <a href="/2021-06-03/the-String-of-Java.html" target="_self">
+          java的字符串
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/threadlocal-analysis.html" target="_self">
+        <a href="/2021-06-03/the-String-of-Java.html" target="_self">
           
           
             
           
-          顾名思义，ThreadLocal就是基于线程粒度的私有变量，跟我们以往认知中基于函数、类粒度的私有变量不同。而且ThreadLocal的使用频率非常高，但是如若使用不当，则可能会发生内存泄漏，所以好好研究一下其实现原理是非常有必要的。内容分为三个部分：ThreadLocalMap是什么，ThreadLocal是如何插入变量的，ThreadLocal是如何删除变量的。
-ThreadLocalMap是
+          java的所有字符串都会保存在全局字符串池中，在了解全局字符串池之前，我们需要明白：在java中，所有的字符串字面值都会被解释为一个字符串对象。
+
+All string literals in Java programs, such as “abc”, are implemented as instances of this class
+
+接下来我们聊聊全局字符串池。全局字符串池在jdk1.7后也
         </a>
       </p>
 
@@ -305,7 +316,7 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
+            <time datetime="2021-06-03 15:44" pubdate>
               2021-06-03
             </time>
           </div>
@@ -314,7 +325,7 @@ ThreadLocalMap是
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+              <a href="/categories/Java/">Java</a>
             
           </div>
         
@@ -322,7 +333,7 @@ ThreadLocalMap是
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/ThreadLocal/">ThreadLocal</a>
+              <a href="/tags/String/">String</a>
             
           </div>
         
@@ -358,7 +369,7 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
+            <time datetime="2021-06-03 15:44" pubdate>
               2021-06-03
             </time>
           </div>
@@ -410,7 +421,7 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
+            <time datetime="2021-06-03 15:44" pubdate>
               2021-06-03
             </time>
           </div>
@@ -428,6 +439,57 @@ ThreadLocalMap是
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/IO%E6%A8%A1%E5%9E%8B/">IO模型</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/threadlocal-analysis.html" target="_self">
+          ThreadLocal源码解析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/threadlocal-analysis.html" target="_self">
+          
+          
+            
+          
+          顾名思义，ThreadLocal就是基于线程粒度的私有变量，跟我们以往认知中基于函数、类粒度的私有变量不同。而且ThreadLocal的使用频率非常高，但是如若使用不当，则可能会发生内存泄漏，所以好好研究一下其实现原理是非常有必要的。内容分为三个部分：ThreadLocalMap是什么，ThreadLocal是如何插入变量的，ThreadLocal是如何删除变量的。
+ThreadLocalMap是
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 15:44" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/ThreadLocal/">ThreadLocal</a>
             
           </div>
         
@@ -461,7 +523,7 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
+            <time datetime="2021-06-03 15:44" pubdate>
               2021-06-03
             </time>
           </div>
@@ -527,7 +589,7 @@ offer(e,tim
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
+            <time datetime="2021-06-03 15:44" pubdate>
               2021-06-03
             </time>
           </div>
@@ -581,7 +643,7 @@ An object that executes submitted Runnable tasks.
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
+            <time datetime="2021-06-03 15:44" pubdate>
               2021-06-03
             </time>
           </div>
@@ -637,7 +699,7 @@ SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
+            <time datetime="2021-06-03 15:44" pubdate>
               2021-06-03
             </time>
           </div>
@@ -662,62 +724,11 @@ SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部�
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/Interrupt-mechanism.html" target="_self">
-          中断机制
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/Interrupt-mechanism.html" target="_self">
-          
-          
-            
-          
-          在多线程环境下，终止一个线程的任务最好的方法是通过中断。而Java的中断类似于通知协作机制，被中断的线程并不会立即停止自己的任务，而是仅仅收到了中断的通知，具体怎么处理收到的中断，这需要用户自己定义。那么为什么说Java的中断类似于通知机制？我们首先需要了解中断到底做了什么。
-1. 实施中断Java中的中断操作只需要调用目标线程的interrupt()方法即可完成。那么这个方法到底做了什么？我们来
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/interrupt/">interrupt</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/3/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/#board">5</a><a class="page-number" href="/page/6/#board">6</a><a class="extend next" rel="next" href="/page/5/#board"><i class="iconfont icon-arrowright"></i></a>
+      <a class="extend prev" rel="prev" href="/page/3/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/#board">2</a><a class="page-number" href="/page/3/#board">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/#board">5</a><a class="page-number" href="/page/6/#board">6</a><a class="page-number" href="/page/7/#board">7</a><a class="extend next" rel="next" href="/page/5/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 

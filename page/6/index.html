@@ -184,6 +184,211 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021-06-03/LinkedBlockingQueue-analysis.html" target="_self">
+          LinkedBlockingQueue与ArrayBlockingQueue分析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/LinkedBlockingQueue-analysis.html" target="_self">
+          
+          
+            
+          
+          LinkedBlockingQueue使用两个锁的原因是为了实现读写分离，聊率更高。如果只有一个锁，生产者和消费者只能有一个角色在工作。
+ArrayBlockingQueue为何不适合锁分离这个主要是循环队列的原因，主要是数组和链表不同，链表队列的添加和头部的删除，都是只和一个节点相关，添加只往后加就可以，删除只从头部去掉就好。为了防止head和tail相互影响出现问题，这里就需要原子性的计数器，
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 15:44" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/concurrent-collections/">concurrent collections</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/SynchronousQueue-analysis.html" target="_self">
+          SynchronousQueue分析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/SynchronousQueue-analysis.html" target="_self">
+          
+          
+            
+          
+          
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 15:44" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/concurrent-collections/">concurrent collections</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/shared-lock-analysis.html" target="_self">
+          从Semaphore中学习共享锁原理
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/shared-lock-analysis.html" target="_self">
+          
+          
+            
+          
+          共享锁和独占锁的实现差别不是很大，一个最大的区别就是在共享锁中，当一个线程获取锁后，它会尽可能多地唤醒后继线程。
+与独占锁不同的是，对于双链表中的节点，额外指针nextWaiter，指向SHARED节点，用来标志当前节点处于共享模式。而独占锁的nextWatier则指向null。
+1.共享锁的获取对于共享锁的获取，自定义同步器肯定会首先调用AQS的模板方法acquireShared，然后会调用自定
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 15:44" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/shared-lock/">shared lock</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/ConcurrentHashMap-analysis-I.html" target="_self">
+          ConcurrentHashMap架构解析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/ConcurrentHashMap-analysis-I.html" target="_self">
+          
+          
+            
+          
+          前言本篇主要介绍ConcurrentHashMap的基本架构、插入与删除操作的原理，对于它扩容的逻辑，放在第二部分讲解：ConcurrentHashMap扩容分析。
+
+本文旨在介绍J.U.C包下的同步集合ConcurrentHashMap。因为Java自带的HashMap是线程不安全的，虽然也提供了线程安全的HashTable，但是后者是对整个哈希表加锁，势必效率不理想。而ConcurrentHa
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 15:44" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/concurrent-collections/">concurrent collections</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021-06-03/ConcurrentHashMap-analysis-II.html" target="_self">
           ConcurrentHashMap扩容分析
         </a>
@@ -209,7 +414,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
+            <time datetime="2021-06-03 15:44" pubdate>
               2021-06-03
             </time>
           </div>
@@ -263,7 +468,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
+            <time datetime="2021-06-03 15:44" pubdate>
               2021-06-03
             </time>
           </div>
@@ -315,7 +520,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
+            <time datetime="2021-06-03 15:44" pubdate>
               2021-06-03
             </time>
           </div>
@@ -352,7 +557,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
+            <time datetime="2021-06-03 15:44" pubdate>
               2021-06-03
             </time>
           </div>
@@ -407,7 +612,7 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
+            <time datetime="2021-06-03 15:44" pubdate>
               2021-06-03
             </time>
           </div>
@@ -460,7 +665,7 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
+            <time datetime="2021-06-03 15:44" pubdate>
               2021-06-03
             </time>
           </div>
@@ -485,203 +690,11 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
     </article>
   </div>
 
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/condition-analysis.html" target="_self">
-          Condition队列
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/condition-analysis.html" target="_self">
-          
-          
-            
-          
-          Condition接口的功能用来实现类似于synchronized的await()/signal()通知机制。但是比synchronized的通知机制更丰富、更灵活。我们知道，synchronized锁内部维护了一个waitList保存调用了wait()主动释放锁的线程。AQS的waitList功能就是通过Condition内部维护的Condition queue实现的。
-与AQS的同步队列相似，
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/condition-queue/">condition queue</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/index-of-mysql.html" target="_self">
-          mysql中的索引
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/index-of-mysql.html" target="_self">
-          
-          
-            
-          
-          前言索引是使用MySQL是一个很重要的知识点,正确的使用索引能够极大地提高MySQL的运行效率。那么关于索引,我产生了如下问题:
-
-索引是什么
-有哪些索引
-索引的原理是什么
-如何正确地使用索引
-
-下面我将一一对问题进行解答。
-1.索引是什么索引是一种专门用于数据库的结构,其目的也非常明显,就是用来优化数据库的执行效率。首先我们来看看官方是如何描述索引的用处:
-
-Indexes are used t
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/mysql/">mysql</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%B4%A2%E5%BC%95/">索引</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/the-installation-of-mysql-on-linux.html" target="_self">
-          基于centos7安装MySQL
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/the-installation-of-mysql-on-linux.html" target="_self">
-          
-          
-            
-          
-          前言安装的环境为centos7。并且要在
-Docker下安装MySQLcentos下安装MySQL
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/Docker/">Docker</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/hello-world.html" target="_self">
-          Hello World
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/hello-world.html" target="_self">
-          
-          
-            
-          
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 15:40" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
 
 
   <nav aria-label="navigation">
     <span class="pagination" id="pagination">
-      <a class="extend prev" rel="prev" href="/page/5/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><span class="page-number current">6</span>
+      <a class="extend prev" rel="prev" href="/page/5/#board"><i class="iconfont icon-arrowleft"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/#board">4</a><a class="page-number" href="/page/5/#board">5</a><span class="page-number current">6</span><a class="page-number" href="/page/7/#board">7</a><a class="extend next" rel="next" href="/page/7/#board"><i class="iconfont icon-arrowright"></i></a>
     </span>
   </nav>
 
