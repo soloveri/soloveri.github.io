@@ -184,19 +184,20 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/JMM.html" target="_self">
-          Java内存模型
+        <a href="/2021-06-03/shared-lock-analysis.html" target="_self">
+          从Semaphore中学习共享锁原理
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/JMM.html" target="_self">
+        <a href="/2021-06-03/shared-lock-analysis.html" target="_self">
           
           
             
           
-          1. 内存模型(memory model)1.1. 内存模型是什么在编译和运行程序时，编译器和CPU都会为了效率而力所能及地对程序进行优化，例如编译器和CPU的指令重排、CPU的流水线执行等操作。但是这种优化不是没有限制的，如果不能及时保证内存的可见性，程序就有可能出现错误,这里的可见性是指如果有一个线程A对某个内存地址addr进行了写操作，那么其他线程一定能够看到A对地址addr的操作。
-所以内
+          共享锁和独占锁的实现差别不是很大，一个最大的区别就是在共享锁中，当一个线程获取锁后，它会尽可能多地唤醒后继线程。
+与独占锁不同的是，对于双链表中的节点，额外指针nextWaiter，指向SHARED节点，用来标志当前节点处于共享模式。而独占锁的nextWatier则指向null。
+1.共享锁的获取对于共享锁的获取，自定义同步器肯定会首先调用AQS的模板方法acquireShared，然后会调用自定
         </a>
       </p>
 
@@ -204,7 +205,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
+            <time datetime="2021-06-03 11:26" pubdate>
               2021-06-03
             </time>
           </div>
@@ -221,7 +222,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/JMM/">JMM</a>
+              <a href="/tags/shared-lock/">shared lock</a>
             
           </div>
         
@@ -235,22 +236,22 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/Thread-state-transition.html" target="_self">
-          线程的状态转换
+        <a href="/2021-06-03/what-is-IOC.html" target="_self">
+          IOC到底是什么？
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/Thread-state-transition.html" target="_self">
+        <a href="/2021-06-03/what-is-IOC.html" target="_self">
           
           
             
           
-          因为线程是调度的基本单位，所以线程的状态转换与进程的状态转换是一致的。主要有五个状态：启动、就绪、执行、等待、销毁。这几个状态的转换图如下所示：
+          这篇博文：浅谈IOC–说清楚IOC是什么讲的不错，我在此就是做一些摘抄。
 
-可以看到，等待状态只能转换为就绪，再等CPU调度。这是一般的线程状态转换图。
-在java中，又多了几个状态。
-java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNABLE
+1. IOC是什么？IOC，Inversion of Control，译为控制反转。
+1996年，Michael Mattson在其论文:Object-Oriented FrameworksA survey of methodological issues中，首先提出了IOC这个概念，IOC是一个方法论。
+简单来说，IOC
         </a>
       </p>
 
@@ -258,7 +259,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
+            <time datetime="2021-06-03 11:26" pubdate>
               2021-06-03
             </time>
           </div>
@@ -267,7 +268,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+              <a href="/categories/framework/">framework</a>
             
           </div>
         
@@ -275,9 +276,47 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2/">状态转换</a>
+              <a href="/tags/Spring/">Spring</a>
             
           </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/tomcat.html" target="_self">
+          
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/tomcat.html" target="_self">
+          
+          
+            
+          
+          自我介绍面试官您好，我叫高宇航，目前是武汉大学国家网络安全学院的硕士二年级研究生，本科也就读于武汉大学网络安全学院。
+在个人技术方面：我对Java的基础比较熟悉，包括Java语言本身以及一些jvm的相关原理，在安全方面，我对二进制安全比较了解，能够熟练阅读调试汇编，使用常见的恶意代码分析工具，比如ollydbg、IDA，对于web安全，我了解一些基本的攻击漏洞，例如xss和CSRF
+在项目经验方面
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 11:26" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
         
       </div>
     </article>
@@ -309,7 +348,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
+            <time datetime="2021-06-03 11:26" pubdate>
               2021-06-03
             </time>
           </div>
@@ -364,7 +403,7 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
+            <time datetime="2021-06-03 11:26" pubdate>
               2021-06-03
             </time>
           </div>
@@ -417,7 +456,7 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
+            <time datetime="2021-06-03 11:26" pubdate>
               2021-06-03
             </time>
           </div>
@@ -468,7 +507,7 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
+            <time datetime="2021-06-03 11:26" pubdate>
               2021-06-03
             </time>
           </div>
@@ -486,58 +525,6 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/condition-queue/">condition queue</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/shared-lock-analysis.html" target="_self">
-          从Semaphore中学习共享锁原理
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/shared-lock-analysis.html" target="_self">
-          
-          
-            
-          
-          共享锁和独占锁的实现差别不是很大，一个最大的区别就是在共享锁中，当一个线程获取锁后，它会尽可能多地唤醒后继线程。
-与独占锁不同的是，对于双链表中的节点，额外指针nextWaiter，指向SHARED节点，用来标志当前节点处于共享模式。而独占锁的nextWatier则指向null。
-1.共享锁的获取对于共享锁的获取，自定义同步器肯定会首先调用AQS的模板方法acquireShared，然后会调用自定
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/shared-lock/">shared lock</a>
             
           </div>
         
@@ -580,7 +567,7 @@ Indexes are used t
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
+            <time datetime="2021-06-03 11:26" pubdate>
               2021-06-03
             </time>
           </div>
@@ -631,7 +618,7 @@ Docker下安装MySQLcentos下安装MySQL
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
+            <time datetime="2021-06-03 11:26" pubdate>
               2021-06-03
             </time>
           </div>
@@ -675,7 +662,7 @@ Quick
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
+            <time datetime="2021-06-03 11:26" pubdate>
               2021-06-03
             </time>
           </div>

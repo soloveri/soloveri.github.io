@@ -184,6 +184,63 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/2021-06-03/the-GC-of-Java.html" target="_self">
+          Java中的GC
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/the-GC-of-Java.html" target="_self">
+          
+          
+            
+          
+          Java中的自动垃圾回收是其一大优点。本文将从以下三个方面简介相关知识：
+
+如何定义垃圾
+垃圾回收的时机
+垃圾回收的策略
+具体的垃圾回收器
+
+在介绍相关的知识前，我们需要知道一个词：stop-the-world，这个词专门为GC而生，因为Java会在进行垃圾回收的时候除了GC线程外，会暂停所有工作线程，也就是所谓的“停止世界运转”。那么GC优化时，我们的目标可能就是减少GC时stop-the-wo
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 11:26" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java/">java</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/garbage-collection/">garbage collection</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/2021-06-03/the-String-of-Java.html" target="_self">
           java的字符串
         </a>
@@ -207,7 +264,7 @@ All string literals in Java programs, such as “abc”, are implemented as inst
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
+            <time datetime="2021-06-03 11:26" pubdate>
               2021-06-03
             </time>
           </div>
@@ -258,7 +315,7 @@ All string literals in Java programs, such as “abc”, are implemented as inst
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
+            <time datetime="2021-06-03 11:26" pubdate>
               2021-06-03
             </time>
           </div>
@@ -310,7 +367,7 @@ All string literals in Java programs, such as “abc”, are implemented as inst
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
+            <time datetime="2021-06-03 11:26" pubdate>
               2021-06-03
             </time>
           </div>
@@ -362,7 +419,7 @@ The latter form of the insert operation is designed specific
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
+            <time datetime="2021-06-03 11:26" pubdate>
               2021-06-03
             </time>
           </div>
@@ -414,7 +471,7 @@ The latter form of the insert operation is designed specific
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
+            <time datetime="2021-06-03 11:26" pubdate>
               2021-06-03
             </time>
           </div>
@@ -466,7 +523,7 @@ The latter form of the insert operation is designed specific
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
+            <time datetime="2021-06-03 11:26" pubdate>
               2021-06-03
             </time>
           </div>
@@ -484,58 +541,6 @@ The latter form of the insert operation is designed specific
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/HashMap/">HashMap</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/red-black-tree.html" target="_self">
-          红黑树入门
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/red-black-tree.html" target="_self">
-          
-          
-            
-          
-          本篇将带你一步一步了解红黑树，当然大部分内容来源于算法(第4版)一书，我仅仅对一点内容总结了自己的心得。
-在谈谈红黑树之前，我们先来回顾一下二叉排序树(balanced sort tree),因为红黑树是从BST的概念演化而来的。BST的定义很简单，对于一个节点来说，左树的所有节点的值都小于当前节点的值，右树所有节点的值都大于当前节点的值。但是在最坏情况下BST的高度会达到O(N),效率太差。
-我
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E9%9B%86%E5%90%88/">java集合</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91-map/">红黑树,map</a>
             
           </div>
         
@@ -572,7 +577,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
+            <time datetime="2021-06-03 11:26" pubdate>
               2021-06-03
             </time>
           </div>
@@ -623,7 +628,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
+            <time datetime="2021-06-03 11:26" pubdate>
               2021-06-03
             </time>
           </div>
@@ -678,7 +683,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 11:20" pubdate>
+            <time datetime="2021-06-03 11:26" pubdate>
               2021-06-03
             </time>
           </div>
