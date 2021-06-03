@@ -206,7 +206,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 18:47" pubdate>
+            <time datetime="2021-06-03 18:55" pubdate>
               2021-06-03
             </time>
           </div>
@@ -261,7 +261,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 18:47" pubdate>
+            <time datetime="2021-06-03 18:55" pubdate>
               2021-06-03
             </time>
           </div>
@@ -312,7 +312,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 18:47" pubdate>
+            <time datetime="2021-06-03 18:55" pubdate>
               2021-06-03
             </time>
           </div>
@@ -330,58 +330,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/HashMap/">HashMap</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/LinkedList-source-code-analysis.html" target="_self">
-          LinkedList源码分析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/LinkedList-source-code-analysis.html" target="_self">
-          
-          
-            
-          
-          LinkedList弥补了ArrayList插入元素慢的缺点,当然也带了查找元素慢的缺点。LinkedList同时实现了List和Queue接口,其底层采用双向链表实现。当然LinkedList也有一个父类AbstractSequentialList用于实现一般的方法。下面是LinkedList的继承图:
-
-可以看到LinkedList实现了Cloneable、Serializable接口,当然也
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 18:47" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/LinkedList/">LinkedList</a>
             
           </div>
         
@@ -416,7 +364,7 @@ The latter form of the insert operation is designed specific
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 18:47" pubdate>
+            <time datetime="2021-06-03 18:55" pubdate>
               2021-06-03
             </time>
           </div>
@@ -468,7 +416,7 @@ The latter form of the insert operation is designed specific
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 18:47" pubdate>
+            <time datetime="2021-06-03 18:55" pubdate>
               2021-06-03
             </time>
           </div>
@@ -520,7 +468,7 @@ The latter form of the insert operation is designed specific
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 18:47" pubdate>
+            <time datetime="2021-06-03 18:55" pubdate>
               2021-06-03
             </time>
           </div>
@@ -572,7 +520,7 @@ The latter form of the insert operation is designed specific
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 18:47" pubdate>
+            <time datetime="2021-06-03 18:55" pubdate>
               2021-06-03
             </time>
           </div>
@@ -603,22 +551,20 @@ The latter form of the insert operation is designed specific
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/ArrayList-source-code-analysis.html" target="_self">
-          ArrayList源码分析
+        <a href="/2021-06-03/access-control-of-Java.html" target="_self">
+          思考java中的访问控制
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/ArrayList-source-code-analysis.html" target="_self">
+        <a href="/2021-06-03/access-control-of-Java.html" target="_self">
           
           
             
           
-          前言分析源码初体验，第一次分析个比较简单的集合类ArrayList。我把重点放在了ArrayList实现的接口、继承的类以及几个主要的类方法上。
-0x0 ArrayList继承图我们首先来看看ArrayList中的继承图。
-
-ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable、Seriablizable、List接口。
-这里我首先有了两个
+          java中权限修饰符作用于两个地方，一个是类，另一个是类的成员。下面将分别详细讲解。
+java中的类权限修饰符在讲解类的权限的修饰符前，我们需要明确一个概念。在java中，任何可执行的语句都必须放在一个类中的方法，比如调用方法。不像c++，在类外也能定义函数，在java中，我们say no。不管你是创建别的类的对象，还是创建方法，成员，等等，这都必须放在一个类中。
+java中的类只能有两种权限修饰
         </a>
       </p>
 
@@ -626,7 +572,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 18:47" pubdate>
+            <time datetime="2021-06-03 18:55" pubdate>
               2021-06-03
             </time>
           </div>
@@ -635,7 +581,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+              <a href="/categories/java/">java</a>
             
           </div>
         
@@ -643,7 +589,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/ArrayList/">ArrayList</a>
+              <a href="/tags/%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6/">访问控制</a>
             
           </div>
         
@@ -657,19 +603,20 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/ArrayQueue-and-ArrayDeque-analysis.html" target="_self">
-          ArrayQueue与ArrayDeque源码分析
+        <a href="/2021-06-03/analysis-of-dynamic-proxy.html" target="_self">
+          动态代理的原理
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/ArrayQueue-and-ArrayDeque-analysis.html" target="_self">
+        <a href="/2021-06-03/analysis-of-dynamic-proxy.html" target="_self">
           
           
             
           
-          前言这里将ArrayQueue与ArrayDeque放在一起分析是因为二者都是基于数组实现的队列。
-0x0 小试牛刀-ArrayQueue源码分析在进入主题之前我们思考一个问题,如果我们用数组实现一个传统的FIFO队列,是有可能出现数组未满,但是队列已满的假象的。这是因为我们在不断弹出元素的同时,队列的头指针就会不断朝着队列尾部的方向移动,那么头指针之前的空间就被浪费了,而采用链表实现的队列就不会
+          1. 前言代理分为静态代理和动态代理。静态代理就是我们手动地将代理类写出来，而动态代理就是由虚拟机在运行时自动地将代理类构造出来。下面我就简单地阐述静态代理的用法以及缺点。
+首先在下面声明需要代理的类：
+123456789101112131415161718192021222324252627282930313233//实体类实现的接口public interface UserDao &#123;
         </a>
       </p>
 
@@ -677,7 +624,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 18:47" pubdate>
+            <time datetime="2021-06-03 18:55" pubdate>
               2021-06-03
             </time>
           </div>
@@ -686,7 +633,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+              <a href="/categories/java/">java</a>
             
           </div>
         
@@ -694,11 +641,64 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Queue/">Queue</a>
+              <a href="/tags/dynamic-proxy/">dynamic proxy</a>
             
-              <a href="/tags/ArrayQueue/">ArrayQueue</a>
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/the-GC-of-Java.html" target="_self">
+          Java中的GC
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/the-GC-of-Java.html" target="_self">
+          
+          
             
-              <a href="/tags/ArrayDeque/">ArrayDeque</a>
+          
+          Java中的自动垃圾回收是其一大优点。本文将从以下三个方面简介相关知识：
+
+如何定义垃圾
+垃圾回收的时机
+垃圾回收的策略
+具体的垃圾回收器
+
+在介绍相关的知识前，我们需要知道一个词：stop-the-world，这个词专门为GC而生，因为Java会在进行垃圾回收的时候除了GC线程外，会暂停所有工作线程，也就是所谓的“停止世界运转”。那么GC优化时，我们的目标可能就是减少GC时stop-the-wo
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 18:55" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java/">java</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/garbage-collection/">garbage collection</a>
             
           </div>
         
