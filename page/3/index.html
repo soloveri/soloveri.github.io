@@ -46,7 +46,8 @@
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
-<meta name="generator" content="Hexo 5.4.0"></head>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/rss2.xml" title="一颗胡杨树" type="application/rss+xml">
+</head>
 
 
 <body>
@@ -184,20 +185,20 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/HashMap-analysis-part-one.html" target="_self">
-          HashMap源码分析(一)-HashMap中的那些常量
+        <a href="/2021-06-03/analysis-of-dynamic-proxy.html" target="_self">
+          动态代理的原理
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/HashMap-analysis-part-one.html" target="_self">
+        <a href="/2021-06-03/analysis-of-dynamic-proxy.html" target="_self">
           
           
             
           
-          前言HashMap实现了接口Map、Cloneable、Serializable,后两个都是标记接口,注意HasnMap的clone方法也仅仅是浅复制(shadow copy)。而Map是跟Collection并列的顶级接口。HashMap并且继承抽象类AbstractMap。
-本文将首先简单说说接口Map,因为AbstarctMap作为实现接口Map的骨架,仅实现了一些基本方法,没什么好说的。
-
+          1. 前言代理分为静态代理和动态代理。静态代理就是我们手动地将代理类写出来，而动态代理就是由虚拟机在运行时自动地将代理类构造出来。下面我就简单地阐述静态代理的用法以及缺点。
+首先在下面声明需要代理的类：
+123456789101112131415161718192021222324252627282930313233//实体类实现的接口public interface UserDao &#123;
         </a>
       </p>
 
@@ -205,7 +206,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 19:42" pubdate>
+            <time datetime="2021-06-03 20:27" pubdate>
               2021-06-03
             </time>
           </div>
@@ -214,7 +215,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+              <a href="/categories/java/">java</a>
             
           </div>
         
@@ -222,7 +223,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/HashMap/">HashMap</a>
+              <a href="/tags/dynamic-proxy/">dynamic proxy</a>
             
           </div>
         
@@ -236,20 +237,25 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/HashMap-analysis-part-two.html" target="_self">
-          HashMap源码分析(二)-插入源码
+        <a href="/2021-06-03/the-GC-of-Java.html" target="_self">
+          Java中的GC
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/HashMap-analysis-part-two.html" target="_self">
+        <a href="/2021-06-03/the-GC-of-Java.html" target="_self">
           
           
             
           
-          HashMap中最常用的就是put(key,value)函数与remove函数,而且这些函数还会包含RB树与list的相互转换,比较复杂。值得认真推敲。
-1. put方法下面JDk1.8中,HashMap的put源码。其又在内部调用了putVal。
-1234567public V put(K key, V value) &#123;    return putVal(hash(key), key,
+          Java中的自动垃圾回收是其一大优点。本文将从以下三个方面简介相关知识：
+
+如何定义垃圾
+垃圾回收的时机
+垃圾回收的策略
+具体的垃圾回收器
+
+在介绍相关的知识前，我们需要知道一个词：stop-the-world，这个词专门为GC而生，因为Java会在进行垃圾回收的时候除了GC线程外，会暂停所有工作线程，也就是所谓的“停止世界运转”。那么GC优化时，我们的目标可能就是减少GC时stop-the-wo
         </a>
       </p>
 
@@ -257,7 +263,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 19:42" pubdate>
+            <time datetime="2021-06-03 20:27" pubdate>
               2021-06-03
             </time>
           </div>
@@ -266,7 +272,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+              <a href="/categories/java/">java</a>
             
           </div>
         
@@ -274,7 +280,61 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/HashMap/">HashMap</a>
+              <a href="/tags/garbage-collection/">garbage collection</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-03/the-String-of-Java.html" target="_self">
+          java的字符串
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-03/the-String-of-Java.html" target="_self">
+          
+          
+            
+          
+          java的所有字符串都会保存在全局字符串池中，在了解全局字符串池之前，我们需要明白：在java中，所有的字符串字面值都会被解释为一个字符串对象。
+
+All string literals in Java programs, such as “abc”, are implemented as instances of this class
+
+接下来我们聊聊全局字符串池。全局字符串池在jdk1.7后也
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-03 20:27" pubdate>
+              2021-06-03
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Java/">Java</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/String/">String</a>
             
           </div>
         
@@ -311,7 +371,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 19:42" pubdate>
+            <time datetime="2021-06-03 20:27" pubdate>
               2021-06-03
             </time>
           </div>
@@ -329,61 +389,6 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/ArrayList/">ArrayList</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/ArrayQueue-and-ArrayDeque-analysis.html" target="_self">
-          ArrayQueue与ArrayDeque源码分析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/ArrayQueue-and-ArrayDeque-analysis.html" target="_self">
-          
-          
-            
-          
-          前言这里将ArrayQueue与ArrayDeque放在一起分析是因为二者都是基于数组实现的队列。
-0x0 小试牛刀-ArrayQueue源码分析在进入主题之前我们思考一个问题,如果我们用数组实现一个传统的FIFO队列,是有可能出现数组未满,但是队列已满的假象的。这是因为我们在不断弹出元素的同时,队列的头指针就会不断朝着队列尾部的方向移动,那么头指针之前的空间就被浪费了,而采用链表实现的队列就不会
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 19:42" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Queue/">Queue</a>
-            
-              <a href="/tags/ArrayQueue/">ArrayQueue</a>
-            
-              <a href="/tags/ArrayDeque/">ArrayDeque</a>
             
           </div>
         
@@ -417,7 +422,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 19:42" pubdate>
+            <time datetime="2021-06-03 20:27" pubdate>
               2021-06-03
             </time>
           </div>
@@ -468,7 +473,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 19:42" pubdate>
+            <time datetime="2021-06-03 20:27" pubdate>
               2021-06-03
             </time>
           </div>
@@ -519,7 +524,7 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 19:42" pubdate>
+            <time datetime="2021-06-03 20:27" pubdate>
               2021-06-03
             </time>
           </div>
@@ -572,7 +577,7 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 19:42" pubdate>
+            <time datetime="2021-06-03 20:27" pubdate>
               2021-06-03
             </time>
           </div>
@@ -624,7 +629,7 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 19:42" pubdate>
+            <time datetime="2021-06-03 20:27" pubdate>
               2021-06-03
             </time>
           </div>
@@ -675,7 +680,7 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 19:42" pubdate>
+            <time datetime="2021-06-03 20:27" pubdate>
               2021-06-03
             </time>
           </div>
