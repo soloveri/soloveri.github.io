@@ -1,0 +1,14 @@
+User-agent: *
+Allow: /
+Allow: /archives/
+Allow: /tags/
+Allow: /categories/
+Allow: /about/
+Allow: /others/
+
+Disallow: /js/
+Disallow: /css/
+Disallow: /lib/
+Disallow: /img/
+
+Sitemap: https://eripe.me/sitemap.xml

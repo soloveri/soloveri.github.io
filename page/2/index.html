@@ -42,7 +42,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"soloveri.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":"UA-198559201-1","gtag":"G-19MVRDT9NM","tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"3MrDNVWQz1aBbREDmtPT7DuN-MdYXbMMI","app_key":"34YIO0Yk922Dzi79zUJidSkl","server_url":null}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"eripe.me","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":"UA-198559201-1","gtag":"G-19MVRDT9NM","tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"3MrDNVWQz1aBbREDmtPT7DuN-MdYXbMMI","app_key":"34YIO0Yk922Dzi79zUJidSkl","server_url":null}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -185,13 +185,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/the-generic-of-java.html" target="_self">
+        <a href="/2021-06-04/the-generic-of-java.html" target="_self">
           java的泛型
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/the-generic-of-java.html" target="_self">
+        <a href="/2021-06-04/the-generic-of-java.html" target="_self">
           
           
             
@@ -207,8 +207,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
             </time>
           </div>
         
@@ -240,13 +240,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/class-loading-mechanism.html" target="_self">
+        <a href="/2021-06-04/class-loading-mechanism.html" target="_self">
           类的加载机制
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/class-loading-mechanism.html" target="_self">
+        <a href="/2021-06-04/class-loading-mechanism.html" target="_self">
           
           
             
@@ -262,8 +262,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
             </time>
           </div>
         
@@ -293,13 +293,220 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/access-control-of-Java.html" target="_self">
+        <a href="/2021-06-04/HashMap-analysis-part-three.html" target="_self">
+          HashMap源码分析(三)-删除源码
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-04/HashMap-analysis-part-three.html" target="_self">
+          
+          
+            
+          
+          HashMap的删除操作一般通过remove完成。在remove方法中,同样存在fast-fail机制,不了解的可以去看看ArrayList中的fast-fail。通过fast-fail机制检查后,会调用真正的删除方法removeNode,如下面代码所示：
+12345678910111213141516171819202122232425262728293031323334353637383940
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/HashMap/">HashMap</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-04/HashMap-analysis-part-one.html" target="_self">
+          HashMap源码分析(一)-HashMap中的那些常量
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-04/HashMap-analysis-part-one.html" target="_self">
+          
+          
+            
+          
+          前言HashMap实现了接口Map、Cloneable、Serializable,后两个都是标记接口,注意HasnMap的clone方法也仅仅是浅复制(shadow copy)。而Map是跟Collection并列的顶级接口。HashMap并且继承抽象类AbstractMap。
+本文将首先简单说说接口Map,因为AbstarctMap作为实现接口Map的骨架,仅实现了一些基本方法,没什么好说的。
+
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/HashMap/">HashMap</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-04/HashMap-analysis-part-two.html" target="_self">
+          HashMap源码分析(二)-插入源码
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-04/HashMap-analysis-part-two.html" target="_self">
+          
+          
+            
+          
+          HashMap中最常用的就是put(key,value)函数与remove函数,而且这些函数还会包含RB树与list的相互转换,比较复杂。值得认真推敲。
+1. put方法下面JDk1.8中,HashMap的put源码。其又在内部调用了putVal。
+1234567public V put(K key, V value) &#123;    return putVal(hash(key), key,
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/HashMap/">HashMap</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-04/red-black-tree.html" target="_self">
+          红黑树入门
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-04/red-black-tree.html" target="_self">
+          
+          
+            
+          
+          本篇将带你一步一步了解红黑树，当然大部分内容来源于算法(第4版)一书，我仅仅对一点内容总结了自己的心得。
+在谈谈红黑树之前，我们先来回顾一下二叉排序树(balanced sort tree),因为红黑树是从BST的概念演化而来的。BST的定义很简单，对于一个节点来说，左树的所有节点的值都小于当前节点的值，右树所有节点的值都大于当前节点的值。但是在最坏情况下BST的高度会达到O(N),效率太差。
+我
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E9%9B%86%E5%90%88/">java集合</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91-map/">红黑树,map</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-04/access-control-of-Java.html" target="_self">
           思考java中的访问控制
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/access-control-of-Java.html" target="_self">
+        <a href="/2021-06-04/access-control-of-Java.html" target="_self">
           
           
             
@@ -314,8 +521,8 @@ java中的类只能有两种权限修饰
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
             </time>
           </div>
         
@@ -345,13 +552,13 @@ java中的类只能有两种权限修饰
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/analysis-of-dynamic-proxy.html" target="_self">
+        <a href="/2021-06-04/analysis-of-dynamic-proxy.html" target="_self">
           动态代理的原理
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/analysis-of-dynamic-proxy.html" target="_self">
+        <a href="/2021-06-04/analysis-of-dynamic-proxy.html" target="_self">
           
           
             
@@ -366,8 +573,8 @@ java中的类只能有两种权限修饰
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
             </time>
           </div>
         
@@ -397,13 +604,13 @@ java中的类只能有两种权限修饰
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/the-GC-of-Java.html" target="_self">
+        <a href="/2021-06-04/the-GC-of-Java.html" target="_self">
           Java中的GC
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/the-GC-of-Java.html" target="_self">
+        <a href="/2021-06-04/the-GC-of-Java.html" target="_self">
           
           
             
@@ -423,8 +630,8 @@ java中的类只能有两种权限修饰
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
             </time>
           </div>
         
@@ -454,13 +661,13 @@ java中的类只能有两种权限修饰
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/the-String-of-Java.html" target="_self">
+        <a href="/2021-06-04/the-String-of-Java.html" target="_self">
           java的字符串
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/the-String-of-Java.html" target="_self">
+        <a href="/2021-06-04/the-String-of-Java.html" target="_self">
           
           
             
@@ -477,8 +684,8 @@ All string literals in Java programs, such as “abc”, are implemented as inst
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
             </time>
           </div>
         
@@ -495,213 +702,6 @@ All string literals in Java programs, such as “abc”, are implemented as inst
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/String/">String</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/HashMap-analysis-part-three.html" target="_self">
-          HashMap源码分析(三)-删除源码
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/HashMap-analysis-part-three.html" target="_self">
-          
-          
-            
-          
-          HashMap的删除操作一般通过remove完成。在remove方法中,同样存在fast-fail机制,不了解的可以去看看ArrayList中的fast-fail。通过fast-fail机制检查后,会调用真正的删除方法removeNode,如下面代码所示：
-12345678910111213141516171819202122232425262728293031323334353637383940
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/HashMap/">HashMap</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/LinkedList-source-code-analysis.html" target="_self">
-          LinkedList源码分析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/LinkedList-source-code-analysis.html" target="_self">
-          
-          
-            
-          
-          LinkedList弥补了ArrayList插入元素慢的缺点,当然也带了查找元素慢的缺点。LinkedList同时实现了List和Queue接口,其底层采用双向链表实现。当然LinkedList也有一个父类AbstractSequentialList用于实现一般的方法。下面是LinkedList的继承图:
-
-可以看到LinkedList实现了Cloneable、Serializable接口,当然也
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/LinkedList/">LinkedList</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/Queue-interface-analysis.html" target="_self">
-          Queue接口分析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/Queue-interface-analysis.html" target="_self">
-          
-          
-            
-          
-          0x1 基本概念Queue接口继承自超级接口Collection,其不仅实现了Coolection中的基本方法,而且额外增加了适用于队列的增、删、差方法。并且对应这三种操作,Queue提供了两套方法,一套在操作失败时抛出异常,另一套在操作失败时返回null,不过在文档中说到:
-
-The latter form of the insert operation is designed specific
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Queue/">Queue</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-03/HashMap-analysis-part-one.html" target="_self">
-          HashMap源码分析(一)-HashMap中的那些常量
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-03/HashMap-analysis-part-one.html" target="_self">
-          
-          
-            
-          
-          前言HashMap实现了接口Map、Cloneable、Serializable,后两个都是标记接口,注意HasnMap的clone方法也仅仅是浅复制(shadow copy)。而Map是跟Collection并列的顶级接口。HashMap并且继承抽象类AbstractMap。
-本文将首先简单说说接口Map,因为AbstarctMap作为实现接口Map的骨架,仅实现了一些基本方法,没什么好说的。
-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/HashMap/">HashMap</a>
             
           </div>
         

@@ -1,0 +1,712 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/panda.png">
+  <link rel="icon" href="/img/panda.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#55967e">
+  <meta name="description" content="">
+  <meta name="author" content="rain">
+  <meta name="keywords" content="">
+  
+  <title>Docker使用方法(二)-文件系统架构 - 一颗胡杨树</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"eripe.me","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":"UA-198559201-1","gtag":"G-19MVRDT9NM","tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"3MrDNVWQz1aBbREDmtPT7DuN-MdYXbMMI","app_key":"34YIO0Yk922Dzi79zUJidSkl","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/rss2.xml" title="一颗胡杨树" type="application/rss+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Rains·Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/home.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Docker使用方法(二)-文件系统架构">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-04 10:57" pubdate>
+        2021年6月4日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.8k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      32
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Docker使用方法(二)-文件系统架构</h1>
+            
+            <div class="markdown-body">
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一定要将登录用户切换为root才能查看Docker的文件架构！！！</p>
+<h2 id="0x0-基本文件布局"><a href="#0x0-基本文件布局" class="headerlink" title="0x0 基本文件布局"></a>0x0 基本文件布局</h2><p>Docker的文件主要都存储在<code>/var/lib/docker</code>目录下,文件目录如下所示:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.filesys.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.filesys"></p>
+<p>其中<code>containers</code>存储的是容器,<code>images</code>存储的是镜像。在深入了解Docker的原理之前,我们需要了解两个基本名词:</p>
+<ul>
+<li>overlayFS</li>
+<li>overlay2</li>
+</ul>
+<h2 id="0x1-overlayFS"><a href="#0x1-overlayFS" class="headerlink" title="0x1 overlayFS"></a>0x1 overlayFS</h2><p>其中overlayFS是一种类似于aufs的文件堆叠系统,但是比aufs更快。本质上来说,overlayFS是属于linux内核驱动的一部分。</p>
+<p>overlayFS依赖于已有的底层文件系统,它并不实际参与硬盘的分区。而是将一些底层文件系统的文件合并,给不同的用户呈现不同的文件,实现了相同文件复用的功能,提高了空间使用率。下面一张图很好的解释了overlayFS的<a target="_blank" rel="noopener" href="https://blog.csdn.net/luckyapple1028/article/details/77916194">基本工作原理</a>:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/overlayFS.jfif" srcset="/img/loading.gif" lazyload alt="overlayFS"></p>
+<p>overlayFS分为四个部分:</p>
+<ul>
+<li>lower dir:挂载时最多支持500个lower dir</li>
+<li>upper dir</li>
+<li>merge dir</li>
+<li>work dir:用于存放文件系统挂载后产生的临时和简介文件,内容对用户不可见</li>
+</ul>
+<p>其中的lower dir和upper dir来自底层文件系统,可以由用户自行指定。其中merge dir就是overlayFS的挂载点。并且overlayFS有如下特点:</p>
+<ul>
+<li>如果lower和upper中有同名的目录或文件,会在merge中合并为同一个文件夹,并且upper会覆盖掉lower中的文件与目录。</li>
+<li>如果有多个lower存在同名文件,那么使用层次较高的lower dir的同名文件</li>
+<li>lower dir是<strong>只读</strong>的</li>
+<li>upper dir是<strong>可读可写</strong>的</li>
+<li>overlayFS具有copy-up的特性。也就是如果想对lower dir中的文件进行写入,只能将文件拷贝至upper dir,然后再对拷贝后的文件进行写入。</li>
+</ul>
+<h3 id="0x1-1-overlayFS的挂载"><a href="#0x1-1-overlayFS的挂载" class="headerlink" title="0x1-1 overlayFS的挂载"></a>0x1-1 overlayFS的挂载</h3><p>overlayFS的基本用法可以参考<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Overlay_filesystem">官网</a>。下面是我参照<a target="_blank" rel="noopener" href="https://blog.csdn.net/luckyapple1028/article/details/78075358">overlayFS的基本使用</a>做的一个复现。</p>
+<p>首先需要创建lower、upper、work、merge这四类目录,文件树如下所示:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.worktree.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.worktree"></p>
+<p>首先对各个dir下的文件写入标记:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.write-content-1.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.write-content-1"></p>
+<p>然后对各个foo文件写入标记:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.write-content-2.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.write-content-2"></p>
+<p>最后执行挂载命令:</p>
+<blockquote>
+<p>sudo mount -t overlay overlay -o lowerdir=lower1:lower2,upperdir=upper,workdir=work merge</p>
+</blockquote>
+<p>注意<code>workdir</code>和<code>merge</code>之间是没有<code>,</code>的。<code>lowerdir</code>后面的目录是有顺序的,排在前面的lower dir在lower这个层次中的排名就较前,也就是如开头部分的图片所示:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/overlayFS.jfif" srcset="/img/loading.gif" lazyload alt="overlayFS"></p>
+<p>挂载后merge目录下的结构如下:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.merge-tree.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.merge-tree"></p>
+<p>最后在merge目录中的<code>aa</code>文件来自<code>lower1</code>,<code>bb</code>文件来自<code>upper</code>。<code>foo</code>文件来自<code>lower</code>与<code>upper</code>。如下图所示：</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.result.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.result"></p>
+<p>可以看到确实将同名的底层文件都隐藏了起来。</p>
+<h3 id="0x1-2-overlayFS的写入操作"><a href="#0x1-2-overlayFS的写入操作" class="headerlink" title="0x1-2 overlayFS的写入操作"></a>0x1-2 overlayFS的写入操作</h3><p>upper dir是一个可读可写层,而lower dir是只读层。所以如果我们想要写入的文件来自upper dir,那就是直接写入,在此就不举例说明了;如果来自lower dir,就会先将文件复制到upper再写入。这就是所谓的copy-up特性。</p>
+<p>下图是在上述文件挂载完成后向来自<code>lower1/dir/</code>的<code>aa</code>写入文件:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.write-to-lower.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.write-to-lower"></p>
+<p>可以看到,我们在挂载点向lower层的文件写入内容后,upper层直接复制了了<code>lower1/dir/aa</code>,并直接追加写入的内容。而<code>lower1/dir/aa</code>本身的内容的却没有改变。</p>
+<h3 id="0x1-3-overlayFS的删除操作"><a href="#0x1-3-overlayFS的删除操作" class="headerlink" title="0x1-3 overlayFS的删除操作"></a>0x1-3 overlayFS的删除操作</h3><p>overlayFS中的删除并不是真正的删除,它只是使用了一个障眼法-<strong>whiteout</strong>文件来覆盖同名文件,让用户以为已经把文件删除了。</p>
+<blockquote>
+<p>whiteout文件并非普通文件，而是主次设备号都为0的字符设备（可以通过”mknod <name> c 0 0”命令手动创建）</p>
+</blockquote>
+<blockquote>
+<p>并且whiteout文件在merge层不可见。达到了隐藏文件的目的</p>
+</blockquote>
+<p>删除操作分为三个场景：</p>
+<ul>
+<li>要删除的文件/文件夹没有覆盖,仅来自upper层,那么直接删除就好</li>
+<li>删除的文件/文件来自lower层,upper层中不存在,那么会在merge层和upper中生成同名的<strong>whiteout</strong>文件,用于屏蔽底层文件</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如下图所示,其中upper在进行删除操作前为空目录：</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.delete-from-merge.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.delete-from-merge"></p>
+<ul>
+<li>要删除的文件来自lower层,upper中存在覆盖,那么会在merge层和upper层生成同名的<strong>whiteout</strong>文件,用于屏蔽底层文件。</li>
+</ul>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;原始文件结构如下:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.worktree.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.worktree"></p>
+<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;删除后的upper目录如下:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.delete-from-upper.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.delete-from-upper"></p>
+<p>这也就是docker中,虽然在container layer(upper)中删除了许多东西,但是image layer(lower)还是没有变小的原因。</p>
+<p>这就是所谓的堆叠文件系统。详细介绍请移步:</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/luckyapple1028/article/details/77916194">overlayFS的基本介绍</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/luckyapple1028/article/details/78075358">overlayFS的基本使用</a></li>
+</ul>
+<h2 id="0x2-overlay2"><a href="#0x2-overlay2" class="headerlink" title="0x2 overlay2"></a>0x2 overlay2</h2><p>docker为overlayFS提供了了两个存储驱动,一个是原始的overlay,另外一个就是现在新版的overlay2。所以docker自然也采用了堆叠的方式存储镜像。</p>
+<p>这里以拉取最新的ubuntu images为例,可以看到,拉取的镜像为4层:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.pull-ubuntu.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.pull-ubuntu"></p>
+<p>在overlay2目录下出现了五个目录,其中四个为拉取的镜像,额外的目录为<code>l</code>。它存放的是对应镜像的软符号链接。为什么需要设置软符号链接?</p>
+<blockquote>
+<p>因为虽然在overlayFS中用户指定的lowerdir最多可以支持500层。但是由于mount的挂载选项最多支持1个内存page的输入（默认大小为4KB），所以如果指定的lowerdir数量较多且长度较长，会有溢出而导致挂载失败的风险（目前内核的-o挂载选项不支持超过1个内存页，即4KB大小）。</p>
+</blockquote>
+<p>所以设置软符号链接就是防止挂载失败,并且还能多挂载几个lower dir。每个软符号链接下的都会存在一个<code>diff</code>目录。接来看看看各个image layer中的内容:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.ubuntu-tree.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.ubuntu-tree"></p>
+<p>其中每个image layer中的<strong>diff文件夹存放了当前image layer的内容</strong>, link文件的内容是当前层对应的短符号链接,lower文件夹存放了当前层的所有下层<code>lower dir</code>的id。可以看到,id为<code>9045</code>的image layer没有<code>lower</code>,即<code>9045</code>就是最底层的image layer(这会在后面验证)。work目录用于挂载时的工作目录。</p>
+<p>那么这些这些目录是怎么和镜像关联起来的呢？答案是通过元数据进行关联。元数据又分为image元数据和layer数据。</p>
+<h3 id="0x2-1-image元数据"><a href="#0x2-1-image元数据" class="headerlink" title="0x2-1 image元数据"></a>0x2-1 image元数据</h3><p>image元数据存储在<code>/var/lib/docker/image/&lt;storage_driver&gt;/imagedb/content/sha256/</code>目录,文件名称是对应的iamge id,如下所示:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.imagedb.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.imagedb"></p>
+<p>该文件以json格式保存了该image的重要信息,其中<code>rootfs</code>值得关注,因为它指定了各个image layer的工作顺序。查看文件内容时可以将其格式化为json:(<code>使用vim :%!python -m json.tool格式化成json</code>),其中<code>rootfs</code>的内容如下:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.rootfs.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.rootfs"></p>
+<p>其中的diff_ids是有严格顺序的,从上到下,表示image layer的最底层到最高层id。顺序是反的是因为如果产生了新的image layer直接在最后面追加即可,非常方便。那么image是又如何关联到layer的呢？docker是通过image元数据中的diff_id与一些历史信息计算出chainID关联到layer元数据,layer元数据再关联到对应的image layer。</p>
+<h3 id="0x2-2-layer元数据"><a href="#0x2-2-layer元数据" class="headerlink" title="0x2-2 layer元数据"></a>0x2-2 layer元数据</h3><p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.layerdb.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.layerdb"></p>
+<p>在<code>/var/docker/&lt;storage_driver&gt;/image/layerdb/sha256</code>中,有四个目录,其中每个目录的数字就是每个diff_id对应的chainID。可以看到,只有最底层的<code>ce30</code>能在layerdb中找到对应的chainID,那是因为最底层的diff_id和chainID是相同的。所以除去最底层,剩下的chainID需要计算,这里不做演示。</p>
+<p>每个chainID目录都有三个共同的文件<code>cache-id</code>、<code>diff</code>、<code>size</code>,而有的没有<code>parent</code>。下面一一解析下各个文件的内容。</p>
+<h3 id="cache-id"><a href="#cache-id" class="headerlink" title="cache-id"></a>cache-id</h3><p>刚才说到layerdb保存的毕竟是元数据,那么这些元数据到底是怎么和具体数据链接起来呢?其中的<code>cache-id</code>是关键。</p>
+<p>我们查看<code>ce30</code>的<code>cache-id</code>文件内容:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.cache-id.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.cache-id"></p>
+<p>docker随机生成的uuid，内容是保存image layer的目录索引。其中的id为<code>9045</code>就是刚才拉取的<code>ubuntu</code>镜像中的最底层image layer。说明没有<code>lower</code>目录的image layer就是在最底层。</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.ubuntu-tree.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.ubuntu-tree"></p>
+<h4 id="size"><a href="#size" class="headerlink" title="size"></a>size</h4><p>size文件表示当前chainID对应的image layer的大小。</p>
+<h4 id="diff"><a href="#diff" class="headerlink" title="diff"></a>diff</h4><p>保存了当前chainID对应的diff_id。</p>
+<h4 id="parent"><a href="#parent" class="headerlink" title="parent"></a>parent</h4><p>这里的parent保存的是在<code>rootfs</code>中:位置较下的diff_id的上一个diff_id的chainID。</p>
+<p>比如说chainID为<code>2515</code>的image layer。我们首先在diff中查看其对应的diff_id。</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.2515-diff.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.2515-diff"></p>
+<p>其对应的diff_id为<code>8eeb</code>。再来查看其<code>parent</code>文件:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.2515-parent.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.2515-parent"></p>
+<p>而在<code>rootfs</code>中,<code>8eeb</code>的上一个diff_id对应的chainID就是<code>ce30</code>(因为第一个位置的diff_id与chainID相同)。</p>
+<h3 id="0x2-3-overlay2的挂载"><a href="#0x2-3-overlay2的挂载" class="headerlink" title="0x2-3 overlay2的挂载"></a>0x2-3 overlay2的挂载</h3><p>挂载的信息存储在<code>/var/lib/docker/image/layerdb/mounts</code>目录下,每个目录名称就是对应的容器ID,如下图所示:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.mounts.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.mounts"></p>
+<p><code>mounts</code>只有一个目录,对应于一个正在运行的容器。每个容器ID目录下存在三个文件。init-id对应当前挂载的容器的init层,mount-id就是对应的容器层(merge目录)。而parent文件还是存储位置在当前layer在<code>rootfs</code>上一个的diff_id的chainID。</p>
+<p>三个文件的内容如下:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.threes.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.threes"></p>
+<p>可以看到,<code>parent</code>中的内容为<code>sha256:7515</code>,而该chainID对应的diff_id就是<code>0956</code>。</p>
+<p>最后查看以下<code>/var/lib/docker/overlays/</code>目录:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.final.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.final"></p>
+<p>看到多了init层与container层。</p>
+<p>关于init layer的<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/33697774/init-layer-in-docker">作用</a>:</p>
+<blockquote>
+<p>Each containers has two layers, one (called the init layer), which is based on an image layer and a child of that which contains the actual container content. The init layer contains a few files that must always exist in Docker containers (e.g. /.dockerinit). Supported Filesystems</p>
+</blockquote>
+<p>简单来说就是帮我们对容器进行必要的初始化,避免我们自己初始化错误或者根本就忘掉。初始化的目录或文件如下:</p>
+<blockquote>
+<p>The containerID-init layer is the init layer of a container which is based on an image. It add some file into current container,include:<br>    “/dev/pts”:         “dir”,<br>    “/dev/shm”:         “dir”,<br>    “/proc”:            “dir”,<br>    “/sys”:             “dir”,<br>    “/.dockerenv”:      “file”,<br>    “/etc/resolv.conf”: “file”,<br>    “/etc/hosts”:       “file”,<br>    “/etc/hostname”:    “file”,<br>    “/dev/console”:     “file”,<br>    “/etc/mtab”:        “/proc/mounts”,</p>
+</blockquote>
+<p><strong>注意:init layer是一个只读层。</strong></p>
+<p>最后以上述的四层ubuntu image为例,将iamgedb、layerdb、image layer、init layer、contain layer联合到一起。</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/layout.drawio.svg" srcset="/img/loading.gif" lazyload alt="layout"></p>
+<p>可以看到和挂载命令基本一致:</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.docker-mount.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.docker-mount"></p>
+<p>其中挂载都是使用的符号链接,upper就是diff目录,work目录与diff目录同级。</p>
+<h3 id="0x2-4-overlay2的删除操作"><a href="#0x2-4-overlay2的删除操作" class="headerlink" title="0x2-4 overlay2的删除操作"></a>0x2-4 overlay2的删除操作</h3><p>删除分为删除image与删除container。</p>
+<ul>
+<li>删除container:首先需要停止想要删除的容器:<code>docker stop [container ID]</code>,然后删除容器:<code>docker rm [container ID]</code></li>
+<li>删除image:在删除image前,一定要删除container,完成上述步骤后,直接<code>docker rmi [image id]</code>即可。</li>
+</ul>
+<h2 id="0x3-小结"><a href="#0x3-小结" class="headerlink" title="0x3 小结"></a>0x3 小结</h2><ol>
+<li><p>docker在每次创建容器时都会自动添加一个init layer对容器进行初始化,添加contain layer面向用户。并且每次默认启动的容器都是不相同的。</p>
+</li>
+<li><p>docker对于每种文件驱动,都会在<code>docker/image</code>下创建同名文件以保存元数据。docker通过imagedb、layerdb、关联到具体的image layer。</p>
+</li>
+</ol>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li><p><a target="_blank" rel="noopener" href="https://blog.51cto.com/haoyonghui/2457915">docker 存储驱之overlayFS</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/luckyapple1028/article/details/77916194">深入理解overlayfs（一）：初识</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/luckyapple1028/article/details/78075358">深入理解overlayfs（二）：使用与原理分析</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sammyliu/p/5877964.html">Docker镜像存储-overlayfs</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/sammyliu/p/5877964.html">docker一站式学习</a></p>
+</li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/tools/">tools</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Docker/">Docker</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021-06-04/Docker-write-dockfile.html">
+                        <span class="hidden-mobile">Dockerfile的基本规则</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@waline/client@0.16.2/dist/Waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-blond.vercel.app","placeholder":"说点什么","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":true,"avatarCDN":"","avatarForce":false,"requiredFields":[],"emojiCDN":null,"emojiMaps":null,"anonymous":null},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        new Waline(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+
+  <div>
+    <span id="timeDate">载入天数...</span>
+    <span id="times">载入时分秒...</span>
+    <script>
+    var now = new Date();
+    function createtime(){
+        var grt= new Date("06/03/2021 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24;
+        dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+        hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){
+            hnum = "0" + hnum;
+        }
+        minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes);
+        if(String(mnum).length ==1 ){
+                  mnum = "0" + mnum;
+        }
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){
+                  snum = "0" + snum;
+        }
+        document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+        document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+    }  //此次自定义显示内容
+    setInterval("createtime()",250);
+    </script>
+  </div>
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    <!-- Google Analytics -->
+    <script defer>
+      window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) };
+      ga.l = +new Date;
+      ga('create', 'UA-198559201-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+    <!-- Google gtag.js -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-19MVRDT9NM"></script>
+    <script defer>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-19MVRDT9NM');
+    </script>
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

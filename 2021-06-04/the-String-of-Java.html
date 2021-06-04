@@ -1,0 +1,609 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/panda.png">
+  <link rel="icon" href="/img/panda.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#55967e">
+  <meta name="description" content="">
+  <meta name="author" content="rain">
+  <meta name="keywords" content="">
+  
+  <title>java的字符串 - 一颗胡杨树</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"eripe.me","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":"UA-198559201-1","gtag":"G-19MVRDT9NM","tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"3MrDNVWQz1aBbREDmtPT7DuN-MdYXbMMI","app_key":"34YIO0Yk922Dzi79zUJidSkl","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/rss2.xml" title="一颗胡杨树" type="application/rss+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Rains·Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/home.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="java的字符串">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-04 10:57" pubdate>
+        2021年6月4日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.6k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      19
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">java的字符串</h1>
+            
+            <div class="markdown-body">
+              <p>java的所有字符串都会保存在全局字符串池中，在了解全局字符串池之前，我们需要明白：在java中，所有的字符串字面值都会被解释为一个字符串对象。</p>
+<blockquote>
+<p>All string literals in Java programs, such as “abc”, are implemented as instances of this class</p>
+</blockquote>
+<p>接下来我们聊聊全局字符串池。全局字符串池在jdk1.7后也是堆的一部分，不属于某个类，被所有线程共享。那么这个字符串池有啥用？</p>
+<blockquote>
+<p>String pool helps in saving a lot of space for Java Runtime although it takes more time to create the String.</p>
+</blockquote>
+<p>由上可知，字符串池的创建是为了在运行时节省空间。字符串常量池跟创建字符串的方式息息相关。首先创建字符串的方式有两种：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">String s1=<span class="hljs-string">&quot;test&quot;</span>;<br>String s2=<span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;test&quot;</span>);<br>String s3=<span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;abc&quot;</span>);<br>String s4=<span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;bc&quot;</span>);<br>String s5=<span class="hljs-string">&quot;a&quot;</span>+s4;<br><br>System.out.println()<br></code></pre></div></td></tr></table></figure>
+
+<p>首先我们应该明白一个理念：就是所有能够在编译时确定的常量都会放在<code>constant_pool table</code>中，相对应的任何引用在编译期都无法确定。比如上面代码中的<code>test</code>、<code>abc</code>字面值都会作为String对象并在编译后加入当前class的<code>constant_pool table</code>中。在运行时会被解释为String对象加入字符串常量池。String的intern方法非常特殊。下面来详解关于String intern的一切。</p>
+<h2 id="Intern的用法"><a href="#Intern的用法" class="headerlink" title="Intern的用法"></a>Intern的用法</h2><p>在解释关于intern的相关操作时，我们首先需要知道什么是intern。</p>
+<blockquote>
+<p>String.intern()是一个Native方法，它的作用是 ： 如果字符串常量池已经包含一个内容等于当前String对象的字符串对象，则返回代表字符串常量池中的内容相同的字符串的对象；否则将此 String对象的引用地址（堆中）添加到字符串常量池中。<strong>jdk 1.7 后的字符串常量池存在于堆中。</strong></p>
+</blockquote>
+<h3 id="字符串已加入字符串池后Intern"><a href="#字符串已加入字符串池后Intern" class="headerlink" title="字符串已加入字符串池后Intern"></a>字符串已加入字符串池后Intern</h3><figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">String s1=<span class="hljs-string">&quot;abc&quot;</span>;<br>String s2=<span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;abc&quot;</span>);<br>String s2Intern=s2.intern();<br>System.out.println(<span class="hljs-string">&quot;s2Intern==s2: &quot;</span>+(s2Intern==s2));<span class="hljs-comment">//flase</span><br>System.out.println(<span class="hljs-string">&quot;s1==s2Intern: &quot;</span>+(s1==s2Intern));<span class="hljs-comment">//true</span><br></code></pre></div></td></tr></table></figure>
+
+<p>在加载类后，<code>abc</code>这个字面值已经加入字符串池。因为这个在编译时就能确定。</p>
+<p>在执行第一句后，<code>abc</code>会加入字符串池中，s1是指向该字符串的引用。</p>
+<p>在执行第二句时，会在堆内创建一个String对象。该对象的字面值为<code>abc</code>。</p>
+<p>第三句s2调用Intern时，会使用<code>equals</code>方法在字符串池中找与s2内容相同的字符串，能找到吗？当然，因为前一句执行完，<code>abc</code>这个字面值已经加入字符串池中。</p>
+<p>第四句比较<code>s2</code>与<code>s2Intern</code>，<code>s2</code>是堆中<code>abc</code>的引用，<code>s2Intern</code>是字符串池中<code>abc</code>的引用。结果自然为false，因为都不是一个东西。</p>
+<p>而第五句比较<code>s1``s2Intern</code>是否相等。<code>s1</code>是字符串池中<code>abc</code>的引用，<code>s2Intern</code>得到的也是字符串池中<code>abc</code>的引用，结果自然为true。</p>
+<h3 id="字符串未加入字符串池Intern"><a href="#字符串未加入字符串池Intern" class="headerlink" title="字符串未加入字符串池Intern"></a>字符串未加入字符串池Intern</h3><figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">String bb = <span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;123&quot;</span>) + <span class="hljs-string">&quot;456&quot;</span>;<br>String bbIntern = bb.intern();<br>System.out.println(<span class="hljs-string">&quot;bb==bbIntern    &quot;</span> + (bb == bbIntern));<span class="hljs-comment">//true</span><br><br>String str=<span class="hljs-string">&quot;123456&quot;</span>;<br>System.out.println(<span class="hljs-string">&quot;str== bb: &quot;</span>+(str==bb));<span class="hljs-comment">//true</span><br>System.out.println(<span class="hljs-string">&quot;str==bbIntern: &quot;</span>+(str==bbIntern));<span class="hljs-comment">//true</span><br><br>String cc=<span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;12&quot;</span>)+<span class="hljs-string">&quot;3&quot;</span>;<br>String ccIntern=cc.intern();<br>System.out.println(<span class="hljs-string">&quot;ccIntern==cc: &quot;</span>+(ccIntern==cc));<span class="hljs-comment">//false</span><br></code></pre></div></td></tr></table></figure>
+
+<p>仍然对每句进行解读：</p>
+<p>第一句：<code>123</code>、<code>456</code>这两个字面值会加入字符串池，但是<code>123456</code>并没有字符串池。</p>
+<p>第二句：bb调用intern()查看在字符串池中是否有<code>123456</code>，当然没有。那就把堆中包含<code>123456</code>的对象bb的引用加入字符串池中并返回该引用。</p>
+<p>第三句：<code>bb</code>和<code>bbIntern</code>保存的都是堆中<code>123456</code>对象的引用，地址自然相等。</p>
+<p>第四句：<code>str</code>中保存的是字符串池<code>123456</code>的引用，也就是对象bb的引用，二者自然相等。</p>
+<p>第五句：在字符串池中查找<code>123456</code>找到了，就是执行第二句时新添加到池中引用。二者自然相同。</p>
+<p>第六句：把<code>12</code>、<code>3</code>两个字面值加入字符串池中，和<code>123</code>还是有区别的。</p>
+<p>第七句：<code>cc</code>调用intern(),返回的当然是早已在第一句已经添加到池中的<code>123</code>的引用。</p>
+<p>第八句：<code>ccIntern</code>保存的是池中<code>123</code>引用，而<code>cc</code>保存的是堆中<code>123</code>的引用，地址自然不相同</p>
+<h3 id="字符串到底创建几次的经典问题"><a href="#字符串到底创建几次的经典问题" class="headerlink" title="字符串到底创建几次的经典问题"></a>字符串到底创建几次的经典问题</h3><figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">String str=<span class="hljs-keyword">new</span> String(<span class="hljs-string">&quot;123&quot;</span>);<br></code></pre></div></td></tr></table></figure>
+
+<p>上述代码中到底创建了几个对象?<br>这得看常量池中有没有<code>123</code>这个String对象，如果有，那么只会在堆中创建一个String对象，然后该String对象中的<code>123</code>字符串对象会引用字符串常量池中的<code>123</code>String对象。如果没有，那么<code>123</code>这个String对象会被添加到字符串池中，然后在堆中也会创建一个包含<code>123</code>的String对象。<strong>注意这两个对象一个在堆里面，一个在字符串池里面，肯定不是一个东西</strong></p>
+<p>可以看出，字符串池相当于一个共享缓存，如果引用的字符串的字面值相同，那么它们就会引用字符串池中的同一个字符串。(前提是使用intern()方法)</p>
+<h3 id="intern-方法小结"><a href="#intern-方法小结" class="headerlink" title="intern()方法小结"></a>intern()方法小结</h3><p>如果查询的字符串在字符串池中有，那么就返回字符串池中引用。如果没有，就把堆中的字符串对象引用加入字符串池中，然后返回该引用。</p>
+<h3 id="字符串进入字符串池的时机"><a href="#字符串进入字符串池的时机" class="headerlink" title="字符串进入字符串池的时机"></a>字符串进入字符串池的时机</h3><p>我觉的如果时<code>String s1=&quot;abc&quot;</code>这种形式构造字符串，那么就确定了s1中的内容，不需要等到运行时解决，应该直接会加入字符串池中。反之，如果使用<code>String s2=new String(&quot;123&quot;)</code>这种形式构造字符串，s2的值是没办法编译时解决的，但是<code>123</code>这个字面值还是会放到类常量池中。</p>
+<p>这个问题我现在还没有答案，待定。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>constant_pool table是<code>.class</code>文件的一部分，run time constant table是类的一部分，而类又被放在方法区中，方法区又是堆的一部分。String pool也是堆的一部分<br>常量池是为了避免频繁的创建和销毁对象而影响系统性能。</p>
+<p><strong>参考文献</strong><br><a href=https://www.journaldev.com/797/what-is-java-string-pool>字符串池解析</a><br><a href=https://examples.javacodegeeks.com/core-java/lang/string/java-string-pool-example/>字符串简单剖析</a><br><a href=https://juejin.im/entry/5a4ed02a51882573541c29d5>深度解析字符串池,必看</a><br><a href=https://cloud.tencent.com/developer/article/1450501>深度解析java常量池</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/String/">String</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021-06-04/the-GC-of-Java.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Java中的GC</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021-06-04/LinkedList-source-code-analysis.html">
+                        <span class="hidden-mobile">LinkedList源码分析</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@waline/client@0.16.2/dist/Waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-blond.vercel.app","placeholder":"说点什么","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":true,"avatarCDN":"","avatarForce":false,"requiredFields":[],"emojiCDN":null,"emojiMaps":null,"anonymous":null},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        new Waline(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+
+  <div>
+    <span id="timeDate">载入天数...</span>
+    <span id="times">载入时分秒...</span>
+    <script>
+    var now = new Date();
+    function createtime(){
+        var grt= new Date("06/03/2021 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24;
+        dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+        hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){
+            hnum = "0" + hnum;
+        }
+        minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes);
+        if(String(mnum).length ==1 ){
+                  mnum = "0" + mnum;
+        }
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){
+                  snum = "0" + snum;
+        }
+        document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+        document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+    }  //此次自定义显示内容
+    setInterval("createtime()",250);
+    </script>
+  </div>
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    <!-- Google Analytics -->
+    <script defer>
+      window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) };
+      ga.l = +new Date;
+      ga('create', 'UA-198559201-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+    <!-- Google gtag.js -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-19MVRDT9NM"></script>
+    <script defer>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-19MVRDT9NM');
+    </script>
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

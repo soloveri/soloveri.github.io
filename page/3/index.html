@@ -42,7 +42,7 @@
 
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
-    var CONFIG = {"hostname":"soloveri.github.io","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":"UA-198559201-1","gtag":"G-19MVRDT9NM","tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"3MrDNVWQz1aBbREDmtPT7DuN-MdYXbMMI","app_key":"34YIO0Yk922Dzi79zUJidSkl","server_url":null}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"eripe.me","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":"UA-198559201-1","gtag":"G-19MVRDT9NM","tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"3MrDNVWQz1aBbREDmtPT7DuN-MdYXbMMI","app_key":"34YIO0Yk922Dzi79zUJidSkl","server_url":null}},"search_path":"/local-search.xml"};
   </script>
   <script  src="/js/utils.js" ></script>
   <script  src="/js/color-schema.js" ></script>
@@ -185,20 +185,20 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/HashMap-analysis-part-two.html" target="_self">
-          HashMap源码分析(二)-插入源码
+        <a href="/2021-06-04/LinkedList-source-code-analysis.html" target="_self">
+          LinkedList源码分析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/HashMap-analysis-part-two.html" target="_self">
+        <a href="/2021-06-04/LinkedList-source-code-analysis.html" target="_self">
           
           
             
           
-          HashMap中最常用的就是put(key,value)函数与remove函数,而且这些函数还会包含RB树与list的相互转换,比较复杂。值得认真推敲。
-1. put方法下面JDk1.8中,HashMap的put源码。其又在内部调用了putVal。
-1234567public V put(K key, V value) &#123;    return putVal(hash(key), key,
+          LinkedList弥补了ArrayList插入元素慢的缺点,当然也带了查找元素慢的缺点。LinkedList同时实现了List和Queue接口,其底层采用双向链表实现。当然LinkedList也有一个父类AbstractSequentialList用于实现一般的方法。下面是LinkedList的继承图:
+
+可以看到LinkedList实现了Cloneable、Serializable接口,当然也
         </a>
       </p>
 
@@ -206,8 +206,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
             </time>
           </div>
         
@@ -223,7 +223,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/HashMap/">HashMap</a>
+              <a href="/tags/LinkedList/">LinkedList</a>
             
           </div>
         
@@ -237,20 +237,20 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/red-black-tree.html" target="_self">
-          红黑树入门
+        <a href="/2021-06-04/Queue-interface-analysis.html" target="_self">
+          Queue接口分析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/red-black-tree.html" target="_self">
+        <a href="/2021-06-04/Queue-interface-analysis.html" target="_self">
           
           
             
           
-          本篇将带你一步一步了解红黑树，当然大部分内容来源于算法(第4版)一书，我仅仅对一点内容总结了自己的心得。
-在谈谈红黑树之前，我们先来回顾一下二叉排序树(balanced sort tree),因为红黑树是从BST的概念演化而来的。BST的定义很简单，对于一个节点来说，左树的所有节点的值都小于当前节点的值，右树所有节点的值都大于当前节点的值。但是在最坏情况下BST的高度会达到O(N),效率太差。
-我
+          0x1 基本概念Queue接口继承自超级接口Collection,其不仅实现了Coolection中的基本方法,而且额外增加了适用于队列的增、删、差方法。并且对应这三种操作,Queue提供了两套方法,一套在操作失败时抛出异常,另一套在操作失败时返回null,不过在文档中说到:
+
+The latter form of the insert operation is designed specific
         </a>
       </p>
 
@@ -258,8 +258,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
             </time>
           </div>
         
@@ -267,7 +267,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/java%E9%9B%86%E5%90%88/">java集合</a>
+              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
             
           </div>
         
@@ -275,7 +275,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91-map/">红黑树,map</a>
+              <a href="/tags/Queue/">Queue</a>
             
           </div>
         
@@ -289,13 +289,13 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/ArrayList-source-code-analysis.html" target="_self">
+        <a href="/2021-06-04/ArrayList-source-code-analysis.html" target="_self">
           ArrayList源码分析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/ArrayList-source-code-analysis.html" target="_self">
+        <a href="/2021-06-04/ArrayList-source-code-analysis.html" target="_self">
           
           
             
@@ -312,8 +312,8 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
             </time>
           </div>
         
@@ -343,13 +343,13 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/ArrayQueue-and-ArrayDeque-analysis.html" target="_self">
+        <a href="/2021-06-04/ArrayQueue-and-ArrayDeque-analysis.html" target="_self">
           ArrayQueue与ArrayDeque源码分析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/ArrayQueue-and-ArrayDeque-analysis.html" target="_self">
+        <a href="/2021-06-04/ArrayQueue-and-ArrayDeque-analysis.html" target="_self">
           
           
             
@@ -363,8 +363,8 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
             </time>
           </div>
         
@@ -398,13 +398,13 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/volatile-keyword.html" target="_self">
+        <a href="/2021-06-04/volatile-keyword.html" target="_self">
           volatile关键字
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/volatile-keyword.html" target="_self">
+        <a href="/2021-06-04/volatile-keyword.html" target="_self">
           
           
             
@@ -418,8 +418,8 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
             </time>
           </div>
         
@@ -449,13 +449,13 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html" target="_self">
+        <a href="/2021-06-04/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html" target="_self">
           多线程为什么会不安全
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html" target="_self">
+        <a href="/2021-06-04/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html" target="_self">
           
           
             
@@ -469,8 +469,8 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
             </time>
           </div>
         
@@ -500,13 +500,13 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/threadlocal-analysis.html" target="_self">
+        <a href="/2021-06-04/threadlocal-analysis.html" target="_self">
           ThreadLocal源码解析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/threadlocal-analysis.html" target="_self">
+        <a href="/2021-06-04/threadlocal-analysis.html" target="_self">
           
           
             
@@ -520,8 +520,8 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
             </time>
           </div>
         
@@ -551,13 +551,13 @@ ThreadLocalMap是
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80.html" target="_self">
+        <a href="/2021-06-04/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80.html" target="_self">
           多线程基础
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80.html" target="_self">
+        <a href="/2021-06-04/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80.html" target="_self">
           
           
             
@@ -573,8 +573,8 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
             </time>
           </div>
         
@@ -604,13 +604,13 @@ ThreadLocalMap是
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/five-IO-model.html" target="_self">
+        <a href="/2021-06-04/five-IO-model.html" target="_self">
           五种IO模型
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/five-IO-model.html" target="_self">
+        <a href="/2021-06-04/five-IO-model.html" target="_self">
           
           
             
@@ -625,8 +625,8 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
             </time>
           </div>
         
@@ -656,13 +656,13 @@ ThreadLocalMap是
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-03/synchronized-keyword.html" target="_self">
+        <a href="/2021-06-04/synchronized-keyword.html" target="_self">
           synchronized关键字
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-03/synchronized-keyword.html" target="_self">
+        <a href="/2021-06-04/synchronized-keyword.html" target="_self">
           
           
             
@@ -676,8 +676,8 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-03 21:17" pubdate>
-              2021-06-03
+            <time datetime="2021-06-04 10:57" pubdate>
+              2021-06-04
             </time>
           </div>
         

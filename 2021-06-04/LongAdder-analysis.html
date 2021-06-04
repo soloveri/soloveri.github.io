@@ -1,0 +1,592 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/panda.png">
+  <link rel="icon" href="/img/panda.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#55967e">
+  <meta name="description" content="">
+  <meta name="author" content="rain">
+  <meta name="keywords" content="">
+  
+  <title>LongAdder源码解析 - 一颗胡杨树</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"eripe.me","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":"UA-198559201-1","gtag":"G-19MVRDT9NM","tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"3MrDNVWQz1aBbREDmtPT7DuN-MdYXbMMI","app_key":"34YIO0Yk922Dzi79zUJidSkl","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/rss2.xml" title="一颗胡杨树" type="application/rss+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Rains·Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/home.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="LongAdder源码解析">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-04 10:57" pubdate>
+        2021年6月4日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      27
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">LongAdder源码解析</h1>
+            
+            <div class="markdown-body">
+              <h2 id="1-预备知识"><a href="#1-预备知识" class="headerlink" title="1. 预备知识"></a>1. 预备知识</h2><p>在Java1.5中，JUC就已经提供了大数原子类<code>AtomicLong</code>，但是在Java1.8中，又提供了相同功能的大数原子类<code>LongAdder</code>。why？答案是如此的纯粹：为了效率。难道前者的效率就不行了吗？如果在轻微冲突的情况下，二者的效率几乎差不多。但是如果竞争非常激烈，那么因为每次对<code>AtomicLong</code>更新时都会使用CAS，激烈竞争导致CAS的成功的概率不大，所以有可能会执行多次无效的CAS操作。那么后者<code>LongAdder</code>在更新时采用了分段计数的方法，它在每次更新时不再直接更新具体的数，而是在内部维护了一个基数<code>base</code>和增量数组<code>cells</code>。在竞争激烈的情况下，每个线程会只会在增量数组中更新自己得到增量。那么如果想要获得最后的结果，只需要将<code>base</code>与<code>sum(cells[i])</code>相加即可。</p>
+<p>那么分段计数的方法就如此完美吗？没有任何缺点吗？在该类的注释中说到：</p>
+<blockquote>
+<p>This class is usually preferable to AtomicLong when multiple threads update a common sum that is used for purposes such as collecting statistics, not for fine-grained synchronization control.</p>
+</blockquote>
+<p>大意是说该类一般<strong>用于收集一些统计数据</strong>，而不应该用于线程同步，因为增量数组中的值是瞬息万变的，那么是有可能直接略过了我们的目标值，比如我们的目标值是1，但是有可能直接从1增加到3。</p>
+<h2 id="2-体系结构"><a href="#2-体系结构" class="headerlink" title="2. 体系结构"></a>2. 体系结构</h2><p><code>LongAdder</code>中采用的分段计数逻辑其实是由<code>Stripe64</code>类完成的，<code>LongAdder</code>的继承结构如下所示：</p>
+<p><img src="./images/Stripe64.png" srcset="/img/loading.gif" lazyload alt="Stripe64"></p>
+<p>实现分段计数的属性增量数组<code>cells</code>与基数<code>base</code>均由<code>Stripe64</code>类维护。</p>
+<p>对于增量数组中的一个元素<code>CounterCell</code>，它代表的是一个线程更新的增量。所以类似于hashmap，<code>Stripe64</code>使用<code>ThreadLocalRandom</code>为每个线程维护了一个随机数当作线程的哈希值，熟悉hashmap的同学都知道，hashmap的table长度必须是2的整数幂。类似的，<code>Stripe64</code>也规定了增量数组<code>cells</code>的长度也必须是2的整数幂。但是长度是有限的，如果达到了最大核心数，那么<code>cells</code>不会再扩容。</p>
+<p>自旋锁<code>cellsBusy</code>则是用来控制数组的初始化及扩容操作。下面罗列了<code>Stripe64</code>的重要字段：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Striped64</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Number</span> </span>&#123;<br>    <span class="hljs-meta">@sun</span>.misc.Contended <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Cell</span> </span>&#123;<br>        <span class="hljs-keyword">volatile</span> <span class="hljs-keyword">long</span> value;<br>        Cell(<span class="hljs-keyword">long</span> x) &#123; value = x; &#125;<br>        <span class="hljs-function"><span class="hljs-keyword">final</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">cas</span><span class="hljs-params">(<span class="hljs-keyword">long</span> cmp, <span class="hljs-keyword">long</span> val)</span> </span>&#123;<br>            <span class="hljs-keyword">return</span> UNSAFE.compareAndSwapLong(<span class="hljs-keyword">this</span>, valueOffset, cmp, val);<br>        &#125;<br><br>        <span class="hljs-comment">// Unsafe mechanics</span><br>        <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> sun.misc.Unsafe UNSAFE;<br>        <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">long</span> valueOffset;<br>        <span class="hljs-keyword">static</span> &#123;<br>            <span class="hljs-keyword">try</span> &#123;<br>                UNSAFE = sun.misc.Unsafe.getUnsafe();<br>                Class&lt;?&gt; ak = Cell.class;<br>                valueOffset = UNSAFE.objectFieldOffset<br>                    (ak.getDeclaredField(<span class="hljs-string">&quot;value&quot;</span>));<br>            &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Error(e);<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">//有效的CPU核心数，也就是增量数组cells的容量上限</span><br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">int</span> NCPU = Runtime.getRuntime().availableProcessors();<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * Table of cells. When non-null, size is a power of 2.</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-comment">//增量数组cells，容量必须为2的倍数，因为跟HashMap类似，需要依靠hash值计算对应的索引</span><br>    <span class="hljs-keyword">transient</span> <span class="hljs-keyword">volatile</span> Cell[] cells;<br><br>    <span class="hljs-comment">//基数</span><br>    <span class="hljs-keyword">transient</span> <span class="hljs-keyword">volatile</span> <span class="hljs-keyword">long</span> base;<br><br>    <br>    <span class="hljs-comment">//自旋锁，用于互斥访问增量数组cells</span><br>    <span class="hljs-keyword">transient</span> <span class="hljs-keyword">volatile</span> <span class="hljs-keyword">int</span> cellsBusy;<br>    ...<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<h2 id="3-计算逻辑"><a href="#3-计算逻辑" class="headerlink" title="3. 计算逻辑"></a>3. 计算逻辑</h2><p>整个<code>longAccumulate()</code>的逻辑可以划分为三个case（详情见注释）：</p>
+<ol>
+<li>case1：如果<code>CounterCell</code>数组已经初始化好了，那么直接尝试在当前线程对应槽位更新<code>CounterCell</code>对象</li>
+<li>case2：<code>CounterCell</code>数组没有初始化，也没有加锁，那么会构建一个长度为2的<code>CounterCell</code>数组，因为至少存在两个同时更新的线程才会发生冲突</li>
+<li>case3：<code>CounterCell</code>正在进行初始化或扩容，那么则直接尝试更新<code>baseCount</code></li>
+</ol>
+<p>其中我认为<code>case1</code>的情况稍微复杂点，我这里展示一下它的流程图：</p>
+<p><img src="./images/longAccumulate.drawio.svg" srcset="/img/loading.gif" lazyload alt="longAccumulate"></p>
+<p>流程图可能有疏漏，后续再精进吧。下面的代码中添加了详细的注释：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><br><span class="hljs-comment">/**</span><br><span class="hljs-comment">这个函数作用就是在当前线程对应的槽位更新cell对象，但是并不负责计算map最后的大小</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">有很多场景能用到这个函数，包括：</span><br><span class="hljs-comment">1. CounterCell数组未初始化</span><br><span class="hljs-comment">2. 对应槽位的CounterCell未初始化</span><br><span class="hljs-comment">3. CounterCell初始化，但是修改value时CAS失败</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">其中属性cellBusy是专门为该函数准备的自旋锁，在扩容或者构造新cell时使用</span><br><span class="hljs-comment">wasCounttended表示进入这个函数原因是是否未更新对应CounterCell对象失败，true为不是因为失败</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> x the value</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> fn the update function, or null for add (this convention</span><br><span class="hljs-comment"> * avoids the need for an extra field or function in LongAdder).</span><br><span class="hljs-comment"> * <span class="hljs-doctag">@param</span> wasUncontended false if CAS failed before call</span><br><span class="hljs-comment"> */</span><br><span class="hljs-function"><span class="hljs-keyword">final</span> <span class="hljs-keyword">void</span> <span class="hljs-title">longAccumulate</span><span class="hljs-params">(<span class="hljs-keyword">long</span> x, LongBinaryOperator fn,</span></span><br><span class="hljs-params"><span class="hljs-function">                            <span class="hljs-keyword">boolean</span> wasUncontended)</span> </span>&#123;<br>    <span class="hljs-keyword">int</span> h;<br>    <span class="hljs-comment">//如果当前线程的hash值还为准备好，那么强制初始化</span><br>    <span class="hljs-keyword">if</span> ((h = getProbe()) == <span class="hljs-number">0</span>) &#123;<br>        ThreadLocalRandom.current(); <span class="hljs-comment">// force initialization</span><br>        h = getProbe();<br>        wasUncontended = <span class="hljs-keyword">true</span>;<br>    &#125;<br>    <span class="hljs-keyword">boolean</span> collide = <span class="hljs-keyword">false</span>;                <span class="hljs-comment">// True if last slot nonempty</span><br>    <span class="hljs-keyword">for</span> (;;) &#123;<br>        Cell[] as; Cell a; <span class="hljs-keyword">int</span> n; <span class="hljs-keyword">long</span> v;<br>        <span class="hljs-comment">//case1:如果CounterCell数组已经初始化好了</span><br>        <span class="hljs-keyword">if</span> ((as = cells) != <span class="hljs-keyword">null</span> &amp;&amp; (n = as.length) &gt; <span class="hljs-number">0</span>) &#123;<br>            <span class="hljs-comment">//对应槽位的CounterCell对象没有初始化，或者正在扩容，那么尝试构造新的Cell</span><br>            <span class="hljs-keyword">if</span> ((a = as[(n - <span class="hljs-number">1</span>) &amp; h]) == <span class="hljs-keyword">null</span>) &#123;<br>                 <span class="hljs-comment">//如果当前没有线程持有自旋锁</span><br>                <span class="hljs-keyword">if</span> (cellsBusy == <span class="hljs-number">0</span>) &#123;       <span class="hljs-comment">// Try to attach new Cell</span><br>                    <span class="hljs-comment">//先构造好一个cell对象</span><br>                    Cell r = <span class="hljs-keyword">new</span> Cell(x);   <span class="hljs-comment">// Optimistically create</span><br>                     <span class="hljs-comment">//尝试获取自旋锁cellsBusy</span><br>                    <span class="hljs-keyword">if</span> (cellsBusy == <span class="hljs-number">0</span> &amp;&amp; casCellsBusy()) &#123;<br>                        <span class="hljs-keyword">boolean</span> created = <span class="hljs-keyword">false</span>;<br>                        <span class="hljs-keyword">try</span> &#123;               <span class="hljs-comment">// Recheck under lock</span><br>                            Cell[] rs; <span class="hljs-keyword">int</span> m, j;<br>                            <span class="hljs-comment">//再次检查cell数组是否为空</span><br>                            <span class="hljs-keyword">if</span> ((rs = cells) != <span class="hljs-keyword">null</span> &amp;&amp;<br>                                (m = rs.length) &gt; <span class="hljs-number">0</span> &amp;&amp;<br>                                rs[j = (m - <span class="hljs-number">1</span>) &amp; h] == <span class="hljs-keyword">null</span>) &#123;<br>                                 <span class="hljs-comment">//在cell数组的对应槽位上赋值我们先构造好的cell对象</span><br>                                rs[j] = r;<br>                                <span class="hljs-comment">//cell对象创建成功，那么可以退出循环了，设置标志位create</span><br>                                created = <span class="hljs-keyword">true</span>;<br>                            &#125;<br>                        &#125; <span class="hljs-keyword">finally</span> &#123;<br>                            <span class="hljs-comment">//释放自旋锁</span><br>                            cellsBusy = <span class="hljs-number">0</span>;<br>                        &#125;<br>                        <span class="hljs-comment">//如果创建cell对象成功，那么则退出循环</span><br>                        <span class="hljs-keyword">if</span> (created)<br>                            <span class="hljs-keyword">break</span>;<br>                        <span class="hljs-keyword">continue</span>;           <span class="hljs-comment">// Slot is now non-empty</span><br>                    &#125;<br>                &#125;<br>                <span class="hljs-comment">//设置扩容标志</span><br>                collide = <span class="hljs-keyword">false</span>;<br>            &#125;<br>            <span class="hljs-comment">//走到这说明对应槽位的cell对象已经构造好了</span><br>            <span class="hljs-comment">//那么就判断进入这个函数的原因是不是因为更新对应cell的时候发生冲突</span><br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!wasUncontended)       <span class="hljs-comment">// CAS already known to fail</span><br>                <span class="hljs-comment">//如果是因为更新时cas发生冲突，那么就尝试进行一次rehash更新线程的hash值，并且只会更新一次</span><br>                wasUncontended = <span class="hljs-keyword">true</span>;      <span class="hljs-comment">// Continue after rehash</span><br>            <br>            <span class="hljs-comment">//在rehash之后再次尝试使用cas进行更新</span><br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (a.cas(v = a.value, ((fn == <span class="hljs-keyword">null</span>) ? v + x :<br>                                            fn.applyAsLong(v, x))))<br>                <span class="hljs-keyword">break</span>;<br>             <span class="hljs-comment">//如果cell数组扩容了，或者大小已经超过了核心处理器数量，那么对于当前线程来说不会再扩容了</span><br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (n &gt;= NCPU || cells != as)<br>                collide = <span class="hljs-keyword">false</span>;            <span class="hljs-comment">// At max size or stale</span><br>            <span class="hljs-comment">//设置扩容标志，设为false只会走下面的else-if，不可能到达后面的扩容逻辑</span><br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (!collide)<br>                collide = <span class="hljs-keyword">true</span>;<br>            <span class="hljs-comment">//尝试加锁扩容</span><br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (cellsBusy == <span class="hljs-number">0</span> &amp;&amp; casCellsBusy()) &#123;<br>                <span class="hljs-keyword">try</span> &#123;<br>                    <span class="hljs-comment">//再次判断cell数组没有被初始化</span><br>                    <span class="hljs-keyword">if</span> (cells == as) &#123;      <span class="hljs-comment">// Expand table unless stale</span><br>                        <br>                        Cell[] rs = <span class="hljs-keyword">new</span> Cell[n &lt;&lt; <span class="hljs-number">1</span>];<br>                        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; n; ++i)<br>                            rs[i] = as[i];<br>                        cells = rs;<br>                    &#125;<br>                &#125; <span class="hljs-keyword">finally</span> &#123;<br>                    cellsBusy = <span class="hljs-number">0</span>;<br>                &#125;<br>                <span class="hljs-comment">//设置扩容标志</span><br>                collide = <span class="hljs-keyword">false</span>;<br>                <span class="hljs-keyword">continue</span>;                   <span class="hljs-comment">// Retry with expanded table</span><br>            &#125;<br>            <span class="hljs-comment">//重新计算当先线程的hash值</span><br>            h = advanceProbe(h);<br>        &#125;<br>        <span class="hljs-comment">//case2:CounterCell数组没有被加锁，并且没有初始化</span><br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (cellsBusy == <span class="hljs-number">0</span> &amp;&amp; cells == as &amp;&amp; casCellsBusy()) &#123;<br>            <span class="hljs-keyword">boolean</span> init = <span class="hljs-keyword">false</span>;<br>            <span class="hljs-keyword">try</span> &#123;<br>                <span class="hljs-comment">//那么则尝试进行初始化</span><br>                <span class="hljs-keyword">if</span> (cells == as) &#123;<br>                    <span class="hljs-comment">//构造一个长度为2的cell数组，因为至少有两个线程竞争更改容量，才会进入这个函数</span><br>                    Cell[] rs = <span class="hljs-keyword">new</span> Cell[<span class="hljs-number">2</span>];<br>                    <span class="hljs-comment">//在当前线程的槽位上构造cell对象</span><br>                    rs[h &amp; <span class="hljs-number">1</span>] = <span class="hljs-keyword">new</span> Cell(x);<br>                    cells = rs;<br>                    init = <span class="hljs-keyword">true</span>;<br>                &#125;<br>            &#125; <span class="hljs-keyword">finally</span> &#123;<br>                <span class="hljs-comment">//释放自旋锁</span><br>                cellsBusy = <span class="hljs-number">0</span>;<br>            &#125;<br>            <span class="hljs-comment">//如果成功初始化，说明cell对象也构造好了，那么则退出循环</span><br>            <span class="hljs-keyword">if</span> (init)<br>                <span class="hljs-keyword">break</span>;<br>        &#125;<br>        <span class="hljs-comment">//case3:CounterCell数组正在初始化，因为获取自旋锁CELLBUSY失败，则尝试直接在原来的baseCount上累加</span><br>        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (casBase(v = base, ((fn == <span class="hljs-keyword">null</span>) ? v + x :<br>                                    fn.applyAsLong(v, x))))<br>            <span class="hljs-keyword">break</span>;                          <span class="hljs-comment">// Fall back on using base</span><br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<h2 id="4-总结"><a href="#4-总结" class="headerlink" title="4. 总结"></a>4. 总结</h2><p><code>LongAdder</code>出现的原因是因为原来的<code>AtomicLong</code>在竞争激烈的情况下效率很低，所以<code>LongAdder</code>则是将热点数据分散，每个线程只负责自己的部分。<code>ConcurrentHashMap</code>计算容量时就采用了这种方法。</p>
+<p>而<code>LongAccumulator</code>则实现了重载符号的逻辑。<code>LongAdder</code>只能实现加法，而<code>LongAccumulator</code>允许我们自定义符号功能，类似于cpp中的符号重载。</p>
+<p>类似的，<code>DoubleAdder</code>和<code>DoubleAccumulator</code>实现了<code>Double</code>类型的大数原子类，与<code>long</code>类型的实现逻辑几乎没有任务区别。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/atomic/">atomic</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021-06-04/AtomicStampedReference-analysis.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">AtomicStampedReference源码解析</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021-06-04/atomic-class-overview.html">
+                        <span class="hidden-mobile">原子类总览</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@waline/client@0.16.2/dist/Waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-blond.vercel.app","placeholder":"说点什么","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":true,"avatarCDN":"","avatarForce":false,"requiredFields":[],"emojiCDN":null,"emojiMaps":null,"anonymous":null},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        new Waline(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+
+  <div>
+    <span id="timeDate">载入天数...</span>
+    <span id="times">载入时分秒...</span>
+    <script>
+    var now = new Date();
+    function createtime(){
+        var grt= new Date("06/03/2021 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24;
+        dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+        hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){
+            hnum = "0" + hnum;
+        }
+        minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes);
+        if(String(mnum).length ==1 ){
+                  mnum = "0" + mnum;
+        }
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){
+                  snum = "0" + snum;
+        }
+        document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+        document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+    }  //此次自定义显示内容
+    setInterval("createtime()",250);
+    </script>
+  </div>
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    <!-- Google Analytics -->
+    <script defer>
+      window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) };
+      ga.l = +new Date;
+      ga('create', 'UA-198559201-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+    <!-- Google gtag.js -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-19MVRDT9NM"></script>
+    <script defer>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-19MVRDT9NM');
+    </script>
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

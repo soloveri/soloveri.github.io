@@ -1,0 +1,641 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/panda.png">
+  <link rel="icon" href="/img/panda.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#55967e">
+  <meta name="description" content="">
+  <meta name="author" content="rain">
+  <meta name="keywords" content="">
+  
+  <title>通过MySQL驱动的加载学习SPI机制 - 一颗胡杨树</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"eripe.me","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":"UA-198559201-1","gtag":"G-19MVRDT9NM","tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"3MrDNVWQz1aBbREDmtPT7DuN-MdYXbMMI","app_key":"34YIO0Yk922Dzi79zUJidSkl","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/rss2.xml" title="一颗胡杨树" type="application/rss+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Rains·Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/home.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="通过MySQL驱动的加载学习SPI机制">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-04 10:57" pubdate>
+        2021年6月4日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.5k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      32
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">通过MySQL驱动的加载学习SPI机制</h1>
+            
+            <div class="markdown-body">
+              <h2 id="前言-什么是SPI"><a href="#前言-什么是SPI" class="headerlink" title="前言 什么是SPI"></a>前言 什么是SPI</h2><p>SPI机制（Service Provider Interface)简而言之，就是java规定了一组服务的接口，但是没有具体的实现类。那么具体的实现类肯定由不同的厂商实现，那么客户在使用时是仅依赖于接口的。<strong>SPI的具体实现是靠<code>ServiceLoader</code>完成的。</strong><br>在讲解双亲委派模型时，我们知道，SPI接口是通过<code>bootstrap ClassLoader</code>加载至jvm中的。而具体的驱动实现类是通过线程上下文类加载器加载至jvm中的。下面我们就通过加载数据库驱动的例子来了解SPI的实现原理。</p>
+<h2 id="1-获得数据库连接实例的方式"><a href="#1-获得数据库连接实例的方式" class="headerlink" title="1. 获得数据库连接实例的方式"></a>1. 获得数据库连接实例的方式</h2><p>在JDBC4.0之前，还没有引入SPI，一般需要使用<code>Class.forName()</code>注册驱动，所以加载驱动的代码一般是如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">Class.forName(<span class="hljs-string">&quot;xxxx&quot;</span>);<br>Connection c=DriverManager.getConnection(<span class="hljs-string">&quot;url&quot;</span>);<br></code></pre></div></td></tr></table></figure>
+
+<p>在JDBC4.0之后，我们只需要使用<code>DriverManager.getConnection(url)</code>就可以获得连接对象。这是因为在<code>getConnection()</code>内部会自己调用<code>Class.forName()</code>，这里包含了一层嵌套关系。而<code>DriverManager</code>又是由<code>Bootstrap ClassLoader</code>加载的，根据符号解析的规定，<code>DriverManager</code>内部的符号如果需要解析为类或接口，则会调用<code>DriverManager</code>的加载器。但是问题是<code>DriverManager</code>只会加载核心库。根据双亲委派模型，父类的请求无法派给子类，所以这时候就采用了线程上下文类加载器。<strong>而在JDBC4.0之前没有这层嵌套关系。</strong></p>
+<p>下面我们来看看到底是如何获得驱动的。在初次使用<code>DriverManager</code>时，首先会执行静态代码块中<code>loadInitialDrivers()</code>函数。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">static</span> &#123;<br>    loadInitialDrivers();<br>    println(<span class="hljs-string">&quot;JDBC DriverManager initialized&quot;</span>);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>初始化函数如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">loadInitialDrivers</span><span class="hljs-params">()</span> </span>&#123;<br>    String drivers;<br>    <span class="hljs-keyword">try</span> &#123;<br>        <span class="hljs-comment">//查看是否设置了系统属性jdbc.drivers</span><br>        drivers = AccessController.doPrivileged(<span class="hljs-keyword">new</span> PrivilegedAction&lt;String&gt;() &#123;<br>            <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123;<br>                <span class="hljs-keyword">return</span> System.getProperty(<span class="hljs-string">&quot;jdbc.drivers&quot;</span>);<br>            &#125;<br>        &#125;);<br>    &#125; <span class="hljs-keyword">catch</span> (Exception ex) &#123;<br>        drivers = <span class="hljs-keyword">null</span>;<br>    &#125;<br>    <span class="hljs-comment">//使用ServiceLoader加载驱动</span><br>    AccessController.doPrivileged(<span class="hljs-keyword">new</span> PrivilegedAction&lt;Void&gt;() &#123;<br>        <span class="hljs-function"><span class="hljs-keyword">public</span> Void <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123;<br><br>            ServiceLoader&lt;Driver&gt; loadedDrivers = ServiceLoader.load(Driver.class);<br>            <br>            Iterator&lt;Driver&gt; driversIterator = loadedDrivers.iterator();<br>            <span class="hljs-keyword">try</span>&#123;<br>                <span class="hljs-keyword">while</span>(driversIterator.hasNext()) &#123;<br>                    driversIterator.next();<br>                &#125;<br>            &#125; <span class="hljs-keyword">catch</span>(Throwable t) &#123;<br>            <span class="hljs-comment">// Do nothing</span><br>            &#125;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">null</span>;<br>        &#125;<br>    &#125;);<br><br>    println(<span class="hljs-string">&quot;DriverManager.initialize: jdbc.drivers = &quot;</span> + drivers);<br><br>    <span class="hljs-keyword">if</span> (drivers == <span class="hljs-keyword">null</span> || drivers.equals(<span class="hljs-string">&quot;&quot;</span>)) &#123;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-comment">//如果设置了系统属性jdbc.drivers,</span><br>    <span class="hljs-comment">//那么如果SPI已经成功加载了驱动，下面的代码还是会重复注册驱动</span><br>    String[] driversList = drivers.split(<span class="hljs-string">&quot;:&quot;</span>);<br>    println(<span class="hljs-string">&quot;number of Drivers:&quot;</span> + driversList.length);<br>    <span class="hljs-keyword">for</span> (String aDriver : driversList) &#123;<br>        ...<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>可以看到，<code>DriverManager</code>的初始化分分为两个版本：</p>
+<ul>
+<li>设置系统属性<code>jdbc.drivers</code>属性</li>
+<li>使用``ServiceLoader`加载，如果驱动以service provider的形式出现</li>
+</ul>
+<h2 id="2-SPI加载数据库驱动的原理"><a href="#2-SPI加载数据库驱动的原理" class="headerlink" title="2. SPI加载数据库驱动的原理"></a>2. SPI加载数据库驱动的原理</h2><h3 id="2-1-获取ServiceLoader对象"><a href="#2-1-获取ServiceLoader对象" class="headerlink" title="2.1 获取ServiceLoader对象"></a>2.1 获取ServiceLoader对象</h3><p>使用SPI初始化代码时首先使用<code>ServiceLoader</code>的静态方法<code>load</code>加载SPI<code>Driver</code>的class文件。源码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;S&gt; <span class="hljs-function">ServiceLoader&lt;S&gt; <span class="hljs-title">load</span><span class="hljs-params">(Class&lt;S&gt; service)</span> </span>&#123;<br>    ClassLoader cl = Thread.currentThread().getContextClassLoader();<br>    <span class="hljs-keyword">return</span> ServiceLoader.load(service, cl);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p><code> ServiceLoader.load(service, cl)</code>又会通过私有构造方法返回<code>ServiceLoader</code>对象，在私有构造方法内部调用了<code>reload()</code>方法，源码如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">reload</span><span class="hljs-params">()</span> </span>&#123;<br>    providers.clear();<br>    lookupIterator = <span class="hljs-keyword">new</span> LazyIterator(service, loader);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>首先清空<code>providers</code>，这里的<code>providers</code>是一个<code>LinkedHashMap</code>，用来保存已经加载过服务实现类的实例。随后生成了<code>lazyIterator</code>对象，这个懒加载器是<code>ServiceLoader</code>的核心，它完成了查找实现类、加载实现类的动作。</p>
+<p>那么这里的<strong>懒</strong>到底是指什么？我的理解是在程序启动之初，服务实现类并没有被加载至jvm中<strong>直到我们使用时</strong>。所以这里的懒就是在程序启动到我们使用之前的这一段时间内，不需要也没有加载服务实现类，懒就是懒在这个阶段。那非懒应该就是指在程序一启动就会加载所有的服务实现类。</p>
+<h3 id="2-2-使用ServiceLoader对象迭代器遍历实现类容器"><a href="#2-2-使用ServiceLoader对象迭代器遍历实现类容器" class="headerlink" title="2.2 使用ServiceLoader对象迭代器遍历实现类容器"></a>2.2 使用ServiceLoader对象迭代器遍历实现类容器</h3><p>在成功获取ServiceLoader对象<code>loadedDrivers</code>后，会继续获取<code>loadedDrivers</code>的内部迭代器：</p>
+<blockquote>
+<p>Iterator<Driver> driversIterator = loadedDrivers.iterator();</p>
+</blockquote>
+<p>然后<code>DriverManager</code>会使用这个迭代器遍历ServiceLoader内部用来存储服务实现类对象的容器。具体的驱动注册就在遍历容器的时候完成。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">try</span>&#123;<br>    <span class="hljs-keyword">while</span>(driversIterator.hasNext()) &#123;<br>        driversIterator.next();<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>我们来看看<code>ServiceLoader</code>内部迭代器的<code>hasNext()</code>方法:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> Iterator&lt;S&gt; <span class="hljs-title">iterator</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Iterator&lt;S&gt;() &#123;<br><br>        Iterator&lt;Map.Entry&lt;String,S&gt;&gt; knownProviders<br>            = providers.entrySet().iterator();<br><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">hasNext</span><span class="hljs-params">()</span> </span>&#123;<br>            <span class="hljs-keyword">if</span> (knownProviders.hasNext())<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>            <span class="hljs-keyword">return</span> lookupIterator.hasNext();<br>        &#125;<br><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> S <span class="hljs-title">next</span><span class="hljs-params">()</span> </span>&#123;<br>            <span class="hljs-keyword">if</span> (knownProviders.hasNext())<br>                <span class="hljs-keyword">return</span> knownProviders.next().getValue();<br>            <span class="hljs-keyword">return</span> lookupIterator.next();<br>        &#125;<br><br>        <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">remove</span><span class="hljs-params">()</span> </span>&#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> UnsupportedOperationException();<br>        &#125;<br>    &#125;;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p><code>hasNext()</code>首先调用内部容器<code>providers</code>自身的迭代器。失败后才会调用懒迭代器类<code>LazyIterator</code>的<code>hasNext()</code>，其具体实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">LazyIterator</span></span><br><span class="hljs-class">        <span class="hljs-keyword">implements</span> <span class="hljs-title">Iterator</span>&lt;<span class="hljs-title">S</span>&gt;</span><br><span class="hljs-class"></span>&#123;<br>    ...<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">hasNext</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-comment">//无论执行if还是else，都会最终执行hasNextService</span><br>        <span class="hljs-keyword">if</span> (acc == <span class="hljs-keyword">null</span>) &#123;<br>            <span class="hljs-keyword">return</span> hasNextService();<br>        &#125; <span class="hljs-keyword">else</span> &#123;<br>            PrivilegedAction&lt;Boolean&gt; action = <span class="hljs-keyword">new</span> PrivilegedAction&lt;Boolean&gt;() &#123;<br>                <span class="hljs-function"><span class="hljs-keyword">public</span> Boolean <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123; <span class="hljs-keyword">return</span> hasNextService(); &#125;<br>            &#125;;<br>            <span class="hljs-keyword">return</span> AccessController.doPrivileged(action, acc);<br>        &#125;<br>    &#125;<br>    ...<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>在调用<code>LazyIteraotr</code>的<code>hasNext()</code>方法后，内部会调用<code>hashNextService()</code>:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">private</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">hasNextService</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (nextName != <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>    &#125;<br>    <span class="hljs-keyword">if</span> (configs == <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            <br>            String fullName = PREFIX + service.getName();<br>            <span class="hljs-keyword">if</span> (loader == <span class="hljs-keyword">null</span>)<br>                configs = ClassLoader.getSystemResources(fullName);<br>            <span class="hljs-keyword">else</span><br>                configs = loader.getResources(fullName);<br>        &#125; <span class="hljs-keyword">catch</span> (IOException x) &#123;<br>            fail(service, <span class="hljs-string">&quot;Error locating configuration files&quot;</span>, x);<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">while</span> ((pending == <span class="hljs-keyword">null</span>) || !pending.hasNext()) &#123;<br>        <span class="hljs-keyword">if</span> (!configs.hasMoreElements()) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>        &#125;<br>        pending = parse(service, configs.nextElement());<br>    &#125;<br>    nextName = pending.next();<br>    <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>我们看到该方法内部有一个常量字符串<code>PREFIX</code>，其值为:</p>
+<blockquote>
+<p>private static final String PREFIX = “META-INF/services/“;</p>
+</blockquote>
+<p>这是因为java规定，所谓为SPI提供实现的厂商必须在jar包提供目录<code>META-INF/services/</code>，目录内的文件存放当前服务实现类的入口类名，文件名文当前服务接口的全限定名。以MySQL为例，其jar包内容如下：</p>
+<p><img src="images/mysql-SPI.PNG" srcset="/img/loading.gif" lazyload alt="mysql-SPI"></p>
+<p>其中<code>java.sql.Driver</code>就是java数据库服务接口的全限定名，其内容如下：</p>
+<p><img src="images/mysql-content.PNG" srcset="/img/loading.gif" lazyload alt="mysql-content"></p>
+<p><code>com.mysql.cj.jdbc.Driver</code>就是具体实现类的全限定名。<code>hasNextService</code>的目标就是把具体实现类的全限定名找到。找的方法就是找到文件：<code>META-INF/services/+service.name</code>。其中<code>service</code>的名字是java规定好的。例如加载数据库时的<code>service</code>就对应<code>Driver</code>类。</p>
+<p>在找到具体实现类的名字后，下一步当然是要把它加载进来了。调用<code>ServiceLoader</code>迭代器的<code>next()</code>方法，如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">hasNext</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (acc == <span class="hljs-keyword">null</span>) &#123;<br>        <span class="hljs-keyword">return</span> hasNextService();<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        PrivilegedAction&lt;Boolean&gt; action = <span class="hljs-keyword">new</span> PrivilegedAction&lt;Boolean&gt;() &#123;<br>            <span class="hljs-function"><span class="hljs-keyword">public</span> Boolean <span class="hljs-title">run</span><span class="hljs-params">()</span> </span>&#123; <span class="hljs-keyword">return</span> hasNextService(); &#125;<br>        &#125;;<br>        <span class="hljs-keyword">return</span> AccessController.doPrivileged(action, acc);<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">private</span> S <span class="hljs-title">nextService</span><span class="hljs-params">()</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (!hasNextService())<br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> NoSuchElementException();<br>    String cn = nextName;<br>    nextName = <span class="hljs-keyword">null</span>;<br>    Class&lt;?&gt; c = <span class="hljs-keyword">null</span>;<br>    <span class="hljs-keyword">try</span> &#123;<br>        c = Class.forName(cn, <span class="hljs-keyword">false</span>, loader);<br>    &#125;<br>    ...<br><br>    <span class="hljs-keyword">try</span> &#123;<br>        S p = service.cast(c.newInstance());<br>        providers.put(cn, p);<br>        <span class="hljs-keyword">return</span> p;<br>    &#125;<br>    ...<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>具体的加载由<code>Class.forName()</code>完成，注意，其中传入的loader是线程上下文类加载器。在将具体实现类加载进jvm后，会实例化一个实现类对象，即调用<code>c.newInstance()</code>。在实例化的过程完成了驱动的注册。我们来看看mysql实现类的构造函数：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Driver</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">NonRegisteringDriver</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">java</span>.<span class="hljs-title">sql</span>.<span class="hljs-title">Driver</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Driver</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> SQLException </span>&#123;<br>    &#125;<br><br>    <span class="hljs-keyword">static</span> &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            DriverManager.registerDriver(<span class="hljs-keyword">new</span> Driver());<br>        &#125; <span class="hljs-keyword">catch</span> (SQLException var1) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> RuntimeException(<span class="hljs-string">&quot;Can&#x27;t register driver!&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>非常简单，一旦进行实例化，就会执行静态构造代码块，mysql实现的<code>Driver</code>会主动向<code>DriverManger</code>提出注册请求。至此，已经完成了数据库驱动的一次注册过程。</p>
+<h3 id="2-3-获得数据库连接对象"><a href="#2-3-获得数据库连接对象" class="headerlink" title="2.3 获得数据库连接对象"></a>2.3 获得数据库连接对象</h3><p><code>DriverManager</code>会遍历所有已经注册过的驱动，如果能成功连接目标数据库，那么就返回当前连接对象，否则继续遍历剩下的Driver实例直至结束。下面是遍历驱动的核心代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">for</span>(DriverInfo aDriver : registeredDrivers) &#123;<br>    <span class="hljs-comment">// If the caller does not have permission to load the driver then</span><br>    <span class="hljs-comment">// skip it.</span><br>    <span class="hljs-keyword">if</span>(isDriverAllowed(aDriver.driver, callerCL)) &#123;<br>        <span class="hljs-keyword">try</span> &#123;<br>            println(<span class="hljs-string">&quot;    trying &quot;</span> + aDriver.driver.getClass().getName());<br>            Connection con = aDriver.driver.connect(url, info);<br>            <span class="hljs-keyword">if</span> (con != <span class="hljs-keyword">null</span>) &#123;<br>                <span class="hljs-comment">// Success!</span><br>                println(<span class="hljs-string">&quot;getConnection returning &quot;</span> + aDriver.driver.getClass().getName());<br>                <span class="hljs-keyword">return</span> (con);<br>            &#125;<br>        &#125; <span class="hljs-keyword">catch</span> (SQLException ex) &#123;<br>            <span class="hljs-keyword">if</span> (reason == <span class="hljs-keyword">null</span>) &#123;<br>                reason = ex;<br>            &#125;<br>        &#125;<br>    &#125; <span class="hljs-keyword">else</span> &#123;<br>        println(<span class="hljs-string">&quot;    skipping: &quot;</span> + aDriver.getClass().getName());<br>    &#125;<br><br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>可以看到，如果在一次尝试连接中抛出异常，那么就不会尝试后续的数据库驱动，这还是有点小bug的。</p>
+<h3 id="2-4-存在的问题"><a href="#2-4-存在的问题" class="headerlink" title="2.4 存在的问题"></a>2.4 存在的问题</h3><p><strong>A. ServiceLoader的providers有什么用？</strong></p>
+<p>可以看到，在<code>DriverMangaer</code>初次完成注册后，并没有使用过缓存<code>providers</code>。但是这仅仅是<code>DriverManager</code>的问题，并不能说明缓存没有用。如果我们此时再次遍历当前<code>loadedDrivers</code>，那么就不会再次使用<code>Class.forName()</code>加载，而是会通过内部缓存获得具体的实现类对象。</p>
+<p><strong>B. 如果有多个驱动需要注册，那么在成功注册第一个驱动后，<code>knownProviders.hasNext()</code>返回的结果不应该是<code>true</code>吗？</strong></p>
+<p>其实这跟HashMap迭代器的实现有关，在每次调用<code>entrySet().iterator()</code>后，返回的迭代器都是新<code>new</code>出来的，即初始化函数<code>loadInitialDrivers()</code>中的<code>driversIterator</code>永远都是<code>providers</code>为空时生成的迭代器。所以尽管成功了加载了一个驱动，<code>knownProviders.hasNext()</code>的结果依然是<code>false</code>，依旧会调用懒迭代器<code>lookupIterator</code>的<code>hasNext()</code>方法。</p>
+<h2 id="3-传统的驱动加载方式"><a href="#3-传统的驱动加载方式" class="headerlink" title="3. 传统的驱动加载方式"></a>3. 传统的驱动加载方式</h2><p>传统的加载是通过<code>Class.forName()</code>完成的，而该方法会默认初始化目标类，如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-meta">@CallerSensitive</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> Class&lt;?&gt; forName(String className)<br>            <span class="hljs-keyword">throws</span> ClassNotFoundException &#123;<br>    Class&lt;?&gt; caller = Reflection.getCallerClass();<br>    <span class="hljs-keyword">return</span> forName0(className, <span class="hljs-keyword">true</span>, ClassLoader.getClassLoader(caller), caller);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>一旦完成了实现类的初始化，数据库驱动会自己向<code>DriverManager</code>完成注册。SPI仅仅替代我们写了<code>Class.forName</code>这句话。</p>
+<h2 id="4-小结"><a href="#4-小结" class="headerlink" title="4. 小结"></a>4. 小结</h2><p>SPI的核心<code>ServiceLoader</code>类，而该类的核心又是内部实现的<code>LazyIterator</code>。在实现SPI时，规定实现库的jar包中必须在<code>META-INF/services/</code>目录下存放以目标SPI命名的文件，其中的内容就是厂商具体实现类的全限定名。</p>
+<p>但是SPI仍然是有缺点的：</p>
+<ul>
+<li>对于某一项服务，会加载所有的实现类，但是其中有一些我们并不需要</li>
+<li>会存在并发问题</li>
+</ul>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E7%B1%BB%E5%8A%A0%E8%BD%BD/">类加载</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/SPI%E6%9C%BA%E5%88%B6/">SPI机制</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%A9%B1%E5%8A%A8%E5%8A%A0%E8%BD%BD/">数据库驱动加载</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021-06-04/type-system-of-java.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">java中的类型系统</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021-06-04/Frequently-asked-questions-about-generics.html">
+                        <span class="hidden-mobile">关于泛型的常见问题</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@waline/client@0.16.2/dist/Waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-blond.vercel.app","placeholder":"说点什么","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":true,"avatarCDN":"","avatarForce":false,"requiredFields":[],"emojiCDN":null,"emojiMaps":null,"anonymous":null},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        new Waline(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+
+  <div>
+    <span id="timeDate">载入天数...</span>
+    <span id="times">载入时分秒...</span>
+    <script>
+    var now = new Date();
+    function createtime(){
+        var grt= new Date("06/03/2021 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24;
+        dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+        hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){
+            hnum = "0" + hnum;
+        }
+        minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes);
+        if(String(mnum).length ==1 ){
+                  mnum = "0" + mnum;
+        }
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){
+                  snum = "0" + snum;
+        }
+        document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+        document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+    }  //此次自定义显示内容
+    setInterval("createtime()",250);
+    </script>
+  </div>
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    <!-- Google Analytics -->
+    <script defer>
+      window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) };
+      ga.l = +new Date;
+      ga('create', 'UA-198559201-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+    <!-- Google gtag.js -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-19MVRDT9NM"></script>
+    <script defer>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-19MVRDT9NM');
+    </script>
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>

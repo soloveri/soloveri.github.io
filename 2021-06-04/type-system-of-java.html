@@ -1,0 +1,655 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/panda.png">
+  <link rel="icon" href="/img/panda.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#55967e">
+  <meta name="description" content="">
+  <meta name="author" content="rain">
+  <meta name="keywords" content="">
+  
+  <title>java中的类型系统 - 一颗胡杨树</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"eripe.me","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":"UA-198559201-1","gtag":"G-19MVRDT9NM","tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"3MrDNVWQz1aBbREDmtPT7DuN-MdYXbMMI","app_key":"34YIO0Yk922Dzi79zUJidSkl","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/rss2.xml" title="一颗胡杨树" type="application/rss+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Rains·Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/home.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="java中的类型系统">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-04 10:57" pubdate>
+        2021年6月4日 上午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      2.1k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      28
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">java中的类型系统</h1>
+            
+            <div class="markdown-body">
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>java的类型系统在1.5之后就变的很复杂了。但是又极其重要因为java中的反射基于此。所以想要深入理解反射还需要简单地学习一下java的类型系统。首先我们简要说明一下在逻辑上java的type分类。然后再在实现层次上简要了解一下java到底是如何实现的。</p>
+<p>首先java是一个强类型语言,其任何一个变量、任何一个表达式都有类型。在Java中,总的分为<del>两类</del>三类(还有一个特殊的<code>null type</code>):</p>
+<ul>
+<li>primitive types:原始类型,分类<code>boolean type</code>和<code>numeric type</code>,后者又可以分为<code>integral types</code>和<code>floating-point types</code>。<ul>
+<li>integral types:包括<code>byte</code>、<code>short</code>、<code>int</code>、<code>long</code>、<code>float</code>、<code>char</code></li>
+<li>floating-point type:包括<code>float</code>和<code>double</code></li>
+</ul>
+</li>
+<li>reference types:包括<code>class types</code>、<code>interface types</code>、<code>array type</code>以及<code>type virables</code></li>
+<li>special type:<code>null type</code></li>
+</ul>
+<blockquote>
+<p>在java中,对象是类的实例或者是动态创建的数组,<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.3">参考文献</a></p>
+</blockquote>
+<p>是的,数组也是一个对象。</p>
+<hr>
+<p><strong>Extension：</strong></p>
+<p>这里额外说一下<code>null type</code>,关键字<code>null</code>不是一个类型而是一个特殊的值,可以简答的认为null指向一个特殊的内存区域。我们不能声明一个为<code>null type</code>的引用,也不能将<code>null type</code>声明为类型参数,例如<code>List&lt;null&gt;</code>(<a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/26632104/java-kinds-of-type-and-null-reference">参考</a>)。但是<code>null</code>却可以强转为任何类型的引用,转换结果为目标类型的空引用,<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jls/se7/html/jls-5.html#jls-5.2">参考</a>。</p>
+<blockquote>
+<p>A value of the null type (the null reference is the only such value) may be assigned to any reference type, resulting in a null reference of that type.</p>
+</blockquote>
+<p>最后,<code>null type</code>不是一个引用类型。</p>
+<hr>
+<h3 id="Reference-Types"><a href="#Reference-Types" class="headerlink" title="Reference Types"></a>Reference Types</h3><p>下面的一段代码使用了四种引用类型(摘自<a target="_blank" rel="noopener" href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-4.html#jls-4.3">jse8规范</a>):</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Point</span>&lt;<span class="hljs-title">T</span>&gt; </span>&#123;<br>    <span class="hljs-keyword">int</span>[] metrics;<br>    T variables;<br>&#125;<br><span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Move</span> </span>&#123; <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">move</span><span class="hljs-params">(<span class="hljs-keyword">int</span> deltax, <span class="hljs-keyword">int</span> deltay)</span></span>; &#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>其中,<code>Point</code>是一个<code>class type</code>(翻译成类类型好难受…),<code>int[]</code>是一个<code>array type</code>,<code>Move</code>是一个<code>interface type</code>,<code>T</code>是一个<code>type variable</code>。前三种都很好理解,最后一个<code>type variable</code>值得一提。</p>
+<p>在jse8规范中,<code>type variable</code>被定义为一个唯一的符号在类、接口、方法、构造函数中作为一个type。所以这个<code>type variable</code>只能在上面四个地方使用。引入<code>type variable</code>的原因是因为在泛型类、泛型接口、泛型构造函数、泛型方法中定义了类型参数。</p>
+<p>所以,很好理解,<code>type variable</code>就是泛型中<code>&lt;T&gt;</code>中的T。注意,<code>type</code></p>
+<p><code>Type</code>接口是java中type信息的顶级接口。主要有五种type,分别是:</p>
+<ul>
+<li><code>raw types</code>:原始类型,使用对应类型的Class对象表示</li>
+<li><code>primitive types</code>:基本类型,使用对应原始类型的Class对象表示</li>
+<li><code>parameterized types</code>:参数类型,基于接口<code>ParameterizedTypes</code>,对应实现类为<code>ParameterizedTypesImpl</code></li>
+<li><code>array types</code>:泛型数组类型,基于接口<code>GenericArrayType</code>,对应实现类为<code>GenericArrayTypeImpl</code></li>
+<li><code>type variables</code>:类型变量,基于接口<code>TypeVariable</code>,对应实现类为<code>TypeVariableImpl</code></li>
+<li><code>WildcardType</code>:通配符类型,基于接口<code>WildcardType</code>,对应实现类为<code>WildcardTypeImpl</code></li>
+</ul>
+<p>其中<code>ParameterizedTypes</code>、<code>GenericArrayType</code>、<code>TypeVariable</code>、<code>WildcardType</code>这四个接口是<code>Type</code>接口的子接口。继承图如下所示:</p>
+<p><img src="images/Type.png" srcset="/img/loading.gif" lazyload alt="Type继承图"></p>
+<p>可以看到,<code>Class</code>类是<code>Type</code>接口的子类。下面来一一解释一下四种子接口的含义。</p>
+<h2 id="1-ParameterizedType"><a href="#1-ParameterizedType" class="headerlink" title="1. ParameterizedType"></a>1. ParameterizedType</h2><p><code>ParameterizedType</code>翻译过来就是参数化类型,emm。应该就是将类型参数化,这是引入泛型(Generic)的必然结果。例如我们常用的<code>List&lt;Integer&gt;</code>,这一个完整的带<code>&lt;&gt;</code>的类型就叫做参数化类型。下面解释了raw type于parameterized type之间的关系。</p>
+<ul>
+<li>genric type:<code>List&lt;T&gt;</code></li>
+<li>parameterized type:<code>List&lt;Integer&gt;</code></li>
+<li>raw type:<code>List</code></li>
+<li>type parameter:<code>Integer</code></li>
+</ul>
+<p><strong>有如下常用方法</strong>:</p>
+<ul>
+<li><code>Type getRawType()</code>: 返回承载该泛型信息的对象, 如上面那个Map&lt;String, String&gt;承载范型信息的对象是Map</li>
+<li><code>Type[] getActualTypeArguments()</code>: 返回实际泛型类型列表, 如上面那个Map&lt;String, String&gt;实际范型列表中有两个元素, 都是String</li>
+<li><code>Type getOwnerType()</code>: 返回当前成员的属主,例如<code>Map.Entry</code>属于<code>Map</code></li>
+</ul>
+<p>以具体的参数化类型, 如<code>Map&lt;String, String&gt;</code>为例:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestType</span> </span>&#123;<br>    Map&lt;String, String&gt; map;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        Field f = TestType.class.getDeclaredField(<span class="hljs-string">&quot;map&quot;</span>);<br>        System.out.println(f.getGenericType());                               <span class="hljs-comment">// java.util.Map&lt;java.lang.String, java.lang.String&gt;</span><br>        System.out.println(f.getGenericType() <span class="hljs-keyword">instanceof</span> ParameterizedType);  <span class="hljs-comment">// true</span><br>        ParameterizedType pType = (ParameterizedType) f.getGenericType();<br>        System.out.println(pType.getRawType());                               <span class="hljs-comment">// interface java.util.Map</span><br>        <span class="hljs-keyword">for</span> (Type type : pType.getActualTypeArguments()) &#123;<br>            System.out.println(type);                                         <span class="hljs-comment">// 打印两遍: class java.lang.String</span><br>        &#125;<br>        System.out.println(pType.getOwnerType());                             <span class="hljs-comment">// null</span><br>    &#125;<br>&#125;<br><br></code></pre></div></td></tr></table></figure>
+<h2 id="2-TypeVariable"><a href="#2-TypeVariable" class="headerlink" title="2. TypeVariable"></a>2. TypeVariable</h2><p>类型变量, 范型信息在编译时会被转换为一个特定的类型, 而TypeVariable就是用来反映在JVM编译该泛型前的信息.</p>
+<p><strong>常用方法:</strong></p>
+<ul>
+<li><code>Type[] getBounds()</code>: 获取类型变量的上边界, 若未明确声明上边界则默认为Object</li>
+<li><code>D getGenericDeclaration()</code>: 获取声明该类型变量实体,其中<code>D</code>是泛型类型的声明,也就是所在的类全限定名</li>
+<li><code>String getName()</code>: 获取在源码中定义时的名字</li>
+</ul>
+<p>注意:<br>类型变量在定义的时候只能使用extends进行(多)边界限定, 不能用super;为什么边界是一个数组? 因为类型变量可以通过&amp;进行多个上边界限定，因此上边界有多个</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestType</span> &lt;<span class="hljs-title">K</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Comparable</span> &amp; <span class="hljs-title">Serializable</span>, <span class="hljs-title">V</span>&gt; </span>&#123;<br>    K key;<br>    V value;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        <span class="hljs-comment">// 获取字段的类型</span><br>        Field fk = TestType.class.getDeclaredField(<span class="hljs-string">&quot;key&quot;</span>);<br>        Field fv = TestType.class.getDeclaredField(<span class="hljs-string">&quot;value&quot;</span>);<br>        Assert.that(fk.getGenericType() <span class="hljs-keyword">instanceof</span> TypeVariable, <span class="hljs-string">&quot;必须为TypeVariable类型&quot;</span>);<br>        Assert.that(fv.getGenericType() <span class="hljs-keyword">instanceof</span> TypeVariable, <span class="hljs-string">&quot;必须为TypeVariable类型&quot;</span>);<br>        TypeVariable keyType = (TypeVariable)fk.getGenericType();<br>        TypeVariable valueType = (TypeVariable)fv.getGenericType();<br>        <span class="hljs-comment">// getName 方法</span><br>        System.out.println(keyType.getName());                 <span class="hljs-comment">// K</span><br>        System.out.println(valueType.getName());               <span class="hljs-comment">// V</span><br>        <span class="hljs-comment">// getGenericDeclaration 方法</span><br>        System.out.println(keyType.getGenericDeclaration());   <span class="hljs-comment">// class com.test.TestType</span><br>        System.out.println(valueType.getGenericDeclaration()); <span class="hljs-comment">// class com.test.TestType</span><br>        <span class="hljs-comment">// getBounds 方法</span><br>        System.out.println(<span class="hljs-string">&quot;K 的上界:&quot;</span>);                        <span class="hljs-comment">// 有两个</span><br>        <span class="hljs-keyword">for</span> (Type type : keyType.getBounds()) &#123;                <span class="hljs-comment">// interface java.lang.Comparable</span><br>            System.out.println(type);                          <span class="hljs-comment">// interface java.io.Serializable</span><br>        &#125;<br>        System.out.println(<span class="hljs-string">&quot;V 的上界:&quot;</span>);                        <span class="hljs-comment">// 没明确声明上界的, 默认上界是 Object</span><br>        <span class="hljs-keyword">for</span> (Type type : valueType.getBounds()) &#123;              <span class="hljs-comment">// class java.lang.Object</span><br>            System.out.println(type);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<h2 id="3-GenericArrayType"><a href="#3-GenericArrayType" class="headerlink" title="3. GenericArrayType"></a>3. GenericArrayType</h2><p>我们仍然记得,不能创建泛型数组,那么这个<code>GenericArrayType</code>是啥意思?</p>
+<p>虽然不能泛型数组,但是能够创建泛型数组引用啊,<code>T[] nums=null</code>是合法的,见下方代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestType</span> &lt;<span class="hljs-title">T</span>&gt; </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        Method method = Test.class.getDeclaredMethods()[<span class="hljs-number">0</span>];<br>        <span class="hljs-comment">// public void com.test.Test.show(java.util.List[],java.lang.Object[],java.util.List,java.lang.String[],int[])</span><br>        System.out.println(method);<br>        Type[] types = method.getGenericParameterTypes();  <span class="hljs-comment">// 这是 Method 中的方法</span><br>        <span class="hljs-keyword">for</span> (Type type : types) &#123;<br>            System.out.println(type <span class="hljs-keyword">instanceof</span> GenericArrayType);<br>        &#125;<br>    &#125;<br>&#125;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span>&lt;<span class="hljs-title">T</span>&gt; </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">show</span><span class="hljs-params">(List&lt;String&gt;[] pTypeArray, T[] vTypeArray, List&lt;String&gt; list, String[] strings, <span class="hljs-keyword">int</span>[] ints)</span> </span>&#123;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>声明一个泛型数组引用还是没有问题的,运行结果如下:</p>
+<ul>
+<li>第一个参数List<String>[]的组成元素List<String>是ParameterizedType类型, 打印结果为true</li>
+<li>第二个参数T[]的组成元素T是TypeVariable类型, 打印结果为true</li>
+<li>第三个参数List<String>不是数组, 打印结果为false</li>
+<li>第四个参数String[]的组成元素String是普通对象, 没有范型, 打印结果为false</li>
+<li>第五个参数int[] pTypeArray的组成元素int是原生类型, 也没有范型, 打印结果为false</li>
+</ul>
+<p>所以数组元素是<code>ParameterizedType</code>或<code>TypeVariable</code>的数组类型才是<code>GenericArrayType</code>。</p>
+<h2 id="4-WildcardType"><a href="#4-WildcardType" class="headerlink" title="4. WildcardType"></a>4. WildcardType</h2><p>该接口表示通配符泛型, 比如? extends Number 和 ? super Integer 它有如下方法:</p>
+<ul>
+<li>Type[] getUpperBounds(): 获取范型变量的上界</li>
+<li>Type[] getLowerBounds(): 获取范型变量的下界<br>注意:</li>
+</ul>
+<p>现阶段通配符只接受一个上边界或下边界, 返回数组是为了以后的扩展, 实际上现在返回的数组的大小是1</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestType</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> List&lt;? extends Number&gt; a;  <span class="hljs-comment">// // a没有下界, 取下界会抛出ArrayIndexOutOfBoundsException</span><br>    <span class="hljs-keyword">private</span> List&lt;? <span class="hljs-keyword">super</span> String&gt; b;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        Field fieldA = TestType.class.getDeclaredField(<span class="hljs-string">&quot;a&quot;</span>);<br>        Field fieldB = TestType.class.getDeclaredField(<span class="hljs-string">&quot;b&quot;</span>);<br>        <span class="hljs-comment">// 先拿到范型类型</span><br>        Assert.that(fieldA.getGenericType() <span class="hljs-keyword">instanceof</span> ParameterizedType, <span class="hljs-string">&quot;&quot;</span>);<br>        Assert.that(fieldB.getGenericType() <span class="hljs-keyword">instanceof</span> ParameterizedType, <span class="hljs-string">&quot;&quot;</span>);<br>        ParameterizedType pTypeA = (ParameterizedType) fieldA.getGenericType();<br>        ParameterizedType pTypeB = (ParameterizedType) fieldB.getGenericType();<br>        <span class="hljs-comment">// 再从范型里拿到通配符类型</span><br>        Assert.that(pTypeA.getActualTypeArguments()[<span class="hljs-number">0</span>] <span class="hljs-keyword">instanceof</span> WildcardType, <span class="hljs-string">&quot;&quot;</span>);<br>        Assert.that(pTypeB.getActualTypeArguments()[<span class="hljs-number">0</span>] <span class="hljs-keyword">instanceof</span> WildcardType, <span class="hljs-string">&quot;&quot;</span>);<br>        WildcardType wTypeA = (WildcardType) pTypeA.getActualTypeArguments()[<span class="hljs-number">0</span>];<br>        WildcardType wTypeB = (WildcardType) pTypeB.getActualTypeArguments()[<span class="hljs-number">0</span>];<br>        <span class="hljs-comment">// 方法测试</span><br>        System.out.println(wTypeA.getUpperBounds()[<span class="hljs-number">0</span>]);   <span class="hljs-comment">// class java.lang.Number</span><br>        System.out.println(wTypeB.getLowerBounds()[<span class="hljs-number">0</span>]);   <span class="hljs-comment">// class java.lang.String</span><br>        <span class="hljs-comment">// 看看通配符类型到底是什么, 打印结果为: ? extends java.lang.Number</span><br>        System.out.println(wTypeA);<br>    &#125;<br>&#125;<br><br></code></pre></div></td></tr></table></figure>
+
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>转载自<a target="_blank" rel="noopener" href="http://loveshisong.cn/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/2016-02-16-Type%E8%AF%A6%E8%A7%A3.html">Java中的Type详解</a>。</p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%8F%8D%E5%B0%84/">反射</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">基本概念</a>
+                    
+                      <a class="hover-with-bg" href="/tags/%E7%B1%BB%E5%9E%8B/">类型</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2021-06-04/parents-delegation-model.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">双亲委派模型</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021-06-04/SPI-service-mechanism.html">
+                        <span class="hidden-mobile">通过MySQL驱动的加载学习SPI机制</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@waline/client@0.16.2/dist/Waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-blond.vercel.app","placeholder":"说点什么","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":true,"avatarCDN":"","avatarForce":false,"requiredFields":[],"emojiCDN":null,"emojiMaps":null,"anonymous":null},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        new Waline(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+
+  <div>
+    <span id="timeDate">载入天数...</span>
+    <span id="times">载入时分秒...</span>
+    <script>
+    var now = new Date();
+    function createtime(){
+        var grt= new Date("06/03/2021 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24;
+        dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+        hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){
+            hnum = "0" + hnum;
+        }
+        minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes);
+        if(String(mnum).length ==1 ){
+                  mnum = "0" + mnum;
+        }
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){
+                  snum = "0" + snum;
+        }
+        document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+        document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+    }  //此次自定义显示内容
+    setInterval("createtime()",250);
+    </script>
+  </div>
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    <!-- Google Analytics -->
+    <script defer>
+      window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) };
+      ga.l = +new Date;
+      ga('create', 'UA-198559201-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+    <!-- Google gtag.js -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-19MVRDT9NM"></script>
+    <script defer>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-19MVRDT9NM');
+    </script>
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
