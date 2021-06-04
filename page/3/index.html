@@ -16,7 +16,7 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   
   <meta name="theme-color" content="#55967e">
-  <meta name="description" content="欢迎乘坐八楼二号公交车">
+  <meta name="description" content="欢迎乘坐八楼的二路公交车">
   <meta name="author" content="Rains.Lee">
   <meta name="keywords" content="Java">
   
@@ -185,20 +185,20 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-04/Queue-interface-analysis.html" target="_self">
-          Queue接口分析
+        <a href="/2021-06-04/HashMap-analysis-part-two.html" target="_self">
+          HashMap源码分析(二)-插入源码
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-04/Queue-interface-analysis.html" target="_self">
+        <a href="/2021-06-04/HashMap-analysis-part-two.html" target="_self">
           
           
             
           
-          0x1 基本概念Queue接口继承自超级接口Collection,其不仅实现了Coolection中的基本方法,而且额外增加了适用于队列的增、删、差方法。并且对应这三种操作,Queue提供了两套方法,一套在操作失败时抛出异常,另一套在操作失败时返回null,不过在文档中说到:
-
-The latter form of the insert operation is designed specific
+          HashMap中最常用的就是put(key,value)函数与remove函数,而且这些函数还会包含RB树与list的相互转换,比较复杂。值得认真推敲。
+1. put方法下面JDk1.8中,HashMap的put源码。其又在内部调用了putVal。
+1234567public V put(K key, V value) &#123;    return putVal(hash(key), key,
         </a>
       </p>
 
@@ -206,59 +206,7 @@ The latter form of the insert operation is designed specific
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
-              2021-06-04
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Queue/">Queue</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-04/HashMap-analysis-part-one.html" target="_self">
-          HashMap源码分析(一)-HashMap中的那些常量
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-04/HashMap-analysis-part-one.html" target="_self">
-          
-          
-            
-          
-          前言HashMap实现了接口Map、Cloneable、Serializable,后两个都是标记接口,注意HasnMap的clone方法也仅仅是浅复制(shadow copy)。而Map是跟Collection并列的顶级接口。HashMap并且继承抽象类AbstractMap。
-本文将首先简单说说接口Map,因为AbstarctMap作为实现接口Map的骨架,仅实现了一些基本方法,没什么好说的。
-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
+            <time datetime="2021-06-04 19:57" pubdate>
               2021-06-04
             </time>
           </div>
@@ -276,6 +224,58 @@ The latter form of the insert operation is designed specific
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/HashMap/">HashMap</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-04/red-black-tree.html" target="_self">
+          红黑树入门
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-04/red-black-tree.html" target="_self">
+          
+          
+            
+          
+          本篇将带你一步一步了解红黑树，当然大部分内容来源于算法(第4版)一书，我仅仅对一点内容总结了自己的心得。
+在谈谈红黑树之前，我们先来回顾一下二叉排序树(balanced sort tree),因为红黑树是从BST的概念演化而来的。BST的定义很简单，对于一个节点来说，左树的所有节点的值都小于当前节点的值，右树所有节点的值都大于当前节点的值。但是在最坏情况下BST的高度会达到O(N),效率太差。
+我
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-04 19:57" pubdate>
+              2021-06-04
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E9%9B%86%E5%90%88/">java集合</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91-map/">红黑树,map</a>
             
           </div>
         
@@ -312,7 +312,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
+            <time datetime="2021-06-04 19:57" pubdate>
               2021-06-04
             </time>
           </div>
@@ -363,7 +363,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
+            <time datetime="2021-06-04 19:57" pubdate>
               2021-06-04
             </time>
           </div>
@@ -398,57 +398,6 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-04/volatile-keyword.html" target="_self">
-          volatile关键字
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-04/volatile-keyword.html" target="_self">
-          
-          
-            
-          
-          1. volatile是什么volatile被称为轻量级的synchronzied，它保证了内存的可见性、指令的有序性。我们通过经典的懒汉单例模式看看这个关键字的作用。
-"线程不安全"12345678910111213public class DraconianSingleton &#123;    private static DraconianSingleton instance;    pu
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
-              2021-06-04
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/volatile/">volatile</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
         <a href="/2021-06-04/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html" target="_self">
           多线程为什么会不安全
         </a>
@@ -469,7 +418,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
+            <time datetime="2021-06-04 19:57" pubdate>
               2021-06-04
             </time>
           </div>
@@ -487,6 +436,57 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">基本概念</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-04/volatile-keyword.html" target="_self">
+          volatile关键字
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-04/volatile-keyword.html" target="_self">
+          
+          
+            
+          
+          1. volatile是什么volatile被称为轻量级的synchronzied，它保证了内存的可见性、指令的有序性。我们通过经典的懒汉单例模式看看这个关键字的作用。
+"线程不安全"12345678910111213public class DraconianSingleton &#123;    private static DraconianSingleton instance;    pu
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-04 19:57" pubdate>
+              2021-06-04
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/volatile/">volatile</a>
             
           </div>
         
@@ -520,7 +520,7 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
+            <time datetime="2021-06-04 19:57" pubdate>
               2021-06-04
             </time>
           </div>
@@ -573,7 +573,7 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
+            <time datetime="2021-06-04 19:57" pubdate>
               2021-06-04
             </time>
           </div>
@@ -625,7 +625,7 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
+            <time datetime="2021-06-04 19:57" pubdate>
               2021-06-04
             </time>
           </div>
@@ -676,7 +676,7 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
+            <time datetime="2021-06-04 19:57" pubdate>
               2021-06-04
             </time>
           </div>

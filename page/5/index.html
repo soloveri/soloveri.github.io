@@ -16,7 +16,7 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   
   <meta name="theme-color" content="#55967e">
-  <meta name="description" content="欢迎乘坐八楼二号公交车">
+  <meta name="description" content="欢迎乘坐八楼的二路公交车">
   <meta name="author" content="Rains.Lee">
   <meta name="keywords" content="Java">
   
@@ -185,19 +185,19 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/2021-06-04/AtomicStampedReference-analysis.html" target="_self">
-          AtomicStampedReference源码解析
+        <a href="/2021-06-04/Interrupt-mechanism.html" target="_self">
+          中断机制
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/2021-06-04/AtomicStampedReference-analysis.html" target="_self">
+        <a href="/2021-06-04/Interrupt-mechanism.html" target="_self">
           
           
             
           
-          AtomicStampeddReference解决了普通CAS操作的ABA问题，当然该类只能存储引用类型，因为泛型只支持引用。具体的解决方法就是为每个引用提供了一个时间戳（实际用int代替），这两个数据由内部静态类Pair封装，如下所示：
-12345678910111213141516public class AtomicStampedReference&lt;V&gt; &#123;    pr
+          在多线程环境下，终止一个线程的任务最好的方法是通过中断。而Java的中断类似于通知协作机制，被中断的线程并不会立即停止自己的任务，而是仅仅收到了中断的通知，具体怎么处理收到的中断，这需要用户自己定义。那么为什么说Java的中断类似于通知机制？我们首先需要了解中断到底做了什么。
+1. 实施中断Java中的中断操作只需要调用目标线程的interrupt()方法即可完成。那么这个方法到底做了什么？我们来
         </a>
       </p>
 
@@ -205,7 +205,164 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
+            <time datetime="2021-06-04 19:57" pubdate>
+              2021-06-04
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/interrupt/">interrupt</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-04/JMM.html" target="_self">
+          Java内存模型
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-04/JMM.html" target="_self">
+          
+          
+            
+          
+          1. 内存模型(memory model)1.1. 内存模型是什么在编译和运行程序时，编译器和CPU都会为了效率而力所能及地对程序进行优化，例如编译器和CPU的指令重排、CPU的流水线执行等操作。但是这种优化不是没有限制的，如果不能及时保证内存的可见性，程序就有可能出现错误,这里的可见性是指如果有一个线程A对某个内存地址addr进行了写操作，那么其他线程一定能够看到A对地址addr的操作。
+所以内
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-04 19:57" pubdate>
+              2021-06-04
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/JMM/">JMM</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-04/Thread-state-transition.html" target="_self">
+          线程的状态转换
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-04/Thread-state-transition.html" target="_self">
+          
+          
+            
+          
+          因为线程是调度的基本单位，所以线程的状态转换与进程的状态转换是一致的。主要有五个状态：启动、就绪、执行、等待、销毁。这几个状态的转换图如下所示：
+
+可以看到，等待状态只能转换为就绪，再等CPU调度。这是一般的线程状态转换图。
+在java中，又多了几个状态。
+java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNABLE
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-04 19:57" pubdate>
+              2021-06-04
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2/">状态转换</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/2021-06-04/AtomicInteger-analysis.html" target="_self">
+          AtomicInteger源码解析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/2021-06-04/AtomicInteger-analysis.html" target="_self">
+          
+          
+            
+          
+          整数型原子类AtomicInteger，能够保证每次更新时都是原子操作。其中的CAS操作都需要依靠Unsafe类来完成，我们需要关注的一般就是构造方法、增加方法与删除方法。
+1. 构造方法AtomicInteger首先会调用类构造器，初始化当前对象的valueoffset用于进行CAS操作，具体值由volatile变量value负责维护，字段定义如下所示：
+12345678910111213141
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-04 19:57" pubdate>
               2021-06-04
             </time>
           </div>
@@ -223,106 +380,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/atomic/">atomic</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-04/LongAdder-analysis.html" target="_self">
-          LongAdder源码解析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-04/LongAdder-analysis.html" target="_self">
-          
-          
-            
-          
-          1. 预备知识在Java1.5中，JUC就已经提供了大数原子类AtomicLong，但是在Java1.8中，又提供了相同功能的大数原子类LongAdder。why？答案是如此的纯粹：为了效率。难道前者的效率就不行了吗？如果在轻微冲突的情况下，二者的效率几乎差不多。但是如果竞争非常激烈，那么因为每次对AtomicLong更新时都会使用CAS，激烈竞争导致CAS的成功的概率不大，所以有可能会执行多次无
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
-              2021-06-04
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/atomic/">atomic</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-04/atomic-class-overview.html" target="_self">
-          原子类总览
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-04/atomic-class-overview.html" target="_self">
-          
-          
-            
-          
-          J.U.C包提供了许多原子类，我按照功能分了四类，如下所示：|  普通原子类   | 原子更新的数组  | 原子更新对象字段的updater  | 大数原子类  ||  —-  | —-  | —-  | —-  || AtomicBoolean AtomicInteger  AtomicLong AtomicReference atomicMarkableReference AtomicStam
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
-              2021-06-04
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/atomic-class/">atomic class</a>
             
           </div>
         
@@ -357,7 +414,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
+            <time datetime="2021-06-04 19:57" pubdate>
               2021-06-04
             </time>
           </div>
@@ -375,58 +432,6 @@
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/shared-lock/">shared lock</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/2021-06-04/ConcurrentHashMap-analysis-I.html" target="_self">
-          ConcurrentHashMap架构解析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/2021-06-04/ConcurrentHashMap-analysis-I.html" target="_self">
-          
-          
-            
-          
-          前言本篇主要介绍ConcurrentHashMap的基本架构、插入与删除操作的原理，对于它扩容的逻辑，放在第二部分讲解：ConcurrentHashMap扩容分析。
-
-本文旨在介绍J.U.C包下的同步集合ConcurrentHashMap。因为Java自带的HashMap是线程不安全的，虽然也提供了线程安全的HashTable，但是后者是对整个哈希表加锁，势必效率不理想。而ConcurrentHa
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
-              2021-06-04
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java-basic/">java basic</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/concurrent-collections/">concurrent collections</a>
             
           </div>
         
@@ -463,7 +468,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
+            <time datetime="2021-06-04 19:57" pubdate>
               2021-06-04
             </time>
           </div>
@@ -514,7 +519,7 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
+            <time datetime="2021-06-04 19:57" pubdate>
               2021-06-04
             </time>
           </div>
@@ -569,7 +574,7 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
+            <time datetime="2021-06-04 19:57" pubdate>
               2021-06-04
             </time>
           </div>
@@ -622,7 +627,7 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
+            <time datetime="2021-06-04 19:57" pubdate>
               2021-06-04
             </time>
           </div>
@@ -673,7 +678,7 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-04 12:26" pubdate>
+            <time datetime="2021-06-04 19:57" pubdate>
               2021-06-04
             </time>
           </div>
