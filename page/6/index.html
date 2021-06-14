@@ -182,26 +182,32 @@
   <div class="row mx-auto index-card">
     
     
-    <article class="col-12 col-md-12 mx-auto index-info">
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/articles/Docker-write-dockfile.html" target="_self">
+          <img src="/img/docker.png" srcset="/img/loading.gif" lazyload alt="Dockerfile的基本规则">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/what-is-spring-mvc.html" target="_self">
-          Spring MVC原理
+        <a href="/articles/Docker-write-dockfile.html" target="_self">
+          Dockerfile的基本规则
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/what-is-spring-mvc.html" target="_self">
+        <a href="/articles/Docker-write-dockfile.html" target="_self">
           
           
             
           
-          1. MVC是什么？MVC是一种设计规范，并不是一种设计模式。该规范将一个web分割成3部分来处理：请求首先经过控制器Controller；经过业务处理得到数据模型Model；最后通过model渲染视图View并响应给客户端。
-我们完全利用Servlet自己实现MVC规范，如下图所示：
-基本流程为：
+          前言在了解了docker的基本原理后，是时候了解以下Dockerfile是怎么写的了。首先我们需要了解RUN与CMD命令的区别。
 
-用户发请求
-Servlet（作为Controller）接收请求数据，解析数据模型model，并调
+RUN命令：每执行一次，就会在原有镜像的基础上添加一个upper dir保存所作的改变，所以对于一类的命令我们尽量使用一条RUN，否则会创建过多的不必要的upper dir
+CMD命令：容器是一个进程，CMD命令就像是容器启动时输入的命令参数，所以只能有一条CMD
+
+
         </a>
       </p>
 
@@ -209,8 +215,8 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
+            <time datetime="2020-07-22 09:48" pubdate>
+              2020-07-22
             </time>
           </div>
         
@@ -218,7 +224,7 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/framework/">framework</a>
+              <a href="/categories/tools/">tools</a>
             
           </div>
         
@@ -226,7 +232,63 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Spring-MVC/">Spring MVC</a>
+              <a href="/tags/Docker/">Docker</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/articles/basic-Docker-install.html" target="_self">
+          <img src="/img/docker.png" srcset="/img/loading.gif" lazyload alt="Docker使用方法(一)-基本安装">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/basic-Docker-install.html" target="_self">
+          Docker使用方法(一)-基本安装
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/basic-Docker-install.html" target="_self">
+          
+          
+            
+          
+          docker的基本使用与配置
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-22 09:39" pubdate>
+              2020-07-22
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/tools/">tools</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Docker/">Docker</a>
             
           </div>
         
@@ -240,28 +302,20 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/index-of-mysql.html" target="_self">
-          mysql中的索引
+        <a href="/articles/access-control-of-Java.html" target="_self">
+          思考java中的访问控制
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/index-of-mysql.html" target="_self">
+        <a href="/articles/access-control-of-Java.html" target="_self">
           
           
             
           
-          前言索引是使用MySQL是一个很重要的知识点,正确的使用索引能够极大地提高MySQL的运行效率。那么关于索引,我产生了如下问题:
-
-索引是什么
-有哪些索引
-索引的原理是什么
-如何正确地使用索引
-
-下面我将一一对问题进行解答。
-1.索引是什么索引是一种专门用于数据库的结构,其目的也非常明显,就是用来优化数据库的执行效率。首先我们来看看官方是如何描述索引的用处:
-
-Indexes are used t
+          java中权限修饰符作用于两个地方，一个是类，另一个是类的成员。下面将分别详细讲解。
+java中的类权限修饰符在讲解类的权限的修饰符前，我们需要明确一个概念。在java中，任何可执行的语句都必须放在一个类中的方法，比如调用方法。不像c++，在类外也能定义函数，在java中，我们say no。不管你是创建别的类的对象，还是创建方法，成员，等等，这都必须放在一个类中。
+java中的类只能有两种权限修饰
         </a>
       </p>
 
@@ -269,8 +323,8 @@ Indexes are used t
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
+            <time datetime="2020-04-10 01:08" pubdate>
+              2020-04-10
             </time>
           </div>
         
@@ -278,7 +332,7 @@ Indexes are used t
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/mysql/">mysql</a>
+              <a href="/categories/java/">java</a>
             
           </div>
         
@@ -286,7 +340,7 @@ Indexes are used t
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E7%B4%A2%E5%BC%95/">索引</a>
+              <a href="/tags/%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6/">访问控制</a>
             
           </div>
         
@@ -300,19 +354,22 @@ Indexes are used t
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/hello-world.html" target="_self">
-          Hello World
+        <a href="/articles/the-String-of-Java.html" target="_self">
+          java的字符串
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/hello-world.html" target="_self">
+        <a href="/articles/the-String-of-Java.html" target="_self">
           
           
             
           
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick
+          java的所有字符串都会保存在全局字符串池中，在了解全局字符串池之前，我们需要明白：在java中，所有的字符串字面值都会被解释为一个字符串对象。
+
+All string literals in Java programs, such as “abc”, are implemented as instances of this class
+
+接下来我们聊聊全局字符串池。全局字符串池在jdk1.7后也
         </a>
       </p>
 
@@ -320,12 +377,26 @@ Quick
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
+            <time datetime="2020-04-08 17:00" pubdate>
+              2020-04-08
             </time>
           </div>
         
         
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Java/">Java</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/String/">String</a>
+            
+          </div>
         
       </div>
     </article>

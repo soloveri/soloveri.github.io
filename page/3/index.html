@@ -185,425 +185,6 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/HashMap-analysis-part-two.html" target="_self">
-          HashMap源码分析(二)-插入源码
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/HashMap-analysis-part-two.html" target="_self">
-          
-          
-            
-          
-          HashMap中最常用的就是put(key,value)函数与remove函数,而且这些函数还会包含RB树与list的相互转换,比较复杂。值得认真推敲。
-1. put方法下面JDk1.8中,HashMap的put源码。其又在内部调用了putVal。
-1234567public V put(K key, V value) &#123;    return putVal(hash(key), key,
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/HashMap/">HashMap</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/red-black-tree.html" target="_self">
-          红黑树入门
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/red-black-tree.html" target="_self">
-          
-          
-            
-          
-          本篇将带你一步一步了解红黑树，当然大部分内容来源于算法(第4版)一书，我仅仅对一点内容总结了自己的心得。
-在谈谈红黑树之前，我们先来回顾一下二叉排序树(balanced sort tree),因为红黑树是从BST的概念演化而来的。BST的定义很简单，对于一个节点来说，左树的所有节点的值都小于当前节点的值，右树所有节点的值都大于当前节点的值。但是在最坏情况下BST的高度会达到O(N),效率太差。
-我
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E9%9B%86%E5%90%88/">java集合</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91-map/">红黑树,map</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/ArrayList-source-code-analysis.html" target="_self">
-          ArrayList源码分析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/ArrayList-source-code-analysis.html" target="_self">
-          
-          
-            
-          
-          前言分析源码初体验，第一次分析个比较简单的集合类ArrayList。我把重点放在了ArrayList实现的接口、继承的类以及几个主要的类方法上。
-0x0 ArrayList继承图我们首先来看看ArrayList中的继承图。
-
-ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable、Seriablizable、List接口。
-这里我首先有了两个
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/ArrayList/">ArrayList</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/ArrayQueue-and-ArrayDeque-analysis.html" target="_self">
-          ArrayQueue与ArrayDeque源码分析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/ArrayQueue-and-ArrayDeque-analysis.html" target="_self">
-          
-          
-            
-          
-          前言这里将ArrayQueue与ArrayDeque放在一起分析是因为二者都是基于数组实现的队列。
-0x0 小试牛刀-ArrayQueue源码分析在进入主题之前我们思考一个问题,如果我们用数组实现一个传统的FIFO队列,是有可能出现数组未满,但是队列已满的假象的。这是因为我们在不断弹出元素的同时,队列的头指针就会不断朝着队列尾部的方向移动,那么头指针之前的空间就被浪费了,而采用链表实现的队列就不会
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Queue/">Queue</a>
-            
-              <a href="/tags/ArrayQueue/">ArrayQueue</a>
-            
-              <a href="/tags/ArrayDeque/">ArrayDeque</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/volatile-keyword.html" target="_self">
-          volatile关键字
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/volatile-keyword.html" target="_self">
-          
-          
-            
-          
-          1. volatile是什么volatile被称为轻量级的synchronzied，它保证了内存的可见性、指令的有序性。我们通过经典的懒汉单例模式看看这个关键字的作用。
-"线程不安全"12345678910111213public class DraconianSingleton &#123;    private static DraconianSingleton instance;    pu
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/volatile/">volatile</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html" target="_self">
-          多线程为什么会不安全
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html" target="_self">
-          
-          
-            
-          
-          在聊多线程为什么不安全之前，需要说一哈学习多线程编程的路线。多线程说到底就是为了提高效率，而这个效率的提高是有安全风险的，这也是多线程为啥这么难的原因。而编写一个多线程的程序可以分为三个部分：分工、同步、互斥。
-分工更偏向于设计，这里是提高性能的关键。相当于项目经理分配任务。与现实世界非常相似, 不过是一个线程执行完了一个任务，如何通知执行后续任务的线程开工而已。 这里多说一句，计算机里的这个模型
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">基本概念</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/threadlocal-analysis.html" target="_self">
-          ThreadLocal源码解析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/threadlocal-analysis.html" target="_self">
-          
-          
-            
-          
-          顾名思义，ThreadLocal就是基于线程粒度的私有变量，跟我们以往认知中基于函数、类粒度的私有变量不同。而且ThreadLocal的使用频率非常高，但是如若使用不当，则可能会发生内存泄漏，所以好好研究一下其实现原理是非常有必要的。内容分为三个部分：ThreadLocalMap是什么，ThreadLocal是如何插入变量的，ThreadLocal是如何删除变量的。
-ThreadLocalMap是
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/ThreadLocal/">ThreadLocal</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80.html" target="_self">
-          多线程基础
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80.html" target="_self">
-          
-          
-            
-          
-          多进程是为了提高CPU效率，而多线程是为了提高程序使用率？我咋感觉不对啊，多线程通信方便，资源浪费小。并且多线程能不能提高效率得看是什么任务。
-总而言之：多进程为操作系统提供了并发的可能，多进程为单个程序提供了并发的能力。
-简而言之：多线程就是程序内部有多条执行路径，这句话至少我认为是没有错的。
-并且并发是在某一时间段同时发生，并行是在某一时间点同时发生。不要记混了。所以记住java搞高并发就不会
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
         <a href="/articles/five-IO-model.html" target="_self">
           五种IO模型
         </a>
@@ -625,7 +206,7 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
+            <time datetime="2021-06-14 15:48" pubdate>
               2021-06-14
             </time>
           </div>
@@ -676,7 +257,7 @@ ThreadLocalMap是
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
+            <time datetime="2021-06-14 15:48" pubdate>
               2021-06-14
             </time>
           </div>
@@ -694,6 +275,441 @@ ThreadLocalMap是
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/synchronized/">synchronized</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/interface-BlockingQueue-analysis.html" target="_self">
+          BlockingQueue接口分析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/interface-BlockingQueue-analysis.html" target="_self">
+          
+          
+            
+          
+          1. 基本概念BlockingQueue接口，提供了一组集合，一般用在生产者消费者模式中。它能搞保证在多线程环境下：当队列为空时，消费者线程会等待直到队列不空；当队列满时，生产者会等待直到队列不满。该接口提供了四种存储与删除模式：
+
+
+
+/
+操作失败抛出异常
+操作失败返回特殊值
+操作失败阻塞线程
+操作具有时间限制
+
+
+
+插入操作
+add(e)
+offer(e)
+put(e)
+offer(e,tim
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-14 15:48" pubdate>
+              2021-06-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/concurrent-collections/">concurrent collections</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/Executor-interface.html" target="_self">
+          Exectuor框架解析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/Executor-interface.html" target="_self">
+          
+          
+            
+          
+          1. Executor接口在JUC包中，还提供了Executor框架用来实现线程池，我们经常使用的线程池都是从Executor派生而来。我们可以看看整个Executor框架的继承结构：
+
+那么在这个框架中，我们第一步应该需要了解它的核心接口Executor。这个接口的作用在它的注释中说的很清楚：
+
+An object that executes submitted Runnable tasks. 
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-14 15:48" pubdate>
+              2021-06-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Executor/">Executor</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/ThreadPoolExecutor.html" target="_self">
+          ThreadPoolExecutor线程池解析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/ThreadPoolExecutor.html" target="_self">
+          
+          
+            
+          
+          0. 预备知识在了解ThreadPoolExecutor之前，我们首先需要了解一些基本概念，下图是ThreadPoolExecutor的部分核心字段。我先依次对其进行解释。
+
+#0.1 线程池状态JUC为线程池规定了5种状态，如下图所示：
+对于每种状态，含义如下：
+
+RUNNING: 线程池能够接受任务并处理阻塞队列中的任务
+SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部执行完
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-14 15:48" pubdate>
+              2021-06-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Executor/">Executor</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/Interrupt-mechanism.html" target="_self">
+          中断机制
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/Interrupt-mechanism.html" target="_self">
+          
+          
+            
+          
+          在多线程环境下，终止一个线程的任务最好的方法是通过中断。而Java的中断类似于通知协作机制，被中断的线程并不会立即停止自己的任务，而是仅仅收到了中断的通知，具体怎么处理收到的中断，这需要用户自己定义。那么为什么说Java的中断类似于通知机制？我们首先需要了解中断到底做了什么。
+1. 实施中断Java中的中断操作只需要调用目标线程的interrupt()方法即可完成。那么这个方法到底做了什么？我们来
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-14 15:48" pubdate>
+              2021-06-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/interrupt/">interrupt</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/JMM.html" target="_self">
+          Java内存模型
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/JMM.html" target="_self">
+          
+          
+            
+          
+          1. 内存模型(memory model)1.1. 内存模型是什么在编译和运行程序时，编译器和CPU都会为了效率而力所能及地对程序进行优化，例如编译器和CPU的指令重排、CPU的流水线执行等操作。但是这种优化不是没有限制的，如果不能及时保证内存的可见性，程序就有可能出现错误,这里的可见性是指如果有一个线程A对某个内存地址addr进行了写操作，那么其他线程一定能够看到A对地址addr的操作。
+所以内
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-14 15:48" pubdate>
+              2021-06-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/JMM/">JMM</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/Thread-state-transition.html" target="_self">
+          线程的状态转换
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/Thread-state-transition.html" target="_self">
+          
+          
+            
+          
+          因为线程是调度的基本单位，所以线程的状态转换与进程的状态转换是一致的。主要有五个状态：启动、就绪、执行、等待、销毁。这几个状态的转换图如下所示：
+
+可以看到，等待状态只能转换为就绪，再等CPU调度。这是一般的线程状态转换图。
+在java中，又多了几个状态。
+java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNABLE
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-14 15:48" pubdate>
+              2021-06-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2/">状态转换</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/AtomicInteger-analysis.html" target="_self">
+          AtomicInteger源码解析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/AtomicInteger-analysis.html" target="_self">
+          
+          
+            
+          
+          整数型原子类AtomicInteger，能够保证每次更新时都是原子操作。其中的CAS操作都需要依靠Unsafe类来完成，我们需要关注的一般就是构造方法、增加方法与删除方法。
+1. 构造方法AtomicInteger首先会调用类构造器，初始化当前对象的valueoffset用于进行CAS操作，具体值由volatile变量value负责维护，字段定义如下所示：
+12345678910111213141
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-14 15:48" pubdate>
+              2021-06-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/atomic/">atomic</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/AtomicIntegerArray-analysis.html" target="_self">
+          AtomicIntegerArray源码解析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/AtomicIntegerArray-analysis.html" target="_self">
+          
+          
+            
+          
+          AtomicIntegerArray能够保证数组中的每个元素原子地更新。构造方法、增加、减少方法都没什么好说，我认为值得关注的点是仅有计算偏移的方法。我们先来看看它的静态构造块：
+12345678910111213141516171819202122232425262728public class AtomicIntegerArray implements java.io.Serializable
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-14 15:48" pubdate>
+              2021-06-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/atomic/">atomic</a>
             
           </div>
         

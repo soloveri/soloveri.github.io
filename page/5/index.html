@@ -185,18 +185,19 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/atomic-class-overview.html" target="_self">
-          原子类总览
+        <a href="/articles/hello-world.html" target="_self">
+          Hello World
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/atomic-class-overview.html" target="_self">
+        <a href="/articles/hello-world.html" target="_self">
           
           
             
           
-          J.U.C包提供了许多原子类，我按照功能分了四类，如下所示：|  普通原子类   | 原子更新的数组  | 原子更新对象字段的updater  | 大数原子类  ||  —-  | —-  | —-  | —-  || AtomicBoolean AtomicInteger  AtomicLong AtomicReference atomicMarkableReference AtomicStam
+          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Quick
         </a>
       </p>
 
@@ -204,26 +205,12 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
+            <time datetime="2021-06-14 15:48" pubdate>
               2021-06-14
             </time>
           </div>
         
         
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/atomic-class/">atomic class</a>
-            
-          </div>
         
       </div>
     </article>
@@ -235,19 +222,20 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/CopyOnWrite-collections-analysis.html" target="_self">
-          CopyOnWrite容器分析
+        <a href="/articles/log-system-for-Java-abstract.html" target="_self">
+          Java日志库扫盲
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/CopyOnWrite-collections-analysis.html" target="_self">
+        <a href="/articles/log-system-for-Java-abstract.html" target="_self">
           
           
             
           
-          1. 预备知识J.U.C包提供了两种copy-on-wirte容器：CopyOnWriteList与CopyOnWriteSet。不了解copy-on-write技术的，可以去看理解 Copy On Write 技术。
-CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList内容的操作都基于copy-on-write，对于同一个元素，插入操作happ
+          1. 基本概念slf4j：simple logging facade for Java，可以看作用来管理各个日志库的调度器，我们只需要通过配置slf4j后端具体的使用的日志库就可以完成日志操作，对用户隐藏了后端真正使用的日志库log4j：一个日志库Logback：日志库
+2. 如何结合slf4j使用log4j其实结合slf4j使用log4j并不难，但是因为不了解各个库的作用，浪费了一些时间。
+在最
         </a>
       </p>
 
@@ -255,8 +243,8 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
+            <time datetime="2021-06-07 16:57" pubdate>
+              2021-06-07
             </time>
           </div>
         
@@ -264,7 +252,7 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+              <a href="/categories/tools/">tools</a>
             
           </div>
         
@@ -272,376 +260,7 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/concurrent-collections/">concurrent collections</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/shared-lock-analysis.html" target="_self">
-          从Semaphore中学习共享锁原理
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/shared-lock-analysis.html" target="_self">
-          
-          
-            
-          
-          共享锁和独占锁的实现差别不是很大，一个最大的区别就是在共享锁中，当一个线程获取锁后，它会尽可能多地唤醒后继线程。
-与独占锁不同的是，对于双链表中的节点，额外指针nextWaiter，指向SHARED节点，用来标志当前节点处于共享模式。而独占锁的nextWatier则指向null。
-1.共享锁的获取对于共享锁的获取，自定义同步器肯定会首先调用AQS的模板方法acquireShared，然后会调用自定
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/shared-lock/">shared lock</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/ConcurrentHashMap-analysis-I.html" target="_self">
-          ConcurrentHashMap架构解析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/ConcurrentHashMap-analysis-I.html" target="_self">
-          
-          
-            
-          
-          前言本篇主要介绍ConcurrentHashMap的基本架构、插入与删除操作的原理，对于它扩容的逻辑，放在第二部分讲解：ConcurrentHashMap扩容分析。
-
-本文旨在介绍J.U.C包下的同步集合ConcurrentHashMap。因为Java自带的HashMap是线程不安全的，虽然也提供了线程安全的HashTable，但是后者是对整个哈希表加锁，势必效率不理想。而ConcurrentHa
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java-basic/">java basic</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/concurrent-collections/">concurrent collections</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/ConcurrentHashMap-analysis-II.html" target="_self">
-          ConcurrentHashMap扩容分析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/ConcurrentHashMap-analysis-II.html" target="_self">
-          
-          
-            
-          
-          前言本篇继承于ConcurrentHashMap架构解析，在了解了ConcurrentHashMap的整体架构与插入删除逻辑后，还有一个知识点：扩容逻辑需要学习，我认为这是ConcurrentHashMap核心中的核心。
-废话不多说，对于ConcurrentHashMap来说，扩容可以整体分为两个部分：
-
-将属性table扩展为原来的两倍
-将旧table中数据迁移到新table
-
-那么本文就按照这
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/concurrent-collections/">concurrent collections</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/CLH.html" target="_self">
-          AQS使用的CLH原型
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/CLH.html" target="_self">
-          
-          
-            
-          
-          预备知识#1. 内存架构比较常见的内存架构有两种：SMP (Symmetric MultiProcessing) 与 NUMA (Non-uniform memory access)。
-对称多处理是一种包括软硬件的多核计算机架构，会有两个或以上的相同的核心共享一块主存，这些核心在操作系统中地位相同，可以访问所有 I/O 设备。它的优点是内存等一些组件在核心之间是共享的，一致性可以保证，但也正因为内
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/synchronized/">synchronized</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/ReentrantLock-analysis.html" target="_self">
-          ReentrantLock源码解析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/ReentrantLock-analysis.html" target="_self">
-          
-          
-            
-          
-          1. 预备知识ReentrantLock是基于AbstractQueueSynchronizer的可重入锁。分为公平和非公平模式。它的内部类Sync继承了AbstractQueueSynchronizer，具体的资源获取与释放由Sync来实现，基本结构如下图所示：
-
-其中NonfairSync实现了非公平锁的逻辑，FairSync实现了公平锁的逻辑。
-2. ReentrantLock的加锁流程这里
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/ReentrantLock/">ReentrantLock</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/condition-analysis.html" target="_self">
-          Condition队列
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/condition-analysis.html" target="_self">
-          
-          
-            
-          
-          Condition接口的功能用来实现类似于synchronized的await()/signal()通知机制。但是比synchronized的通知机制更丰富、更灵活。我们知道，synchronized锁内部维护了一个waitList保存调用了wait()主动释放锁的线程。AQS的waitList功能就是通过Condition内部维护的Condition queue实现的。
-与AQS的同步队列相似，
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/condition-queue/">condition queue</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/what-is-IOC.html" target="_self">
-          IOC到底是什么？
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/what-is-IOC.html" target="_self">
-          
-          
-            
-          
-          这篇博文：浅谈IOC–说清楚IOC是什么讲的不错，我在此就是做一些摘抄。
-
-1. IOC是什么？IOC，Inversion of Control，译为控制反转。
-1996年，Michael Mattson在其论文:Object-Oriented FrameworksA survey of methodological issues中，首先提出了IOC这个概念，IOC是一个方法论。
-简单来说，IOC
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/framework/">framework</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Spring/">Spring</a>
+              <a href="/tags/logging/">logging</a>
             
           </div>
         
@@ -687,8 +306,8 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
+            <time datetime="2021-04-26 10:50" pubdate>
+              2021-04-26
             </time>
           </div>
         
@@ -705,6 +324,396 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/tomcat/">tomcat</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/the-GC-of-Java.html" target="_self">
+          Java中的GC
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/the-GC-of-Java.html" target="_self">
+          
+          
+            
+          
+          Java中的自动垃圾回收是其一大优点。本文将从以下三个方面简介相关知识：
+
+如何定义垃圾
+垃圾回收的时机
+垃圾回收的策略
+具体的垃圾回收器
+
+在介绍相关的知识前，我们需要知道一个词：stop-the-world，这个词专门为GC而生，因为Java会在进行垃圾回收的时候除了GC线程外，会暂停所有工作线程，也就是所谓的“停止世界运转”。那么GC优化时，我们的目标可能就是减少GC时stop-the-wo
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-03-21 16:21" pubdate>
+              2021-03-21
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java/">java</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/garbage-collection/">garbage collection</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/analysis-of-dynamic-proxy.html" target="_self">
+          动态代理的原理
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/analysis-of-dynamic-proxy.html" target="_self">
+          
+          
+            
+          
+          1. 前言代理分为静态代理和动态代理。静态代理就是我们手动地将代理类写出来，而动态代理就是由虚拟机在运行时自动地将代理类构造出来。下面我就简单地阐述静态代理的用法以及缺点。
+首先在下面声明需要代理的类：
+123456789101112131415161718192021222324252627282930313233//实体类实现的接口public interface UserDao &#123;
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-03-13 19:45" pubdate>
+              2021-03-13
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java/">java</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/dynamic-proxy/">dynamic proxy</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/what-is-IOC.html" target="_self">
+          IOC到底是什么？
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/what-is-IOC.html" target="_self">
+          
+          
+            
+          
+          这篇博文：浅谈IOC–说清楚IOC是什么讲的不错，我在此就是做一些摘抄。
+
+1. IOC是什么？IOC，Inversion of Control，译为控制反转。
+1996年，Michael Mattson在其论文:Object-Oriented FrameworksA survey of methodological issues中，首先提出了IOC这个概念，IOC是一个方法论。
+简单来说，IOC
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-03-12 18:48" pubdate>
+              2021-03-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/framework/">framework</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Spring/">Spring</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/what-is-spring-mvc.html" target="_self">
+          Spring MVC原理
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/what-is-spring-mvc.html" target="_self">
+          
+          
+            
+          
+          1. MVC是什么？MVC是一种设计规范，并不是一种设计模式。该规范将一个web分割成3部分来处理：请求首先经过控制器Controller；经过业务处理得到数据模型Model；最后通过model渲染视图View并响应给客户端。
+我们完全利用Servlet自己实现MVC规范，如下图所示：
+基本流程为：
+
+用户发请求
+Servlet（作为Controller）接收请求数据，解析数据模型model，并调
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-03-04 18:40" pubdate>
+              2021-03-04
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/framework/">framework</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Spring-MVC/">Spring MVC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/top-questions-for-network.html" target="_self">
+          计网热门问题
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/top-questions-for-network.html" target="_self">
+          
+          
+            
+          
+          本篇不为别的，只为记录面试过程中关于计网的热门问题。
+[TOC]
+
+1. 点击一个链接后，发生了什么首先，我们需要有一个总的概念：在点击一个链接后，网卡首先会将http请求使用http协议封装，接着将数据包经由tcp/udp协议封装，最后使用ip协议将数据包在各个网段之间传输直至到达目的地。http协议的封装这里不作详细介绍。tcp连接的建立和ip数据包的转发才是重点。
+
+tcp连接建立的基础是使
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-01-16 15:06" pubdate>
+              2021-01-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/network/">network</a>
+            
+          </div>
+        
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/index-of-mysql.html" target="_self">
+          mysql中的索引
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/index-of-mysql.html" target="_self">
+          
+          
+            
+          
+          前言索引是使用MySQL是一个很重要的知识点,正确的使用索引能够极大地提高MySQL的运行效率。那么关于索引,我产生了如下问题:
+
+索引是什么
+有哪些索引
+索引的原理是什么
+如何正确地使用索引
+
+下面我将一一对问题进行解答。
+1.索引是什么索引是一种专门用于数据库的结构,其目的也非常明显,就是用来优化数据库的执行效率。首先我们来看看官方是如何描述索引的用处:
+
+Indexes are used t
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-10-10 21:01" pubdate>
+              2020-10-10
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/mysql/">mysql</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%B4%A2%E5%BC%95/">索引</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+      <div class="col-12 col-md-4 m-auto index-img">
+        <a href="/articles/Docker-filesys-layout.html" target="_self">
+          <img src="/img/docker.png" srcset="/img/loading.gif" lazyload alt="Docker使用方法(二)-文件系统架构">
+        </a>
+      </div>
+    
+    <article class="col-12 col-md-8 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/Docker-filesys-layout.html" target="_self">
+          Docker使用方法(二)-文件系统架构
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/Docker-filesys-layout.html" target="_self">
+          
+          
+            
+          
+          前言一定要将登录用户切换为root才能查看Docker的文件架构！！！
+0x0 基本文件布局Docker的文件主要都存储在/var/lib/docker目录下,文件目录如下所示:
+
+其中containers存储的是容器,images存储的是镜像。在深入了解Docker的原理之前,我们需要了解两个基本名词:
+
+overlayFS
+overlay2
+
+0x1 overlayFS其中overlayFS是
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-22 09:48" pubdate>
+              2020-07-22
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/tools/">tools</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Docker/">Docker</a>
             
           </div>
         

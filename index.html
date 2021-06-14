@@ -182,235 +182,6 @@
   <div class="row mx-auto index-card">
     
     
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/articles/Docker-filesys-layout.html" target="_self">
-          <img src="/img/docker.png" srcset="/img/loading.gif" lazyload alt="Docker使用方法(二)-文件系统架构">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/Docker-filesys-layout.html" target="_self">
-          Docker使用方法(二)-文件系统架构
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/Docker-filesys-layout.html" target="_self">
-          
-          
-            
-          
-          前言一定要将登录用户切换为root才能查看Docker的文件架构！！！
-0x0 基本文件布局Docker的文件主要都存储在/var/lib/docker目录下,文件目录如下所示:
-
-其中containers存储的是容器,images存储的是镜像。在深入了解Docker的原理之前,我们需要了解两个基本名词:
-
-overlayFS
-overlay2
-
-0x1 overlayFS其中overlayFS是
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/tools/">tools</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Docker/">Docker</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/articles/Docker-write-dockfile.html" target="_self">
-          <img src="/img/docker.png" srcset="/img/loading.gif" lazyload alt="Dockerfile的基本规则">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/Docker-write-dockfile.html" target="_self">
-          Dockerfile的基本规则
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/Docker-write-dockfile.html" target="_self">
-          
-          
-            
-          
-          前言在了解了docker的基本原理后，是时候了解以下Dockerfile是怎么写的了。首先我们需要了解RUN与CMD命令的区别。
-
-RUN命令：每执行一次，就会在原有镜像的基础上添加一个upper dir保存所作的改变，所以对于一类的命令我们尽量使用一条RUN，否则会创建过多的不必要的upper dir
-CMD命令：容器是一个进程，CMD命令就像是容器启动时输入的命令参数，所以只能有一条CMD
-
-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/tools/">tools</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Docker/">Docker</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-      <div class="col-12 col-md-4 m-auto index-img">
-        <a href="/articles/basic-Docker-install.html" target="_self">
-          <img src="/img/docker.png" srcset="/img/loading.gif" lazyload alt="Docker使用方法(一)-基本安装">
-        </a>
-      </div>
-    
-    <article class="col-12 col-md-8 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/basic-Docker-install.html" target="_self">
-          Docker使用方法(一)-基本安装
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/basic-Docker-install.html" target="_self">
-          
-          
-            
-          
-          docker的基本使用与配置
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/tools/">tools</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/Docker/">Docker</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/top-questions-for-network.html" target="_self">
-          计网热门问题
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/top-questions-for-network.html" target="_self">
-          
-          
-            
-          
-          本篇不为别的，只为记录面试过程中关于计网的热门问题。
-[TOC]
-
-1. 点击一个链接后，发生了什么首先，我们需要有一个总的概念：在点击一个链接后，网卡首先会将http请求使用http协议封装，接着将数据包经由tcp/udp协议封装，最后使用ip协议将数据包在各个网段之间传输直至到达目的地。http协议的封装这里不作详细介绍。tcp连接的建立和ip数据包的转发才是重点。
-
-tcp连接建立的基础是使
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
-              2021-06-14
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/network/">network</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
@@ -435,7 +206,7 @@ In order to fully understand the class object, let go back in and understand we 
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
+            <time datetime="2021-06-14 15:48" pubdate>
               2021-06-14
             </time>
           </div>
@@ -494,7 +265,7 @@ In order to fully understand the class object, let go back in and understand we 
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
+            <time datetime="2021-06-14 15:48" pubdate>
               2021-06-14
             </time>
           </div>
@@ -547,7 +318,7 @@ java团队有意将类加载阶段中的“通过一个类的全限定名来获�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
+            <time datetime="2021-06-14 15:48" pubdate>
               2021-06-14
             </time>
           </div>
@@ -598,7 +369,7 @@ java团队有意将类加载阶段中的“通过一个类的全限定名来获�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
+            <time datetime="2021-06-14 15:48" pubdate>
               2021-06-14
             </time>
           </div>
@@ -650,7 +421,7 @@ java团队有意将类加载阶段中的“通过一个类的全限定名来获�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
+            <time datetime="2021-06-14 15:48" pubdate>
               2021-06-14
             </time>
           </div>
@@ -670,6 +441,114 @@ java团队有意将类加载阶段中的“通过一个类的全限定名来获�
               <a href="/tags/SPI%E6%9C%BA%E5%88%B6/">SPI机制</a>
             
               <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%A9%B1%E5%8A%A8%E5%8A%A0%E8%BD%BD/">数据库驱动加载</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/the-generic-of-java.html" target="_self">
+          java的泛型
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/the-generic-of-java.html" target="_self">
+          
+          
+            
+          
+          前言
+这篇文章是在研究java的Type体系顺带扯出的概念,泛型的使用要说简单也很简单,要说难也可以说难。本文将由浅入深,带你学习java中的”泛型”。
+
+1. 泛型的基本概念泛型的概念始于java1.5,所以在1.5之前所有使用java的地方都没有泛型的影子,那么为了保持向后兼容,java中的泛型被设计成了伪泛型,仅仅存在于编译时期,在实际生成的字节码文件中是没有泛型的,这一动作叫做泛型的擦除。
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-14 15:48" pubdate>
+              2021-06-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%8F%8D%E5%B0%84/">反射</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">基本概念</a>
+            
+              <a href="/tags/%E6%B3%9B%E5%9E%8B/">泛型</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/class-loading-mechanism.html" target="_self">
+          类的加载机制
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/class-loading-mechanism.html" target="_self">
+          
+          
+            
+          
+          1. 类初始化的时机当复习类加载时机时，我给自己抛出了一个问题：这里的时机只说明了类的初始化，那么对于接口呢？接口什么时候会被初始化呢？
+仔细回顾《深入理解Java虚拟机》，才发现，作者给出的是会触发类型初始化的六种时机，而不是类初始化。这里类型可能是指类或者接口。ok，那么我的问题迎刃而解了。接口初始化的时机同样遵循以下六种场景。
+
+在Java中，只有主动引用才会触发类类型加载动作。所谓的主动引
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-14 15:48" pubdate>
+              2021-06-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/jvm/">jvm</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/class-loading/">class loading</a>
             
           </div>
         
@@ -706,7 +585,7 @@ java团队有意将类加载阶段中的“通过一个类的全限定名来获�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-14 15:41" pubdate>
+            <time datetime="2021-06-14 15:48" pubdate>
               2021-06-14
             </time>
           </div>
@@ -724,6 +603,109 @@ java团队有意将类加载阶段中的“通过一个类的全限定名来获�
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/%E6%B3%9B%E5%9E%8B/">泛型</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/HashMap-analysis-part-three.html" target="_self">
+          HashMap源码分析(三)-删除源码
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/HashMap-analysis-part-three.html" target="_self">
+          
+          
+            
+          
+          HashMap的删除操作一般通过remove完成。在remove方法中,同样存在fast-fail机制,不了解的可以去看看ArrayList中的fast-fail。通过fast-fail机制检查后,会调用真正的删除方法removeNode,如下面代码所示：
+12345678910111213141516171819202122232425262728293031323334353637383940
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-14 15:48" pubdate>
+              2021-06-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/HashMap/">HashMap</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/LinkedList-source-code-analysis.html" target="_self">
+          LinkedList源码分析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/LinkedList-source-code-analysis.html" target="_self">
+          
+          
+            
+          
+          LinkedList弥补了ArrayList插入元素慢的缺点,当然也带了查找元素慢的缺点。LinkedList同时实现了List和Queue接口,其底层采用双向链表实现。当然LinkedList也有一个父类AbstractSequentialList用于实现一般的方法。下面是LinkedList的继承图:
+
+可以看到LinkedList实现了Cloneable、Serializable接口,当然也
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-06-14 15:48" pubdate>
+              2021-06-14
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/LinkedList/">LinkedList</a>
             
           </div>
         
