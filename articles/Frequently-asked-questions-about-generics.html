@@ -1,0 +1,747 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/panda.png">
+  <link rel="icon" href="/img/panda.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#55967e">
+  <meta name="description" content="欢迎乘坐八楼的二路公交车">
+  <meta name="author" content="Rains.Lee">
+  <meta name="keywords" content="Java">
+  
+  <title>关于泛型的常见问题 - 一颗胡杨树</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"eripe.me","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":"UA-198559201-1","gtag":"G-19MVRDT9NM","tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"3MrDNVWQz1aBbREDmtPT7DuN-MdYXbMMI","app_key":"34YIO0Yk922Dzi79zUJidSkl","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/rss2.xml" title="一颗胡杨树" type="application/rss+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Rains·Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/home.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="关于泛型的常见问题">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-14 15:41" pubdate>
+        2021年6月14日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      4.9k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      60
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">关于泛型的常见问题</h1>
+            
+            <div class="markdown-body">
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>这里罗列一些关于泛型的常见问题,并给出解答。其中本篇大多数问题来自<a target="_blank" rel="noopener" href="http://www.angelikalanger.com/GenericsFAQ/FAQSections/ParameterizedTypes.html">Java Generics FAQs - Generic And Parameterized Types</a>,我这里仅翻译一些我认为比较容易糊涂的问题。</p>
+<p>当然,在解答这些问题时,我们需要牢记一个概念,通配符<code>?</code>表示的是不知道是什么类型,而不是任意类型。</p>
+<ul>
+<li>泛型类型:<code>class test&lt;T&gt;&#123;&#125;</code></li>
+<li>具体参数类型:<code>class test&lt;String&gt; t1=null;</code></li>
+<li>泛型参数类型:<code>test&lt;?&gt; t2=null;</code></li>
+</ul>
+<h2 id="1-使用通配符时经常出现的capture-XXX-of-到底什么意思"><a href="#1-使用通配符时经常出现的capture-XXX-of-到底什么意思" class="headerlink" title="1. 使用通配符时经常出现的capture#XXX of ? 到底什么意思?"></a>1. 使用通配符时经常出现的capture#XXX of ? 到底什么意思?</h2><p>在使用通配符时,我们很有可能会遇到类似<code>capture#337 of ?</code>这样莫名奇妙的错误。其中<code>capture</code>是捕获的意思,捕获的是通配符<code>?</code>,那么<code>#337</code>又代表着什么?这一切都要从捕获转化(Capture Conversion)开始说起。</p>
+<p>让我们思考一个问题,如果我们定义定义一个泛型类C如下(类似于List容器)如下:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">C</span> &lt;<span class="hljs-title">T</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Number</span>&gt;</span>&#123;<br>    ...<br>    <span class="hljs-function">T <span class="hljs-title">get</span><span class="hljs-params">()</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(T)</span></span><br><span class="hljs-function">&#125;</span><br><span class="hljs-function"></span><br><span class="hljs-function">C&lt;?&gt; c</span>=<span class="hljs-keyword">new</span> C&lt;Integer&gt;()<br></code></pre></div></td></tr></table></figure>
+
+<p>那么通过<code>c</code>调用对象方法时,方法的签名是什么样的?像下面这样?(编译时期泛型还是存在的)</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">C</span> &lt;? <span class="hljs-keyword">extends</span> <span class="hljs-title">Number</span>&gt;</span>&#123;<br>    ...<br>    ? get();<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(?)</span></span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>这显然是毫无意义的,但是我们知道实例化类时一定会使用一个具体的类型X:&lt; Number( <strong>:&lt;</strong> 表示前者继承于后者),尽管我们不知道这个X到底是什么类型的。这并不重要。那么被具体类型X实例化的类C长下面这样:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">C</span>&lt;<span class="hljs-title">X</span>&gt;</span>&#123;<span class="hljs-comment">//X:&lt;Number</span><br>    ...<br>    <span class="hljs-function">X <span class="hljs-title">get</span><span class="hljs-params">()</span></span>;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(X)</span></span>;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>使用一个具有名字的类型比使用通配符<code>?</code>容易多了。所以编译器也是这么做的。只不过编译器并不会使用<code>X</code>,而是随机使用一个数字,例如<code>#337</code>表示上面这个通配符。所以才会有了这句<code>capture#337 of ?</code>。即编译将遇到这个统配符<code>?</code>分配了一个名字叫做<code>#337</code>。</p>
+<p>当一个<code>value</code>的类型是通配符类型,编译器会使用类型变量替换这个<code>value</code>种存在的通配符<code>?</code>(类型变量中的数字按序增长),这种操作名为<code>capture conversion</code>,通过这个操作,编译器只需要处理带有具体类型的对象。</p>
+<p>对于上面的例子,<code>get()</code>方法返回一个<code>X</code>类型的引用,其中<code>X:&lt;Number</code>,那么我们就可以执行下述操作:</p>
+<blockquote>
+<p>Number n= c.get();//c为类C的实例,get方法返回的是Number类型</p>
+</blockquote>
+<p>但是我们却不能向c中添加元素。</p>
+<blockquote>
+<p>c.add(number)//add方法接受的参数为类型为capture#1 of ?</p>
+</blockquote>
+<p>因为add方法接受的参数类型为x(编译器的名字可能为capture#1 of ?),而容器c中的引用至少都为Number类型,因为容器内的元素类型都有一个限制:<code>? extends Number</code>,所以编译器出于安全,将容器内的引用推断为<code>Number</code>类型肯定是不会错的。<br>那么一个存储<code>Number</code>类型的容器,能接受一个类型为<code>capture#1 of ?</code>的值吗?不知道,因为后者的类型编译器无法推断,所以为了保险起见,直接会产生编译错误。</p>
+<p>只要有表达式产生了<code>wild type</code>的<strong>value</strong>(The compiler applies capture conversion on every expression that yields a value in wild type),<code>capture conversion</code>操作就存在。并且会为每个通配符<code>?</code>分配一个唯一ID。以下面代码为例:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;? extends Number&gt; foo(List&lt;? extends Number&gt; numberList)<br>&#123;<br>#<span class="hljs-number">1</span>  <span class="hljs-keyword">for</span>(Number number : numberList)<br>#<span class="hljs-number">2</span>      <span class="hljs-keyword">assert</span> numberList.contains(number);<br>#<span class="hljs-number">3</span>  numberList = numberList;<br>#<span class="hljs-number">4</span>  <span class="hljs-keyword">return</span> numberList;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>上面代码有四个地方都存在<code>wild type</code>的变量,我们一个一个来分析。</p>
+<p>对于<code>#1</code>处的<code>numberList</code>,其类型为<code>List &lt;? extends Number&gt;</code>,那么会将这处的<code>numberList</code>转换为<code>List&lt;X1&gt;</code>类型,<code>List&lt;X1&gt;</code>是<code>Iterable&lt;X1&gt;</code>的子类,所以可以使用for循环遍历,number的类型是<code>X1</code>,又因为<code>X1:&lt;Number</code>,所以其可以向上转型为<code>Number</code></p>
+<p>对于<code>#2</code>处的<code>numberList</code>,编译器会将其类型转换为<code>List&lt;X2&gt;</code>类型,其中的<code>contains</code>方法是<code>List&lt;X2&gt;</code>类型下的<code>contains</code>方法,所以该方法接受一个<code>X2</code>类型的参数</p>
+<p>对于<code>#3</code>处的右<code>numberList</code>,编译器会将其类型转换为<code>List&lt;X3&gt;</code>,但是！！！对于左边的<code>numberList</code>,因为其是一个variable,而不是一个value,所以编译器不会对其类型进行转换,还是<code>List&lt;? extends Number&gt;</code>,将<code>List&lt;X3&gt;</code>类型赋值给<code>List&lt;? extends Number&gt;</code>类型是合法的,因为<code>X3:&lt;Number</code>。<br><strong>那么是否可以认为左侧的都是variable,而右侧的是value???</strong> 或者是否可以这样理解:右边的变量<code>numberList</code>把它的value赋值给了左侧的<code>numberList</code>,而这个value是<code>wild type</code>？或者说用的时候实际上使用的实际上是variable的value?</p>
+<p>对于<code>#4</code>处的<code>numberList</code>,编译器同样会转换为<code>List&lt;X4&gt;</code>后返回。</p>
+<p>上面的转换规则非常重要,我们再来看一个难一点的例子。现在有一个map,类型为<code>Map&lt;?,?&gt; map</code>,那么如果进行如下操作是合法的:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">for</span>(Entry&lt;?,?&gt; entry : map.entrySet())<br></code></pre></div></td></tr></table></figure>
+
+<p>因为<code>map</code>会被转型为<code>Map&lt;X1,X2&gt;</code>类型,那么返回的entrySet就是<code>Set&lt;Entry&lt;X1,X2&gt;&gt;</code>,因为<code>X1&lt;:?</code>,<code>X2&lt;:?</code>,所以将<code>Entry&lt;X1,X2&gt;</code>类型赋值给<code>Entry&lt;?,?&gt;</code>类型是合理的。但是下面的操作就非法了</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">Set&lt;Entry&lt;?,?&gt;&gt; entrySet = map.entrySet(); <span class="hljs-comment">// compile error</span><br></code></pre></div></td></tr></table></figure>
+
+<p>很简单,错误原因是因为泛型不是协变的,<code>Set&lt;Entry&lt;X1,X2&gt;&gt;</code>不是<code>Set&lt;Entry&lt;?,?&gt;&gt;</code>的子类。比较笨拙的办法是在定义一个<code>wild type</code>,如下所示:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">Set&lt;? extends Entry&lt;?,?&gt;&gt; entrySet=map.entrySet();<br></code></pre></div></td></tr></table></figure>
+
+<p>其实还有一个比较取巧的办法,通过名为<code>capture helper</code>的操作来解决这个问题。</p>
+<h3 id="1-1-Capture-Helper"><a href="#1-1-Capture-Helper" class="headerlink" title="1.1 Capture Helper"></a>1.1 Capture Helper</h3><p>因为编译器对于<code>wild type</code>的取名都是任意的,并且对我们是不可见的,所以我们在源码中无法引用,以下面的代码为例:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bar</span><span class="hljs-params">(List&lt;? extends Number&gt; numberList)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-comment">// numberList.add( numberList.get(0) ); // compile error,因为左numberList接受的是X2类型,而又numberList接受的是X1类型</span><br><br>    <span class="hljs-comment">//假设下面的代码存在,我们将传进来的numberList转型为List&lt;X&gt;类型,那么该方法所有使用numberList的地方,其类型是List&lt;X&gt;</span><br>    <span class="hljs-comment">//而不是见一个numberList换一个类型</span><br>    List&lt;X&gt; list = numberList;  <span class="hljs-comment">// *imaginary* code</span><br><br>    X number = list.get(<span class="hljs-number">0</span>);     <span class="hljs-comment">// get() returns X</span><br>    list.add(number);           <span class="hljs-comment">// add() accepts X</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>既然人为定义<code>wild type</code>的类型,可行,那么我把类型<code>X</code>定义出来不久好了?如下面代码所示:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">&lt;T extends Number&gt; <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bar2</span><span class="hljs-params">(List&lt;T&gt; list)</span></span><br><span class="hljs-function"></span>&#123;<br>    T number = list.get(<span class="hljs-number">0</span>);<br>    list.add(number);<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>然后我们就可以调用<code>bar(numberList)</code>解决上面每个<code>numberList</code>类型不一样的问题。方法<code>bar2</code>就叫做<code>capture helper</code>。</p>
+<p>那么<code>capture helper</code>的出现有什么意义呢?<br>答案是为了兼容老代码,因为1.5之前的代码没有泛型,如果使用泛型的代码想要接受没有泛型的容器,就得实现<code>capture helper</code>(当然不局限于容器,这里容器比较典型)</p>
+<p><strong>参考文献:</strong></p>
+<ol>
+<li><p><a target="_blank" rel="noopener" href="http://bayou.io/draft/Capturing_Wildcards.html#Capture_Everywhere">Capturing Wildcards</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="http://bayou.io/draft/Wildcard_Case_Studies.html#Map&lt;?,?&gt;_Entry_Set">Wildcard Case Studies</a></p>
+</li>
+</ol>
+<h2 id="2-lt-extends-E-gt-与-lt-T-extends-E-gt-有什么区别"><a href="#2-lt-extends-E-gt-与-lt-T-extends-E-gt-有什么区别" class="headerlink" title="2. &lt;? extends E&gt;与&lt;T extends E&gt;有什么区别?"></a>2. &lt;? extends E&gt;与&lt;T extends E&gt;有什么区别?</h2><p>这是容易搞混的一点,首先<code>T</code>叫做类型变量(type variable),<code>?</code>叫做通配符(wildcard)。</p>
+<ol>
+<li><p>类型变量不能使用<code>super</code>,即类型变量不能有上界,例如<code>T super E</code>,这样是非法的。至于为什么非法可以看下一个问题。但是通配符<code>?</code>却可以有上界或者下界。</p>
+</li>
+<li><p>类型变量可以有多个限制,例如<code>T extends A &amp; B</code>,但是通配符<strong>至多</strong>有一个界限。</p>
+</li>
+<li><p>通配符不能表示一个类型变量,所以通配符不能用来定义<code>generic type</code> ,类型变量可以用来定义<code>generic type</code></p>
+</li>
+</ol>
+<p><strong>参考文献:</strong></p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/18384897/what-is-difference-between-extends-object-and-e-extends-object">What is difference between &lt;? extends Object&gt; and <E extends Object>?</a></li>
+</ol>
+<h2 id="3-lt-T-super-E-gt-为什么是非法的"><a href="#3-lt-T-super-E-gt-为什么是非法的" class="headerlink" title="3. &lt;T super E&gt;为什么是非法的?"></a>3. &lt;T super E&gt;为什么是非法的?</h2><p>因为Object所有引用类型的父类。<T super E>并不会按照我们的想法工作。例如我们定义了一个容器<code>ArrayList&lt;Integer&gt; list</code>,思考下面的代码是否意义:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><br><span class="hljs-comment">//add方法是list的对象方法</span><br><span class="hljs-keyword">public</span> &lt;T <span class="hljs-keyword">super</span> Integer&gt; <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(T)</span></span>&#123;<br>    list.add(T);<br>&#125;<br><br>ArrayList&lt;Integer&gt; list=<span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>list.add(<span class="hljs-number">1</span>);<span class="hljs-comment">//正常,没有任何问题</span><br>lsit.add(<span class="hljs-string">&quot;aaa&quot;</span>);<span class="hljs-comment">//我们的本意是这句不该通过编译,但是却通过了</span><br></code></pre></div></td></tr></table></figure>
+
+<p><code>add</code>方法的本意是接受类型是<code>Integer</code>的参数,可以是<code>Object</code>、<code>Number</code>、<code>Integer</code>,不应该接受<code>String</code>类型。</p>
+<p>但是<code>Object</code>也是<code>String</code>的父类。很有可能给<code>add</code>传入的参数静态类型是<code>Object</code>,动态类型是<code>String</code>。虽然放进去是没有问题,但是如果把这个<code>String</code>类型的元素取出来,会出现<code>castException</code>,因为<code>String</code>根本不可能转换为<code>Integer</code>。</p>
+<p><strong>参考文献:</strong></p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/2800369/bounding-generics-with-super-keyword">Bounding generics with ‘super’ keyword</a></li>
+</ol>
+<h2 id="4-为什么定义类型参数时不能使用通配符’-’"><a href="#4-为什么定义类型参数时不能使用通配符’-’" class="headerlink" title="4. 为什么定义类型参数时不能使用通配符’?’?"></a>4. 为什么定义类型参数时不能使用通配符’?’?</h2><p>因为通配符<code>?</code>只是用来定义<code>wild type</code>的一个语法成分,它没有任何语义,<strong>它不能表示任何类型</strong>。想象一下,如果下面的代码是合法的:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">List</span>&lt;?&gt;</span>&#123;<br>    ? get(<span class="hljs-keyword">int</span> index)&#123;&#125;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(? elem)</span></span>&#123;&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>在前面曾经说过,由于<code>capture conversion</code>的原因,编译器会把每一个类型是<code>wild type</code>的value中的通配符<code>?</code>赋一个名字,例如像下面这样:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">List</span>&lt;<span class="hljs-title">X1</span>&gt;</span>&#123;<br>    <span class="hljs-function">X2 <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-keyword">int</span> inedx)</span></span>&#123;&#125;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(X3 elem)</span></span>&#123;&#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>那么我们在实例化List的时候,像<code>List&lt;String&gt;</code>这样?那么<code>get</code>的返回值类型又是什么?这样就违背了我们使用<code>?</code>定义泛型类的初衷。我们的本意是<code>List</code>接受一个不知道是什么类型的类型参数(unkown type),并且想要<code>get</code>的返回值类型也是同一个<code>unknown type</code>。但是这很显然不可能。</p>
+<p><strong>所以通配符<code>?</code>就不能用来定义一个类型变量(type variable),它只能用在类型声明的地方</strong>,例如声明方法的形参类型,声明一个变量。因为 <strong>?不是一个有效的变量名,不是一个有效的标识符</strong>:</p>
+<blockquote>
+<p>You can’t name a generic parameter as ?, because ? is not a valid identifier - a valid name of a variable.<br>You have to give a generic parameter a valid java name so you can refer to it in the implementation.</p>
+</blockquote>
+<p>下面是通配符常用的地方:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;?&gt; list;<span class="hljs-comment">//ok,声明变量类型</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(List&lt;? extends Number&gt; list)</span></span>;<span class="hljs-comment">//ok,声明参数类型</span><br></code></pre></div></td></tr></table></figure>
+
+<p>那么所谓的定义一个泛型类型是什么?就像下面这样:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">    List MyList&lt;T&gt;&#123;<span class="hljs-comment">//定义了一个泛型类型MyList&lt;T&gt;,T是类型变量</span><br><br>    <span class="hljs-keyword">public</span> &lt;V&gt; <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">add</span><span class="hljs-params">(V num,T test)</span></span>&#123;&#125;<span class="hljs-comment">//定义了一个类型变量V</span><br>    <span class="hljs-keyword">public</span> &lt;?&gt; <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">get</span><span class="hljs-params">()</span></span>;<span class="hljs-comment">//compile error</span><br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>并且统配符<code>?</code>只能用来填充类型变量。所谓的填充是什么意思,比如我们定义了一个方法接受<code>MyList&lt;T&gt;</code>泛型的方法,那么我们就可以用<code>?</code>填充这个T。那么填充在哪?</p>
+<ul>
+<li>声明方法的参数</li>
+<li>声明变量</li>
+</ul>
+<p>如下所示:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">//定义方法时声明参数,使用?填充T</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">(MyList&lt;?&gt; myList)</span></span>&#123;&#125;<br><span class="hljs-comment">//或者加个界限</span><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">(MyList&lt;? extends Number&gt; myList)</span></span>&#123;&#125;<br><span class="hljs-comment">//定义了一个MyList&lt;T&gt;的变量,使用?填充T</span><br>MyList&lt;?&gt; myList;<span class="hljs-comment">//</span><br></code></pre></div></td></tr></table></figure>
+
+<p><strong>参考文献:</strong></p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/24740590/java-generic-wildcard?rq=1">java Generic wildcard “?”</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/harvic880925/article/details/49883589">夯实JAVA基本之一——泛型详解(2)：高级进阶</a></li>
+</ol>
+<h2 id="5-有没有不能使用泛型的地方"><a href="#5-有没有不能使用泛型的地方" class="headerlink" title="5. 有没有不能使用泛型的地方?"></a>5. 有没有不能使用泛型的地方?</h2><p>几乎所有类型都可以拥有类型参数,但除了一下几种类型:</p>
+<ul>
+<li>枚举类型:因为枚举类型不能有类型参数,所以枚举类中的值都是静态类型的,但是又因为<strong>类型参数不能用于任何静态的上下文环境</strong>,所以在枚举类中使用泛型是没有任何意义的</li>
+<li>匿名内部类:它可以继承一个参数化类型的类或者接口,但它本身不能是，因为<strong>匿名内部泛型类没有任何意义</strong>。因为匿名内部类没有名字,所以在声明时就没有地方提供类型参数</li>
+<li>异常类:一个泛型类不能间接或者直接继承自<code>Throwable</code>接口,因为异常处理机制是一种运行时机制,但是在运行时泛型已经被擦出了。所以对于同一个泛型类型但是类型参数不同的两个参数化类型来说,虚拟机并不能区分它们,所以异常泛型类也是无意义的。</li>
+</ul>
+<h2 id="6-能不能强转成参数化类型"><a href="#6-能不能强转成参数化类型" class="headerlink" title="6.能不能强转成参数化类型?"></a>6.能不能强转成参数化类型?</h2><p>可以,但是这种操作是类型不安全的,且会产生”unchecked”的编译警告。</p>
+<p>因为一个变量的类型分为静态类型与动态类型。一个类型转换操作也分为两个部分:</p>
+<ul>
+<li>编译时期的静态类型检查</li>
+<li>运行十七的动态类型检查</li>
+</ul>
+<p>静态时期的类型检查去除了一些显而易见的错误,例如讲<code>String</code>转换成<code>Date</code>。而动态类型检查使用了动态类型进行检查。如果动态类型不是目标类型或者不是目标类型的子类(也就是所谓的向下转型),那么就会产生<code>ClassCastException</code>。</p>
+<p>但是并不是所有类型转换都会动态类型检查。基本类型之间的转换仅会进行静态类型检查。并且向上转型也只会进行静态类型检查,向上转型不写也没关系,因为编译器会帮你做这件事。</p>
+<p><strong>需要动态检查</strong>的类型转换潜在是类型不安全的,尤其是当目标类型为一个参数化类型。在运行时参数化类型的类型信息不在存在,虚拟机不能区分两个是同一个泛型,但是采用不同的类型参数实例化出的参数化类型,所以在这种情况下,本不该通过动态检查的类型转换却通过了,这不是我们希望看到的。例如下面的代码,将<code>Object</code>转换为<code>List&lt;String&gt;</code>,但是却没有抛出<code>ClassCastException</code>.</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">m1</span><span class="hljs-params">()</span> </span>&#123;<br>  List&lt;Date&gt; list = <span class="hljs-keyword">new</span> ArrayList&lt;Date&gt;();<br>  ...<br>  m2(list);<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">m2</span><span class="hljs-params">(Object arg)</span> </span>&#123;<br>  ...<br>  List&lt;String&gt; list = (List&lt;String&gt;) arg;    <span class="hljs-comment">// unchecked warning</span><br>  ...<br>  m3(list);<br>  ...<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">m3</span><span class="hljs-params">(List&lt;String&gt; list)</span> </span>&#123;<br>  ...<br>  String s = list.get(<span class="hljs-number">0</span>);      <span class="hljs-comment">// ClassCastException</span><br>  ...<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>注意上面抛出异常的位置,不是在我们进行类型转换的位置,而是在我们提取元素的时候。这种没有在正确地方抛出的异常是我们非常不愿意看到的。所以为了引起我们对这种潜在的类型不安全的转换注意,编译器产生了”unchecked”警告在遇到可疑的转换时。</p>
+<p>所以,<strong>编译器在每一处目标类型是参数化类型并且是向下转型的地方,都会产生一个unchecked警告</strong>。</p>
+<h2 id="7-泛型中哪里会出现的”unchecked”警告"><a href="#7-泛型中哪里会出现的”unchecked”警告" class="headerlink" title="7.泛型中哪里会出现的”unchecked”警告?"></a>7.泛型中哪里会出现的”unchecked”警告?</h2><ol>
+<li><p>首先就是上面一个问题所说的:向下转型为参数化类型的地方。</p>
+</li>
+<li><p>如果方法的参数类型没有因为类型擦除而改变,那么调用这个方法就是类型安全的</p>
+</li>
+<li><p>如果字段的类型因为类型擦除而改变,那么对该字段赋值就会产生”unchecked”,但是读取该字段的值却不会产生任何问题</p>
+</li>
+</ol>
+<h2 id="8-unbound-wildcard-parameterized-type和raw-type有什么区别"><a href="#8-unbound-wildcard-parameterized-type和raw-type有什么区别" class="headerlink" title="8. unbound wildcard parameterized type和raw type有什么区别?"></a>8. unbound wildcard parameterized type和raw type有什么区别?</h2><p>其实这二者没有太大区别,二者都可以被视作是任何参数化类型的超级类,并且二者都是<code>reifiable types</code>。所以这两种类型可以作为数组的元素类型(注意是unbound wildcard而不是wildcard)。但是编译器对<code>unbound wildcard parameterized type</code>更严格。对于同样的操作,如果<code>raw type</code>产生了<code>unchecked</code>警告,那么<code>unbound wildcard parameterized type</code>则会产生编译错误。</p>
+<h2 id="9-泛型真的不能使用instance-of吗"><a href="#9-泛型真的不能使用instance-of吗" class="headerlink" title="9. 泛型真的不能使用instance of吗?"></a>9. 泛型真的不能使用instance of吗?</h2><p>大部分都不行,只有无界通配符可以,因为只有<code>reifiable type</code>能够使用<code>instance of</code>,<code>reifiable types</code>包括且只包括:</p>
+<ul>
+<li><p>It refers to a non-generic class or interface type declaration.</p>
+</li>
+<li><p>It is a parameterized type in which all type arguments are <strong>unbounded</strong> wildcards (§4.5.1).</p>
+</li>
+<li><p>It is a raw type (§4.8).</p>
+</li>
+<li><p>It is a primitive type (§4.2).</p>
+</li>
+<li><p>It is an array type (§10.1) whose element type is reifiable.</p>
+</li>
+<li><p>It is a nested type where, for each type T separated by a “.”, T itself is reifiable.</p>
+</li>
+</ul>
+<h2 id="10-能创建数组元素是具体参数化类型的数组吗"><a href="#10-能创建数组元素是具体参数化类型的数组吗" class="headerlink" title="10. 能创建数组元素是具体参数化类型的数组吗?"></a>10. 能创建数组元素是具体参数化类型的数组吗?</h2><p>所谓的具体参数化类型就是类型参数是一个具体的参数,例如<code>String</code>、<code>Integer</code>等等。对于这个问题的答案是不能,因为是类型不安全的。</p>
+<p>因为插入操作会逃过数组的动态类型检查,见如下代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">test</span><span class="hljs-params">()</span> </span>&#123;<br>  Pair&lt;Integer,Integer&gt;[] intPairArr = <span class="hljs-keyword">new</span> Pair&lt;Integer,Integer&gt;[<span class="hljs-number">10</span>] ; <span class="hljs-comment">// error</span><br>  addElements(intPairArr); <br>  Pair&lt;Integer,Integer&gt; pair = intPairArr[<span class="hljs-number">1</span>];<br>  Integer i = pair.getFirst();<br>  pair.setSecond(i);<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">addElements</span><span class="hljs-params">( Object[] objArr)</span> </span>&#123;<br>  objArr[<span class="hljs-number">0</span>] = <span class="hljs-keyword">new</span> Pair&lt;Integer,Integer&gt;(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);<br>  objArr[<span class="hljs-number">1</span>] = <span class="hljs-keyword">new</span> Pair&lt;String,String&gt;(<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;&quot;</span>);      <span class="hljs-comment">// should fail with ArrayStoreException,但是因为在运行时泛型已经不存在了</span><br>                                                  <span class="hljs-comment">//  逃过了数组插入时的类型动态检查</span><br>&#125;<br><br></code></pre></div></td></tr></table></figure>
+
+<h2 id="11-能创建数组元素类型是通配符参数化类型的数组吗"><a href="#11-能创建数组元素类型是通配符参数化类型的数组吗" class="headerlink" title="11. 能创建数组元素类型是通配符参数化类型的数组吗?"></a>11. 能创建数组元素类型是通配符参数化类型的数组吗?</h2><p>无界通配符可以,有界通配符不行。因为有界通配符的插入操作也可以逃过数组插入时的动态类型检查,而无界通配符不会。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><br><span class="hljs-comment">//非法操作</span><br>Object[] numPairArr = <span class="hljs-keyword">new</span> Pair&lt;? extends Number,? extends Number&gt;[<span class="hljs-number">10</span>]; <span class="hljs-comment">// illegal</span><br>numPairArr[<span class="hljs-number">0</span>] = <span class="hljs-keyword">new</span> Pair&lt;Long,Long&gt;(<span class="hljs-number">0L</span>,<span class="hljs-number">0L</span>);     <span class="hljs-comment">// fine</span><br><span class="hljs-comment">//注意,下面这句逃过了数组的动态类型检查</span><br>numPairArr[<span class="hljs-number">0</span>] = <span class="hljs-keyword">new</span> Pair&lt;String,String&gt;(<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;&quot;</span>); <span class="hljs-comment">// should fail, but would succeed</span><br><br><span class="hljs-comment">//合法操作</span><br>Object[] pairArr = <span class="hljs-keyword">new</span> Pair&lt;?,?&gt;[<span class="hljs-number">10</span>] ;        <span class="hljs-comment">// fine</span><br>pairArr[<span class="hljs-number">0</span>] = <span class="hljs-keyword">new</span> Pair &lt;Long,Long&gt;(<span class="hljs-number">0L</span>,<span class="hljs-number">0L</span>);     <span class="hljs-comment">// fine</span><br>pairArr[<span class="hljs-number">0</span>] = <span class="hljs-keyword">new</span> Pair &lt;String,String&gt;(<span class="hljs-string">&quot;&quot;</span>,<span class="hljs-string">&quot;&quot;</span>); <span class="hljs-comment">// fine </span><br>pairArr[<span class="hljs-number">0</span>] = <span class="hljs-keyword">new</span> ArrayList &lt;String&gt;();        <span class="hljs-comment">// fails with ArrayStoreException</span><br></code></pre></div></td></tr></table></figure>
+
+<h2 id="12-能创建数组元素是有界通配符参数化类型的数组引用吗"><a href="#12-能创建数组元素是有界通配符参数化类型的数组引用吗" class="headerlink" title="12. 能创建数组元素是有界通配符参数化类型的数组引用吗?"></a>12. 能创建数组元素是有界通配符参数化类型的数组引用吗?</h2><p>可以,但没必要。</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">//创建了数组元素类型是有界通配符类型的数组</span><br><br>Pair&lt;? extends Number,? extends Number&gt;[] arr = <span class="hljs-keyword">null</span>;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Point</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Pair</span>&lt;<span class="hljs-title">Double</span>,<span class="hljs-title">Double</span>&gt; </span>&#123; ... &#125;<br>Pair&lt;? extends Number,? extends Number&gt;[] arr = <span class="hljs-keyword">new</span> Point[<span class="hljs-number">2</span>];<br>arr[<span class="hljs-number">0</span>] = <span class="hljs-keyword">new</span> Point(-<span class="hljs-number">1.0</span>,<span class="hljs-number">1.0</span>);  <span class="hljs-comment">// fine</span><br><span class="hljs-comment">//虽然能通过静态类型检查,但是无法通过数组的动态类型检查</span><br>arr[<span class="hljs-number">1</span>] = <span class="hljs-keyword">new</span> Pair&lt;Number,Number&gt;(-<span class="hljs-number">1.0</span>,<span class="hljs-number">1.0</span>); <span class="hljs-comment">// fine (causes ArrayStoreException)</span><br>arr[<span class="hljs-number">2</span>] = <span class="hljs-keyword">new</span> Pair&lt;Integer,Integer&gt;(<span class="hljs-number">1</span>,<span class="hljs-number">2</span>); <span class="hljs-comment">// fine (causes ArrayStoreException)</span><br></code></pre></div></td></tr></table></figure>
+
+<h2 id="13-通配符参数化类型不能干嘛"><a href="#13-通配符参数化类型不能干嘛" class="headerlink" title="13.通配符参数化类型不能干嘛?"></a>13.通配符参数化类型不能干嘛?</h2><p>不能做父类。见如下代码:</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">MyClass</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Comparable</span> &lt;?&gt; </span>&#123; <span class="hljs-comment">// error</span><br>  <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">compareTo</span><span class="hljs-params">( ??? arg)</span> </span>&#123; ... &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>编译器无法知道<code>comapreTo</code>方法到底接受的是什么类型的参数,很奇怪。而且,如前面所说,因为有<code>capture conversion</code>操作,这样的定义是没有任何意义的。</p>
+<h2 id="15-具体化参数类型不能做什么"><a href="#15-具体化参数类型不能做什么" class="headerlink" title="15. 具体化参数类型不能做什么?"></a>15. 具体化参数类型不能做什么?</h2><p>具体化参数类型(concrete parameterized type)就是使用具体类型实例化泛型类型的类型。那么它不能做:</p>
+<ol>
+<li>使用<code>instance of</code></li>
+<li>不能创建数组</li>
+<li>不能用于异常处理(泛型都不行)</li>
+</ol>
+<h2 id="14-泛型不能做什么"><a href="#14-泛型不能做什么" class="headerlink" title="14. 泛型不能做什么?"></a>14. 泛型不能做什么?</h2><ol>
+<li>不能在静态字段中使用类型参数(type paramemter):<strong>因为type parameter不适用于静态上下文环境</strong>,所以泛型不能适用于静态泛型字段,例如<code>static T member</code>、<code>static List&lt;T&gt; list</code></li>
+<li>不用如此使用：<code>obj instanceof T</code>，因为类型擦除的原因</li>
+</ol>
+<p><strong>参考文献:</strong></p>
+<p>若非特殊标注,问题引自<a target="_blank" rel="noopener" href="http://www.angelikalanger.com/GenericsFAQ/FAQSections/ParameterizedTypes.html#FAQ001">Java Generics FAQs - Generic And Parameterized Types</a></p>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/%E6%B3%9B%E5%9E%8B/">泛型</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/articles/SPI-service-mechanism.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">通过MySQL驱动的加载学习SPI机制</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/articles/the-generic-of-java.html">
+                        <span class="hidden-mobile">java的泛型</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@waline/client@0.16.2/dist/Waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-blond.vercel.app","placeholder":"说点什么","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":true,"avatarCDN":"","avatarForce":false,"requiredFields":[],"emojiCDN":null,"emojiMaps":null,"anonymous":null},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        new Waline(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+
+  <div>
+    <span id="timeDate">载入天数...</span>
+    <span id="times">载入时分秒...</span>
+    <script>
+    var now = new Date();
+    function createtime(){
+        var grt= new Date("06/03/2021 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24;
+        dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+        hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){
+            hnum = "0" + hnum;
+        }
+        minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes);
+        if(String(mnum).length ==1 ){
+                  mnum = "0" + mnum;
+        }
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){
+                  snum = "0" + snum;
+        }
+        document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+        document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+    }  //此次自定义显示内容
+    setInterval("createtime()",250);
+    </script>
+  </div>
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    <!-- Google Analytics -->
+    <script defer>
+      window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) };
+      ga.l = +new Date;
+      ga('create', 'UA-198559201-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+    <!-- Google gtag.js -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-19MVRDT9NM"></script>
+    <script defer>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-19MVRDT9NM');
+    </script>
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
