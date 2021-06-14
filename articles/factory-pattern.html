@@ -188,7 +188,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      231 字
+      2.3k 字
     </span>
   
 
@@ -198,7 +198,7 @@
       <i class="iconfont icon-clock-fill"></i>
       
       
-      3
+      30
        分钟
     </span>
   
@@ -239,17 +239,92 @@
             <h1 style="display: none">工厂模式扫盲</h1>
             
             <div class="markdown-body">
-              <p>工厂模式可以分为三种：简单工厂模式、工厂方法模式以及抽线工厂模式。本文对这三种设计模式进行了简单介绍。</p>
-<h2 id="1-为什么需要工厂模式"><a href="#1-为什么需要工厂模式" class="headerlink" title="1. 为什么需要工厂模式"></a>1. 为什么需要工厂模式</h2><h2 id="2-静态工厂模式"><a href="#2-静态工厂模式" class="headerlink" title="2. 静态工厂模式"></a>2. 静态工厂模式</h2><h2 id="3-工厂方法模式"><a href="#3-工厂方法模式" class="headerlink" title="3. 工厂方法模式"></a>3. 工厂方法模式</h2><p>每生产一种新的对象，不仅要构建对应的类，还要构造对应的工厂类。也就是说，增加一种新的生产目标，至少要增加两个类，同时不能组合生产各种已有的对象。</p>
-<h2 id="4-抽象工厂模式"><a href="#4-抽象工厂模式" class="headerlink" title="4. 抽象工厂模式"></a>4. 抽象工厂模式</h2><p>工厂方法与抽象工厂</p>
+              <p>工厂模式基本上可分为四种种：静态工厂模式、简单工厂模式、工厂方法模式以及抽线工厂模式。本文将对这四种设计模式进行了简单介绍。</p>
+<h2 id="1-为什么需要工厂模式"><a href="#1-为什么需要工厂模式" class="headerlink" title="1. 为什么需要工厂模式"></a>1. 为什么需要工厂模式</h2><p>这个问题的答案很容易想到，工厂模式是为了将对象的使用与创建这两个步骤分开，实现代码的解耦，不然一个很明显的问题就是如果我们修改了对象的创建方法，那么需要修改的地方将无法想象。工厂模式避免了这一窘境。</p>
+<h2 id="2-静态工厂模式"><a href="#2-静态工厂模式" class="headerlink" title="2. 静态工厂模式"></a>2. 静态工厂模式</h2><p>静态工厂模式比较简单，基本定义为：一个类中的方法根据不同的参数返回不同的实例，不过一般是一个单独的类来定义这个唯一的方法，demo代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">UserFactory</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> function <span class="hljs-title">create</span><span class="hljs-params">(String type)</span> </span>&#123;<br>        <span class="hljs-keyword">switch</span> (type) &#123;<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;user&#x27;</span>: <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> User();<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;customer&#x27;</span>: <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Customer();<br>            <span class="hljs-keyword">case</span> <span class="hljs-string">&#x27;admin&#x27;</span>: <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> Admin();<br>            <span class="hljs-keyword">default</span>:<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> Exception(<span class="hljs-string">&#x27;Wrong user type passed.&#x27;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>但是该模式的缺点就是如果产品类非常多，那么条件判断是一件非常麻烦的事，而且代码十分臃肿。我认为该模式适用于产品类较少的情况。</p>
+<h2 id="3-工厂方法模式"><a href="#3-工厂方法模式" class="headerlink" title="3. 工厂方法模式"></a>3. 工厂方法模式</h2><p>根据我的探索，工厂方法有两种版本：</p>
+<ol>
+<li>经典版本，由GOF定义</li>
+<li>无名氏版本</li>
+</ol>
+<p>首先工厂方法模式（factory method）的<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Factory_method_pattern">经典定义</a>如下（GOF版本）：</p>
 <div class="note note-info">
-            <p>First, we must note that neither Java nor C# existed when the GoF wrote their book. The GoF use of the term interface is unrelated to the interface types introduced by particular languages. Therefore, the concrete creator can be created from any API. <strong>The important point in the pattern is that the API consumes its own Factory Method</strong>, so an interface with only one method cannot be a Factory Method any more than it can be an Abstract Factory.</p>
+            <p>“Define an interface for creating an object, but let subclasses decide which class to <strong>instantiate</strong>. The Factory method lets a class defer instantiation it uses to subclasses.”</p>
           </div>
 
+<p>大意是指通过“接口”创建对象，但是具体的创建过程交由继承的子类来实现。定义很抽象，我们通过<a target="_blank" rel="noopener" href="https://stackoverflow.com/a/50786084">jaco0646</a>提供的demo来了解一下：</p>
+<figure class="highlight java"><figcaption><span>"factory method"</span></figcaption><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Creator</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">anOperation</span><span class="hljs-params">()</span> </span>&#123;<br>        Product p = factoryMethod();<br>        p.whatever();<br>    &#125;<br>    <span class="hljs-comment">//factory method</span><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> <span class="hljs-keyword">abstract</span> Product <span class="hljs-title">factoryMethod</span><span class="hljs-params">()</span></span>;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ConcreteCreator</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Creator</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> Product <span class="hljs-title">factoryMethod</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ConcreteProduct();<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>上述代码中，抽象类“Creator”调用了自己的定义的工厂方法“factoryMethod”，但是方法具体的实现交给了子类“ConcreteCreator”，子类实现的工厂方法返回的是一个具体产品，很标准地实现了上述定义，但是美中不足是没有使用“interface”。<a target="_blank" rel="noopener" href="https://stackoverflow.com/a/38668246">jaco0646</a>给出了回答：</p>
+<div class="note note-info">
+            <p>First, we must note that neither Java nor C# existed when the GoF wrote their book. The GoF use of the term interface is unrelated to the interface types introduced by particular languages. Therefore, the concrete creator can be created from any API. The important point in the pattern is that <strong>the API consumes its own Factory Method</strong>, so an interface with only one method cannot be a Factory Method any more than it can be an Abstract Factory.</p>
+          </div>
+
+<p>大意是指因为时代原因，GOF中的“interface”和具体语言中“interface”完全不同，我们可以通过任何形式的API使用工厂方法，但是需要注意该API必须消费自己的工厂方法。可能熟悉设计模式的同学发现，这就是模板方法啊，你到底懂不懂啊？很巧，我在<a target="_blank" rel="noopener" href="https://stackoverflow.com/a/50786084">jaco0646</a>的回答中又发现了答案：</p>
+<div class="note note-info">
+            <p>The Factory Method Pattern is nothing more than a specialization of the Template Method Pattern. The two patterns share an identical structure. They only differ in purpose. Factory Method is creational (it builds something) whereas Template Method is behavioral (it computes something).</p>
+          </div>
+
+<p>大意是说工厂方法与模板方法的区别很微妙，前者是创建型方法（指创建具体的实例），而后者是行为型方法（指完成逻辑功能）。</p>
+<p>上述是我了解的经典工厂方法，而无名氏版本是由抽象工厂、具体工厂、抽象产品、具体产品四类元素组成组成，demo如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-comment">//抽象产品</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Product</span></span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">shape</span><span class="hljs-params">()</span></span>;<br>&#125;<br><span class="hljs-comment">//具体产品</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ConcreteProduct</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Product</span></span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">shape</span><span class="hljs-params">()</span></span>&#123;<br>        ...<br>    &#125;<br>&#125;<br><span class="hljs-comment">//抽象工厂</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Creator</span></span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">factoryMethod</span><span class="hljs-params">()</span></span>;<br>&#125;<br><span class="hljs-comment">//具体工厂</span><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ConcreteCreator</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">Creator</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">protected</span> Product <span class="hljs-title">factoryMethod</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> ConcreteProduct();<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>其实这种版本应该没啥问题，但是当我学习抽象工厂模式时，我陷入了疑惑。</p>
+<h2 id="4-抽象工厂模式"><a href="#4-抽象工厂模式" class="headerlink" title="4. 抽象工厂模式"></a>4. 抽象工厂模式</h2><p>抽象工厂模式的<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Abstract_factory_pattern#Definition">GOF定义</a>如下所示：</p>
+<div class="note note-info">
+            <p>The essence of the Abstract Factory Pattern is to “Provide an interface for creating families of related or dependent objects without specifying their concrete classes.”（通过“接口”创建相关的系列产品，但是并不声明如何创建）</p>
+          </div>
+
+<p>这里还是拿来主义，<a target="_blank" rel="noopener" href="https://stackoverflow.com/a/50786084">jaco0646</a>提供的demo如下所示：</p>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Client</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> AbstractFactory_MessageQueue factory;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Client</span><span class="hljs-params">(AbstractFactory_MessageQueue factory)</span> </span>&#123;<br>        <span class="hljs-comment">// The factory creates message queues either for Azure or MSMQ.</span><br>        <span class="hljs-comment">// The client does not know which technology is used.</span><br>        <br>        <span class="hljs-comment">// inject AbstractFactory to Client </span><br>        <span class="hljs-keyword">this</span>.factory = factory;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">sendMessage</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-comment">//The client doesn&#x27;t know whether the OutboundQueue is Azure or MSMQ.</span><br>        OutboundQueue out = factory.createProductA();<br>        out.sendMessage(<span class="hljs-string">&quot;Hello Abstract Factory!&quot;</span>);<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> String <span class="hljs-title">receiveMessage</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-comment">//The client doesn&#x27;t know whether the ReplyQueue is Azure or MSMQ.</span><br>        ReplyQueue in = factory.createProductB();<br>        <span class="hljs-keyword">return</span> in.receiveMessage();<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">AbstractFactory_MessageQueue</span> </span>&#123;<br>    <span class="hljs-function">OutboundQueue <span class="hljs-title">createProductA</span><span class="hljs-params">()</span></span>;<br>    <span class="hljs-function">ReplyQueue <span class="hljs-title">createProductB</span><span class="hljs-params">()</span></span>;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ConcreteFactory_Azure</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">AbstractFactory_MessageQueue</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> OutboundQueue <span class="hljs-title">createProductA</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> AzureMessageQueue();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> ReplyQueue <span class="hljs-title">createProductB</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> AzureResponseMessageQueue();<br>    &#125;<br>&#125;<br><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ConcreteFactory_Msmq</span> <span class="hljs-keyword">implements</span> <span class="hljs-title">AbstractFactory_MessageQueue</span> </span>&#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> OutboundQueue <span class="hljs-title">createProductA</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> MsmqMessageQueue();<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> ReplyQueue <span class="hljs-title">createProductB</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> MsmqResponseMessageQueue();<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
+<p>其中“AbstractFactory_MessageQueue”作为抽象工厂，定义了两个创建产品的方法“createProductA()”、“createProductB()”。具体的实现交给抽象工厂的“继承者”具体工厂。该模式单独很好理解，但是与无名氏版工厂方法模式放在一块，就非常迷惑了？不免提出几个问题：</p>
 <ol>
-<li><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/4209791/design-patterns-abstract-factory-vs-factory-method#comment119542960_4209791"></a></p>
+<li>工厂方法模式到底哪一版才是对的？</li>
+<li>无名氏版工厂方法模式算是一种设计模式吗？</li>
+<li>经典工厂方法与抽象工厂的区别到底是什么？</li>
+</ol>
+<p>对于第一个问题，我暂时还没有找到答案，我目前比较认同第一种版本，即GOF版本，因为我认为无名氏版本实质与抽象工厂没有区别。</p>
+<p>对于第二个问题，我貌似找到了一个答案：</p>
+<div class="note note-info">
+            <p>an interface with only one method cannot be a Factory Method any more than it can be an Abstract Factory, what do we call a creational interface with only one method?</p><p><strong>Answer:</strong><br>If the method is static, it is commonly called a Static Factory. If the method is non-static, it is commonly called a Simple Factory. Neither of these is a GoF pattern, but in practice they are far more commonly used!</p>
+          </div>
+
+<p>对于第三个问题，网上有了比较明确的回答，我这里仅作简单摘要，因为内容较长，单独成为一节。</p>
+<h2 id="5-传统工厂方法与抽象工厂的区别"><a href="#5-传统工厂方法与抽象工厂的区别" class="headerlink" title="5. 传统工厂方法与抽象工厂的区别"></a>5. 传统工厂方法与抽象工厂的区别</h2><p>针对<a target="_blank" rel="noopener" href="https://stackoverflow.com/a/50786084">jaco0646</a> demo中的代码，他提出以下内容：</p>
+<p>对于抽象工厂，我们需要知道：</p>
+<p>（1）抽象工厂最重要的一点是它会被注入“Client”代码，这也就是为什么我们说抽象工厂是由组合实现，例如demo中“AbstractFactory”被注入了“Client”的代码，这也就是抽象方法被称由组合实现的原因。</p>
+<div class="note note-info">
+            <p>The most important point to grasp here is that the abstract factory is injected into the client. This is why we say that Abstract Factory is implemented by Composition. Often, a dependency injection framework would perform that task; but a framework is not required for DI.</p>
+          </div>
+
+<p>（2）抽象工厂的实现类并不是所谓的工厂方法。</p>
+<p>（3）抽象工厂中的家族产品是指各个产品间在逻辑上具备关联，而不是指代码实现中具备继承关系。</p>
+<p>对于工厂方法模式，我们需要知道：</p>
+<p>（1）在demo中，工厂方法模式中的“Client”是指“ConcreteCreator”，“Client”的父类定义了工厂方法，这就是我们称工厂方法是由继承实现的原因。</p>
+<div class="note note-info">
+            <p>The most important point to grasp here is that the ConcreteCreator is the client. In other words, the client is a subclass whose parent defines the factoryMethod(). This is why we say that Factory Method is implemented by Inheritance.)</p>
+          </div>
+
+<p>（2）工厂方法模式与模板方法模式并无太大区别，前者是创建型方法，后者是行为型方法。</p>
+<p>（3）我认为这点是传统工厂方法模式与抽象工厂最大的区别。在demo代码中父类“Creator”消费了自己的工厂方法“factoryMethod()”，如果将代码中的“anOperation()”删除，那么就不再是一个传统的工厂方法。</p>
+<div class="note note-info">
+            <p>And finally, the third point to note is that the Creator (parent) class invokes its own factoryMethod(). If we remove anOperation() from the parent class, leaving only a single method behind, it is no longer the Factory Method pattern. In other words, Factory Method cannot be implemented with less than two methods in the parent class; and one must invoke the other.</p>
+          </div>
+
+<p>如果仔细阅读了上面的内容，相信大家已经知道了GOF版本的工厂方法与抽象工厂的区别。核心就是<strong>工厂方法模式主要通过继承来实现，会消费自己定义的工厂方法。而抽象工厂模式主要通过组合与代码注入来实现</strong>。</p>
+<h2 id="6-各种工厂模式的适用场景"><a href="#6-各种工厂模式的适用场景" class="headerlink" title="6. 各种工厂模式的适用场景"></a>6. 各种工厂模式的适用场景</h2><ol>
+<li>对于简单工厂，一般适用于产品类较少，各个产品构造简单时适用。</li>
+<li>对于传统工厂方法模式，如果不知道子类是如何创建对象或者需要子类客制化创建过程，那么使用它</li>
+<li>对于抽象工厂模式，一般用来创建一系列配套的产品共同使用</li>
+</ol>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><ol>
+<li><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/38668246/12893742">Design Patterns: Abstract Factory vs Factory Method</a></p>
 </li>
-<li><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/38668246/12893742"></a></p>
+<li><p><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/30465141/12893742">Factory Pattern. When to use factory methods?</a></p>
 </li>
 </ol>
 
@@ -281,6 +356,29 @@
                   
                 </p>
               
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/articles/hello-world.html">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">Hello World</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/articles/log-system-for-Java-abstract.html">
+                        <span class="hidden-mobile">Java日志库扫盲</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
               
             </div>
 
