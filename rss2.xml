@@ -15,14 +15,14 @@
     <atom:link href="https://eripe.me/rss2.xml" rel="self" type="application/rss+xml"/>
     
     <description>欢迎乘坐八楼的二路公交车</description>
-    <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+    <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
     <generator>http://hexo.io/</generator>
     
     <item>
       <title>反射初体验</title>
       <link>https://eripe.me/articles/%E5%8F%8D%E5%B0%84%E5%88%9D%E4%BD%93%E9%AA%8C.html</link>
       <guid>https://eripe.me/articles/%E5%8F%8D%E5%B0%84%E5%88%9D%E4%BD%93%E9%AA%8C.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
       
         
         
@@ -51,7 +51,7 @@
       <title>java的内存布局</title>
       <link>https://eripe.me/articles/java-memory-layout.html</link>
       <guid>https://eripe.me/articles/java-memory-layout.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
       
         
         
@@ -80,7 +80,7 @@
       <title>双亲委派模型</title>
       <link>https://eripe.me/articles/parents-delegation-model.html</link>
       <guid>https://eripe.me/articles/parents-delegation-model.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
       
         
         
@@ -109,7 +109,7 @@
       <title>java中的类型系统</title>
       <link>https://eripe.me/articles/type-system-of-java.html</link>
       <guid>https://eripe.me/articles/type-system-of-java.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
       
         
         
@@ -140,7 +140,7 @@
       <title>通过MySQL驱动的加载学习SPI机制</title>
       <link>https://eripe.me/articles/SPI-service-mechanism.html</link>
       <guid>https://eripe.me/articles/SPI-service-mechanism.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
       
         
         
@@ -171,7 +171,7 @@
       <title>关于泛型的常见问题</title>
       <link>https://eripe.me/articles/Frequently-asked-questions-about-generics.html</link>
       <guid>https://eripe.me/articles/Frequently-asked-questions-about-generics.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
       
         
         
@@ -200,7 +200,7 @@
       <title>java的泛型</title>
       <link>https://eripe.me/articles/the-generic-of-java.html</link>
       <guid>https://eripe.me/articles/the-generic-of-java.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
       
         
         
@@ -231,7 +231,7 @@
       <title>类的加载机制</title>
       <link>https://eripe.me/articles/class-loading-mechanism.html</link>
       <guid>https://eripe.me/articles/class-loading-mechanism.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
       
         
         
@@ -260,7 +260,7 @@
       <title>HashMap源码分析(三)-删除源码</title>
       <link>https://eripe.me/articles/HashMap-analysis-part-three.html</link>
       <guid>https://eripe.me/articles/HashMap-analysis-part-three.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
       
         
         
@@ -286,10 +286,39 @@
     </item>
     
     <item>
+      <title>Queue接口分析</title>
+      <link>https://eripe.me/articles/Queue-interface-analysis.html</link>
+      <guid>https://eripe.me/articles/Queue-interface-analysis.html</guid>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
+      
+        
+        
+          
+          
+      <description>&lt;h2 id=&quot;0x1-基本概念&quot;&gt;&lt;a href=&quot;#0x1-基本概念&quot; class=&quot;headerlink&quot; title=&quot;0x1 基本概念&quot;&gt;&lt;/a&gt;0x1</description>
+          
+        
+      
+      
+      
+      <content:encoded><![CDATA[<h2 id="0x1-基本概念"><a href="#0x1-基本概念" class="headerlink" title="0x1 基本概念"></a>0x1 基本概念</h2><p><code>Queue</code>接口继承自超级接口<code>Collection</code>,其不仅实现了<code>Coolection</code>中的基本方法,而且额外增加了适用于队列的增、删、差方法。并且对应这三种操作,Queue提供了两套方法,一套在操作失败时抛出异常,另一套在操作失败时返回<code>null</code>,不过在文档中说到:</p><blockquote><p>The latter form of the insert operation is designed specifically for use with capacity-restricted Queue implementations</p></blockquote><p>说是后者是专门为容量有限的队列而设计的,why?这点不是很懂。</p><p>更新:2020-07-23 19:12:32</p><p>现在懂了,如果对于<strong>容量有限</strong>的队列,比如<code>ArrayBlockingQueue</code>,它是继承自抽象类<code>AbstractQueue</code>,如果调用其<code>offer</code>方法(在<code>AbstractQueue</code>中实现),添加元素失败后只会返回true,否则返回false。而调用<code>add</code>的话,如果插入失败,就会抛出状态异常。所以说,offer类方法可用于检查队列是否已满,比add类方法优秀点。但是对于<code>LinkedList</code>、<code>ArrayQueue</code>等带自动扩容属性的队列来说,二者效果差不多,不过offer类可以返回操作是否成功的信息。还是推荐使用offer类。</p><p>两组方法如下图所示:</p><p><img src="images/methods.png" alt="methods"></p><h2 id="0x2-抽象类AbstractQueue"><a href="#0x2-抽象类AbstractQueue" class="headerlink" title="0x2 抽象类AbstractQueue"></a>0x2 抽象类AbstractQueue</h2><p>当然,跟<code>Collection</code>接口差不多,<code>Queue</code>也有一个抽象类用于实现一般的方法:</p><figure class="highlight java"><figcaption><span>"AbstractQueue"</span></figcaption><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AbstractQueue</span>&lt;<span class="hljs-title">E</span>&gt;</span><br><span class="hljs-class">    <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractCollection</span>&lt;<span class="hljs-title">E</span>&gt;</span><br><span class="hljs-class">    <span class="hljs-keyword">implements</span> <span class="hljs-title">Queue</span>&lt;<span class="hljs-title">E</span>&gt; </span>&#123;<br>    ...<br>    &#125;<br></code></pre></div></td></tr></table></figure><p>可以看到,因为<code>Queue</code>本身就继承自<code>Clooection</code>,所以<code>AbstractQueue</code>的实现继承自<code>AbstractClloection</code>没有任何异议吧。当然为了实现了Queue的特有方法,也实现了接口<code>Queue</code>。下面简单分析一下<code>offer()</code>方法。</p><figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">add</span><span class="hljs-params">(E e)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (offer(e))<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalStateException(<span class="hljs-string">&quot;Queue full&quot;</span>);<br>&#125;<br></code></pre></div></td></tr></table></figure><p>add在内部调用了offer,所以用谁不用我多说了吧。不过一开始我看到写法还是一愣,这<code>offer()</code>方法的实现在哪啊?</p><p>后来一想,抽象类不一定要实现嘛,把这个方法留到子类去实现也行奥。</p><h2 id="0x3-Deque接口"><a href="#0x3-Deque接口" class="headerlink" title="0x3 Deque接口"></a>0x3 Deque接口</h2><p>Deque就是<code>double ended queue</code>,也就是所谓的双端队列,什么是双端队列我就不说了,来看看其规定的抽象方法:</p><figure class="highlight java"><figcaption><span>"Deque"</span></figcaption><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Deque</span>&lt;<span class="hljs-title">E</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">Queue</span>&lt;<span class="hljs-title">E</span>&gt; </span>&#123;<br>    <br>    <span class="hljs-comment">//双端队列方法</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addFirst</span><span class="hljs-params">(E e)</span></span>;<br>  <br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addLast</span><span class="hljs-params">(E e)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">offerFirst</span><span class="hljs-params">(E e)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">offerLast</span><span class="hljs-params">(E e)</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">removeFirst</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">removeLast</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">pollFirst</span><span class="hljs-params">()</span></span>;<br> <br>    <span class="hljs-function">E <span class="hljs-title">pollLast</span><span class="hljs-params">()</span></span>;<br> <br>    <span class="hljs-function">E <span class="hljs-title">getFirst</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">getLast</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">peekFirst</span><span class="hljs-params">()</span></span>;<br> <br>    <span class="hljs-function">E <span class="hljs-title">peekLast</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">removeFirstOccurrence</span><span class="hljs-params">(Object o)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">removeLastOccurrence</span><span class="hljs-params">(Object o)</span></span>;<br><br>    <span class="hljs-comment">// 单向队列方法</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">add</span><span class="hljs-params">(E e)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">offer</span><span class="hljs-params">(E e)</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">remove</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">poll</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">element</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">peek</span><span class="hljs-params">()</span></span>;<br><br><br>    <span class="hljs-comment">//栈方法</span><br> <br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">push</span><span class="hljs-params">(E e)</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">pop</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-comment">//重写Collection的部分方法</span><br> <br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">remove</span><span class="hljs-params">(Object o)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">contains</span><span class="hljs-params">(Object o)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">size</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">Iterator&lt;E&gt; <span class="hljs-title">iterator</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">Iterator&lt;E&gt; <span class="hljs-title">descendingIterator</span><span class="hljs-params">()</span></span>;<br><br>&#125;<br><br></code></pre></div></td></tr></table></figure>]]></content:encoded>
+      
+      
+      <category domain="https://eripe.me/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</category>
+      
+      
+      <category domain="https://eripe.me/tags/Queue/">Queue</category>
+      
+      
+      <comments>https://eripe.me/articles/Queue-interface-analysis.html#disqus_thread</comments>
+      
+    </item>
+    
+    <item>
       <title>HashMap源码分析(一)-HashMap中的那些常量</title>
       <link>https://eripe.me/articles/HashMap-analysis-part-one.html</link>
       <guid>https://eripe.me/articles/HashMap-analysis-part-one.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
       
         
         
@@ -318,7 +347,7 @@
       <title>HashMap源码分析(二)-插入源码</title>
       <link>https://eripe.me/articles/HashMap-analysis-part-two.html</link>
       <guid>https://eripe.me/articles/HashMap-analysis-part-two.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
       
         
         
@@ -347,7 +376,7 @@
       <title>红黑树入门</title>
       <link>https://eripe.me/articles/red-black-tree.html</link>
       <guid>https://eripe.me/articles/red-black-tree.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
       
         
         
@@ -377,7 +406,7 @@
       <title>LinkedList源码分析</title>
       <link>https://eripe.me/articles/LinkedList-source-code-analysis.html</link>
       <guid>https://eripe.me/articles/LinkedList-source-code-analysis.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
       
         
         
@@ -403,39 +432,10 @@
     </item>
     
     <item>
-      <title>Queue接口分析</title>
-      <link>https://eripe.me/articles/Queue-interface-analysis.html</link>
-      <guid>https://eripe.me/articles/Queue-interface-analysis.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
-      
-        
-        
-          
-          
-      <description>&lt;h2 id=&quot;0x1-基本概念&quot;&gt;&lt;a href=&quot;#0x1-基本概念&quot; class=&quot;headerlink&quot; title=&quot;0x1 基本概念&quot;&gt;&lt;/a&gt;0x1</description>
-          
-        
-      
-      
-      
-      <content:encoded><![CDATA[<h2 id="0x1-基本概念"><a href="#0x1-基本概念" class="headerlink" title="0x1 基本概念"></a>0x1 基本概念</h2><p><code>Queue</code>接口继承自超级接口<code>Collection</code>,其不仅实现了<code>Coolection</code>中的基本方法,而且额外增加了适用于队列的增、删、差方法。并且对应这三种操作,Queue提供了两套方法,一套在操作失败时抛出异常,另一套在操作失败时返回<code>null</code>,不过在文档中说到:</p><blockquote><p>The latter form of the insert operation is designed specifically for use with capacity-restricted Queue implementations</p></blockquote><p>说是后者是专门为容量有限的队列而设计的,why?这点不是很懂。</p><p>更新:2020-07-23 19:12:32</p><p>现在懂了,如果对于<strong>容量有限</strong>的队列,比如<code>ArrayBlockingQueue</code>,它是继承自抽象类<code>AbstractQueue</code>,如果调用其<code>offer</code>方法(在<code>AbstractQueue</code>中实现),添加元素失败后只会返回true,否则返回false。而调用<code>add</code>的话,如果插入失败,就会抛出状态异常。所以说,offer类方法可用于检查队列是否已满,比add类方法优秀点。但是对于<code>LinkedList</code>、<code>ArrayQueue</code>等带自动扩容属性的队列来说,二者效果差不多,不过offer类可以返回操作是否成功的信息。还是推荐使用offer类。</p><p>两组方法如下图所示:</p><p><img src="images/methods.png" alt="methods"></p><h2 id="0x2-抽象类AbstractQueue"><a href="#0x2-抽象类AbstractQueue" class="headerlink" title="0x2 抽象类AbstractQueue"></a>0x2 抽象类AbstractQueue</h2><p>当然,跟<code>Collection</code>接口差不多,<code>Queue</code>也有一个抽象类用于实现一般的方法:</p><figure class="highlight java"><figcaption><span>"AbstractQueue"</span></figcaption><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">abstract</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">AbstractQueue</span>&lt;<span class="hljs-title">E</span>&gt;</span><br><span class="hljs-class">    <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractCollection</span>&lt;<span class="hljs-title">E</span>&gt;</span><br><span class="hljs-class">    <span class="hljs-keyword">implements</span> <span class="hljs-title">Queue</span>&lt;<span class="hljs-title">E</span>&gt; </span>&#123;<br>    ...<br>    &#125;<br></code></pre></div></td></tr></table></figure><p>可以看到,因为<code>Queue</code>本身就继承自<code>Clooection</code>,所以<code>AbstractQueue</code>的实现继承自<code>AbstractClloection</code>没有任何异议吧。当然为了实现了Queue的特有方法,也实现了接口<code>Queue</code>。下面简单分析一下<code>offer()</code>方法。</p><figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">boolean</span> <span class="hljs-title">add</span><span class="hljs-params">(E e)</span> </span>&#123;<br>    <span class="hljs-keyword">if</span> (offer(e))<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> IllegalStateException(<span class="hljs-string">&quot;Queue full&quot;</span>);<br>&#125;<br></code></pre></div></td></tr></table></figure><p>add在内部调用了offer,所以用谁不用我多说了吧。不过一开始我看到写法还是一愣,这<code>offer()</code>方法的实现在哪啊?</p><p>后来一想,抽象类不一定要实现嘛,把这个方法留到子类去实现也行奥。</p><h2 id="0x3-Deque接口"><a href="#0x3-Deque接口" class="headerlink" title="0x3 Deque接口"></a>0x3 Deque接口</h2><p>Deque就是<code>double ended queue</code>,也就是所谓的双端队列,什么是双端队列我就不说了,来看看其规定的抽象方法:</p><figure class="highlight java"><figcaption><span>"Deque"</span></figcaption><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">interface</span> <span class="hljs-title">Deque</span>&lt;<span class="hljs-title">E</span>&gt; <span class="hljs-keyword">extends</span> <span class="hljs-title">Queue</span>&lt;<span class="hljs-title">E</span>&gt; </span>&#123;<br>    <br>    <span class="hljs-comment">//双端队列方法</span><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addFirst</span><span class="hljs-params">(E e)</span></span>;<br>  <br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">addLast</span><span class="hljs-params">(E e)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">offerFirst</span><span class="hljs-params">(E e)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">offerLast</span><span class="hljs-params">(E e)</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">removeFirst</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">removeLast</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">pollFirst</span><span class="hljs-params">()</span></span>;<br> <br>    <span class="hljs-function">E <span class="hljs-title">pollLast</span><span class="hljs-params">()</span></span>;<br> <br>    <span class="hljs-function">E <span class="hljs-title">getFirst</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">getLast</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">peekFirst</span><span class="hljs-params">()</span></span>;<br> <br>    <span class="hljs-function">E <span class="hljs-title">peekLast</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">removeFirstOccurrence</span><span class="hljs-params">(Object o)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">removeLastOccurrence</span><span class="hljs-params">(Object o)</span></span>;<br><br>    <span class="hljs-comment">// 单向队列方法</span><br><br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">add</span><span class="hljs-params">(E e)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">offer</span><span class="hljs-params">(E e)</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">remove</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">poll</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">element</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">peek</span><span class="hljs-params">()</span></span>;<br><br><br>    <span class="hljs-comment">//栈方法</span><br> <br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">push</span><span class="hljs-params">(E e)</span></span>;<br><br>    <span class="hljs-function">E <span class="hljs-title">pop</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-comment">//重写Collection的部分方法</span><br> <br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">remove</span><span class="hljs-params">(Object o)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">boolean</span> <span class="hljs-title">contains</span><span class="hljs-params">(Object o)</span></span>;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">size</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">Iterator&lt;E&gt; <span class="hljs-title">iterator</span><span class="hljs-params">()</span></span>;<br><br>    <span class="hljs-function">Iterator&lt;E&gt; <span class="hljs-title">descendingIterator</span><span class="hljs-params">()</span></span>;<br><br>&#125;<br><br></code></pre></div></td></tr></table></figure>]]></content:encoded>
-      
-      
-      <category domain="https://eripe.me/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</category>
-      
-      
-      <category domain="https://eripe.me/tags/Queue/">Queue</category>
-      
-      
-      <comments>https://eripe.me/articles/Queue-interface-analysis.html#disqus_thread</comments>
-      
-    </item>
-    
-    <item>
       <title>ArrayList源码分析</title>
       <link>https://eripe.me/articles/ArrayList-source-code-analysis.html</link>
       <guid>https://eripe.me/articles/ArrayList-source-code-analysis.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
       
         
         
@@ -464,7 +464,7 @@
       <title>ArrayQueue与ArrayDeque源码分析</title>
       <link>https://eripe.me/articles/ArrayQueue-and-ArrayDeque-analysis.html</link>
       <guid>https://eripe.me/articles/ArrayQueue-and-ArrayDeque-analysis.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
       
         
         
@@ -497,7 +497,7 @@
       <title>volatile关键字</title>
       <link>https://eripe.me/articles/volatile-keyword.html</link>
       <guid>https://eripe.me/articles/volatile-keyword.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
       
         
         
@@ -526,7 +526,7 @@
       <title>多线程为什么会不安全</title>
       <link>https://eripe.me/articles/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html</link>
       <guid>https://eripe.me/articles/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E4%B8%8D%E5%AE%89%E5%85%A8.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
       
         
         
@@ -555,7 +555,7 @@
       <title>ThreadLocal源码解析</title>
       <link>https://eripe.me/articles/threadlocal-analysis.html</link>
       <guid>https://eripe.me/articles/threadlocal-analysis.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
       
         
         
@@ -584,7 +584,7 @@
       <title>多线程基础</title>
       <link>https://eripe.me/articles/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80.html</link>
       <guid>https://eripe.me/articles/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80.html</guid>
-      <pubDate>Mon, 14 Jun 2021 11:50:07 GMT</pubDate>
+      <pubDate>Mon, 14 Jun 2021 12:42:43 GMT</pubDate>
       
         
         
