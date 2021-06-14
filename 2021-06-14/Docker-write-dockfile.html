@@ -1,0 +1,602 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=&#34;auto&#34;>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/panda.png">
+  <link rel="icon" href="/img/panda.png">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+  
+  <meta name="theme-color" content="#55967e">
+  <meta name="description" content="欢迎乘坐八楼的二路公交车">
+  <meta name="author" content="Rains.Lee">
+  <meta name="keywords" content="Java">
+  
+  <title>Dockerfile的基本规则 - 一颗胡杨树</title>
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
+
+
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/github-markdown-css@4.0.0/github-markdown.min.css" />
+  <link  rel="stylesheet" href="/lib/hint/hint.min.css" />
+
+  
+    
+    
+      
+      <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@10.7.2/styles/github-gist.min.css" />
+    
+  
+
+  
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_ba1fz6golrf.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_kmeydafke9r.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+<!-- 自定义样式保持在最底部 -->
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    var CONFIG = {"hostname":"eripe.me","root":"/","version":"1.8.11","typing":{"enable":true,"typeSpeed":70,"cursorChar":"_","loop":false},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"right","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"copy_btn":true,"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":true,"baidu":null,"google":"UA-198559201-1","gtag":"G-19MVRDT9NM","tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":"3MrDNVWQz1aBbREDmtPT7DuN-MdYXbMMI","app_key":"34YIO0Yk922Dzi79zUJidSkl","server_url":null}},"search_path":"/local-search.xml"};
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+<meta name="generator" content="Hexo 5.4.0"><link rel="alternate" href="/rss2.xml" title="一颗胡杨树" type="application/rss+xml">
+</head>
+
+
+<body>
+  <header style="height: 70vh;">
+    <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand"
+       href="/">&nbsp;<strong>Rains·Blog</strong>&nbsp;</a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                首页
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                归档
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                分类
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                标签
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                关于
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" data-toggle="modal" data-target="#modalSearch">&nbsp;<i
+                class="iconfont icon-search"></i>&nbsp;</a>
+          </li>
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self">&nbsp;<i
+                class="iconfont icon-dark" id="color-toggle-icon"></i>&nbsp;</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+    <div class="banner" id="banner" parallax=true
+         style="background: url('/img/home.jpg') no-repeat center center;
+           background-size: cover;">
+      <div class="full-bg-img">
+        <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+          <div class="page-header text-center fade-in-up">
+            <span class="h2" id="subtitle" title="Dockerfile的基本规则">
+              
+            </span>
+
+            
+              <div class="mt-3">
+  
+  
+    <span class="post-meta">
+      <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+      <time datetime="2021-06-14 14:26" pubdate>
+        2021年6月14日 下午
+      </time>
+    </span>
+  
+</div>
+
+<div class="mt-1">
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-chart"></i>
+      1.3k 字
+    </span>
+  
+
+  
+    
+    <span class="post-meta mr-2">
+      <i class="iconfont icon-clock-fill"></i>
+      
+      
+      16
+       分钟
+    </span>
+  
+
+  
+  
+    
+      <!-- LeanCloud 统计文章PV -->
+      <span id="leancloud-page-views-container" class="post-meta" style="display: none">
+        <i class="iconfont icon-eye" aria-hidden="true"></i>
+        <span id="leancloud-page-views"></span> 次
+      </span>
+    
+  
+</div>
+
+            
+          </div>
+
+          
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="d-none d-lg-block col-lg-2"></div>
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div class="py-5" id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">Dockerfile的基本规则</h1>
+            
+            <div class="markdown-body">
+              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在了解了<a href="Docker-filesys-layout.md">docker的基本原理</a>后，是时候了解以下Dockerfile是怎么写的了。首先我们需要了解<code>RUN</code>与<code>CMD</code>命令的区别。</p>
+<ul>
+<li><code>RUN</code>命令：每执行一次，就会在原有镜像的基础上添加一个<code>upper dir</code>保存所作的改变，所以对于一类的命令我们尽量使用一条<code>RUN</code>，否则会创建过多的不必要的<code>upper dir</code></li>
+<li><code>CMD</code>命令：容器是一个进程，<code>CMD</code>命令就像是容器启动时输入的命令参数，所以只能有一条<code>CMD</code></li>
+</ul>
+<h2 id="Dockerfile的栗子"><a href="#Dockerfile的栗子" class="headerlink" title="Dockerfile的栗子"></a>Dockerfile的栗子</h2><p>下面是我基于centos7.8制作的mysql5.7镜像。Dockerfile如下所示：</p>
+<figure class="highlight dockerfile"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs Dockerfile"><span class="hljs-keyword">FROM</span> centos:<span class="hljs-number">7.8</span>.<span class="hljs-number">2003</span><br><br><span class="hljs-keyword">MAINTAINER</span> sssoloveri@gmail.com<br><span class="hljs-keyword">RUN</span><span class="bash"> (<span class="hljs-built_in">cd</span> /lib/systemd/system/sysinit.target.wants/; <span class="hljs-keyword">for</span> i <span class="hljs-keyword">in</span> *; <span class="hljs-keyword">do</span> [ <span class="hljs-variable">$i</span> == \</span><br><span class="bash">systemd-tmpfiles-setup.service ] || rm -f <span class="hljs-variable">$i</span>; <span class="hljs-keyword">done</span>); \</span><br><span class="bash">rm -f /lib/systemd/system/multi-user.target.wants/*;\</span><br><span class="bash">rm -f /etc/systemd/system/*.wants/*;\</span><br><span class="bash">rm -f /lib/systemd/system/local-fs.target.wants/*; \</span><br><span class="bash">rm -f /lib/systemd/system/sockets.target.wants/*udev*; \</span><br><span class="bash">rm -f /lib/systemd/system/sockets.target.wants/*initctl*; \</span><br><span class="bash">rm -f /lib/systemd/system/basic.target.wants/*;\</span><br><span class="bash">rm -f /lib/systemd/system/anaconda.target.wants/*;</span><br><br><span class="hljs-keyword">RUN</span><span class="bash"> <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;root:123456&quot;</span> | chpasswd \ </span><br>&amp;&amp; groupadd --gid <span class="hljs-number">1000</span> rain \<br>&amp;&amp; useradd --uid <span class="hljs-number">1000</span> --gid rain  --<span class="hljs-keyword">shell</span><span class="bash"> /bin/bash --create-home rain \</span><br><span class="bash">&amp;&amp; <span class="hljs-built_in">echo</span> <span class="hljs-string">&quot;rain:123456&quot;</span> | chpasswd</span><br><span class="hljs-comment">#USER rain</span><br><span class="hljs-keyword">RUN</span><span class="bash"> rpm -ivh https://mirrors.aliyun.com/epel/epel-release-latest-7.noarch.rpm \</span><br><span class="bash">&amp;&amp; rpm --rebuilddb \ </span><br>&amp;&amp; yum install -y yum-utils net-tools sudo vim \<br>&amp;&amp; rpm -ivh https://dev.mysql.com/get/mysql57-community-release-el7-<span class="hljs-number">11</span>.noarch.rpm \<br>&amp;&amp; yum install -y mysql-community-server \<br>&amp;&amp; yum install -y openssh openssh-server openssh-clients \<br>&amp;&amp; mkdir -p /var/<span class="hljs-keyword">run</span><span class="bash">/sshd \</span><br><span class="bash"><span class="hljs-comment">#&amp;&amp; mkdir -p ~/.ssh \</span></span><br><span class="bash">&amp;&amp; yum install -y supervisor \</span><br><span class="bash">&amp;&amp; rm -rf /etc/supervisord.conf \</span><br><span class="bash">&amp;&amp; mkdir -p /etc/supervisord/conf.d \</span><br><span class="bash">&amp;&amp; mkdir -p /var/<span class="hljs-built_in">log</span>/supervisor/ \</span><br><span class="bash">&amp;&amp; mkdir -p /var/run/supervisor/ \</span><br><span class="bash">&amp;&amp; ssh-keygen -t rsa -f /etc/ssh/ssh_host_rsa_key \</span><br><span class="bash">&amp;&amp; ssh-keygen -t dsa -f /etc/ssh/ssh_host_dsa_key</span><br><span class="hljs-keyword">COPY</span><span class="bash"> authorized_keys /root/.ssh/authorized_keys</span><br><span class="hljs-keyword">COPY</span><span class="bash"> supervisord.conf /etc/supervisord.conf</span><br><span class="hljs-comment">#COPY mysql.conf /etc/supervisord/conf.d/</span><br><span class="hljs-comment">#COPY sshd.conf /etc/supervisord/conf.d/</span><br><span class="hljs-keyword">RUN</span><span class="bash"> yum clean all</span><br><br><span class="hljs-keyword">EXPOSE</span> <span class="hljs-number">3306</span> <span class="hljs-number">22</span><br><br><span class="hljs-comment"># 挂载数据、配置和日志目录</span><br><span class="hljs-keyword">RUN</span><span class="bash"> rm -rf /etc/my.cnf /var/lib/mysql /var/<span class="hljs-built_in">log</span>/mysqld.log</span><br><span class="hljs-keyword">VOLUME</span><span class="bash"> [<span class="hljs-string">&quot;/var/lib/mysql&quot;</span>, <span class="hljs-string">&quot;/etc/my.cnf&quot;</span>,<span class="hljs-string">&quot;/var/log/mysqld.log&quot;</span>]</span><br><br><span class="hljs-keyword">CMD</span><span class="bash"> [<span class="hljs-string">&quot;/usr/sbin/init&quot;</span>]</span><br></code></pre></div></td></tr></table></figure>
+
+<p>上面的内容基本上可以分为以下四个步骤：</p>
+<ol>
+<li>选取基础镜像，声明作者</li>
+<li>安装基础软件，这一步骤中不要写太多的<code>RUN</code>，因为这样会让镜像十分臃肿</li>
+<li>拷贝一些必要的文件，设置数据挂载目录，开放网络端口</li>
+<li>声明容器入口命令</li>
+</ol>
+<p>安装基础软件没什么好说的，按照自己的需求声明就好。 <strong>重点是数据卷映射的权限问题</strong>。以上面的Dockerfile为例，我们当前宿主机的用户id为1000。我们容器启动时的命令为：</p>
+<figure class="highlight docker"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs docker">docker <span class="hljs-keyword">run</span><span class="bash"> -d -u 1000:1000 \                       </span><br>--name mysql --hostname mysql --privileged=true \<br>--<span class="hljs-keyword">volume</span><span class="bash"> /usr/<span class="hljs-built_in">local</span>/mysql/data/:/var/lib/mysql \</span><br><span class="bash">--publish 3306:3306  -v /usr/<span class="hljs-built_in">local</span>/mysql/config/my.cnf:/etc/my.cnf -v /usr/<span class="hljs-built_in">local</span>/mysql/<span class="hljs-built_in">log</span>/mysqld.log:/var/<span class="hljs-built_in">log</span>/mysqld.log mysql:latest /usr/sbin/init</span><br><br></code></pre></div></td></tr></table></figure>
+<p>上面我进行了三项文件或目录的映射：</p>
+<ol>
+<li>(宿主机)/usr/local/mysql/data/—–&gt;(容器)/var/lib/mysql</li>
+<li>(宿主机)/usr/local/mysql/config/my.cnf—–&gt;(容器)/etc/my.cnf</li>
+<li>(宿主机)/usr/local/mysql/log/mysqld.log——&gt;(容器)/var/log/mysqld.log</li>
+</ol>
+<p>上述三个宿主机中的文件或目录的拥有者都是uid为1000的用户。那么就会产生四种情况：</p>
+<ol>
+<li>容器中没有uid为1000的用户，并且没有指定容器的启动用户</li>
+<li>容器中没有uid为1000的用户，并且指定了一个容器中不存在的用户作为启动用户</li>
+<li>容器有uid为1000的用户，并且指定了uid为1000的用户作为启动用户</li>
+<li>容器有uid为1000的用户，但是指定了容器中的另一个uid=1111的用户作为启动用户</li>
+</ol>
+<p>面对上面的问题，我们需要树立一个总的前提：容器中被映射的目录或文件的所有权是与宿主机中映射的目录或文件相同的。所以在容器中，目录<code>var/lib.mysql</code>，文件<code>my.cnf</code>、<code>mysqld.log</code>的所有者都是uid=1000的用户。然后就是容器的启动用户是谁的问题。</p>
+<ol>
+<li>如果没有明确指定，那么容器的默认启动用户就是root</li>
+<li>如果指定了一个容器中不存在的用户，那么容器会显示<code>I have no name!</code>，没有username，没有home</li>
+<li>如果指定的是容器中存在的但不是uid=1000的用户，那么就会正常显示用户名，但不能操作文件，因为所有者不同</li>
+<li>如果指定了容器中存在且和宿主机uid相同的用户，那么就能正常操作文件</li>
+</ol>
+<p>所以显而易见，docker是<strong>根据uid而不是username的映射</strong>来完成权限管理的。所以我们在创建镜像时，一般都会创建一个uid与宿主机数据卷所有者相同的用户方便在容器中操作文件。<strong>一定要确保容器执行者的权限和挂载数据卷的所有者相对应。</strong></p>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/woshimrf/p/understand-docker-uid.html">docker挂载volume的用户权限问题,理解docker容器的uid</a></li>
+<li><a target="_blank" rel="noopener" href="https://yeasy.gitbook.io/docker_practice/image/dockerfile/workdir">docker的中文手册</a></li>
+<li><a target="_blank" rel="noopener" href="http://ghoulich.xninja.org/2018/03/27/how-to-build-and-use-mysql-docker-image/">MySQL的Docker镜像制作详解</a></li>
+</ol>
+
+            </div>
+            <hr>
+            <div>
+              <div class="post-metas mb-3">
+                
+                  <div class="post-meta mr-3">
+                    <i class="iconfont icon-category"></i>
+                    
+                      <a class="hover-with-bg" href="/categories/tools/">tools</a>
+                    
+                  </div>
+                
+                
+                  <div class="post-meta">
+                    <i class="iconfont icon-tags"></i>
+                    
+                      <a class="hover-with-bg" href="/tags/Docker/">Docker</a>
+                    
+                  </div>
+                
+              </div>
+              
+                <p class="note note-warning">
+                  
+                    本博客所有文章除特别声明外，均采用 <a target="_blank" href="https://creativecommons.org/licenses/by-sa/4.0/deed.zh" rel="nofollow noopener noopener">CC BY-SA 4.0 协议</a> ，转载请注明出处！
+                  
+                </p>
+              
+              
+                <div class="post-prevnext">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2021-06-14/basic-Docker-install.html">
+                        <span class="hidden-mobile">Docker使用方法(一)-基本安装</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+              <!-- Comments -->
+              <article class="comments" id="comments" lazyload>
+                
+                  
+                
+                
+  <div id="waline"></div>
+  <script type="text/javascript">
+    Fluid.utils.loadComments('#waline', function() {
+      Fluid.utils.createScript('https://cdn.jsdelivr.net/npm/@waline/client@0.16.2/dist/Waline.min.js', function() {
+        var options = Object.assign(
+          {"serverURL":"https://blog-comment-blond.vercel.app","placeholder":"说点什么","path":"window.location.pathname","avatar":"retro","meta":["nick","mail","link"],"pageSize":10,"lang":"zh-CN","highlight":true,"avatarCDN":"","avatarForce":false,"requiredFields":[],"emojiCDN":null,"emojiMaps":null,"anonymous":null},
+          {
+            el: '#waline',
+            path: window.location.pathname
+          }
+        )
+        new Waline(options);
+      });
+    });
+  </script>
+  <noscript>Please enable JavaScript to view the comments</noscript>
+
+
+              </article>
+            
+          </article>
+        </div>
+      </div>
+    </div>
+    
+      <div class="d-none d-lg-block col-lg-2 toc-container" id="toc-ctn">
+        <div id="toc">
+  <p class="toc-header"><i class="iconfont icon-list"></i>&nbsp;目录</p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+      </div>
+    
+  </div>
+</div>
+
+<!-- Custom -->
+
+
+    
+
+    
+      <a id="scroll-top-button" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v"
+                 for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+
+    
+  </main>
+
+  <footer class="text-center mt-5 py-3">
+  <div class="footer-content">
+     <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Hexo</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Fluid</span></a> 
+  </div>
+  
+  <div class="statistics">
+    
+    
+
+    
+      
+        <!-- LeanCloud 统计PV -->
+        <span id="leancloud-site-pv-container" style="display: none">
+            总访问量 
+            <span id="leancloud-site-pv"></span>
+             次
+          </span>
+      
+      
+        <!-- LeanCloud 统计UV -->
+        <span id="leancloud-site-uv-container" style="display: none">
+            总访客数 
+            <span id="leancloud-site-uv"></span>
+             人
+          </span>
+      
+
+    
+  </div>
+
+
+  
+
+  
+
+  <div>
+    <span id="timeDate">载入天数...</span>
+    <span id="times">载入时分秒...</span>
+    <script>
+    var now = new Date();
+    function createtime(){
+        var grt= new Date("06/03/2021 00:00:00");//此处修改你的建站时间或者网站上线时间
+        now.setTime(now.getTime()+250);
+        days = (now - grt ) / 1000 / 60 / 60 / 24;
+        dnum = Math.floor(days);
+        hours = (now - grt ) / 1000 / 60 / 60 - (24 * dnum);
+        hnum = Math.floor(hours);
+        if(String(hnum).length ==1 ){
+            hnum = "0" + hnum;
+        }
+        minutes = (now - grt ) / 1000 /60 - (24 * 60 * dnum) - (60 * hnum);
+        mnum = Math.floor(minutes);
+        if(String(mnum).length ==1 ){
+                  mnum = "0" + mnum;
+        }
+        seconds = (now - grt ) / 1000 - (24 * 60 * 60 * dnum) - (60 * 60 * hnum) - (60 * mnum);
+        snum = Math.round(seconds);
+        if(String(snum).length ==1 ){
+                  snum = "0" + snum;
+        }
+        document.getElementById("timeDate").innerHTML = "🚀 for&nbsp"+dnum+"&nbspdays";  //此次自定义显示内容
+        document.getElementById("times").innerHTML = hnum + "&nbsphr&nbsp" + mnum + "&nbspmin&nbsp" + snum + "&nbspsec";
+    }  //此次自定义显示内容
+    setInterval("createtime()",250);
+    </script>
+  </div>
+</footer>
+
+
+  <!-- SCRIPTS -->
+  
+  <script  src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js" ></script>
+<script  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+<!-- Plugins -->
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+  
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/tocbot@4.12.3/dist/tocbot.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/@fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/anchor-js@4.3.1/anchor.min.js" ></script>
+
+
+
+  <script defer src="https://cdn.jsdelivr.net/npm/clipboard@2.0.8/dist/clipboard.min.js" ></script>
+
+
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+  <script defer src="/js/leancloud.js" ></script>
+
+
+
+  <script  src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12/lib/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var title = document.getElementById('subtitle').title;
+      
+      typing(title)
+      
+    })(window, document);
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+    <!-- Google Analytics -->
+    <script defer>
+      window.ga = window.ga || function () { (ga.q = ga.q || []).push(arguments) };
+      ga.l = +new Date;
+      ga('create', 'UA-198559201-1', 'auto');
+      ga('send', 'pageview');
+    </script>
+    <script async src='https://www.google-analytics.com/analytics.js'></script>
+  
+
+  
+    <!-- Google gtag.js -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-19MVRDT9NM"></script>
+    <script defer>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-19MVRDT9NM');
+    </script>
+  
+
+  
+
+  
+
+  
+
+
+
+
+
+<!-- 主题的启动项 保持在最底部 -->
+<script  src="/js/boot.js" ></script>
+
+
+</body>
+</html>
