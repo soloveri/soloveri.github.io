@@ -185,72 +185,6 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/interface-BlockingQueue-analysis.html" target="_self">
-          BlockingQueue接口分析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/interface-BlockingQueue-analysis.html" target="_self">
-          
-          
-            
-          
-          1. 基本概念BlockingQueue接口，提供了一组集合，一般用在生产者消费者模式中。它能搞保证在多线程环境下：当队列为空时，消费者线程会等待直到队列不空；当队列满时，生产者会等待直到队列不满。该接口提供了四种存储与删除模式：
-
-
-
-/
-操作失败抛出异常
-操作失败返回特殊值
-操作失败阻塞线程
-操作具有时间限制
-
-
-
-插入操作
-add(e)
-offer(e)
-put(e)
-offer(e,tim
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-04-10 15:54" pubdate>
-              2021-04-10
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/concurrent-collections/">concurrent collections</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
         <a href="/articles/ConcurrentHashMap-analysis-II.html" target="_self">
           ConcurrentHashMap扩容分析
         </a>
@@ -723,6 +657,57 @@ tcp连接建立的基础是使
             
           </div>
         
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/threadlocal-analysis.html" target="_self">
+          ThreadLocal源码解析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/threadlocal-analysis.html" target="_self">
+          
+          
+            
+          
+          顾名思义，ThreadLocal就是基于线程粒度的私有变量，跟我们以往认知中基于函数、类粒度的私有变量不同。而且ThreadLocal的使用频率非常高，但是如若使用不当，则可能会发生内存泄漏，所以好好研究一下其实现原理是非常有必要的。内容分为三个部分：ThreadLocalMap是什么，ThreadLocal是如何插入变量的，ThreadLocal是如何删除变量的。
+ThreadLocalMap是
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-01-12 10:49" pubdate>
+              2021-01-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/ThreadLocal/">ThreadLocal</a>
+            
+          </div>
         
       </div>
     </article>

@@ -185,57 +185,6 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/threadlocal-analysis.html" target="_self">
-          ThreadLocal源码解析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/threadlocal-analysis.html" target="_self">
-          
-          
-            
-          
-          顾名思义，ThreadLocal就是基于线程粒度的私有变量，跟我们以往认知中基于函数、类粒度的私有变量不同。而且ThreadLocal的使用频率非常高，但是如若使用不当，则可能会发生内存泄漏，所以好好研究一下其实现原理是非常有必要的。内容分为三个部分：ThreadLocalMap是什么，ThreadLocal是如何插入变量的，ThreadLocal是如何删除变量的。
-ThreadLocalMap是
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-12 10:49" pubdate>
-              2021-01-12
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/ThreadLocal/">ThreadLocal</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
         <a href="/articles/Interrupt-mechanism.html" target="_self">
           中断机制
         </a>
@@ -685,6 +634,59 @@ ThreadLocalMap是
               <a href="/tags/SPI%E6%9C%BA%E5%88%B6/">SPI机制</a>
             
               <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%A9%B1%E5%8A%A8%E5%8A%A0%E8%BD%BD/">数据库驱动加载</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/class-loading-mechanism.html" target="_self">
+          类的加载机制
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/class-loading-mechanism.html" target="_self">
+          
+          
+            
+          
+          1. 类初始化的时机当复习类加载时机时，我给自己抛出了一个问题：这里的时机只说明了类的初始化，那么对于接口呢？接口什么时候会被初始化呢？
+仔细回顾《深入理解Java虚拟机》，才发现，作者给出的是会触发类型初始化的六种时机，而不是类初始化。这里类型可能是指类或者接口。ok，那么我的问题迎刃而解了。接口初始化的时机同样遵循以下六种场景。
+
+在Java中，只有主动引用才会触发类类型加载动作。所谓的主动引
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-11-05 21:16" pubdate>
+              2020-11-05
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/jvm/">jvm</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/class-loading/">class loading</a>
             
           </div>
         

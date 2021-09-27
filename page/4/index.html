@@ -185,59 +185,6 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/class-loading-mechanism.html" target="_self">
-          类的加载机制
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/class-loading-mechanism.html" target="_self">
-          
-          
-            
-          
-          1. 类初始化的时机当复习类加载时机时，我给自己抛出了一个问题：这里的时机只说明了类的初始化，那么对于接口呢？接口什么时候会被初始化呢？
-仔细回顾《深入理解Java虚拟机》，才发现，作者给出的是会触发类型初始化的六种时机，而不是类初始化。这里类型可能是指类或者接口。ok，那么我的问题迎刃而解了。接口初始化的时机同样遵循以下六种场景。
-
-在Java中，只有主动引用才会触发类类型加载动作。所谓的主动引
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-11-05 21:16" pubdate>
-              2020-11-05
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/jvm/">jvm</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/class-loading/">class loading</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
         <a href="/articles/parents-delegation-model.html" target="_self">
           双亲委派模型
         </a>
@@ -702,6 +649,58 @@ Indexes are used t
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/HashMap/">HashMap</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/LinkedList-source-code-analysis.html" target="_self">
+          LinkedList源码分析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/LinkedList-source-code-analysis.html" target="_self">
+          
+          
+            
+          
+          LinkedList弥补了ArrayList插入元素慢的缺点,当然也带了查找元素慢的缺点。LinkedList同时实现了List和Queue接口,其底层采用双向链表实现。当然LinkedList也有一个父类AbstractSequentialList用于实现一般的方法。下面是LinkedList的继承图:
+
+可以看到LinkedList实现了Cloneable、Serializable接口,当然也
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-27 20:22" pubdate>
+              2020-07-27
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/LinkedList/">LinkedList</a>
             
           </div>
         
