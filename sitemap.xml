@@ -4,273 +4,273 @@
   <url>
     <loc>https://eripe.me/articles/log-system-for-Java-abstract.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/factory-pattern.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/%E5%8F%8D%E5%B0%84%E5%88%9D%E4%BD%93%E9%AA%8C.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/java-memory-layout.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/parents-delegation-model.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://eripe.me/articles/type-system-of-java.html</loc>
-    
-    <lastmod>2021-08-30</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://eripe.me/articles/SPI-service-mechanism.html</loc>
-    
-    <lastmod>2021-08-30</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://eripe.me/articles/the-generic-of-java.html</loc>
-    
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/access-control-of-Java.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/analysis-of-dynamic-proxy.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/the-GC-of-Java.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://eripe.me/articles/type-system-of-java.html</loc>
+    
+    <lastmod>2021-09-27</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://eripe.me/articles/SPI-service-mechanism.html</loc>
+    
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/Frequently-asked-questions-about-generics.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://eripe.me/articles/the-generic-of-java.html</loc>
+    
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/volatile-keyword.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/five-IO-model.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/interface-BlockingQueue-analysis.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/Executor-interface.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/ThreadPoolExecutor.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/Interrupt-mechanism.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/JMM.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/Thread-state-transition.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/AtomicInteger-analysis.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/AtomicIntegerArray-analysis.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/AtomicStampedReference-analysis.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/LongAdder-analysis.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/atomic-class-overview.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/red-black-tree.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/condition-analysis.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/HashMap-analysis-part-three.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/HashMap-analysis-part-one.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/HashMap-analysis-part-two.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/what-is-IOC.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/how-to-debug-tomcat.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/LinkedList-source-code-analysis.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/Queue-interface-analysis.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/what-is-spring-mvc.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/ArrayList-source-code-analysis.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/index-of-mysql.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/articles/hello-world.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
   <url>
     <loc>https://eripe.me/about/index.html</loc>
     
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     
   </url>
   
@@ -396,7 +396,7 @@
 
   <url>
     <loc>https://eripe.me/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
@@ -404,287 +404,287 @@
   
   <url>
     <loc>https://eripe.me/tags/%E7%B4%A2%E5%BC%95/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/factory/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/Spring/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/tomcat/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/interrupt/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/JMM/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/volatile/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/IO%E6%A8%A1%E5%9E%8B/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/dynamic-proxy/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/garbage-collection/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/String/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/%E7%B1%BB%E5%9E%8B/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/Docker/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/logging/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/HashMap/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/synchronized/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/atomic/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/atomic-class/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/concurrent-collections/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/Executor/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/SPI%E6%9C%BA%E5%88%B6/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%A9%B1%E5%8A%A8%E5%8A%A0%E8%BD%BD/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/LinkedList/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/Queue/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/Spring-MVC/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/ThreadLocal/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/%E6%B3%9B%E5%9E%8B/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/%E7%BA%A2%E9%BB%91%E6%A0%91-map/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/ReentrantLock/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/condition-queue/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/shared-lock/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/class-loading/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/%E7%B1%BB%E5%8A%A0%E8%BD%BD/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/ArrayList/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/ArrayQueue/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/tags/ArrayDeque/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
@@ -693,126 +693,126 @@
   
   <url>
     <loc>https://eripe.me/categories/mysql/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/categories/tools/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/categories/design-patterns/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/categories/framework/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/categories/IO/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/categories/java/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/categories/Java/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/categories/%E5%8F%8D%E5%B0%84/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/categories/java%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/categories/java-basic/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/categories/%E7%B1%BB%E5%8A%A0%E8%BD%BD/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/categories/jvm/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/categories/%E5%9F%BA%E7%A1%80/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/categories/java%E9%9B%86%E5%90%88/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
   
   <url>
     <loc>https://eripe.me/categories/network/</loc>
-    <lastmod>2021-08-30</lastmod>
+    <lastmod>2021-09-27</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
   </url>
