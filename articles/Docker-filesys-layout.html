@@ -16,7 +16,7 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   
   <meta name="theme-color" content="#55967e">
-  <meta name="description" content="欢迎乘坐八楼的二路公交车">
+  <meta name="description" content="详细讲解了Docker在Linux环境中所用的overlay文件系统">
   <meta name="author" content="Rains.Lee">
   <meta name="keywords" content="Java">
   
@@ -239,15 +239,15 @@
             <h1 style="display: none">Docker使用方法(二)-文件系统架构</h1>
             
             <div class="markdown-body">
-              <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>一定要将登录用户切换为root才能查看Docker的文件架构！！！</p>
-<h2 id="0x0-基本文件布局"><a href="#0x0-基本文件布局" class="headerlink" title="0x0 基本文件布局"></a>0x0 基本文件布局</h2><p>Docker的文件主要都存储在<code>/var/lib/docker</code>目录下,文件目录如下所示:</p>
+              <h2 id="0-前言"><a href="#0-前言" class="headerlink" title="0. 前言"></a>0. 前言</h2><p>一定要将登录用户切换为root才能查看Docker的文件架构！！！</p>
+<h2 id="1-基本文件布局"><a href="#1-基本文件布局" class="headerlink" title="1. 基本文件布局"></a>1. 基本文件布局</h2><p>Docker的文件主要都存储在<code>/var/lib/docker</code>目录下,文件目录如下所示:</p>
 <p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.filesys.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.filesys"></p>
 <p>其中<code>containers</code>存储的是容器,<code>images</code>存储的是镜像。在深入了解Docker的原理之前,我们需要了解两个基本名词:</p>
 <ul>
 <li>overlayFS</li>
 <li>overlay2</li>
 </ul>
-<h2 id="0x1-overlayFS"><a href="#0x1-overlayFS" class="headerlink" title="0x1 overlayFS"></a>0x1 overlayFS</h2><p>其中overlayFS是一种类似于aufs的文件堆叠系统,但是比aufs更快。本质上来说,overlayFS是属于linux内核驱动的一部分。</p>
+<h3 id="1-1-overlayFS"><a href="#1-1-overlayFS" class="headerlink" title="1.1 overlayFS"></a>1.1 overlayFS</h3><p>其中overlayFS是一种类似于aufs的文件堆叠系统,但是比aufs更快。本质上来说,overlayFS是属于linux内核驱动的一部分。</p>
 <p>overlayFS依赖于已有的底层文件系统,它并不实际参与硬盘的分区。而是将一些底层文件系统的文件合并,给不同的用户呈现不同的文件,实现了相同文件复用的功能,提高了空间使用率。下面一张图很好的解释了overlayFS的<a target="_blank" rel="noopener" href="https://blog.csdn.net/luckyapple1028/article/details/77916194">基本工作原理</a>:</p>
 <p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/overlayFS.jfif" srcset="/img/loading.gif" lazyload alt="overlayFS"></p>
 <p>overlayFS分为四个部分:</p>
@@ -265,7 +265,7 @@
 <li>upper dir是<strong>可读可写</strong>的</li>
 <li>overlayFS具有copy-up的特性。也就是如果想对lower dir中的文件进行写入,只能将文件拷贝至upper dir,然后再对拷贝后的文件进行写入。</li>
 </ul>
-<h3 id="0x1-1-overlayFS的挂载"><a href="#0x1-1-overlayFS的挂载" class="headerlink" title="0x1-1 overlayFS的挂载"></a>0x1-1 overlayFS的挂载</h3><p>overlayFS的基本用法可以参考<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Overlay_filesystem">官网</a>。下面是我参照<a target="_blank" rel="noopener" href="https://blog.csdn.net/luckyapple1028/article/details/78075358">overlayFS的基本使用</a>做的一个复现。</p>
+<h3 id="1-2-overlayFS的挂载"><a href="#1-2-overlayFS的挂载" class="headerlink" title="1.2 overlayFS的挂载"></a>1.2 overlayFS的挂载</h3><p>overlayFS的基本用法可以参考<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Overlay_filesystem">官网</a>。下面是我参照<a target="_blank" rel="noopener" href="https://blog.csdn.net/luckyapple1028/article/details/78075358">overlayFS的基本使用</a>做的一个复现。</p>
 <p>首先需要创建lower、upper、work、merge这四类目录,文件树如下所示:</p>
 <p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.worktree.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.worktree"></p>
 <p>首先对各个dir下的文件写入标记:</p>
@@ -287,7 +287,7 @@
 <p>下图是在上述文件挂载完成后向来自<code>lower1/dir/</code>的<code>aa</code>写入文件:</p>
 <p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.write-to-lower.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.write-to-lower"></p>
 <p>可以看到,我们在挂载点向lower层的文件写入内容后,upper层直接复制了了<code>lower1/dir/aa</code>,并直接追加写入的内容。而<code>lower1/dir/aa</code>本身的内容的却没有改变。</p>
-<h3 id="0x1-3-overlayFS的删除操作"><a href="#0x1-3-overlayFS的删除操作" class="headerlink" title="0x1-3 overlayFS的删除操作"></a>0x1-3 overlayFS的删除操作</h3><p>overlayFS中的删除并不是真正的删除,它只是使用了一个障眼法-<strong>whiteout</strong>文件来覆盖同名文件,让用户以为已经把文件删除了。</p>
+<h3 id="1-3-overlayFS的删除操作"><a href="#1-3-overlayFS的删除操作" class="headerlink" title="1.3 overlayFS的删除操作"></a>1.3 overlayFS的删除操作</h3><p>overlayFS中的删除并不是真正的删除,它只是使用了一个障眼法-<strong>whiteout</strong>文件来覆盖同名文件,让用户以为已经把文件删除了。</p>
 <blockquote>
 <p>whiteout文件并非普通文件，而是主次设备号都为0的字符设备（可以通过”mknod <name> c 0 0”命令手动创建）</p>
 </blockquote>
@@ -314,7 +314,7 @@
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/luckyapple1028/article/details/77916194">overlayFS的基本介绍</a></li>
 <li><a target="_blank" rel="noopener" href="https://blog.csdn.net/luckyapple1028/article/details/78075358">overlayFS的基本使用</a></li>
 </ul>
-<h2 id="0x2-overlay2"><a href="#0x2-overlay2" class="headerlink" title="0x2 overlay2"></a>0x2 overlay2</h2><p>docker为overlayFS提供了了两个存储驱动,一个是原始的overlay,另外一个就是现在新版的overlay2。所以docker自然也采用了堆叠的方式存储镜像。</p>
+<h2 id="2-overlay2"><a href="#2-overlay2" class="headerlink" title="2. overlay2"></a>2. overlay2</h2><p>docker为overlayFS提供了了两个存储驱动,一个是原始的overlay,另外一个就是现在新版的overlay2。所以docker自然也采用了堆叠的方式存储镜像。</p>
 <p>这里以拉取最新的ubuntu images为例,可以看到,拉取的镜像为4层:</p>
 <p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.pull-ubuntu.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.pull-ubuntu"></p>
 <p>在overlay2目录下出现了五个目录,其中四个为拉取的镜像,额外的目录为<code>l</code>。它存放的是对应镜像的软符号链接。为什么需要设置软符号链接?</p>
@@ -325,15 +325,15 @@
 <p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.ubuntu-tree.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.ubuntu-tree"></p>
 <p>其中每个image layer中的<strong>diff文件夹存放了当前image layer的内容</strong>, link文件的内容是当前层对应的短符号链接,lower文件夹存放了当前层的所有下层<code>lower dir</code>的id。可以看到,id为<code>9045</code>的image layer没有<code>lower</code>,即<code>9045</code>就是最底层的image layer(这会在后面验证)。work目录用于挂载时的工作目录。</p>
 <p>那么这些这些目录是怎么和镜像关联起来的呢？答案是通过元数据进行关联。元数据又分为image元数据和layer数据。</p>
-<h3 id="0x2-1-image元数据"><a href="#0x2-1-image元数据" class="headerlink" title="0x2-1 image元数据"></a>0x2-1 image元数据</h3><p>image元数据存储在<code>/var/lib/docker/image/&lt;storage_driver&gt;/imagedb/content/sha256/</code>目录,文件名称是对应的iamge id,如下所示:</p>
+<h3 id="2-1-image元数据"><a href="#2-1-image元数据" class="headerlink" title="2.1 image元数据"></a>2.1 image元数据</h3><p>image元数据存储在<code>/var/lib/docker/image/&lt;storage_driver&gt;/imagedb/content/sha256/</code>目录,文件名称是对应的iamge id,如下所示:</p>
 <p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.imagedb.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.imagedb"></p>
 <p>该文件以json格式保存了该image的重要信息,其中<code>rootfs</code>值得关注,因为它指定了各个image layer的工作顺序。查看文件内容时可以将其格式化为json:(<code>使用vim :%!python -m json.tool格式化成json</code>),其中<code>rootfs</code>的内容如下:</p>
 <p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.rootfs.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.rootfs"></p>
 <p>其中的diff_ids是有严格顺序的,从上到下,表示image layer的最底层到最高层id。顺序是反的是因为如果产生了新的image layer直接在最后面追加即可,非常方便。那么image是又如何关联到layer的呢？docker是通过image元数据中的diff_id与一些历史信息计算出chainID关联到layer元数据,layer元数据再关联到对应的image layer。</p>
-<h3 id="0x2-2-layer元数据"><a href="#0x2-2-layer元数据" class="headerlink" title="0x2-2 layer元数据"></a>0x2-2 layer元数据</h3><p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.layerdb.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.layerdb"></p>
+<h3 id="2-2-layer元数据"><a href="#2-2-layer元数据" class="headerlink" title="2.2 layer元数据"></a>2.2 layer元数据</h3><p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.layerdb.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.layerdb"></p>
 <p>在<code>/var/docker/&lt;storage_driver&gt;/image/layerdb/sha256</code>中,有四个目录,其中每个目录的数字就是每个diff_id对应的chainID。可以看到,只有最底层的<code>ce30</code>能在layerdb中找到对应的chainID,那是因为最底层的diff_id和chainID是相同的。所以除去最底层,剩下的chainID需要计算,这里不做演示。</p>
 <p>每个chainID目录都有三个共同的文件<code>cache-id</code>、<code>diff</code>、<code>size</code>,而有的没有<code>parent</code>。下面一一解析下各个文件的内容。</p>
-<h3 id="cache-id"><a href="#cache-id" class="headerlink" title="cache-id"></a>cache-id</h3><p>刚才说到layerdb保存的毕竟是元数据,那么这些元数据到底是怎么和具体数据链接起来呢?其中的<code>cache-id</code>是关键。</p>
+<h3 id="2-3-cache-id"><a href="#2-3-cache-id" class="headerlink" title="2.3 cache-id"></a>2.3 cache-id</h3><p>刚才说到layerdb保存的毕竟是元数据,那么这些元数据到底是怎么和具体数据链接起来呢?其中的<code>cache-id</code>是关键。</p>
 <p>我们查看<code>ce30</code>的<code>cache-id</code>文件内容:</p>
 <p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.cache-id.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.cache-id"></p>
 <p>docker随机生成的uuid，内容是保存image layer的目录索引。其中的id为<code>9045</code>就是刚才拉取的<code>ubuntu</code>镜像中的最底层image layer。说明没有<code>lower</code>目录的image layer就是在最底层。</p>
@@ -346,7 +346,7 @@
 <p>其对应的diff_id为<code>8eeb</code>。再来查看其<code>parent</code>文件:</p>
 <p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.2515-parent.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.2515-parent"></p>
 <p>而在<code>rootfs</code>中,<code>8eeb</code>的上一个diff_id对应的chainID就是<code>ce30</code>(因为第一个位置的diff_id与chainID相同)。</p>
-<h3 id="0x2-3-overlay2的挂载"><a href="#0x2-3-overlay2的挂载" class="headerlink" title="0x2-3 overlay2的挂载"></a>0x2-3 overlay2的挂载</h3><p>挂载的信息存储在<code>/var/lib/docker/image/layerdb/mounts</code>目录下,每个目录名称就是对应的容器ID,如下图所示:</p>
+<h3 id="2-4-overlay2的挂载"><a href="#2-4-overlay2的挂载" class="headerlink" title="2.4 overlay2的挂载"></a>2.4 overlay2的挂载</h3><p>挂载的信息存储在<code>/var/lib/docker/image/layerdb/mounts</code>目录下,每个目录名称就是对应的容器ID,如下图所示:</p>
 <p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.mounts.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.mounts"></p>
 <p><code>mounts</code>只有一个目录,对应于一个正在运行的容器。每个容器ID目录下存在三个文件。init-id对应当前挂载的容器的init层,mount-id就是对应的容器层(merge目录)。而parent文件还是存储位置在当前layer在<code>rootfs</code>上一个的diff_id的chainID。</p>
 <p>三个文件的内容如下:</p>
@@ -369,12 +369,12 @@
 <p>可以看到和挂载命令基本一致:</p>
 <p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/Docker-filesys-layout.docker-mount.png" srcset="/img/loading.gif" lazyload alt="Docker-filesys-layout.docker-mount"></p>
 <p>其中挂载都是使用的符号链接,upper就是diff目录,work目录与diff目录同级。</p>
-<h3 id="0x2-4-overlay2的删除操作"><a href="#0x2-4-overlay2的删除操作" class="headerlink" title="0x2-4 overlay2的删除操作"></a>0x2-4 overlay2的删除操作</h3><p>删除分为删除image与删除container。</p>
+<h3 id="2-5-overlay2的删除操作"><a href="#2-5-overlay2的删除操作" class="headerlink" title="2.5 overlay2的删除操作"></a>2.5 overlay2的删除操作</h3><p>删除分为删除image与删除container。</p>
 <ul>
 <li>删除container:首先需要停止想要删除的容器:<code>docker stop [container ID]</code>,然后删除容器:<code>docker rm [container ID]</code></li>
 <li>删除image:在删除image前,一定要删除container,完成上述步骤后,直接<code>docker rmi [image id]</code>即可。</li>
 </ul>
-<h2 id="0x3-小结"><a href="#0x3-小结" class="headerlink" title="0x3 小结"></a>0x3 小结</h2><ol>
+<h2 id="3-小结"><a href="#3-小结" class="headerlink" title="3. 小结"></a>3. 小结</h2><ol>
 <li><p>docker在每次创建容器时都会自动添加一个init layer对容器进行初始化,添加contain layer面向用户。并且每次默认启动的容器都是不相同的。</p>
 </li>
 <li><p>docker对于每种文件驱动,都会在<code>docker/image</code>下创建同名文件以保存元数据。docker通过imagedb、layerdb、关联到具体的image layer。</p>

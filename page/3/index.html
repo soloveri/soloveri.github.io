@@ -185,20 +185,19 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/AtomicInteger-analysis.html" target="_self">
-          AtomicInteger源码解析
+        <a href="/articles/threadlocal-analysis.html" target="_self">
+          ThreadLocal源码解析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/AtomicInteger-analysis.html" target="_self">
+        <a href="/articles/threadlocal-analysis.html" target="_self">
           
           
             
           
-          整数型原子类AtomicInteger，能够保证每次更新时都是原子操作。其中的CAS操作都需要依靠Unsafe类来完成，我们需要关注的一般就是构造方法、增加方法与删除方法。
-1. 构造方法AtomicInteger首先会调用类构造器，初始化当前对象的valueoffset用于进行CAS操作，具体值由volatile变量value负责维护，字段定义如下所示：
-12345678910111213141
+          顾名思义，ThreadLocal就是基于线程粒度的私有变量，跟我们以往认知中基于函数、类粒度的私有变量不同。而且ThreadLocal的使用频率非常高，但是如若使用不当，则可能会发生内存泄漏，所以好好研究一下其实现原理是非常有必要的。内容分为三个部分：ThreadLocalMap是什么，ThreadLocal是如何插入变量的，ThreadLocal是如何删除变量的。
+ThreadLocalMap是
         </a>
       </p>
 
@@ -206,8 +205,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
+            <time datetime="2021-01-12 10:49" pubdate>
+              2021-01-12
             </time>
           </div>
         
@@ -215,7 +214,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
             
           </div>
         
@@ -223,7 +222,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/atomic/">atomic</a>
+              <a href="/tags/ThreadLocal/">ThreadLocal</a>
             
           </div>
         
@@ -237,19 +236,19 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/AtomicIntegerArray-analysis.html" target="_self">
-          AtomicIntegerArray源码解析
+        <a href="/articles/Interrupt-mechanism.html" target="_self">
+          中断机制
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/AtomicIntegerArray-analysis.html" target="_self">
+        <a href="/articles/Interrupt-mechanism.html" target="_self">
           
           
             
           
-          AtomicIntegerArray能够保证数组中的每个元素原子地更新。构造方法、增加、减少方法都没什么好说，我认为值得关注的点是仅有计算偏移的方法。我们先来看看它的静态构造块：
-12345678910111213141516171819202122232425262728public class AtomicIntegerArray implements java.io.Serializable
+          在多线程环境下，终止一个线程的任务最好的方法是通过中断。而Java的中断类似于通知协作机制，被中断的线程并不会立即停止自己的任务，而是仅仅收到了中断的通知，具体怎么处理收到的中断，这需要用户自己定义。那么为什么说Java的中断类似于通知机制？我们首先需要了解中断到底做了什么。
+1. 实施中断Java中的中断操作只需要调用目标线程的interrupt()方法即可完成。那么这个方法到底做了什么？我们来
         </a>
       </p>
 
@@ -257,8 +256,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
+            <time datetime="2021-01-10 15:57" pubdate>
+              2021-01-10
             </time>
           </div>
         
@@ -266,7 +265,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
             
           </div>
         
@@ -274,7 +273,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/atomic/">atomic</a>
+              <a href="/tags/interrupt/">interrupt</a>
             
           </div>
         
@@ -288,19 +287,19 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/AtomicStampedReference-analysis.html" target="_self">
-          AtomicStampedReference源码解析
+        <a href="/articles/condition-analysis.html" target="_self">
+          Condition队列
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/AtomicStampedReference-analysis.html" target="_self">
+        <a href="/articles/condition-analysis.html" target="_self">
           
           
             
           
-          AtomicStampeddReference解决了普通CAS操作的ABA问题，当然该类只能存储引用类型，因为泛型只支持引用。具体的解决方法就是为每个引用提供了一个时间戳（实际用int代替），这两个数据由内部静态类Pair封装，如下所示：
-12345678910111213141516public class AtomicStampedReference&lt;V&gt; &#123;    pr
+          Condition接口的功能用来实现类似于synchronized的await()/signal()通知机制。但是比synchronized的通知机制更丰富、更灵活。我们知道，synchronized锁内部维护了一个waitList保存调用了wait()主动释放锁的线程。AQS的waitList功能就是通过Condition内部维护的Condition queue实现的。
+与AQS的同步队列相似，
         </a>
       </p>
 
@@ -308,8 +307,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
+            <time datetime="2020-12-29 14:54" pubdate>
+              2020-12-29
             </time>
           </div>
         
@@ -317,7 +316,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
             
           </div>
         
@@ -325,158 +324,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/atomic/">atomic</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/LongAdder-analysis.html" target="_self">
-          LongAdder源码解析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/LongAdder-analysis.html" target="_self">
-          
-          
-            
-          
-          1. 预备知识在Java1.5中，JUC就已经提供了大数原子类AtomicLong，但是在Java1.8中，又提供了相同功能的大数原子类LongAdder。why？答案是如此的纯粹：为了效率。难道前者的效率就不行了吗？如果在轻微冲突的情况下，二者的效率几乎差不多。但是如果竞争非常激烈，那么因为每次对AtomicLong更新时都会使用CAS，激烈竞争导致CAS的成功的概率不大，所以有可能会执行多次无
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/atomic/">atomic</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/atomic-class-overview.html" target="_self">
-          原子类总览
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/atomic-class-overview.html" target="_self">
-          
-          
-            
-          
-          J.U.C包提供了许多原子类，我按照功能分了四类，如下所示：|  普通原子类   | 原子更新的数组  | 原子更新对象字段的updater  | 大数原子类  ||  —-  | —-  | —-  | —-  || AtomicBoolean AtomicInteger  AtomicLong AtomicReference atomicMarkableReference AtomicStam
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/atomic-class/">atomic class</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/CopyOnWrite-collections-analysis.html" target="_self">
-          CopyOnWrite容器分析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/CopyOnWrite-collections-analysis.html" target="_self">
-          
-          
-            
-          
-          1. 预备知识J.U.C包提供了两种copy-on-wirte容器：CopyOnWriteList与CopyOnWriteSet。不了解copy-on-write技术的，可以去看理解 Copy On Write 技术。
-CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList内容的操作都基于copy-on-write，对于同一个元素，插入操作happ
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/concurrent-collections/">concurrent collections</a>
+              <a href="/tags/condition-queue/">condition queue</a>
             
           </div>
         
@@ -511,8 +359,8 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
+            <time datetime="2020-12-26 20:36" pubdate>
+              2020-12-26
             </time>
           </div>
         
@@ -542,20 +390,21 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/ConcurrentHashMap-analysis-I.html" target="_self">
-          ConcurrentHashMap架构解析
+        <a href="/articles/ReentrantLock-analysis.html" target="_self">
+          ReentrantLock源码解析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/ConcurrentHashMap-analysis-I.html" target="_self">
+        <a href="/articles/ReentrantLock-analysis.html" target="_self">
           
           
             
           
-          前言本篇主要介绍ConcurrentHashMap的基本架构、插入与删除操作的原理，对于它扩容的逻辑，放在第二部分讲解：ConcurrentHashMap扩容分析。
+          1. 预备知识ReentrantLock是基于AbstractQueueSynchronizer的可重入锁。分为公平和非公平模式。它的内部类Sync继承了AbstractQueueSynchronizer，具体的资源获取与释放由Sync来实现，基本结构如下图所示：
 
-本文旨在介绍J.U.C包下的同步集合ConcurrentHashMap。因为Java自带的HashMap是线程不安全的，虽然也提供了线程安全的HashTable，但是后者是对整个哈希表加锁，势必效率不理想。而ConcurrentHa
+其中NonfairSync实现了非公平锁的逻辑，FairSync实现了公平锁的逻辑。
+2. ReentrantLock的加锁流程这里
         </a>
       </p>
 
@@ -563,8 +412,8 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
+            <time datetime="2020-12-17 18:38" pubdate>
+              2020-12-17
             </time>
           </div>
         
@@ -572,7 +421,7 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/java-basic/">java basic</a>
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
             
           </div>
         
@@ -580,63 +429,7 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/concurrent-collections/">concurrent collections</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/ConcurrentHashMap-analysis-II.html" target="_self">
-          ConcurrentHashMap扩容分析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/ConcurrentHashMap-analysis-II.html" target="_self">
-          
-          
-            
-          
-          前言本篇继承于ConcurrentHashMap架构解析，在了解了ConcurrentHashMap的整体架构与插入删除逻辑后，还有一个知识点：扩容逻辑需要学习，我认为这是ConcurrentHashMap核心中的核心。
-废话不多说，对于ConcurrentHashMap来说，扩容可以整体分为两个部分：
-
-将属性table扩展为原来的两倍
-将旧table中数据迁移到新table
-
-那么本文就按照这
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/concurrent-collections/">concurrent collections</a>
+              <a href="/tags/ReentrantLock/">ReentrantLock</a>
             
           </div>
         
@@ -670,8 +463,8 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
+            <time datetime="2020-12-10 13:53" pubdate>
+              2020-12-10
             </time>
           </div>
         
@@ -688,6 +481,210 @@ CopyOnWriteList是ArrayList线程安全的版本。所有更改CopyOnWriteList�
             <i class="iconfont icon-tags"></i>
             
               <a href="/tags/synchronized/">synchronized</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/JMM.html" target="_self">
+          Java内存模型
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/JMM.html" target="_self">
+          
+          
+            
+          
+          1. 内存模型(memory model)1.1. 内存模型是什么在编译和运行程序时，编译器和CPU都会为了效率而力所能及地对程序进行优化，例如编译器和CPU的指令重排、CPU的流水线执行等操作。但是这种优化不是没有限制的，如果不能及时保证内存的可见性，程序就有可能出现错误,这里的可见性是指如果有一个线程A对某个内存地址addr进行了写操作，那么其他线程一定能够看到A对地址addr的操作。
+所以内
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-12-06 13:13" pubdate>
+              2020-12-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/JMM/">JMM</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/volatile-keyword.html" target="_self">
+          volatile关键字
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/volatile-keyword.html" target="_self">
+          
+          
+            
+          
+          本文介绍了在Java中volatile关键字的基本概念与相应原理
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-12-06 13:13" pubdate>
+              2020-12-06
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Java/">Java</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/volatile/">volatile</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/synchronized-keyword.html" target="_self">
+          synchronized关键字
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/synchronized-keyword.html" target="_self">
+          
+          
+            
+          
+          预备知识Java提供的同步机制有许多，synchronized是其中最经常使用、最万能的机制之一。为了学习synchronized的实现原理，进而了解到monior object模式。在java中synchronized辅助实现了该模式。
+1. monitor机制的起源与定义在早期，编写并发程序时使用的同步原语是信号量semaphore与互斥量mutex。程序员需要手动操作信号量的数值与线程的唤醒
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-12-01 19:54" pubdate>
+              2020-12-01
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/synchronized/">synchronized</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/SPI-service-mechanism.html" target="_self">
+          通过MySQL驱动的加载学习SPI机制
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/SPI-service-mechanism.html" target="_self">
+          
+          
+            
+          
+          本文通过数据库驱动的加载原理简要分析了Java的SPI机制
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-11-11 22:19" pubdate>
+              2020-11-11
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Java/">Java</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/SPI%E6%9C%BA%E5%88%B6/">SPI机制</a>
+            
+              <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E9%A9%B1%E5%8A%A8%E5%8A%A0%E8%BD%BD/">数据库驱动加载</a>
             
           </div>
         

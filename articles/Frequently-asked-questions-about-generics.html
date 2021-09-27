@@ -176,8 +176,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-09-27 10:44" pubdate>
-        2021年9月27日 上午
+      <time datetime="2020-08-14 20:59" pubdate>
+        2020年8月14日 晚上
       </time>
     </span>
   
@@ -268,7 +268,7 @@
 </blockquote>
 <p>因为add方法接受的参数类型为x(编译器的名字可能为capture#1 of ?),而容器c中的引用至少都为Number类型,因为容器内的元素类型都有一个限制:<code>? extends Number</code>,所以编译器出于安全,将容器内的引用推断为<code>Number</code>类型肯定是不会错的。<br>那么一个存储<code>Number</code>类型的容器,能接受一个类型为<code>capture#1 of ?</code>的值吗?不知道,因为后者的类型编译器无法推断,所以为了保险起见,直接会产生编译错误。</p>
 <p>只要有表达式产生了<code>wild type</code>的<strong>value</strong>(The compiler applies capture conversion on every expression that yields a value in wild type),<code>capture conversion</code>操作就存在。并且会为每个通配符<code>?</code>分配一个唯一ID。以下面代码为例:</p>
-<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;? extends Number&gt; foo(List&lt;? extends Number&gt; numberList)<br>&#123;<br>#<span class="hljs-number">1</span>  <span class="hljs-keyword">for</span>(Number number : numberList)<br>#<span class="hljs-number">2</span>      <span class="hljs-keyword">assert</span> numberList.contains(number);<br>#<span class="hljs-number">3</span>  numberList = numberList;<br>#<span class="hljs-number">4</span>  <span class="hljs-keyword">return</span> numberList;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">List&lt;? extends Number&gt; foo(List&lt;? extends Number&gt; numberList)<br>&#123;<br>  #<span class="hljs-number">1</span>  <span class="hljs-keyword">for</span>(Number number : numberList)<br>  #<span class="hljs-number">2</span>      <span class="hljs-keyword">assert</span> numberList.contains(number);<br>  #<span class="hljs-number">3</span>  numberList = numberList;<br>  #<span class="hljs-number">4</span>  <span class="hljs-keyword">return</span> numberList;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 
 <p>上面代码有四个地方都存在<code>wild type</code>的变量,我们一个一个来分析。</p>
 <p>对于<code>#1</code>处的<code>numberList</code>,其类型为<code>List &lt;? extends Number&gt;</code>,那么会将这处的<code>numberList</code>转换为<code>List&lt;X1&gt;</code>类型,<code>List&lt;X1&gt;</code>是<code>Iterable&lt;X1&gt;</code>的子类,所以可以使用for循环遍历,number的类型是<code>X1</code>,又因为<code>X1:&lt;Number</code>,所以其可以向上转型为<code>Number</code></p>
@@ -430,7 +430,7 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/%E5%9F%BA%E7%A1%80/">基础</a>
+                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
                     
                   </div>
                 
@@ -455,9 +455,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/articles/SPI-service-mechanism.html">
+                      <a href="/articles/HashMap-analysis-part-two.html">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">通过MySQL驱动的加载学习SPI机制</span>
+                        <span class="hidden-mobile">HashMap源码分析(二)-插入源码</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -466,7 +466,7 @@
                     
                     
                       <a href="/articles/the-generic-of-java.html">
-                        <span class="hidden-mobile">java的泛型</span>
+                        <span class="hidden-mobile">Java的泛型</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

@@ -176,8 +176,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-09-27 10:44" pubdate>
-        2021年9月27日 上午
+      <time datetime="2021-08-06 22:09" pubdate>
+        2021年8月6日 晚上
       </time>
     </span>
   
@@ -272,7 +272,7 @@
 <li>如果被访问版本的<code>trx_id</code>属性值在m_ids列表中最大的事务id和最小事务id之间，那就需要判断一下<code>trx_id</code>属性值是不是在m_ids列表中，如果在，说明创建ReadView 时生成该版本的事务还是活跃的，该版本不可以被访问；如果不在，说明创建 ReadView 时生成该版本的事务已经被提交，该版本可以被访问。</li>
 </ol>
 <h3 id="2-3-MVCC工作的流程"><a href="#2-3-MVCC工作的流程" class="headerlink" title="2.3 MVCC工作的流程"></a>2.3 MVCC工作的流程</h3><p>我们以一个例子来解释MVCC的工作原理，假设当前待操作的行记录如下所示：</p>
-<p><img src="./images/mvcc-undo-log-part-i.drawio.svg" srcset="/img/loading.gif" lazyload alt="mvcc-record"></p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/mvcc..imagesmvcc-undo-log-part-i.drawio.svg.svg" srcset="/img/loading.gif" lazyload alt="mvcc-record"></p>
 <p>数据库开启了事务A、B、C，D，事务C将上述记录的<code>age</code>字段修改为18，事务D将上述记录的<code>name</code>字段修改为tom，执行动作的时刻如下所示：</p>
 <table>
 <thead>
@@ -341,13 +341,13 @@
 <td align="right"></td>
 </tr>
 </tbody></table>
-<p>假设给事务A、C、D分配的事务ID分别为1、2、3，那么在t4时刻，undo log的形式应如下所示：<br><img src="./images/mvcc-undo-log-part-ii.drawio.svg" srcset="/img/loading.gif" lazyload alt="mvcc-readview-ii"></p>
+<p>假设给事务A、C、D分配的事务ID分别为1、2、3，那么在t4时刻，undo log的形式应如下所示：<br><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/mvcc.mvcc-undo-log-part-ii.drawio.svg" srcset="/img/loading.gif" lazyload alt="mvcc-readview-ii"></p>
 <p>t5时刻事务A执行select前，会生成ReadView，生成的四个参数如下所示：<br>| 参数 | m_ids | min_trx_id |  max_trx_id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; | creator_trx_id |<br>| :—–| —-: | :—-: | —-: | —-: |<br>|  | [1,2,3]| 1 |4=3+1（当前最大事务ID+1） | 1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; |</p>
 <p>因为事务B还未被分配事务ID（分配时机详见上文），所以活跃的事务只有A、C、D。在事务A生成ReadView后读之前，事务B欲将该记录的<code>age</code>字段从25改为18，步骤包括：</p>
 <ol>
 <li>对该行加排他锁</li>
 <li>将该行的原始数据创建快照，存入undo log</li>
-<li>执行修改操作后，并将修改后的<code>DB_ROLL_PTR</code>指向undo log最新的一行，如下所示：<br><img src="./images/mvcc-undo-log-part-iii.drawio.svg" srcset="/img/loading.gif" lazyload alt="mvcc-readview-iii"></li>
+<li>执行修改操作后，并将修改后的<code>DB_ROLL_PTR</code>指向undo log最新的一行，如下所示：<br><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/mvcc.mvcc-undo-log-part-iii.drawio.svg" srcset="/img/loading.gif" lazyload alt="mvcc-readview-iii"></li>
 </ol>
 <p>在修改完成后，轮到事务A执行读取操作，那么事务A会根据undo log以及可见性算法来抉择到底读取哪一版本的数据：</p>
 <ol>

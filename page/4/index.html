@@ -185,21 +185,21 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/ReentrantLock-analysis.html" target="_self">
-          ReentrantLock源码解析
+        <a href="/articles/class-loading-mechanism.html" target="_self">
+          类的加载机制
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/ReentrantLock-analysis.html" target="_self">
+        <a href="/articles/class-loading-mechanism.html" target="_self">
           
           
             
           
-          1. 预备知识ReentrantLock是基于AbstractQueueSynchronizer的可重入锁。分为公平和非公平模式。它的内部类Sync继承了AbstractQueueSynchronizer，具体的资源获取与释放由Sync来实现，基本结构如下图所示：
+          1. 类初始化的时机当复习类加载时机时，我给自己抛出了一个问题：这里的时机只说明了类的初始化，那么对于接口呢？接口什么时候会被初始化呢？
+仔细回顾《深入理解Java虚拟机》，才发现，作者给出的是会触发类型初始化的六种时机，而不是类初始化。这里类型可能是指类或者接口。ok，那么我的问题迎刃而解了。接口初始化的时机同样遵循以下六种场景。
 
-其中NonfairSync实现了非公平锁的逻辑，FairSync实现了公平锁的逻辑。
-2. ReentrantLock的加锁流程这里
+在Java中，只有主动引用才会触发类类型加载动作。所谓的主动引
         </a>
       </p>
 
@@ -207,8 +207,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
+            <time datetime="2020-11-05 21:16" pubdate>
+              2020-11-05
             </time>
           </div>
         
@@ -216,7 +216,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+              <a href="/categories/jvm/">jvm</a>
             
           </div>
         
@@ -224,7 +224,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/ReentrantLock/">ReentrantLock</a>
+              <a href="/tags/class-loading/">class loading</a>
             
           </div>
         
@@ -238,19 +238,21 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/condition-analysis.html" target="_self">
-          Condition队列
+        <a href="/articles/parents-delegation-model.html" target="_self">
+          双亲委派模型
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/condition-analysis.html" target="_self">
+        <a href="/articles/parents-delegation-model.html" target="_self">
           
           
             
           
-          Condition接口的功能用来实现类似于synchronized的await()/signal()通知机制。但是比synchronized的通知机制更丰富、更灵活。我们知道，synchronized锁内部维护了一个waitList保存调用了wait()主动释放锁的线程。AQS的waitList功能就是通过Condition内部维护的Condition queue实现的。
-与AQS的同步队列相似，
+          前言首先在了解双亲委派模型前，我们有必要了解它的英文名字：parents delegation model。其实在具体的模型中，并没有所谓的“双亲”，只有一个逻辑意义上的父类，详情见下文。
+1. 类加载器在《深入理解java虚拟机》一书中写道：
+
+java团队有意将类加载阶段中的“通过一个类的全限定名来获取该类的二进制字节流”这个动作放到java虚拟机外部去实现完成这个动作的代码就称为类加载器，以
         </a>
       </p>
 
@@ -258,8 +260,8 @@
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
+            <time datetime="2020-11-05 21:11" pubdate>
+              2020-11-05
             </time>
           </div>
         
@@ -267,7 +269,7 @@
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+              <a href="/categories/jvm/">jvm</a>
             
           </div>
         
@@ -275,7 +277,7 @@
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/condition-queue/">condition queue</a>
+              <a href="/tags/%E7%B1%BB%E5%8A%A0%E8%BD%BD/">类加载</a>
             
           </div>
         
@@ -289,19 +291,20 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/hello-world.html" target="_self">
-          Hello World
+        <a href="/articles/five-IO-model.html" target="_self">
+          五种IO模型
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/hello-world.html" target="_self">
+        <a href="/articles/five-IO-model.html" target="_self">
           
           
             
           
-          Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
-Quick
+          前言相信对于很多新人来说，同步、异步、阻塞、与非阻塞这四个概念非常容易混淆。那是因为我们没有搞清楚我们看待问题的视角。对于这四个概念，站在不同的角度，如何区别是不同的。我在此将所有的资料汇总，总结，并提出我自己的见解。
+我将分两种维度讨论这四种概念，分别是广义上的同步与阻塞，以及狭义上的同步与阻塞。
+1. 广义维度下的区分相信很多人在编写多线程程序最大的难度就是让各个线程之间同步合作。那么根据&l
         </a>
       </p>
 
@@ -309,46 +312,8 @@ Quick
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
-            </time>
-          </div>
-        
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/factory-pattern.html" target="_self">
-          工厂模式扫盲
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/factory-pattern.html" target="_self">
-          
-          
-            
-          
-          工厂模式基本上可分为四种种：静态工厂模式、简单工厂模式、工厂方法模式以及抽线工厂模式。本文将对这四种设计模式进行了简单介绍。
-1. 为什么需要工厂模式这个问题的答案很容易想到，工厂模式是为了将对象的使用与创建这两个步骤分开，实现代码的解耦，不然一个很明显的问题就是如果我们修改了对象的创建方法，那么需要修改的地方将无法想象。工厂模式避免了这一窘境。
-2. 静态工厂模式静态工厂模式比较简单，基本定义为
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-09 19:51" pubdate>
-              2021-06-09
+            <time datetime="2020-10-28 22:17" pubdate>
+              2020-10-28
             </time>
           </div>
         
@@ -356,7 +321,7 @@ Quick
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/design-patterns/">design patterns</a>
+              <a href="/categories/IO/">IO</a>
             
           </div>
         
@@ -364,7 +329,7 @@ Quick
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/factory/">factory</a>
+              <a href="/tags/IO%E6%A8%A1%E5%9E%8B/">IO模型</a>
             
           </div>
         
@@ -378,20 +343,28 @@ Quick
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/log-system-for-Java-abstract.html" target="_self">
-          Java日志库扫盲
+        <a href="/articles/index-of-mysql.html" target="_self">
+          MySQL中的索引
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/log-system-for-Java-abstract.html" target="_self">
+        <a href="/articles/index-of-mysql.html" target="_self">
           
           
             
           
-          1. 基本概念slf4j：simple logging facade for Java，可以看作用来管理各个日志库的调度器，我们只需要通过配置slf4j后端具体的使用的日志库就可以完成日志操作，对用户隐藏了后端真正使用的日志库log4j：一个日志库Logback：日志库
-2. 如何结合slf4j使用log4j其实结合slf4j使用log4j并不难，但是因为不了解各个库的作用，浪费了一些时间。
-在最
+          前言索引是使用MySQL是一个很重要的知识点,正确的使用索引能够极大地提高MySQL的运行效率。那么关于索引,我产生了如下问题:
+
+索引是什么
+有哪些索引
+索引的原理是什么
+如何正确地使用索引
+
+下面我将一一对问题进行解答。
+1.索引是什么索引是一种专门用于数据库的结构,其目的也非常明显,就是用来优化数据库的执行效率。首先我们来看看官方是如何描述索引的用处:
+
+Indexes are used t
         </a>
       </p>
 
@@ -399,8 +372,8 @@ Quick
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-06-07 16:57" pubdate>
-              2021-06-07
+            <time datetime="2020-10-10 21:01" pubdate>
+              2020-10-10
             </time>
           </div>
         
@@ -408,7 +381,7 @@ Quick
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/tools/">tools</a>
+              <a href="/categories/MySQL/">MySQL</a>
             
           </div>
         
@@ -416,7 +389,7 @@ Quick
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/logging/">logging</a>
+              <a href="/tags/%E7%B4%A2%E5%BC%95/">索引</a>
             
           </div>
         
@@ -430,31 +403,19 @@ Quick
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/how-to-debug-tomcat.html" target="_self">
-          配置tomcat调试环境
+        <a href="/articles/HashMap-analysis-part-three.html" target="_self">
+          HashMap源码分析(三)-删除源码
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/how-to-debug-tomcat.html" target="_self">
+        <a href="/articles/HashMap-analysis-part-three.html" target="_self">
           
           
             
           
-          重点是配置好CATALINA_HOME，该目录用于存放tomcat的配置信息。
-我们要将源码作为一个module放入整个项目中，即整个项目的结构如下所示：
-
-&lt;project path&gt;
-&lt;source code path&gt;
-(source code)pom.xml
-
-
-
-(project)pom.xml
-
-
-
-所以我们不仅要为整个项目配置pom.xml，同时也要为源码配置
+          HashMap的删除操作一般通过remove完成。在remove方法中,同样存在fast-fail机制,不了解的可以去看看ArrayList中的fast-fail。通过fast-fail机制检查后,会调用真正的删除方法removeNode,如下面代码所示：
+12345678910111213141516171819202122232425262728293031323334353637383940
         </a>
       </p>
 
@@ -462,8 +423,8 @@ Quick
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-04-26 10:50" pubdate>
-              2021-04-26
+            <time datetime="2020-10-02 17:41" pubdate>
+              2020-10-02
             </time>
           </div>
         
@@ -471,7 +432,7 @@ Quick
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/framework/">framework</a>
+              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
             
           </div>
         
@@ -479,7 +440,7 @@ Quick
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/tomcat/">tomcat</a>
+              <a href="/tags/HashMap/">HashMap</a>
             
           </div>
         
@@ -493,25 +454,20 @@ Quick
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/the-GC-of-Java.html" target="_self">
-          Java中的GC
+        <a href="/articles/HashMap-analysis-part-two.html" target="_self">
+          HashMap源码分析(二)-插入源码
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/the-GC-of-Java.html" target="_self">
+        <a href="/articles/HashMap-analysis-part-two.html" target="_self">
           
           
             
           
-          Java中的自动垃圾回收是其一大优点。本文将从以下三个方面简介相关知识：
-
-如何定义垃圾
-垃圾回收的时机
-垃圾回收的策略
-具体的垃圾回收器
-
-在介绍相关的知识前，我们需要知道一个词：stop-the-world，这个词专门为GC而生，因为Java会在进行垃圾回收的时候除了GC线程外，会暂停所有工作线程，也就是所谓的“停止世界运转”。那么GC优化时，我们的目标可能就是减少GC时stop-the-wo
+          HashMap中最常用的就是put(key,value)函数与remove函数,而且这些函数还会包含RB树与list的相互转换,比较复杂。值得认真推敲。
+1. put方法下面JDk1.8中,HashMap的put源码。其又在内部调用了putVal。
+1234567public V put(K key, V value) &#123;    return putVal(hash(key), key,
         </a>
       </p>
 
@@ -519,8 +475,8 @@ Quick
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-21 16:21" pubdate>
-              2021-03-21
+            <time datetime="2020-10-02 17:40" pubdate>
+              2020-10-02
             </time>
           </div>
         
@@ -528,7 +484,7 @@ Quick
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/java/">java</a>
+              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
             
           </div>
         
@@ -536,7 +492,7 @@ Quick
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/garbage-collection/">garbage collection</a>
+              <a href="/tags/HashMap/">HashMap</a>
             
           </div>
         
@@ -550,20 +506,22 @@ Quick
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/analysis-of-dynamic-proxy.html" target="_self">
-          动态代理的原理
+        <a href="/articles/Frequently-asked-questions-about-generics.html" target="_self">
+          关于泛型的常见问题
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/analysis-of-dynamic-proxy.html" target="_self">
+        <a href="/articles/Frequently-asked-questions-about-generics.html" target="_self">
           
           
             
           
-          1. 前言代理分为静态代理和动态代理。静态代理就是我们手动地将代理类写出来，而动态代理就是由虚拟机在运行时自动地将代理类构造出来。下面我就简单地阐述静态代理的用法以及缺点。
-首先在下面声明需要代理的类：
-123456789101112131415161718192021222324252627282930313233//实体类实现的接口public interface UserDao &#123;
+          前言这里罗列一些关于泛型的常见问题,并给出解答。其中本篇大多数问题来自Java Generics FAQs - Generic And Parameterized Types,我这里仅翻译一些我认为比较容易糊涂的问题。
+当然,在解答这些问题时,我们需要牢记一个概念,通配符?表示的是不知道是什么类型,而不是任意类型。
+
+泛型类型:class test&lt;T&gt;&#123;&#125;
+具体参
         </a>
       </p>
 
@@ -571,8 +529,8 @@ Quick
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-13 19:45" pubdate>
-              2021-03-13
+            <time datetime="2020-08-14 20:59" pubdate>
+              2020-08-14
             </time>
           </div>
         
@@ -580,7 +538,7 @@ Quick
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/java/">java</a>
+              <a href="/categories/Java/">Java</a>
             
           </div>
         
@@ -588,7 +546,7 @@ Quick
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/dynamic-proxy/">dynamic proxy</a>
+              <a href="/tags/%E6%B3%9B%E5%9E%8B/">泛型</a>
             
           </div>
         
@@ -602,22 +560,21 @@ Quick
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/what-is-IOC.html" target="_self">
-          IOC到底是什么？
+        <a href="/articles/the-generic-of-java.html" target="_self">
+          Java的泛型
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/what-is-IOC.html" target="_self">
+        <a href="/articles/the-generic-of-java.html" target="_self">
           
           
             
           
-          这篇博文：浅谈IOC–说清楚IOC是什么讲的不错，我在此就是做一些摘抄。
+          前言
+这篇文章是在研究java的Type体系顺带扯出的概念,泛型的使用要说简单也很简单,要说难也可以说难。本文将由浅入深,带你学习java中的”泛型”。
 
-1. IOC是什么？IOC，Inversion of Control，译为控制反转。
-1996年，Michael Mattson在其论文:Object-Oriented FrameworksA survey of methodological issues中，首先提出了IOC这个概念，IOC是一个方法论。
-简单来说，IOC
+1. 泛型的基本概念泛型的概念始于java1.5,所以在1.5之前所有使用java的地方都没有泛型的影子,那么为了保持向后兼容,java中的泛型被设计成了伪泛型,仅仅存在于编译时期,在实际生成的字节码文件中是没有泛型的,这一动作叫做泛型的擦除。
         </a>
       </p>
 
@@ -625,8 +582,8 @@ Quick
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-12 18:48" pubdate>
-              2021-03-12
+            <time datetime="2020-08-09 19:14" pubdate>
+              2020-08-09
             </time>
           </div>
         
@@ -634,7 +591,7 @@ Quick
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/framework/">framework</a>
+              <a href="/categories/Java/">Java</a>
             
           </div>
         
@@ -642,7 +599,7 @@ Quick
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Spring/">Spring</a>
+              <a href="/tags/%E6%B3%9B%E5%9E%8B/">泛型</a>
             
           </div>
         
@@ -656,23 +613,18 @@ Quick
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/what-is-spring-mvc.html" target="_self">
-          Spring MVC原理
+        <a href="/articles/type-system-of-java.html" target="_self">
+          Java中的类型系统
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/what-is-spring-mvc.html" target="_self">
+        <a href="/articles/type-system-of-java.html" target="_self">
           
           
             
           
-          1. MVC是什么？MVC是一种设计规范，并不是一种设计模式。该规范将一个web分割成3部分来处理：请求首先经过控制器Controller；经过业务处理得到数据模型Model；最后通过model渲染视图View并响应给客户端。
-我们完全利用Servlet自己实现MVC规范，如下图所示：
-基本流程为：
-
-用户发请求
-Servlet（作为Controller）接收请求数据，解析数据模型model，并调
+          本文简要介绍了Java中反射使用的类型系统，包括一些基本概念
         </a>
       </p>
 
@@ -680,8 +632,8 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-03-04 18:40" pubdate>
-              2021-03-04
+            <time datetime="2020-08-07 21:36" pubdate>
+              2020-08-07
             </time>
           </div>
         
@@ -689,7 +641,7 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/framework/">framework</a>
+              <a href="/categories/Java/">Java</a>
             
           </div>
         
@@ -697,7 +649,59 @@ Servlet（作为Controller）接收请求数据，解析数据模型model，并�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Spring-MVC/">Spring MVC</a>
+              <a href="/tags/%E7%B1%BB%E5%9E%8B/">类型</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/HashMap-analysis-part-one.html" target="_self">
+          HashMap源码分析(一)-HashMap中的那些常量
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/HashMap-analysis-part-one.html" target="_self">
+          
+          
+            
+          
+          前言HashMap实现了接口Map、Cloneable、Serializable,后两个都是标记接口,注意HasnMap的clone方法也仅仅是浅复制(shadow copy)。而Map是跟Collection并列的顶级接口。HashMap并且继承抽象类AbstractMap。
+本文将首先简单说说接口Map,因为AbstarctMap作为实现接口Map的骨架,仅实现了一些基本方法,没什么好说的。
+
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-29 20:22" pubdate>
+              2020-07-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/HashMap/">HashMap</a>
             
           </div>
         

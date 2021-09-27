@@ -185,269 +185,6 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/top-questions-for-network.html" target="_self">
-          计网热门问题
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/top-questions-for-network.html" target="_self">
-          
-          
-            
-          
-          本篇不为别的，只为记录面试过程中关于计网的热门问题。
-[TOC]
-
-1. 点击一个链接后，发生了什么首先，我们需要有一个总的概念：在点击一个链接后，网卡首先会将http请求使用http协议封装，接着将数据包经由tcp/udp协议封装，最后使用ip协议将数据包在各个网段之间传输直至到达目的地。http协议的封装这里不作详细介绍。tcp连接的建立和ip数据包的转发才是重点。
-
-tcp连接建立的基础是使
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-01-16 15:06" pubdate>
-              2021-01-16
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/network/">network</a>
-            
-          </div>
-        
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/index-of-mysql.html" target="_self">
-          mysql中的索引
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/index-of-mysql.html" target="_self">
-          
-          
-            
-          
-          前言索引是使用MySQL是一个很重要的知识点,正确的使用索引能够极大地提高MySQL的运行效率。那么关于索引,我产生了如下问题:
-
-索引是什么
-有哪些索引
-索引的原理是什么
-如何正确地使用索引
-
-下面我将一一对问题进行解答。
-1.索引是什么索引是一种专门用于数据库的结构,其目的也非常明显,就是用来优化数据库的执行效率。首先我们来看看官方是如何描述索引的用处:
-
-Indexes are used t
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-10-10 21:01" pubdate>
-              2020-10-10
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/mysql/">mysql</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E7%B4%A2%E5%BC%95/">索引</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/HashMap-analysis-part-three.html" target="_self">
-          HashMap源码分析(三)-删除源码
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/HashMap-analysis-part-three.html" target="_self">
-          
-          
-            
-          
-          HashMap的删除操作一般通过remove完成。在remove方法中,同样存在fast-fail机制,不了解的可以去看看ArrayList中的fast-fail。通过fast-fail机制检查后,会调用真正的删除方法removeNode,如下面代码所示：
-12345678910111213141516171819202122232425262728293031323334353637383940
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-10-02 17:41" pubdate>
-              2020-10-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/HashMap/">HashMap</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/HashMap-analysis-part-two.html" target="_self">
-          HashMap源码分析(二)-插入源码
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/HashMap-analysis-part-two.html" target="_self">
-          
-          
-            
-          
-          HashMap中最常用的就是put(key,value)函数与remove函数,而且这些函数还会包含RB树与list的相互转换,比较复杂。值得认真推敲。
-1. put方法下面JDk1.8中,HashMap的put源码。其又在内部调用了putVal。
-1234567public V put(K key, V value) &#123;    return putVal(hash(key), key,
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-10-02 17:40" pubdate>
-              2020-10-02
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/HashMap/">HashMap</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/HashMap-analysis-part-one.html" target="_self">
-          HashMap源码分析(一)-HashMap中的那些常量
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/HashMap-analysis-part-one.html" target="_self">
-          
-          
-            
-          
-          前言HashMap实现了接口Map、Cloneable、Serializable,后两个都是标记接口,注意HasnMap的clone方法也仅仅是浅复制(shadow copy)。而Map是跟Collection并列的顶级接口。HashMap并且继承抽象类AbstractMap。
-本文将首先简单说说接口Map,因为AbstarctMap作为实现接口Map的骨架,仅实现了一些基本方法,没什么好说的。
-
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2020-07-29 20:22" pubdate>
-              2020-07-29
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/HashMap/">HashMap</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
         <a href="/articles/LinkedList-source-code-analysis.html" target="_self">
           LinkedList源码分析
         </a>
@@ -499,7 +236,7 @@ Indexes are used t
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/articles/Docker-filesys-layout.html" target="_self">
-          <img src="/img/docker.png" srcset="/img/loading.gif" lazyload alt="Docker使用方法(二)-文件系统架构">
+          <img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/basic-Docker-install.docker.png" srcset="/img/loading.gif" lazyload alt="Docker使用方法(二)-文件系统架构">
         </a>
       </div>
     
@@ -517,15 +254,7 @@ Indexes are used t
           
             
           
-          前言一定要将登录用户切换为root才能查看Docker的文件架构！！！
-0x0 基本文件布局Docker的文件主要都存储在/var/lib/docker目录下,文件目录如下所示:
-
-其中containers存储的是容器,images存储的是镜像。在深入了解Docker的原理之前,我们需要了解两个基本名词:
-
-overlayFS
-overlay2
-
-0x1 overlayFS其中overlayFS是
+          详细讲解了Docker在Linux环境中所用的overlay文件系统
         </a>
       </p>
 
@@ -563,7 +292,7 @@ overlay2
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/articles/Docker-write-dockfile.html" target="_self">
-          <img src="/img/docker.png" srcset="/img/loading.gif" lazyload alt="Dockerfile的基本规则">
+          <img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/basic-Docker-install.docker.png" srcset="/img/loading.gif" lazyload alt="Dockerfile的基本规则">
         </a>
       </div>
     
@@ -581,12 +310,7 @@ overlay2
           
             
           
-          前言在了解了docker的基本原理后，是时候了解以下Dockerfile是怎么写的了。首先我们需要了解RUN与CMD命令的区别。
-
-RUN命令：每执行一次，就会在原有镜像的基础上添加一个upper dir保存所作的改变，所以对于一类的命令我们尽量使用一条RUN，否则会创建过多的不必要的upper dir
-CMD命令：容器是一个进程，CMD命令就像是容器启动时输入的命令参数，所以只能有一条CMD
-
-
+          简要介绍了Dockerfile的基本书写规则
         </a>
       </p>
 
@@ -624,7 +348,7 @@ CMD命令：容器是一个进程，CMD命令就像是容器启动时输入的�
     
       <div class="col-12 col-md-4 m-auto index-img">
         <a href="/articles/basic-Docker-install.html" target="_self">
-          <img src="/img/docker.png" srcset="/img/loading.gif" lazyload alt="Docker使用方法(一)-基本安装">
+          <img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/basic-Docker-install.docker.png" srcset="/img/loading.gif" lazyload alt="Docker使用方法(一)-基本安装">
         </a>
       </div>
     
@@ -681,6 +405,65 @@ CMD命令：容器是一个进程，CMD命令就像是容器启动时输入的�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
+        <a href="/articles/java-memory-layout.html" target="_self">
+          java的内存布局
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/java-memory-layout.html" target="_self">
+          
+          
+            
+          
+          前言众所周知,java虚拟机的内存布局和传统的内存布局都差不多,都分为栈、堆啥的。准确的来说，jvm的内存分为以下几个部分:
+
+程序计数器(就是eip)
+堆
+方法区
+本地方法栈
+虚拟机栈
+
+其中堆和方法区是所有线程锁共享的,而程序计数器、栈肯定都是线程私有的,因为这与程序的正常运行息息相关。
+上述的五个区域都可能产生内存溢出,有的还可能产生内存泄漏(虽然内存由jvm管理,但是并不能保证内存不会泄露
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-21 23:32" pubdate>
+              2020-07-21
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/jvm/">jvm</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E5%86%85%E5%AD%98%E5%B8%83%E5%B1%80/">内存布局</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
         <a href="/articles/ArrayQueue-and-ArrayDeque-analysis.html" target="_self">
           ArrayQueue与ArrayDeque源码分析
         </a>
@@ -723,6 +506,218 @@ CMD命令：容器是一个进程，CMD命令就像是容器启动时输入的�
               <a href="/tags/ArrayQueue/">ArrayQueue</a>
             
               <a href="/tags/ArrayDeque/">ArrayDeque</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/Queue-interface-analysis.html" target="_self">
+          Queue接口分析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/Queue-interface-analysis.html" target="_self">
+          
+          
+            
+          
+          0x1 基本概念Queue接口继承自超级接口Collection,其不仅实现了Coolection中的基本方法,而且额外增加了适用于队列的增、删、差方法。并且对应这三种操作,Queue提供了两套方法,一套在操作失败时抛出异常,另一套在操作失败时返回null,不过在文档中说到:
+
+The latter form of the insert operation is designed specific
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-20 20:55" pubdate>
+              2020-07-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Queue/">Queue</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/ArrayList-source-code-analysis.html" target="_self">
+          ArrayList源码分析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/ArrayList-source-code-analysis.html" target="_self">
+          
+          
+            
+          
+          前言分析源码初体验，第一次分析个比较简单的集合类ArrayList。我把重点放在了ArrayList实现的接口、继承的类以及几个主要的类方法上。
+0x0 ArrayList继承图我们首先来看看ArrayList中的继承图。
+
+ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable、Seriablizable、List接口。
+这里我首先有了两个
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-20 20:55" pubdate>
+              2020-07-20
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/ArrayList/">ArrayList</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/red-black-tree.html" target="_self">
+          红黑树入门
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/red-black-tree.html" target="_self">
+          
+          
+            
+          
+          本篇将带你一步一步了解红黑树，当然大部分内容来源于算法(第4版)一书，我仅仅对一点内容总结了自己的心得。
+在谈谈红黑树之前，我们先来回顾一下二叉排序树(balanced sort tree),因为红黑树是从BST的概念演化而来的。BST的定义很简单，对于一个节点来说，左树的所有节点的值都小于当前节点的值，右树所有节点的值都大于当前节点的值。但是在最坏情况下BST的高度会达到O(N),效率太差。
+我
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-07-11 09:32" pubdate>
+              2020-07-11
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/java%E9%9B%86%E5%90%88/">java集合</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91-map/">红黑树,map</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/Thread-state-transition.html" target="_self">
+          线程的状态转换
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/Thread-state-transition.html" target="_self">
+          
+          
+            
+          
+          因为线程是调度的基本单位，所以线程的状态转换与进程的状态转换是一致的。主要有五个状态：启动、就绪、执行、等待、销毁。这几个状态的转换图如下所示：
+
+可以看到，等待状态只能转换为就绪，再等CPU调度。这是一般的线程状态转换图。
+在java中，又多了几个状态。
+java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNABLE
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2020-06-21 23:00" pubdate>
+              2020-06-21
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2/">状态转换</a>
             
           </div>
         

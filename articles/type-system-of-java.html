@@ -16,11 +16,11 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
   
   <meta name="theme-color" content="#55967e">
-  <meta name="description" content="欢迎乘坐八楼的二路公交车">
+  <meta name="description" content="本文简要介绍了Java中反射使用的类型系统，包括一些基本概念">
   <meta name="author" content="Rains.Lee">
   <meta name="keywords" content="Java">
   
-  <title>java中的类型系统 - 一颗胡杨树</title>
+  <title>Java中的类型系统 - 一颗胡杨树</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -166,7 +166,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="java中的类型系统">
+            <span class="h2" id="subtitle" title="Java中的类型系统">
               
             </span>
 
@@ -176,8 +176,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-09-27 10:44" pubdate>
-        2021年9月27日 上午
+      <time datetime="2020-08-07 21:36" pubdate>
+        2020年8月7日 晚上
       </time>
     </span>
   
@@ -236,7 +236,7 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">java中的类型系统</h1>
+            <h1 style="display: none">Java中的类型系统</h1>
             
             <div class="markdown-body">
               <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>java的类型系统在1.5之后就变的很复杂了。但是又极其重要因为java中的反射基于此。所以想要深入理解反射还需要简单地学习一下java的类型系统。首先我们简要说明一下在逻辑上java的type分类。然后再在实现层次上简要了解一下java到底是如何实现的。</p>
@@ -267,8 +267,7 @@
 
 <p>其中,<code>Point</code>是一个<code>class type</code>(翻译成类类型好难受…),<code>int[]</code>是一个<code>array type</code>,<code>Move</code>是一个<code>interface type</code>,<code>T</code>是一个<code>type variable</code>。前三种都很好理解,最后一个<code>type variable</code>值得一提。</p>
 <p>在jse8规范中,<code>type variable</code>被定义为一个唯一的符号在类、接口、方法、构造函数中作为一个type。所以这个<code>type variable</code>只能在上面四个地方使用。引入<code>type variable</code>的原因是因为在泛型类、泛型接口、泛型构造函数、泛型方法中定义了类型参数。</p>
-<p>所以,很好理解,<code>type variable</code>就是泛型中<code>&lt;T&gt;</code>中的T。注意,<code>type</code></p>
-<p><code>Type</code>接口是java中type信息的顶级接口。主要有五种type,分别是:</p>
+<p>所以,很好理解,<code>type variable</code>就是泛型中<code>&lt;T&gt;</code>中的T。注意，<code>Type</code>接口是java中type信息的顶级接口。主要有五种type,分别是:</p>
 <ul>
 <li><code>raw types</code>:原始类型,使用对应类型的Class对象表示</li>
 <li><code>primitive types</code>:基本类型,使用对应原始类型的Class对象表示</li>
@@ -277,8 +276,7 @@
 <li><code>type variables</code>:类型变量,基于接口<code>TypeVariable</code>,对应实现类为<code>TypeVariableImpl</code></li>
 <li><code>WildcardType</code>:通配符类型,基于接口<code>WildcardType</code>,对应实现类为<code>WildcardTypeImpl</code></li>
 </ul>
-<p>其中<code>ParameterizedTypes</code>、<code>GenericArrayType</code>、<code>TypeVariable</code>、<code>WildcardType</code>这四个接口是<code>Type</code>接口的子接口。继承图如下所示:</p>
-<p><img src="images/Type.png" srcset="/img/loading.gif" lazyload alt="Type继承图"></p>
+<p>其中<code>ParameterizedTypes</code>、<code>GenericArrayType</code>、<code>TypeVariable</code>、<code>WildcardType</code>这四个接口是<code>Type</code>接口的子接口。继承图如下所示:<img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/type-system-of-java.Type.png" srcset="/img/loading.gif" lazyload alt="Type继承图"></p>
 <p>可以看到,<code>Class</code>类是<code>Type</code>接口的子类。下面来一一解释一下四种子接口的含义。</p>
 <h2 id="1-ParameterizedType"><a href="#1-ParameterizedType" class="headerlink" title="1. ParameterizedType"></a>1. ParameterizedType</h2><p><code>ParameterizedType</code>翻译过来就是参数化类型,emm。应该就是将类型参数化,这是引入泛型(Generic)的必然结果。例如我们常用的<code>List&lt;Integer&gt;</code>,这一个完整的带<code>&lt;&gt;</code>的类型就叫做参数化类型。下面解释了raw type于parameterized type之间的关系。</p>
 <ul>
@@ -295,6 +293,7 @@
 </ul>
 <p>以具体的参数化类型, 如<code>Map&lt;String, String&gt;</code>为例:</p>
 <figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestType</span> </span>&#123;<br>    Map&lt;String, String&gt; map;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        Field f = TestType.class.getDeclaredField(<span class="hljs-string">&quot;map&quot;</span>);<br>        System.out.println(f.getGenericType());                               <span class="hljs-comment">// java.util.Map&lt;java.lang.String, java.lang.String&gt;</span><br>        System.out.println(f.getGenericType() <span class="hljs-keyword">instanceof</span> ParameterizedType);  <span class="hljs-comment">// true</span><br>        ParameterizedType pType = (ParameterizedType) f.getGenericType();<br>        System.out.println(pType.getRawType());                               <span class="hljs-comment">// interface java.util.Map</span><br>        <span class="hljs-keyword">for</span> (Type type : pType.getActualTypeArguments()) &#123;<br>            System.out.println(type);                                         <span class="hljs-comment">// 打印两遍: class java.lang.String</span><br>        &#125;<br>        System.out.println(pType.getOwnerType());                             <span class="hljs-comment">// null</span><br>    &#125;<br>&#125;<br><br></code></pre></div></td></tr></table></figure>
+
 <h2 id="2-TypeVariable"><a href="#2-TypeVariable" class="headerlink" title="2. TypeVariable"></a>2. TypeVariable</h2><p>类型变量, 范型信息在编译时会被转换为一个特定的类型, 而TypeVariable就是用来反映在JVM编译该泛型前的信息.</p>
 <p><strong>常用方法:</strong></p>
 <ul>
@@ -323,7 +322,7 @@
 <li>Type[] getUpperBounds(): 获取范型变量的上界</li>
 <li>Type[] getLowerBounds(): 获取范型变量的下界<br>注意:</li>
 </ul>
-<p>现阶段通配符只接受一个上边界或下边界, 返回数组是为了以后的扩展, 实际上现在返回的数组的大小是1</p>
+<p>现阶段通配符只接受一个上边界或下边界, 返回数组是为了以后的扩展, 实际上现在返回的数组的大小是1。</p>
 <figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TestType</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> List&lt;? extends Number&gt; a;  <span class="hljs-comment">// // a没有下界, 取下界会抛出ArrayIndexOutOfBoundsException</span><br>    <span class="hljs-keyword">private</span> List&lt;? <span class="hljs-keyword">super</span> String&gt; b;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception </span>&#123;<br>        Field fieldA = TestType.class.getDeclaredField(<span class="hljs-string">&quot;a&quot;</span>);<br>        Field fieldB = TestType.class.getDeclaredField(<span class="hljs-string">&quot;b&quot;</span>);<br>        <span class="hljs-comment">// 先拿到范型类型</span><br>        Assert.that(fieldA.getGenericType() <span class="hljs-keyword">instanceof</span> ParameterizedType, <span class="hljs-string">&quot;&quot;</span>);<br>        Assert.that(fieldB.getGenericType() <span class="hljs-keyword">instanceof</span> ParameterizedType, <span class="hljs-string">&quot;&quot;</span>);<br>        ParameterizedType pTypeA = (ParameterizedType) fieldA.getGenericType();<br>        ParameterizedType pTypeB = (ParameterizedType) fieldB.getGenericType();<br>        <span class="hljs-comment">// 再从范型里拿到通配符类型</span><br>        Assert.that(pTypeA.getActualTypeArguments()[<span class="hljs-number">0</span>] <span class="hljs-keyword">instanceof</span> WildcardType, <span class="hljs-string">&quot;&quot;</span>);<br>        Assert.that(pTypeB.getActualTypeArguments()[<span class="hljs-number">0</span>] <span class="hljs-keyword">instanceof</span> WildcardType, <span class="hljs-string">&quot;&quot;</span>);<br>        WildcardType wTypeA = (WildcardType) pTypeA.getActualTypeArguments()[<span class="hljs-number">0</span>];<br>        WildcardType wTypeB = (WildcardType) pTypeB.getActualTypeArguments()[<span class="hljs-number">0</span>];<br>        <span class="hljs-comment">// 方法测试</span><br>        System.out.println(wTypeA.getUpperBounds()[<span class="hljs-number">0</span>]);   <span class="hljs-comment">// class java.lang.Number</span><br>        System.out.println(wTypeB.getLowerBounds()[<span class="hljs-number">0</span>]);   <span class="hljs-comment">// class java.lang.String</span><br>        <span class="hljs-comment">// 看看通配符类型到底是什么, 打印结果为: ? extends java.lang.Number</span><br>        System.out.println(wTypeA);<br>    &#125;<br>&#125;<br><br></code></pre></div></td></tr></table></figure>
 
 <h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>转载自<a target="_blank" rel="noopener" href="http://loveshisong.cn/%E7%BC%96%E7%A8%8B%E6%8A%80%E6%9C%AF/2016-02-16-Type%E8%AF%A6%E8%A7%A3.html">Java中的Type详解</a>。</p>
@@ -336,15 +335,13 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/%E5%8F%8D%E5%B0%84/">反射</a>
+                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
                     
                   </div>
                 
                 
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">基本概念</a>
                     
                       <a class="hover-with-bg" href="/tags/%E7%B1%BB%E5%9E%8B/">类型</a>
                     
@@ -363,9 +360,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/articles/parents-delegation-model.html">
+                      <a href="/articles/the-generic-of-java.html">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">双亲委派模型</span>
+                        <span class="hidden-mobile">Java的泛型</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -373,8 +370,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/articles/SPI-service-mechanism.html">
-                        <span class="hidden-mobile">通过MySQL驱动的加载学习SPI机制</span>
+                      <a href="/articles/HashMap-analysis-part-one.html">
+                        <span class="hidden-mobile">HashMap源码分析(一)-HashMap中的那些常量</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

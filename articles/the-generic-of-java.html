@@ -20,7 +20,7 @@
   <meta name="author" content="Rains.Lee">
   <meta name="keywords" content="Java">
   
-  <title>java的泛型 - 一颗胡杨树</title>
+  <title>Java的泛型 - 一颗胡杨树</title>
 
   <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" />
 
@@ -166,7 +166,7 @@
       <div class="full-bg-img">
         <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
           <div class="page-header text-center fade-in-up">
-            <span class="h2" id="subtitle" title="java的泛型">
+            <span class="h2" id="subtitle" title="Java的泛型">
               
             </span>
 
@@ -176,8 +176,8 @@
   
     <span class="post-meta">
       <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-      <time datetime="2021-09-27 10:44" pubdate>
-        2021年9月27日 上午
+      <time datetime="2020-08-09 19:14" pubdate>
+        2020年8月9日 晚上
       </time>
     </span>
   
@@ -188,7 +188,7 @@
     
     <span class="post-meta mr-2">
       <i class="iconfont icon-chart"></i>
-      5.9k 字
+      6k 字
     </span>
   
 
@@ -236,7 +236,7 @@
         <div class="py-5" id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">java的泛型</h1>
+            <h1 style="display: none">Java的泛型</h1>
             
             <div class="markdown-body">
               <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><blockquote>
@@ -269,6 +269,7 @@
 <p>泛型方法又分为普通的泛型方法、静态泛型方法、泛型构造方法。泛型方法的声明麻烦一点,泛型方法需要在权限修饰后面定义所要使用的<code>type variable</code>。</p>
 <p>下面是一组使用泛型方法和泛型类的代码:</p>
 <figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">package</span> generic;<br><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">People</span>&lt;<span class="hljs-title">T</span>&gt;</span>&#123;<br>    <span class="hljs-keyword">private</span> T name;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">int</span> age;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">People</span><span class="hljs-params">(T name,<span class="hljs-keyword">int</span> age)</span></span>&#123;<br>        <span class="hljs-keyword">this</span>.name=name;<br>        <span class="hljs-keyword">this</span>.age=age;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> T <span class="hljs-title">getName</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> name;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(T name)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.name = name;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">int</span> <span class="hljs-title">getAge</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">return</span> age;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setAge</span><span class="hljs-params">(<span class="hljs-keyword">int</span> age)</span> </span>&#123;<br>        <span class="hljs-keyword">this</span>.age = age;<br>    &#125;<br>&#125;<br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Test</span>&lt;<span class="hljs-title">V</span>&gt;</span>&#123;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span>&lt;T&gt; V <span class="hljs-title">getInfo</span><span class="hljs-params">(People&lt;T&gt; p1, People&lt;T&gt; p2, V sum)</span></span>&#123;<br>        System.out.println(<span class="hljs-string">&quot;p1:&quot;</span>+p1.getName()+<span class="hljs-string">&quot; &quot;</span>+p1.getAge());<br>        System.out.println(<span class="hljs-string">&quot;p2:&quot;</span>+p2.getName()+<span class="hljs-string">&quot; &quot;</span>+p2.getAge());<br>        <span class="hljs-keyword">return</span> sum;<br>    &#125;<br>&#125;<br><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GenericTest</span> </span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span> </span>&#123;<br>        People&lt;String&gt; p1=<span class="hljs-keyword">new</span> People&lt;&gt;(<span class="hljs-string">&quot;Bob&quot;</span>,<span class="hljs-number">23</span>);<br>        People&lt;String&gt; p2=<span class="hljs-keyword">new</span> People&lt;&gt;(<span class="hljs-string">&quot;Lee&quot;</span>,<span class="hljs-number">20</span>);<br>        Test&lt;Integer&gt; t=<span class="hljs-keyword">new</span> Test&lt;&gt;();<br>        Object result= t.&lt;String&gt;getInfo(p1,p2,<span class="hljs-number">23</span>);<br>        <span class="hljs-comment">//Object result=t.getInfo(p1,p2,23);</span><br><br>        System.out.println(<span class="hljs-string">&quot;result is an instance of Integer:&quot;</span>+result <span class="hljs-keyword">instanceof</span> Integer);<br><br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
+
 <p>运行结果如下:</p>
 <figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">p1:Bob <span class="hljs-number">23</span><br>p2:Lee <span class="hljs-number">20</span><br>result is an instance of Integer:<span class="hljs-keyword">true</span><br></code></pre></div></td></tr></table></figure>
 
@@ -279,6 +280,7 @@
 <p>这样写是因为库编写者已经确定容器中存储的元素的类型就是<code>E</code>,强制转换成<code>E</code>并不会出错,并且调用者也知道返回的类型到底是什么。而且因为方法的返回值是泛型<code>E</code>,编译器会在调用者部分的字节码中自动插入一段强制转换代码将元素类型转为为<code>E</code>。这是由于类型擦除导致的,这会在<strong>后文</strong>详细解释。</p>
 <p>静态泛型方法与常规的泛型方法唯一区别就是<strong>静态泛型方法中不能使用泛型类的类型变量</strong>,例如在<code>people</code>中声明一个方法:</p>
 <figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> &lt;M&gt; calc(M year,M mouth)&#123;...&#125;<br></code></pre></div></td></tr></table></figure>
+
 <p><code>calc</code>中不能使用泛型类<code>People</code>中的类型变量<code>T</code>。</p>
 <p><strong>泛型构造方法:</strong></p>
 <p>最后泛型构造方法又可以分为两种:类本身就是泛型类,类不是泛型类。下面是一个简单的例子:</p>
@@ -340,8 +342,9 @@
 <p>上述所有言论基于java1.8,似乎在java10中已经开始支持泛型数组,但并未考证</p>
 </blockquote>
 <hr>
-<p>回到正题,java中的泛型是不变的。如果泛型是协变的,思考如下代码:</p>
+<p>回到正题,java中的泛型是不支持协变的。如果泛型是协变的,思考如下代码:</p>
 <figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">ArrayList&lt;Number&gt; ref=<span class="hljs-keyword">new</span> ArrayList&lt;Integer&gt;();<br><br>ref.add(<span class="hljs-number">2.3f</span>);<span class="hljs-comment">//cast</span><br></code></pre></div></td></tr></table></figure>
+
 <p>在我们眼里,<code>ref</code>是一个存储<code>Number</code>的容器,那么就可以往里面存储<code>Double</code>、<code>Float</code>、<code>Integer</code>。取元素的时候到底转换成什么类型?程序不知道,程序员也不知道。并且很可能会产生运行时错误。既然这么,干脆就在编译期将这类错误禁止就完事了,但是仍然可以通过一些操作实现协变的逻辑。</p>
 <p>对于泛型不支持逆变,是因为父类的引用赋值给子类就非常危险,所以当然不支持,而且也不可能实现。</p>
 <h3 id="使用协变"><a href="#使用协变" class="headerlink" title="使用协变"></a>使用协变</h3><p>有些时候我们确实需要使用协变这一功能。比如我们有一组类<code>Dog``Cat``Pig</code>,需要对这些类实现一个通用的喂食功能,见如下代码:</p>
@@ -361,6 +364,7 @@
 </ul>
 <p>那么为了实现上面的需求,应将<code>feed</code>的签名改正为<code>public static void feed(List&lt;? extends Animal&gt; animalList)</code>,现在编译运行:</p>
 <figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java">peter eat shit.<br>tom eat shit.<br>lili eat air.<br>candy eat air.<br></code></pre></div></td></tr></table></figure>
+
 <p>成功实现了我们的需求。</p>
 <h3 id="存下取上原则"><a href="#存下取上原则" class="headerlink" title="存下取上原则"></a>存下取上原则</h3><p>该原则取自<a target="_blank" rel="noopener" href="https://www.cnblogs.com/Xieyang-blog/p/9215934.html">Java中泛型区别以及泛型擦除详解</a>。</p>
 <p><strong>A. 上界通配符:</strong><br>但是在使用了泛型通配符的地方,想要对容器增删元素就没有那么简单了。就拿上面的<code>List&lt;? extends Animal&gt; animals</code>做例子。传进来的参数有可能是<code>List&lt;Dog&gt;</code>,也有可能是<code>List&lt;Cat&gt;</code>,假设我们能够向<code>animals</code>中存储新元素,那么当我们取出我们存入的新元素时,它到底是什么类型的?编译器不知道。但是我们读取容器中的内容是没问题的,因为里面的元素至少是一个<code>Animals</code>,使用<code>Animals</code>的引用调用<code>Animals</code>的方法是没有任何问题的。这里就体现了<strong>存下取上</strong>的原则。</p>
@@ -369,14 +373,13 @@
 <p>储存的元素类型<strong>至多</strong>是下界类型,取出时的元素类型<strong>至少</strong>是上界类型</p>
 </blockquote>
 <p>下面的图片很好的解释了这个原则:</p>
-<p><img src="images/upper-bound.drawio.svg" srcset="/img/loading.gif" lazyload alt="upper-bound"></p>
-<p>所以如果容器中,存在有<strong>上界通配符</strong>的泛型:对其写入的元素是很鸡肋的,相当于这个容器是<strong>只读</strong>的。</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/the-generic-of-java.upper-bound.drawio.svg" srcset="/img/loading.gif" lazyload alt="upper-bound"><br>所以如果容器中,存在有<strong>上界通配符</strong>的泛型:对其写入的元素是很鸡肋的,相当于这个容器是<strong>只读</strong>的。</p>
 <p><strong>B. 下界通配符:</strong></p>
 <p>相应的,上界通配符实现的简单意义上的只写功能。例如<code>List&lt;? super Husky&gt; animals</code>,其中<code>husky</code>是<code>Dog</code>的子类,这里能存入的元素类型至多是<code>Husky</code>类型,没有上界,那么就是<code>Object</code>。</p>
 <p>我们可以在<code>animals</code>中存储任意的<code>animals</code>子类对象(就像<code>List&lt;Dog&gt;</code>中存储的都是<code>Dog</code>类型的引用,但是可以在<code>List</code>中存储任意的<code>Dog</code>子类)。</p>
 <figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Husky</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Dog</span></span>&#123;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-title">Husky</span><span class="hljs-params">(String name)</span></span>&#123;<br>        <span class="hljs-keyword">super</span>(name);<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">(String[] args)</span></span>&#123;<br>    List&lt;Dog&gt; list=<span class="hljs-keyword">new</span> ArrayList&lt;&gt;();<br>    insert(list);<br>&#125;<br><br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title">insert</span><span class="hljs-params">(List&lt;? <span class="hljs-keyword">super</span> Dog&gt; set)</span></span>&#123;<br>    <span class="hljs-comment">//成功添加</span><br>    set.add(<span class="hljs-keyword">new</span> Husky(<span class="hljs-string">&quot;husky&quot;</span>));<br>    System.out.println(<span class="hljs-string">&quot;success&quot;</span>);<br>&#125;<br></code></pre></div></td></tr></table></figure>
 
-<p><img src="images/lower-bound.drawio.svg" srcset="/img/loading.gif" lazyload alt="lower-bound"></p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/the-generic-of-java.lower-bound.drawio.svg" srcset="/img/loading.gif" lazyload alt="lower-bound"></p>
 <p>当然类似的,这里只能读取<code>Object</code>类型的对象,也很鸡肋。</p>
 <p>所以如果容器中存在有下界通配符的泛型,那么该容器在非严格意义上是<strong>只写</strong>的。</p>
 <p>这里的存下取上原则也叫做<code>PECS</code>原则,即<code>producer-extends,consumer super</code>。以容器的视角来说,当容器作为作为生产者,往外提供元素时,就使用<code>extends</code>;当容器作为消费者,需要存储元素时,就使用<code>super</code>。</p>
@@ -430,8 +433,8 @@
 <figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Student</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">Person</span></span>&#123;<br>     age;<br>    String stuName;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> E <span class="hljs-title">getName</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">return</span> stuName;<br>    &#125;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setName</span><span class="hljs-params">(E name)</span></span>&#123;<br>        <span class="hljs-keyword">this</span>.stuName=name;<br>    &#125;<br><br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">setAge</span><span class="hljs-params">(T age)</span></span>&#123;<br>        ...<br>    &#125;<br>&#125;<br></code></pre></div></td></tr></table></figure>
 
 <p>子类与父类都进行了擦除这么说并不准确,因为根本就没有定义子类的类型参数…规则和父类擦除而子类不擦除的规则一样。要看父类的类型参数有没有上限,因为编译器的推断类型是不一样的。</p>
-<p><strong>那么为什么不能父类不擦除,而子类不擦除呢？</strong></p>
-<p>因为继承泛型类时,子类必须对父类中的类型参数进行初始化,当然父类擦除或者由子类指定都可以。所以子类擦除而父类不擦除,父类中的类型参数由谁来初始化?</p>
+<p><strong>那么为什么不能父类不擦除,而子类擦除的情况呢？</strong></p>
+<p>因为继承泛型类时,子类必须对父类中的类型参数进行初始化,当父类擦除或者由子类指定时子类都可以确定父类的泛型实际类型。但是如果子类擦除而父类没有擦除，那么父类中的类型参数无法从子类中获得，到底怎么初始化?</p>
 <h4 id="3-3-泛型下的类型获取"><a href="#3-3-泛型下的类型获取" class="headerlink" title="3.3 泛型下的类型获取"></a>3.3 泛型下的类型获取</h4><p>上面曾说到，Java中的泛型是伪泛型，在编译时会被擦除为<code>Object</code>类型的，但是为什么又能够在运行时获取的泛型的真实类型呢？</p>
 <p>首先我们需要知道一个逻辑：<strong>泛型擦除并不代表JVM不知道类型信息</strong>。对于泛型类，JVM可以从Class文件中的<code>Signature</code>属性来获取泛型类的<strong>声明</strong>类型，而不是实际类型。假设有代码如下：</p>
 <figure class="highlight java"><table><tr><td class="gutter hljs"><div class="hljs code-wrapper"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></div></td><td class="code"><div class="hljs code-wrapper"><pre><code class="hljs java"><span class="hljs-keyword">public</span> <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">action</span>&lt;<span class="hljs-title">T</span>&gt;</span>&#123;<br>    T a;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">set</span><span class="hljs-params">(T a)</span></span>&#123;<br>        <span class="hljs-keyword">this</span>.a=a;<br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">public</span> T <span class="hljs-title">get</span><span class="hljs-params">()</span></span>&#123;<br>        <span class="hljs-keyword">return</span> a;<br>    &#125;<br>&#125;<br><span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>    action&lt;Integer&gt; test=<span class="hljs-keyword">new</span> action&lt;&gt;();<br>&#125;<br></code></pre></div></td></tr></table></figure>
@@ -463,15 +466,13 @@
                   <div class="post-meta mr-3">
                     <i class="iconfont icon-category"></i>
                     
-                      <a class="hover-with-bg" href="/categories/%E5%8F%8D%E5%B0%84/">反射</a>
+                      <a class="hover-with-bg" href="/categories/Java/">Java</a>
                     
                   </div>
                 
                 
                   <div class="post-meta">
                     <i class="iconfont icon-tags"></i>
-                    
-                      <a class="hover-with-bg" href="/tags/%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5/">基本概念</a>
                     
                       <a class="hover-with-bg" href="/tags/%E6%B3%9B%E5%9E%8B/">泛型</a>
                     
@@ -500,8 +501,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/articles/class-loading-mechanism.html">
-                        <span class="hidden-mobile">类的加载机制</span>
+                      <a href="/articles/type-system-of-java.html">
+                        <span class="hidden-mobile">Java中的类型系统</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

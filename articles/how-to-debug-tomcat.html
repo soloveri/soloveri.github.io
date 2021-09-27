@@ -269,13 +269,13 @@
 <p>-DUser.region=US</p>
 </blockquote>
 <p>所以最后的虚拟机配置如下所示：</p>
-<p><img src="images/tomcat-vm-options.png" srcset="/img/loading.gif" lazyload alt="vm-options"><br>处理JSP解析问题：</p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/how-to-debug-tomcat.tomcat-vm-options.png" srcset="/img/loading.gif" lazyload alt="vm-options"><br>处理JSP解析问题：</p>
 <p>在<code>org.apache.catalina.startup.ContextConfig.configStart</code>手动初始化jsp，添加如下代码：</p>
 <blockquote>
 <p>context.addServletContainerInitializer(new JasperInitializer(),null)</p>
 </blockquote>
 <p>添加位置如下所示：</p>
-<p><img src="images/tomcat-jsp-position.png" srcset="/img/loading.gif" lazyload alt="position"></p>
+<p><img src="https://eripe.oss-cn-shanghai.aliyuncs.com/img/how-to-debug-tomcat.tomcat-jsp-position.png" srcset="/img/loading.gif" lazyload alt="position"></p>
 <h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><ol>
 <li><p><a target="_blank" rel="noopener" href="https://gongxufan.github.io/2017/10/20/tomcat-source-debug/">基于IntelliJ IDEA环境】Tomcat8源码的调试和项目部署</a></p>
 </li>
@@ -330,8 +330,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/articles/the-GC-of-Java.html">
-                        <span class="hidden-mobile">Java中的GC</span>
+                      <a href="/articles/LongAdder-analysis.html">
+                        <span class="hidden-mobile">LongAdder源码解析</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

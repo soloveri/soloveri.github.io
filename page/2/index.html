@@ -185,213 +185,6 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/threadlocal-analysis.html" target="_self">
-          ThreadLocal源码解析
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/threadlocal-analysis.html" target="_self">
-          
-          
-            
-          
-          顾名思义，ThreadLocal就是基于线程粒度的私有变量，跟我们以往认知中基于函数、类粒度的私有变量不同。而且ThreadLocal的使用频率非常高，但是如若使用不当，则可能会发生内存泄漏，所以好好研究一下其实现原理是非常有必要的。内容分为三个部分：ThreadLocalMap是什么，ThreadLocal是如何插入变量的，ThreadLocal是如何删除变量的。
-ThreadLocalMap是
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/ThreadLocal/">ThreadLocal</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80.html" target="_self">
-          多线程基础
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80.html" target="_self">
-          
-          
-            
-          
-          多进程是为了提高CPU效率，而多线程是为了提高程序使用率？我咋感觉不对啊，多线程通信方便，资源浪费小。并且多线程能不能提高效率得看是什么任务。
-总而言之：多进程为操作系统提供了并发的可能，多进程为单个程序提供了并发的能力。
-简而言之：多线程就是程序内部有多条执行路径，这句话至少我认为是没有错的。
-并且并发是在某一时间段同时发生，并行是在某一时间点同时发生。不要记混了。所以记住java搞高并发就不会
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/five-IO-model.html" target="_self">
-          五种IO模型
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/five-IO-model.html" target="_self">
-          
-          
-            
-          
-          前言相信对于很多新人来说，同步、异步、阻塞、与非阻塞这四个概念非常容易混淆。那是因为我们没有搞清楚我们看待问题的视角。对于这四个概念，站在不同的角度，如何区别是不同的。我在此将所有的资料汇总，总结，并提出我自己的见解。
-我将分两种维度讨论这四种概念，分别是广义上的同步与阻塞，以及狭义上的同步与阻塞。
-1. 广义维度下的区分相信很多人在编写多线程程序最大的难度就是让各个线程之间同步合作。那么根据&l
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/IO/">IO</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/IO%E6%A8%A1%E5%9E%8B/">IO模型</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
-        <a href="/articles/synchronized-keyword.html" target="_self">
-          synchronized关键字
-        </a>
-      </h1>
-
-      <p class="index-excerpt">
-        <a href="/articles/synchronized-keyword.html" target="_self">
-          
-          
-            
-          
-          预备知识Java提供的同步机制有许多，synchronized是其中最经常使用、最万能的机制之一。为了学习synchronized的实现原理，进而了解到monior object模式。在java中synchronized辅助实现了该模式。
-1. monitor机制的起源与定义在早期，编写并发程序时使用的同步原语是信号量semaphore与互斥量mutex。程序员需要手动操作信号量的数值与线程的唤醒
-        </a>
-      </p>
-
-      <div class="index-btm post-metas">
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
-            </time>
-          </div>
-        
-        
-          <div class="post-meta mr-3">
-            <i class="iconfont icon-category"></i>
-            
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
-            
-          </div>
-        
-        
-          <div class="post-meta">
-            <i class="iconfont icon-tags"></i>
-            
-              <a href="/tags/synchronized/">synchronized</a>
-            
-          </div>
-        
-      </div>
-    </article>
-  </div>
-
-  <div class="row mx-auto index-card">
-    
-    
-    <article class="col-12 col-md-12 mx-auto index-info">
-      <h1 class="index-header">
-        
         <a href="/articles/interface-BlockingQueue-analysis.html" target="_self">
           BlockingQueue接口分析
         </a>
@@ -427,8 +220,8 @@ offer(e,tim
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
+            <time datetime="2021-04-10 15:54" pubdate>
+              2021-04-10
             </time>
           </div>
         
@@ -458,22 +251,24 @@ offer(e,tim
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/Executor-interface.html" target="_self">
-          Exectuor框架解析
+        <a href="/articles/ConcurrentHashMap-analysis-II.html" target="_self">
+          ConcurrentHashMap扩容分析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/Executor-interface.html" target="_self">
+        <a href="/articles/ConcurrentHashMap-analysis-II.html" target="_self">
           
           
             
           
-          1. Executor接口在JUC包中，还提供了Executor框架用来实现线程池，我们经常使用的线程池都是从Executor派生而来。我们可以看看整个Executor框架的继承结构：
+          前言本篇继承于ConcurrentHashMap架构解析，在了解了ConcurrentHashMap的整体架构与插入删除逻辑后，还有一个知识点：扩容逻辑需要学习，我认为这是ConcurrentHashMap核心中的核心。
+废话不多说，对于ConcurrentHashMap来说，扩容可以整体分为两个部分：
 
-那么在这个框架中，我们第一步应该需要了解它的核心接口Executor。这个接口的作用在它的注释中说的很清楚：
+将属性table扩展为原来的两倍
+将旧table中数据迁移到新table
 
-An object that executes submitted Runnable tasks. 
+那么本文就按照这
         </a>
       </p>
 
@@ -481,8 +276,8 @@ An object that executes submitted Runnable tasks.
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
+            <time datetime="2021-04-06 10:02" pubdate>
+              2021-04-06
             </time>
           </div>
         
@@ -498,7 +293,59 @@ An object that executes submitted Runnable tasks.
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Executor/">Executor</a>
+              <a href="/tags/concurrent-collections/">concurrent collections</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/ConcurrentHashMap-analysis-I.html" target="_self">
+          ConcurrentHashMap架构解析
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/ConcurrentHashMap-analysis-I.html" target="_self">
+          
+          
+            
+          
+          前言本篇主要介绍ConcurrentHashMap的基本架构、插入与删除操作的原理，对于它扩容的逻辑，放在第二部分讲解：ConcurrentHashMap扩容分析。
+
+本文旨在介绍J.U.C包下的同步集合ConcurrentHashMap。因为Java自带的HashMap是线程不安全的，虽然也提供了线程安全的HashTable，但是后者是对整个哈希表加锁，势必效率不理想。而ConcurrentHa
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-03-29 09:56" pubdate>
+              2021-03-29
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/Java/">Java</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/ConcurrentHashMap/">ConcurrentHashMap</a>
             
           </div>
         
@@ -537,8 +384,8 @@ SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
+            <time datetime="2021-03-26 10:52" pubdate>
+              2021-03-26
             </time>
           </div>
         
@@ -568,19 +415,22 @@ SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/Interrupt-mechanism.html" target="_self">
-          中断机制
+        <a href="/articles/Executor-interface.html" target="_self">
+          Exectuor框架解析
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/Interrupt-mechanism.html" target="_self">
+        <a href="/articles/Executor-interface.html" target="_self">
           
           
             
           
-          在多线程环境下，终止一个线程的任务最好的方法是通过中断。而Java的中断类似于通知协作机制，被中断的线程并不会立即停止自己的任务，而是仅仅收到了中断的通知，具体怎么处理收到的中断，这需要用户自己定义。那么为什么说Java的中断类似于通知机制？我们首先需要了解中断到底做了什么。
-1. 实施中断Java中的中断操作只需要调用目标线程的interrupt()方法即可完成。那么这个方法到底做了什么？我们来
+          1. Executor接口在JUC包中，还提供了Executor框架用来实现线程池，我们经常使用的线程池都是从Executor派生而来。我们可以看看整个Executor框架的继承结构：
+
+那么在这个框架中，我们第一步应该需要了解它的核心接口Executor。这个接口的作用在它的注释中说的很清楚：
+
+An object that executes submitted Runnable tasks. 
         </a>
       </p>
 
@@ -588,8 +438,8 @@ SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
+            <time datetime="2021-03-23 21:48" pubdate>
+              2021-03-23
             </time>
           </div>
         
@@ -597,7 +447,7 @@ SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部�
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+              <a href="/categories/java%E5%9F%BA%E7%A1%80/">java基础</a>
             
           </div>
         
@@ -605,7 +455,7 @@ SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/interrupt/">interrupt</a>
+              <a href="/tags/Executor/">Executor</a>
             
           </div>
         
@@ -619,19 +469,25 @@ SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/JMM.html" target="_self">
-          Java内存模型
+        <a href="/articles/the-GC-of-Java.html" target="_self">
+          Java中的GC
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/JMM.html" target="_self">
+        <a href="/articles/the-GC-of-Java.html" target="_self">
           
           
             
           
-          1. 内存模型(memory model)1.1. 内存模型是什么在编译和运行程序时，编译器和CPU都会为了效率而力所能及地对程序进行优化，例如编译器和CPU的指令重排、CPU的流水线执行等操作。但是这种优化不是没有限制的，如果不能及时保证内存的可见性，程序就有可能出现错误,这里的可见性是指如果有一个线程A对某个内存地址addr进行了写操作，那么其他线程一定能够看到A对地址addr的操作。
-所以内
+          Java中的自动垃圾回收是其一大优点。本文将从以下三个方面简介相关知识：
+
+如何定义垃圾
+垃圾回收的时机
+垃圾回收的策略
+具体的垃圾回收器
+
+在介绍相关的知识前，我们需要知道一个词：stop-the-world，这个词专门为GC而生，因为Java会在进行垃圾回收的时候除了GC线程外，会暂停所有工作线程，也就是所谓的“停止世界运转”。那么GC优化时，我们的目标可能就是减少GC时stop-the-wo
         </a>
       </p>
 
@@ -639,8 +495,8 @@ SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
+            <time datetime="2021-03-21 16:21" pubdate>
+              2021-03-21
             </time>
           </div>
         
@@ -648,7 +504,7 @@ SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部�
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%9F%BA%E7%A1%80/">多线程基础</a>
+              <a href="/categories/Java/">Java</a>
             
           </div>
         
@@ -656,7 +512,7 @@ SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/JMM/">JMM</a>
+              <a href="/tags/%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6/">垃圾回收</a>
             
           </div>
         
@@ -670,22 +526,20 @@ SHUTDOWN: 不再接受新的任务，但是会把阻塞队列中的任务全部�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/Thread-state-transition.html" target="_self">
-          线程的状态转换
+        <a href="/articles/analysis-of-dynamic-proxy.html" target="_self">
+          动态代理的原理
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/Thread-state-transition.html" target="_self">
+        <a href="/articles/analysis-of-dynamic-proxy.html" target="_self">
           
           
             
           
-          因为线程是调度的基本单位，所以线程的状态转换与进程的状态转换是一致的。主要有五个状态：启动、就绪、执行、等待、销毁。这几个状态的转换图如下所示：
-
-可以看到，等待状态只能转换为就绪，再等CPU调度。这是一般的线程状态转换图。
-在java中，又多了几个状态。
-java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNABLE
+          1. 前言代理分为静态代理和动态代理。静态代理就是我们手动地将代理类写出来，而动态代理就是由虚拟机在运行时自动地将代理类构造出来。下面我就简单地阐述静态代理的用法以及缺点。
+首先在下面声明需要代理的类：
+123456789101112131415161718192021222324252627282930313233//实体类实现的接口public interface UserDao &#123;
         </a>
       </p>
 
@@ -693,8 +547,8 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2021-09-27 10:44" pubdate>
-              2021-09-27
+            <time datetime="2021-03-13 19:45" pubdate>
+              2021-03-13
             </time>
           </div>
         
@@ -702,7 +556,7 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
+              <a href="/categories/java/">java</a>
             
           </div>
         
@@ -710,9 +564,165 @@ java中的线程状态12345678910111213public enum State &#123;    NEW,    RUNNA
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E7%8A%B6%E6%80%81%E8%BD%AC%E6%8D%A2/">状态转换</a>
+              <a href="/tags/dynamic-proxy/">dynamic proxy</a>
             
           </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/what-is-IOC.html" target="_self">
+          IOC到底是什么？
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/what-is-IOC.html" target="_self">
+          
+          
+            
+          
+          这篇博文：浅谈IOC–说清楚IOC是什么讲的不错，我在此就是做一些摘抄。
+
+1. IOC是什么？IOC，Inversion of Control，译为控制反转。并不是一种设计模式，但是可以算作一种方法论。
+1996年，Michael Mattson在其论文:Object-Oriented FrameworksA survey of methodological issues中，首先提出了IOC这个
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-03-12 18:48" pubdate>
+              2021-03-12
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/framework/">framework</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Spring/">Spring</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/what-is-spring-mvc.html" target="_self">
+          Spring MVC原理
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/what-is-spring-mvc.html" target="_self">
+          
+          
+            
+          
+          1. MVC是什么？MVC是一种设计规范，并不是一种设计模式。该规范将一个web分割成3部分来处理：请求首先经过控制器Controller；经过业务处理得到数据模型Model；最后通过model渲染视图View并响应给客户端。
+我们完全利用Servlet自己实现MVC规范，如下图所示：
+基本流程为：
+
+用户发请求
+Servlet（作为Controller）接收请求数据，解析数据模型model，并调
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-03-04 18:40" pubdate>
+              2021-03-04
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/framework/">framework</a>
+            
+          </div>
+        
+        
+          <div class="post-meta">
+            <i class="iconfont icon-tags"></i>
+            
+              <a href="/tags/Spring-MVC/">Spring MVC</a>
+            
+          </div>
+        
+      </div>
+    </article>
+  </div>
+
+  <div class="row mx-auto index-card">
+    
+    
+    <article class="col-12 col-md-12 mx-auto index-info">
+      <h1 class="index-header">
+        
+        <a href="/articles/top-questions-for-network.html" target="_self">
+          计网热门问题
+        </a>
+      </h1>
+
+      <p class="index-excerpt">
+        <a href="/articles/top-questions-for-network.html" target="_self">
+          
+          
+            
+          
+          本篇不为别的，只为记录面试过程中关于计网的热门问题。
+[TOC]
+
+1. 点击一个链接后，发生了什么首先，我们需要有一个总的概念：在点击一个链接后，网卡首先会将http请求使用http协议封装，接着将数据包经由tcp/udp协议封装，最后使用ip协议将数据包在各个网段之间传输直至到达目的地。http协议的封装这里不作详细介绍。tcp连接的建立和ip数据包的转发才是重点。
+
+tcp连接建立的基础是使
+        </a>
+      </p>
+
+      <div class="index-btm post-metas">
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-date"></i>
+            <time datetime="2021-01-16 15:06" pubdate>
+              2021-01-16
+            </time>
+          </div>
+        
+        
+          <div class="post-meta mr-3">
+            <i class="iconfont icon-category"></i>
+            
+              <a href="/categories/network/">network</a>
+            
+          </div>
+        
         
       </div>
     </article>

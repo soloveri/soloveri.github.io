@@ -185,20 +185,18 @@
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/Queue-interface-analysis.html" target="_self">
-          Queue接口分析
+        <a href="/articles/why-multi-thread-is-unsafe.html" target="_self">
+          多线程为什么会不安全
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/Queue-interface-analysis.html" target="_self">
+        <a href="/articles/why-multi-thread-is-unsafe.html" target="_self">
           
           
             
           
-          0x1 基本概念Queue接口继承自超级接口Collection,其不仅实现了Coolection中的基本方法,而且额外增加了适用于队列的增、删、差方法。并且对应这三种操作,Queue提供了两套方法,一套在操作失败时抛出异常,另一套在操作失败时返回null,不过在文档中说到:
-
-The latter form of the insert operation is designed specific
+          本文介绍了线程不安全的学术概念
         </a>
       </p>
 
@@ -206,8 +204,8 @@ The latter form of the insert operation is designed specific
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2020-07-20 20:55" pubdate>
-              2020-07-20
+            <time datetime="2020-06-18 21:15" pubdate>
+              2020-06-18
             </time>
           </div>
         
@@ -215,7 +213,7 @@ The latter form of the insert operation is designed specific
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+              <a href="/categories/Java/">Java</a>
             
           </div>
         
@@ -223,7 +221,7 @@ The latter form of the insert operation is designed specific
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/Queue/">Queue</a>
+              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
             
           </div>
         
@@ -237,22 +235,18 @@ The latter form of the insert operation is designed specific
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/ArrayList-source-code-analysis.html" target="_self">
-          ArrayList源码分析
+        <a href="/articles/reflect-of-Java.html" target="_self">
+          反射初体验
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/ArrayList-source-code-analysis.html" target="_self">
+        <a href="/articles/reflect-of-Java.html" target="_self">
           
           
             
           
-          前言分析源码初体验，第一次分析个比较简单的集合类ArrayList。我把重点放在了ArrayList实现的接口、继承的类以及几个主要的类方法上。
-0x0 ArrayList继承图我们首先来看看ArrayList中的继承图。
-
-ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable、Seriablizable、List接口。
-这里我首先有了两个
+          本文为初学者描述了在Java中反射的基本使用方法
         </a>
       </p>
 
@@ -260,8 +254,8 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2020-07-20 20:55" pubdate>
-              2020-07-20
+            <time datetime="2020-06-18 21:14" pubdate>
+              2020-06-18
             </time>
           </div>
         
@@ -269,7 +263,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/%E6%BA%90%E7%A0%81%E5%88%86%E6%9E%90/">源码分析</a>
+              <a href="/categories/Java/">Java</a>
             
           </div>
         
@@ -277,7 +271,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/ArrayList/">ArrayList</a>
+              <a href="/tags/%E5%8F%8D%E5%B0%84/">反射</a>
             
           </div>
         
@@ -291,20 +285,21 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
     <article class="col-12 col-md-12 mx-auto index-info">
       <h1 class="index-header">
         
-        <a href="/articles/red-black-tree.html" target="_self">
-          红黑树入门
+        <a href="/articles/multi-thread-basis.html" target="_self">
+          多线程基础
         </a>
       </h1>
 
       <p class="index-excerpt">
-        <a href="/articles/red-black-tree.html" target="_self">
+        <a href="/articles/multi-thread-basis.html" target="_self">
           
           
             
           
-          本篇将带你一步一步了解红黑树，当然大部分内容来源于算法(第4版)一书，我仅仅对一点内容总结了自己的心得。
-在谈谈红黑树之前，我们先来回顾一下二叉排序树(balanced sort tree),因为红黑树是从BST的概念演化而来的。BST的定义很简单，对于一个节点来说，左树的所有节点的值都小于当前节点的值，右树所有节点的值都大于当前节点的值。但是在最坏情况下BST的高度会达到O(N),效率太差。
-我
+          多进程是为了提高CPU效率，而多线程是为了提高程序使用率？我咋感觉不对啊，多线程通信方便，资源浪费小。并且多线程能不能提高效率得看是什么任务。
+总而言之：多进程为操作系统提供了并发的可能，多进程为单个程序提供了并发的能力。
+简而言之：多线程就是程序内部有多条执行路径，这句话至少我认为是没有错的。
+并且并发是在某一时间段同时发生，并行是在某一时间点同时发生。不要记混了。所以记住java搞高并发就不会
         </a>
       </p>
 
@@ -312,8 +307,8 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
         
           <div class="post-meta mr-3">
             <i class="iconfont icon-date"></i>
-            <time datetime="2020-07-11 09:32" pubdate>
-              2020-07-11
+            <time datetime="2020-04-16 18:57" pubdate>
+              2020-04-16
             </time>
           </div>
         
@@ -321,7 +316,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/java%E9%9B%86%E5%90%88/">java集合</a>
+              <a href="/categories/Java/">Java</a>
             
           </div>
         
@@ -329,7 +324,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
           <div class="post-meta">
             <i class="iconfont icon-tags"></i>
             
-              <a href="/tags/%E7%BA%A2%E9%BB%91%E6%A0%91-map/">红黑树,map</a>
+              <a href="/tags/%E5%A4%9A%E7%BA%BF%E7%A8%8B/">多线程</a>
             
           </div>
         
@@ -344,7 +339,7 @@ ArrayList继承自抽象类AbstractList,并且实现了RandomAccess、Cloneable�
       <h1 class="index-header">
         
         <a href="/articles/access-control-of-Java.html" target="_self">
-          思考java中的访问控制
+          思考Java中的访问控制
         </a>
       </h1>
 
@@ -373,7 +368,7 @@ java中的类只能有两种权限修饰
           <div class="post-meta mr-3">
             <i class="iconfont icon-category"></i>
             
-              <a href="/categories/java/">java</a>
+              <a href="/categories/Java/">Java</a>
             
           </div>
         
